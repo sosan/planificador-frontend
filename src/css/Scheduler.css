@@ -1,0 +1,119 @@
+.noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none; 
+}
+
+
+.contenedor_botones_lightbox
+{
+    height: 290px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+.seccion_radiobotones
+{
+    /* display: grid; */
+    /* grid-template-columns: repeat(auto-fill, minmax(min(190px,50vw), 1fr)); */
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    column-gap: 40px;
+    list-style: none;
+    max-width: 100%;
+    flex-wrap: wrap;
+    place-content: flex-start;
+
+    gap: 50px;
+}
+
+.radiobotones_enlinea
+{
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+}
+
+.texto_radio_boton
+{
+    font-size: 20px;
+}
+
+
+.radio_boton
+{
+    border: 0px !important;
+    width: 2em !important;
+    height: 2em !important;
+}
+
+
+.boton_ligthbox
+{
+    font-size: 20px;
+    font-weight: 900;
+    border-radius: 2px;
+    text-transform: uppercase;
+    border: 1px solid #fff;
+    color: #e6e6e6;
+    padding: 15px 25px;
+
+}
+
+.boton_mas_lightbox
+{
+    
+    background-color: rgb(58,114,2);
+    
+}
+
+.boton_menos_lightbox
+{
+    
+    background-color: rgb(0, 41, 175);
+    
+}
+
+.input_numero_dias
+{
+
+    height: 50px !important;
+    width: 100px !important;
+    margin-top: 1px !important;
+    background-color: transparent;
+    color: black !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
+    text-align: center !important;
+}
+
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.dhx_section_time select:nth-child(1),
+.dhx_section_time select:nth-child(5),
+.dhx_section_time select:nth-child(6),
+.dhx_section_time select:nth-child(7),
+.dhx_section_time select:nth-child(8),
+.dhx_section_time select:nth-child(9)
+{
+    display: none;
+}

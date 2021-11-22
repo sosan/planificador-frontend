@@ -8,93 +8,120 @@ import {
   IonMenu,
   IonMenuToggle,
   IonNote,
+
+  IonItemGroup,
+  IonItemDivider,
+  IonRouterOutlet,
+  IonImg
+
 } from '@ionic/react';
 
+
+
 import { useLocation } from 'react-router-dom';
-import { archiveOutline, archiveSharp, bookmarkOutline, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
-import './Menu.css';
+import { 
+  IItemCategoria,
+  categoriasContratos,
+  categoriasInformes,
+  categoriasFacturacion,
+  categoriasMultas,
+  categoriasPlaning
+} from "./Categorias";
+import '../css/Menu.css';
 
-interface AppPage {
-  url: string;
-  iosIcon: string;
-  mdIcon: string;
-  title: string;
-}
-
-const appPages: AppPage[] = [
-  {
-    title: 'Inbox',
-    url: '/page/Inbox',
-    iosIcon: mailOutline,
-    mdIcon: mailSharp
-  },
-  {
-    title: 'Outbox',
-    url: '/page/Outbox',
-    iosIcon: paperPlaneOutline,
-    mdIcon: paperPlaneSharp
-  },
-  {
-    title: 'Favorites',
-    url: '/page/Favorites',
-    iosIcon: heartOutline,
-    mdIcon: heartSharp
-  },
-  {
-    title: 'Archived',
-    url: '/page/Archived',
-    iosIcon: archiveOutline,
-    mdIcon: archiveSharp
-  },
-  {
-    title: 'Trash',
-    url: '/page/Trash',
-    iosIcon: trashOutline,
-    mdIcon: trashSharp
-  },
-  {
-    title: 'Spam',
-    url: '/page/Spam',
-    iosIcon: warningOutline,
-    mdIcon: warningSharp
-  }
-];
-
-const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+// const labels = ['Etiqueta1', 'Etiqueta2', 'Etiqueta3', 'Etiqueta4', 'Etiqueta5', 'Etiqueta6'];
 
 const Menu: React.FC = () => {
   const location = useLocation();
+  
+  const GetListCategories = (categorias: IItemCategoria[]) =>
+  {
+    
+    const listadoCategorias = [];
+    for (const index in categorias)
+    {
+      const elemento = categorias[index];
+      // console.log("index=" + index + "listado=" + elemento);
+  
+      listadoCategorias.push(
+          <IonMenuToggle key={index} autoHide={false}>
+            <IonItem className={location.pathname === elemento.url ? 'selected' : ''} routerLink={elemento.url} routerDirection="none" lines="none" detail={false}>
+              <IonIcon slot="start" ios={elemento.iosIcon} md={elemento.mdIcon} />
+              <IonLabel>{elemento.title}</IonLabel>
+            </IonItem>
+          </IonMenuToggle>
+        );
+  
+    }
+
+    return listadoCategorias;
+  };
+
+  const listadoPlaning = GetListCategories(categoriasPlaning);
+  const listadoContratos = GetListCategories(categoriasContratos);
+  const listadoFacturacion = GetListCategories(categoriasFacturacion);
+  const listadoInformes = GetListCategories(categoriasInformes);
+  const listadoMultas = GetListCategories(categoriasMultas);
+
+
 
   return (
     <IonMenu contentId="main" type="overlay">
       <IonContent>
+        
         <IonList id="inbox-list">
-          <IonListHeader>Inbox</IonListHeader>
-          <IonNote>hi@ionicframework.com</IonNote>
-          {appPages.map((appPage, index) => {
-            return (
-              <IonMenuToggle key={index} autoHide={false}>
-                <IonItem className={location.pathname === appPage.url ? 'selected' : ''} routerLink={appPage.url} routerDirection="none" lines="none" detail={false}>
-                  <IonIcon slot="start" ios={appPage.iosIcon} md={appPage.mdIcon} />
-                  <IonLabel>{appPage.title}</IonLabel>
-                </IonItem>
-              </IonMenuToggle>
-            );
-          })}
+          <IonListHeader className=" noselect"  >PLANIFICADOR</IonListHeader>
+          <IonNote className=" noselect" >RentCarMallorca</IonNote>
+
+          <IonMenuToggle key={"dash"} autoHide={false}>
+            <IonItem className={location.pathname === "/page/Dashboard" ? 'selected' : 'noselected'} routerLink={"/page/Dashboard"} routerDirection="none" lines="none" detail={false}>
+              <IonImg src={"./assets/icon/icon.png"} className="icono-logo" />
+              <IonLabel>Menu Principal</IonLabel>
+            </IonItem>
+          </IonMenuToggle>
+
+          <IonItemGroup>
+            <IonItemDivider>
+              <IonLabel>Planing</IonLabel>
+            </IonItemDivider>
+            {listadoPlaning }
+          </IonItemGroup>
+
+          <IonItemGroup>
+            <IonItemDivider>
+              <IonLabel>Contratos</IonLabel>
+            </IonItemDivider>
+            {listadoContratos}
+          </IonItemGroup>
+
+
+          <IonItemGroup>
+            <IonItemDivider>
+              <IonLabel>Facturacion</IonLabel>
+            </IonItemDivider>
+            {listadoFacturacion}
+          </IonItemGroup>
+
+          <IonItemGroup>
+            <IonItemDivider>
+              <IonLabel>Informes</IonLabel>
+            </IonItemDivider>
+            {listadoInformes}
+          </IonItemGroup>
+
+          <IonItemGroup>
+            <IonItemDivider>
+              <IonLabel>Multas</IonLabel>
+            </IonItemDivider>
+            {listadoMultas}
+          </IonItemGroup>
+
         </IonList>
 
-        <IonList id="labels-list">
-          <IonListHeader>Labels</IonListHeader>
-          {labels.map((label, index) => (
-            <IonItem lines="none" key={index}>
-              <IonIcon slot="start" icon={bookmarkOutline} />
-              <IonLabel>{label}</IonLabel>
-            </IonItem>
-          ))}
-        </IonList>
       </IonContent>
     </IonMenu>
   );
+
 };
 
 export default Menu;

@@ -1,4 +1,5 @@
-import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
+import { useState } from 'react';
+import { IonApp, IonRouterOutlet, IonSplitPane, IonLoading } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 import Menu from './components/Menu';
@@ -21,17 +22,32 @@ import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
 
 /* Theme variables */
-import './theme/variables.css';
+import './css/variables.css';
 
 const App: React.FC = () => {
+
+  const [showLoading, setShowLoading] = useState(true);
+
+  // setTimeout(() => {
+  //   setShowLoading(false);
+  // }, 2000);
+
+
   return (
     <IonApp>
+      <IonLoading
+        cssClass='my-custom-class'
+        isOpen={showLoading}
+        onDidDismiss={() => setShowLoading(false)}
+        message={'Cargando...'}
+        duration={1000}
+      />
       <IonReactRouter>
-        <IonSplitPane contentId="main">
+        <IonSplitPane contentId="main" disabled={true}>
           <Menu />
           <IonRouterOutlet id="main">
             <Route path="/" exact={true}>
-              <Redirect to="/page/Inbox" />
+              <Redirect to="/page/Dashboard" />
             </Route>
             <Route path="/page/:name" exact={true}>
               <Page />
