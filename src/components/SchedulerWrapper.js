@@ -9,11 +9,9 @@ import 'dhtmlx-scheduler';
 import 'dhtmlx-scheduler/codebase/dhtmlxscheduler_material.css';
 import 'dhtmlx-scheduler/codebase/locale/locale_es';
 import "../css/Scheduler.css"
-import {htmlLightBox} from "../componentsHtml/renderLightBox.js";
+import {htmlLightBox} from "../componentsHtml/renderLightBox";
 
 const scheduler = window.scheduler;
-
-
 
 export const ENUM_TIPOS_EVENTOS = 
 {
@@ -23,40 +21,72 @@ export const ENUM_TIPOS_EVENTOS =
 
 };
 
-function restarDias(event) {
+const reflejarDiasFinVisual = (cantidadDias) =>
+{
+
+    const [diaInicioElemento, diaFinElemento] = document.getElementsByClassName("dhx_lightbox_day_select");
+    const [mesInicioElemento, mesFinElemento] = document.getElementsByClassName("dhx_lightbox_month_select");
+    const [anyoInicioElemento, anyoFinElemento] = document.getElementsByClassName("dhx_lightbox_year_select");
+
+    const diaInicio = diaInicioElemento.value;
+    const mesInicio = mesInicioElemento.value;
+    const anyoInicio = anyoInicioElemento.value;
+
+    const fechaConversionFin = new Date(`${anyoInicio}-${mesInicio}-${diaInicio}`);
+    fechaConversionFin.setDate(fechaConversionFin.getDate() + (cantidadDias - 1));
+
+    diaFinElemento.value = fechaConversionFin.getDate();
+    mesFinElemento.value = fechaConversionFin.getMonth() + 1;
+    anyoFinElemento.value = fechaConversionFin.getFullYear();
+
+};
+
+function restarDias(evento) {
 
     let cantidadDias = document.getElementById("numero_dias").value - 0;
-    if (cantidadDias) {
+    if (cantidadDias > 1) 
+    {
         cantidadDias--;
         document.getElementById("numero_dias").value = cantidadDias;
+        
+        reflejarDiasFinVisual(cantidadDias);
     }
 }
 
-function anadirDias(event) {
+function anadirDias(evento) {
     let cantidadDias = document.getElementById("numero_dias").value - 0;
     if (cantidadDias !== undefined) {
         cantidadDias++;
         document.getElementById("numero_dias").value = cantidadDias;
+        reflejarDiasFinVisual(cantidadDias);
     }
 }
 
 export default class SchedulerWrapper extends Component {
 
 
-    // constructor()
+    // setInitDates(cantidadDias)
     // {
-    //     super();
-        
+    //     const [diaInicioElemento, diaFinElemento] = document.getElementsByClassName("dhx_lightbox_day_select");
+    //     const [mesInicioElemento, mesFinElemento] = document.getElementsByClassName("dhx_lightbox_month_select");
+    //     const [anyoInicioElemento, anyoFinElemento] = document.getElementsByClassName("dhx_lightbox_year_select");
+
+    //     const diaInicio = diaInicioElemento.value;
+    //     const mesInicio = mesInicioElemento.value;
+    //     const anyoInicio = anyoInicioElemento.value;
+
+    //     const fechaConversionFin = new Date(`${anyoInicio}-${mesInicio}-${diaInicio}`);
+    //     fechaConversionFin.setDate(fechaConversionFin.getDate() + (cantidadDias - 1));
+
+    //     diaFinElemento.value = fechaConversionFin.getDate();
+    //     mesFinElemento.value = fechaConversionFin.getMonth() + 1;
+    //     anyoFinElemento.value = fechaConversionFin.getFullYear();
 
     // }
 
     removeEventListener()
     {
-
-        // const menosBoton = document.getElementById('boton_menos_lightbox');
         document.removeEventListener("click", restarDias(), true);
-
-        // const masBoton = document.getElementById('boton_mas_lightbox');
         document.removeEventListener("click", anadirDias(), true);
     }
 
@@ -66,13 +96,12 @@ export default class SchedulerWrapper extends Component {
         }
 
         const onDataUpdated = this.props.onDataUpdated;
-
+        
         scheduler.attachEvent('onEventAdded', (id, ev) => {
             console.log("create");
             if (onDataUpdated) {
                 onDataUpdated(ENUM_TIPOS_EVENTOS.create, ev, id);
             }
-
             
         });
 
@@ -83,6 +112,7 @@ export default class SchedulerWrapper extends Component {
             }
 
             this.removeEventListener();
+            
 
         });
 
@@ -96,15 +126,16 @@ export default class SchedulerWrapper extends Component {
 
         scheduler.attachEvent("onTemplatesReady", function (id, ev) {
             console.log("ontemplatesready");
+            
+            
 
         });
 
         scheduler._$initialized = true;
+
+        
+
     }
-
-    
-
-   
 
     componentDidMount() 
     {
@@ -127,7 +158,20 @@ export default class SchedulerWrapper extends Component {
             },
             set_value: function (node, value, ev) {
                 // console.log("ev=" + JSON.stringify(ev) + " node" + JSON.stringify( node) + " value=" + value) ;
-                node.querySelector("[name='numero_dias']").value = ev.numero_dias || "3";
+                // obtener los numeros de dias por defecto
+                const [diaInicioElemento, diaFinElemento] = document.getElementsByClassName("dhx_lightbox_day_select");
+                const [mesInicioElemento, mesFinElemento] = document.getElementsByClassName("dhx_lightbox_month_select");
+                const [anyoInicioElemento, anyoFinElemento] = document.getElementsByClassName("dhx_lightbox_year_select");
+                        
+                
+                const diaInicio = diaInicioElemento.value;
+                const mesInicio = mesInicioElemento.value;
+                const anyoInicio = anyoInicioElemento.value;
+
+                const fechaConversionFin = new Date(`${anyoInicio}-${mesInicio}-${diaInicio}`);
+                // fechaConversionFin.setDate(fechaConversionFin.getDate() + (cantidadDias - 1));
+
+                node.querySelector("[name='numero_dias']").value = ev.numero_dias || "2";
 
                 const radioSelected = document.getElementById(ev.personChoosed);
                 if (radioSelected)
@@ -157,6 +201,8 @@ export default class SchedulerWrapper extends Component {
                         if (allRadios[i].checked === true)
                         {
                             ev.personChoosed = allRadios[i].value;
+                            ev.color = allRadios[i].nonce;
+                            ev.textColor = "black";
                             break;
                         }
 
@@ -164,22 +210,26 @@ export default class SchedulerWrapper extends Component {
                 }
 
                 ev.numero_dias = node.querySelector("[name='numero_dias']").value;
-                // return node.querySelector("[name='numero_dias']").value;
             },
             focus: function (node) {
                 // var input = node.querySelector("[name='text']");
                 // input.select();
                 // input.focus();
+
+                console.log("focussss");
+
+
             }
+
         };
 
-        
 
         scheduler.config.hour_date = '%g:%i %A';
         // auto terminar los eventos
-        scheduler.config.event_duration = 60 * 24 * 3;
+        scheduler.config.event_duration = 60 * 24 * 1;
         scheduler.config.multi_day = true;
         scheduler.config.auto_end_date = true;
+        scheduler.config.first_hour = 8;
 
         scheduler.xy.scale_width = 70;
         scheduler.config.details_on_dblclick = true;
@@ -194,7 +244,8 @@ export default class SchedulerWrapper extends Component {
         scheduler.config.lightbox.sections = [
             { name: "description", height: 50, type: "textarea", map_to: "text", focus: true },
             { name: "time", height: 72, type: "time", map_to: "auto" },
-            { name: "Numero dias", height: 300, type: "custom_lightbox"},
+            // { name: "time", height: 72, type: "calendar_time", map_to: "auto" },
+            { name: "Numero dias MAS", height: 300, type: "custom_lightbox"},
         ];
 
         this.initSchedulerEvents();
@@ -204,6 +255,9 @@ export default class SchedulerWrapper extends Component {
         
         scheduler.clearAll();
         scheduler.parse(events);
+
+       
+
     }
 
     shouldComponentUpdate(nextProps) {
@@ -212,6 +266,27 @@ export default class SchedulerWrapper extends Component {
 
     componentDidUpdate() {
         scheduler.render();
+
+        // const [diaInicioElemento, diaFinElemento] = document.getElementsByClassName("dhx_lightbox_day_select");
+        // const [mesInicioElemento, mesFinElemento] = document.getElementsByClassName("dhx_lightbox_month_select");
+        // const [anyoInicioElemento, anyoFinElemento] = document.getElementsByClassName("dhx_lightbox_year_select");
+
+        // const diaInicio = diaInicioElemento.value;
+        // const mesInicio = mesInicioElemento.value;
+        // const anyoInicio = anyoInicioElemento.value;
+
+        // const fechaConversionFin = new Date(`${anyoInicio}-${mesInicio}-${diaInicio}`);
+        // fechaConversionFin.setDate(fechaConversionFin.getDate() + (1 - 1));
+
+        // diaFinElemento.value = fechaConversionFin.getDate();
+        // mesFinElemento.value = fechaConversionFin.getMonth() + 1;
+        // anyoFinElemento.value = fechaConversionFin.getFullYear();
+
+    }
+
+    componentWillUnmount()
+    {
+        console.log("desmontado");
     }
 
     setHoursScaleFormat(state) {
@@ -229,4 +304,7 @@ export default class SchedulerWrapper extends Component {
             ></div>
         );
     }
+
+
+
 }

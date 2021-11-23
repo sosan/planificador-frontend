@@ -6,27 +6,27 @@ export const htmlLightBox = `<div class='dhx_cal_ltext contenedor_botones_lightb
     </div>            
     <div class='seccion_radiobotones' >
         <div class='radiobotones_enlinea' >
-            <input class='radio_boton' id='persona1' type='radio' name='persona' value='persona1'>
+            <input class='radio_boton' id='persona1' type='radio' name='persona' value='persona1' nonce="#88b3fe">
             <label class='texto_radio_boton' for='persona1'> Persona1</label>
         </div> 
         <div class='radiobotones_enlinea' >
-            <input class='radio_boton' id='persona2' type='radio' name='persona' value='persona2'>
+            <input class='radio_boton' id='persona2' type='radio' name='persona' value='persona2' nonce="#38ff3f">
             <label class='texto_radio_boton' for='persona2'> Persona2</label>
         </div>
         <div class='radiobotones_enlinea' >
-            <input class='radio_boton' id='persona3' type='radio' name='persona' value='persona3'>
+            <input class='radio_boton' id='persona3' type='radio' name='persona' value='persona3' nonce="#ffc738">
             <label class='texto_radio_boton' for='persona3'> Persona3</label>
         </div>
         <div class='radiobotones_enlinea' >
-            <input class='radio_boton' id='persona4' type='radio' name='persona' value='persona4'>
+            <input class='radio_boton' id='persona4' type='radio' name='persona' value='persona4' nonce="#c5a9ff">
             <label class='texto_radio_boton' for='persona4'> Persona4</label>
         </div>
         <div class='radiobotones_enlinea' >
-            <input class='radio_boton' id='persona5' type='radio' name='persona' value='persona5'>
+            <input class='radio_boton' id='persona5' type='radio' name='persona' value='persona5' nonce="#c8c8c8">
             <label class='texto_radio_boton' for='persona5'> Persona5</label>
         </div>
         <div class='radiobotones_enlinea' >
-            <input class='radio_boton' id='persona6' type='radio' name='persona' value='persona6'>
+            <input class='radio_boton' id='persona6' type='radio' name='persona' value='persona6' nonce="#ffa3a3">
             <label class='texto_radio_boton' for='persona6'> Persona6</label>
         </div>
     </div>

@@ -9,8 +9,8 @@ interface ContainerProps {
 }
 
 const data = [
-    { start_date: '2021-11-17 6:00', end_date: '2021-11-18 8:00', text: 'Event 1', id: 1, personChoosed: "persona1", numero_dias: 3 },
-    { start_date: '2021-11-18 10:00', end_date: '2021-11-19 18:00', text: 'Event 2', id: 2, personChoosed: "persona2", numero_dias: 1 }
+    { start_date: '2021-11-17 6:00', end_date: '2021-11-18 8:00', text: 'Event 1', id: 1, personChoosed: "persona1", numero_dias: 3, color: "#0288D1", textColor: "white" },
+    { start_date: '2021-11-18 10:00', end_date: '2021-11-19 18:00', text: 'Event 2', id: 2, personChoosed: "persona2", numero_dias: 1, color: "#FF5722", textColor: "white"  }
 ];
 
 

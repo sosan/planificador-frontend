@@ -1,3 +1,4 @@
+
 .noselect {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -15,7 +16,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 30px;
+    gap: 50px;
 }
 
 .seccion_radiobotones
@@ -30,8 +31,13 @@
     max-width: 100%;
     flex-wrap: wrap;
     place-content: flex-start;
-
     gap: 50px;
+    /* margin-top: 50px; */
+}
+
+.dhx_cal_light
+{
+    width: 65% !important;
 }
 
 .radiobotones_enlinea
@@ -40,11 +46,21 @@
     flex-direction: row;
     gap: 5px;
     align-items: center;
+    padding: 2px;
+
 }
 
 .texto_radio_boton
 {
+
     font-size: 20px;
+    height: 50px;
+    width: 115px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: -7px;
+
 }
 
 
@@ -53,6 +69,7 @@
     border: 0px !important;
     width: 2em !important;
     height: 2em !important;
+    margin-left: 5px;
 }
 
 
@@ -77,9 +94,7 @@
 
 .boton_menos_lightbox
 {
-    
     background-color: rgb(0, 41, 175);
-    
 }
 
 .input_numero_dias
@@ -108,6 +123,36 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+.radiobotones_enlinea:nth-child(1)
+{
+    background-color: var(--color-persona1);
+}
+
+.radiobotones_enlinea:nth-child(2)
+{
+    background-color: var(--color-persona2);
+}
+
+.radiobotones_enlinea:nth-child(3)
+{
+    background-color: var(--color-persona3);
+}
+
+.radiobotones_enlinea:nth-child(4)
+{
+    background-color: var(--color-persona4);
+}
+
+.radiobotones_enlinea:nth-child(5)
+{
+    background-color: var(--color-persona5);
+}
+.radiobotones_enlinea:nth-child(6)
+{
+    background-color: var(--color-persona6);
+}
+
+
 .dhx_section_time select:nth-child(1),
 .dhx_section_time select:nth-child(5),
 .dhx_section_time select:nth-child(6),
@@ -115,5 +160,5 @@ input[type=number] {
 .dhx_section_time select:nth-child(8),
 .dhx_section_time select:nth-child(9)
 {
-    display: none;
+    /* display: none; */
 }
