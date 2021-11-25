@@ -8,36 +8,49 @@
   user-select: none; 
 }
 
+label
+{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; 
+    cursor: pointer;
+
+}
 
 .contenedor_botones_lightbox
 {
-    height: 290px;
+    height: 430px;
+    overflow-y: scroll;
+
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 50px;
+    gap: 40px;
 }
 
-.seccion_radiobotones
+.seccion_colaboradores
 {
-    /* display: grid; */
-    /* grid-template-columns: repeat(auto-fill, minmax(min(190px,50vw), 1fr)); */
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    column-gap: 40px;
     list-style: none;
     max-width: 100%;
     flex-wrap: wrap;
     place-content: flex-start;
-    gap: 50px;
-    /* margin-top: 50px; */
+    
+    row-gap: 30px;
+    column-gap: 40px;
 }
+
+
 
 .dhx_cal_light
 {
-    width: 65% !important;
+    width: 100% !important;
 }
 
 .radiobotones_enlinea
@@ -60,6 +73,7 @@
     align-items: center;
     justify-content: center;
     margin-left: -7px;
+    white-space: nowrap;
 
 }
 
@@ -152,6 +166,22 @@ input[type=number] {
     background-color: var(--color-persona6);
 }
 
+.radiobotones_enlinea:nth-child(7)
+{
+    background-color: var(--color-persona7);
+}
+
+.radiobotones_enlinea:nth-child(8)
+{
+    background-color: var(--color-persona8);
+}
+
+.radiobotones_enlinea:nth-child(9)
+{
+    background-color: var(--color-persona9);
+}
+
+
 
 .dhx_section_time select:nth-child(1),
 .dhx_section_time select:nth-child(5),
@@ -160,5 +190,44 @@ input[type=number] {
 .dhx_section_time select:nth-child(8),
 .dhx_section_time select:nth-child(9)
 {
-    /* display: none; */
+    display: none;
+}
+
+
+.seccion_garajes
+{
+        display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    list-style: none;
+    max-width: 100%;
+    flex-wrap: wrap;
+    place-content: flex-start;
+    
+    row-gap: 30px;
+    column-gap: 40px;
+
+}
+
+.texto_nota_reserva
+{
+    border: 1px solid black !important;
+}
+
+.primera_linea
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100% 
+}
+
+.centrado_flex
+{
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
 }

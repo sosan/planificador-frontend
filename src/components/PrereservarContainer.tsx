@@ -5,7 +5,8 @@ const PrereservarContainer: any = () => {
 
     return (
         <>
-            <SchedulerContainer name="ssdf" />
+            <SchedulerContainer name="schedulercontainer" />
+            
         </>
     );
 

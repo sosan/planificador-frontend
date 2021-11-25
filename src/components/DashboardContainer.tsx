@@ -36,7 +36,7 @@ const DashboardContainer: any = () => {
 
             listadoCategorias.push(
                 <div id="row" key={index} style={{ width: "200px" }}>
-                    <IonCard className={`cursorclick noselect ${elemento.colorBackground}`} type={"button"} onClick={() => { clicked(); }}>
+                    <IonCard href={elemento.url} className={`cursorclick noselect ${elemento.colorBackground}`} type={"button"} >
                         <IonImg src={elemento.image} />
                         <IonCardHeader>
                             <IonCardTitle className="tituloCard">{elemento.cardTitle}</IonCardTitle>

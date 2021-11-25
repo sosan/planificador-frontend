@@ -12,19 +12,29 @@ interface ContainerProps {
   name: string;
 }
 
+type ContainerState = {
+  borrado: boolean;
+}
+
+
 let currentContent: ReactElement;
 let currentTitle: ReactElement;
 
-export const ContainerSelector: React.FC<ContainerProps> = ({ name }) => {
+// export const ContainerSelector: React.FC<ContainerProps> = ({ name }) => 
+export class ContainerSelector extends React.Component<ContainerProps, ContainerState>
+{
 
-  currentContent = routesContainer[name.toLowerCase()];
-  
-  return (
-    <>
-      {currentContent}
-    </>
-  );
-};
+  render()
+  {
+    currentContent = routesContainer[this.props.name.toLowerCase()];
+    return (
+      <>
+        {currentContent}
+      </>
+    );
+
+  }
+}
 
 export const TitleSelector: React.FC<ContainerProps> = ({ name }) => {
 
