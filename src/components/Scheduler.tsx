@@ -16,6 +16,14 @@ type ContainerState = {
     borrado: boolean;
 }
 
+enum ENUM_TIPOS_STATUS {
+    "none" = "none",
+    "reservado" = "reservado" ,
+    "prepagado" = "prepagado",
+    "100pagado" = "100pagado",
+    "length" = 4,
+}
+
 interface IData
 {
     start_date: string, 
@@ -28,8 +36,10 @@ interface IData
     numero_dias: number,
     color: string, 
     textColor: string,
-    fechaentrada: string
+    fechaentrada: string,
+    status: ENUM_TIPOS_STATUS
 };
+
 
 
 const data: IData[] = [
@@ -44,7 +54,8 @@ const data: IData[] = [
         numero_dias: 3,
         color: "#0288D1", 
         textColor: "white",
-        fechaentrada: ""
+        fechaentrada: "",
+        status: ENUM_TIPOS_STATUS.prepagado
     },
     // { 
     //     start_date: '2021-11-18 10:00', 
@@ -104,12 +115,26 @@ export class SchedulerContainer extends React.Component<ContainerProps, Containe
         console.log("updated =" + JSON.stringify(ev) + " ev.text" + ev.text + " data=" + JSON.stringify(data));
     }
 
-    updateData = async (ev: any) => {
+    validateData = (objectToValidate: IData, objectSelected: IData) =>
+    {
+
+        // la fecha de entrada mantiene la original
+        if (objectSelected.fechaentrada !== "")
+        {
+            objectToValidate.fechaentrada = objectSelected.fechaentrada;
+
+        }
+
+        return objectToValidate;
+    }
+
+    updateData = (ev: IData) => {
 
         for (let i = 0; i < data.length; i++) {
 
             if (ev.id === data[i].id) {
-                data[i] = ev;
+                const datosValidados = this.validateData(ev, data[i]) ;
+                data[i] = datosValidados;
                 break;
             }
 
@@ -120,10 +145,10 @@ export class SchedulerContainer extends React.Component<ContainerProps, Containe
     deleteData = async (ev: any) => {
 
         console.log("data length=" + data.length);
-        for (let i = 0; i < data.length; i++) {
+        for (let i = 0; i < data.length; i++) 
+        {
 
             if (ev.id === data[i].id) {
-                // data.splice(i);
                 data.splice(i, 1)
                 break;
             }

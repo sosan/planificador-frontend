@@ -6,11 +6,19 @@ export const htmlLightBox = `
             <input class='texto_nota_reserva noselect input_numero_dias' id='notareserva' type='text' name='notareserva' value='' placeholder="000" maxlength="7" minlength="1" nonce="" autocomplete="off">
         </div>
 
-        <div class='centrado_flex' >
+        <div class="centrado_flex" >
             <span>Numero dias</span>
             <button id='boton_menos_lightbox' class='boton_ligthbox boton_menos_lightbox'>-</button> 
             <input id='numero_dias' class='noselect input_numero_dias' name='numero_dias' type='number' value='3' min='1' max='99999' autocomplete="off" maxlength="7" minlength="1">
             <button id='boton_mas_lightbox' class='boton_ligthbox boton_mas_lightbox'>+</button>
+        </div>
+        <div class="centrado_flex">
+            <span>Estado:</span>
+            <select id="status" class="status_select">
+                <option value="reservado">Reservado</option>
+                <option value="prepagado">Prepagdo</option>
+                <option value="100pagado">100% Pagado</option>
+            </select>
         </div>
     </div>
     <div class='seccion_colaboradores' >

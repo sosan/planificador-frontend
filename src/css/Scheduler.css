@@ -1,11 +1,11 @@
 
 .noselect {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none; 
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; 
 }
 
 label
@@ -22,14 +22,14 @@ label
 
 .contenedor_botones_lightbox
 {
-    height: 430px;
+    height: 380px;
     overflow-y: scroll;
 
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    gap: 40px;
+    gap: 20px;
 }
 
 .seccion_colaboradores
@@ -67,7 +67,7 @@ label
 {
 
     font-size: 20px;
-    height: 50px;
+    height: 40px;
     width: 115px;
     display: flex;
     align-items: center;
@@ -122,6 +122,11 @@ label
     font-size: 20px !important;
     font-weight: bold !important;
     text-align: center !important;
+}
+
+.status_select
+{
+    width: 200px;
 }
 
 

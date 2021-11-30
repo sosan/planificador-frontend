@@ -21,6 +21,8 @@ export const ENUM_TIPOS_EVENTOS =
 
 };
 
+
+
 const reflejarDiasFinVisual = (cantidadDias) =>
 {
 
@@ -132,9 +134,7 @@ export default class SchedulerWrapper extends Component {
         scheduler.attachEvent("onLightbox", function (event_id) {
             console.log("onlightbox");
 
-            const fechaAhora = new Date();
-            const textoFecha = `${fechaAhora.getDate()}-${fechaAhora.getMonth() + 1}-${fechaAhora.getFullYear()}`;
-            document.getElementById("fechaentrada").textContent = textoFecha;
+           
         });
 
         scheduler.attachEvent("onTemplatesReady", function (id, ev) {
@@ -194,6 +194,13 @@ export default class SchedulerWrapper extends Component {
             },
             set_value: function (node, value, ev) {
                 // console.log("ev=" + JSON.stringify(ev) + " node" + JSON.stringify( node) + " value=" + value) ;
+
+                const fechaAhora = new Date();
+                const textoFecha = `${fechaAhora.getDate()}-${fechaAhora.getMonth() + 1}-${fechaAhora.getFullYear()} ${fechaAhora.getHours()}:${fechaAhora.getMinutes()}`;
+                // document.getElementById("fechaentrada").textContent = textoFecha;
+
+                document.getElementById("fechaentrada").textContent = ev.fechaentrada || textoFecha;
+
                 // reset de la nota
                 const allRadioButtons = document.getElementsByClassName("radio_boton");
                 for (let i = 0; i < allRadioButtons.length; i++)
@@ -243,6 +250,8 @@ export default class SchedulerWrapper extends Component {
                 }
                 
                 document.getElementById("notareserva").value = ev.notareserva || "";
+                document.getElementById("status").value = ev.status || "reservado";
+                
 
                 const boton_menos_lightbox = document.getElementById('boton_menos_lightbox');
                 boton_menos_lightbox.addEventListener("click", restarDias, true);
@@ -256,8 +265,11 @@ export default class SchedulerWrapper extends Component {
                 console.log("antes valores ev get=" + JSON.stringify(ev));
                 // const valoresLigBox = this.obtenerValoresLightBox();
 
+                ev["status"] = document.getElementById("status").value;
                 ev["notareserva"] = document.getElementById("notareserva").value;
                 ev["numero_dias"] = (document.getElementById("numero_dias").value - 0);
+                ev["fechaentrada"] = document.getElementById("fechaentrada").textContent;
+
                 const allGarajes = document.querySelectorAll("[name='garaje']");
                 if (allGarajes)
                 {
