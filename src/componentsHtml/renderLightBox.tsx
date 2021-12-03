@@ -1,4 +1,4 @@
-export const htmlLightBox = `
+export let htmlLightBoxTemplatePreserva = `
 <div class='dhx_cal_ltext contenedor_botones_lightbox' >
     <div class='primera_linea' >
         <div>
@@ -21,46 +21,53 @@ export const htmlLightBox = `
             </select>
         </div>
     </div>
-    <div class='seccion_colaboradores' >
-        <div class='radiobotones_enlinea' >
-            <input class='radio_boton' id='gianni' type='radio' name='persona' value='gianni' nonce="#c9dcff">
-            <label class='texto_radio_boton' for='gianni'>Gianni</label>
-        </div> 
-        <div class='radiobotones_enlinea' >
-            <input class='radio_boton' id='sven' type='radio' name='persona' value='sven' nonce="#38ff3f">
-            <label class='texto_radio_boton' for='sven'>Sven</label>
+    <div class="">
+        <span>Vehiculos:</span>
+        <div class='seccion_coches' id="seccion_coches" >
+            #seccionCoches#
         </div>
-        <div class='radiobotones_enlinea' >
-            <input class='radio_boton' id='llull' type='radio' name='persona' value='llull' nonce="#ffc738">
-            <label class='texto_radio_boton' for='llull'>Llull</label>
-        </div>
-        <div class='radiobotones_enlinea' >
-            <input class='radio_boton' id='thomas' type='radio' name='persona' value='thomas' nonce="#c5a9ff">
-            <label class='texto_radio_boton' for='thomas'>Thomas</label>
-        </div>
-        <div class='radiobotones_enlinea' >
-            <input class='radio_boton' id='belmi' type='radio' name='persona' value='belmi' nonce="#c8c8c8">
-            <label class='texto_radio_boton' for='belmi'>Belmi</label>
-        </div>
-        <div class='radiobotones_enlinea' >
-            <input class='radio_boton' id='lupe' type='radio' name='persona' value='persona6' nonce="#ffa3a3">
-            <label class='texto_radio_boton' for='lupe'>Lupe</label>
-        </div>
-        <div class='radiobotones_enlinea' >
-            <input class='radio_boton' id='fs' type='radio' name='persona' value='fs' nonce="#56c4ff">
-            <label class='texto_radio_boton' for='fs'>Fuera Servicio</label>
-        </div>
-        <div class='radiobotones_enlinea' >
-            <input class='radio_boton' id='dido' type='radio' name='persona' value='dido' nonce="#a3ffff">
-            <label class='texto_radio_boton' for='dido'>Dido</label>
-        </div>
-        <div class='radiobotones_enlinea' >
-            <input class='radio_boton' id='campa' type='radio' name='persona' value='campa' nonce="#B0ED66">
-            <label class='texto_radio_boton' for='campa'>Campa</label>
-        </div>
-
     </div>
-   
+    <div class="">
+        <span>Colaboradores</span>
+        <div class='seccion_colaboradores' >
+            <div class='radiobotones_enlinea' >
+                <input class='radio_boton' id='gianni' type='radio' name='persona' value='gianni' nonce="#c9dcff">
+                <label class='texto_radio_boton' for='gianni'>Gianni</label>
+            </div> 
+            <div class='radiobotones_enlinea' >
+                <input class='radio_boton' id='sven' type='radio' name='persona' value='sven' nonce="#38ff3f">
+                <label class='texto_radio_boton' for='sven'>Sven</label>
+            </div>
+            <div class='radiobotones_enlinea' >
+                <input class='radio_boton' id='llull' type='radio' name='persona' value='llull' nonce="#ffc738">
+                <label class='texto_radio_boton' for='llull'>Llull</label>
+            </div>
+            <div class='radiobotones_enlinea' >
+                <input class='radio_boton' id='thomas' type='radio' name='persona' value='thomas' nonce="#c5a9ff">
+                <label class='texto_radio_boton' for='thomas'>Thomas</label>
+            </div>
+            <div class='radiobotones_enlinea' >
+                <input class='radio_boton' id='belmi' type='radio' name='persona' value='belmi' nonce="#c8c8c8">
+                <label class='texto_radio_boton' for='belmi'>Belmi</label>
+            </div>
+            <div class='radiobotones_enlinea' >
+                <input class='radio_boton' id='lupe' type='radio' name='persona' value='persona6' nonce="#ffa3a3">
+                <label class='texto_radio_boton' for='lupe'>Lupe</label>
+            </div>
+            <div class='radiobotones_enlinea' >
+                <input class='radio_boton' id='fs' type='radio' name='persona' value='fs' nonce="#56c4ff">
+                <label class='texto_radio_boton' for='fs'>Fuera Servicio</label>
+            </div>
+            <div class='radiobotones_enlinea' >
+                <input class='radio_boton' id='dido' type='radio' name='persona' value='dido' nonce="#a3ffff">
+                <label class='texto_radio_boton' for='dido'>Dido</label>
+            </div>
+            <div class='radiobotones_enlinea' >
+                <input class='radio_boton' id='campa' type='radio' name='persona' value='campa' nonce="#B0ED66">
+                <label class='texto_radio_boton' for='campa'>Campa</label>
+            </div>
+        </div>
+    </div>
     <div class='' >
         <span>Garajes</span>
         <div class='seccion_garajes' >

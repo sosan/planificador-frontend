@@ -32,7 +32,8 @@ label
     gap: 20px;
 }
 
-.seccion_colaboradores
+.seccion_colaboradores,
+.seccion_coches
 {
     display: flex;
     flex-direction: row;
@@ -46,6 +47,13 @@ label
     column-gap: 40px;
 }
 
+.carseleccionado
+{
+    height: 50px !important;
+    width: 200px !important;
+    border: 1px solid black !important;
+
+}
 
 
 .dhx_cal_light

@@ -1,10 +1,7 @@
-import React, { ReactElement, useState, useEffect, ReactNode } from 'react';
-import {
-    useIonViewDidEnter,
-    useIonViewDidLeave,
-    useIonViewWillEnter,
-    useIonViewWillLeave } from '@ionic/react';
+import React from 'react';
 import SchedulerWrapper from './SchedulerWrapper';
+import { IDataCoches, datosCoches } from "../datos/coches"
+import { htmlLightBoxTemplatePreserva } from "../componentsHtml/renderLightBox";
 import { ENUM_TIPOS_EVENTOS } from "./SchedulerWrapper";
 
 
@@ -24,25 +21,26 @@ enum ENUM_TIPOS_STATUS {
     "length" = 4,
 }
 
-interface IData
+interface IDataEventos
 {
-    start_date: string, 
-    end_date: string,
-    text: string,
-    id: number,
-    numeronotas: string,
-    garaje: string,
-    personChoosed: string,
-    numero_dias: number,
-    color: string, 
-    textColor: string,
-    fechaentrada: string,
-    status: ENUM_TIPOS_STATUS
+    "start_date": string, 
+    "end_date": string,
+    "text": string,
+    "id": number,
+    "numeronotas": string,
+    "garaje": string,
+    "personChoosed": string,
+    "numero_dias": number,
+    "color": string, 
+    "textColor": string,
+    "fechaentrada": string,
+    "status": ENUM_TIPOS_STATUS,
+    "vehiculoSeleccionado"?: IDataCoches
+    
 };
 
 
-
-const data: IData[] = [
+const dataEventos: IDataEventos[] = [
     { 
         start_date: '2021-11-17 6:00', 
         end_date: '2021-11-18 8:00',
@@ -55,7 +53,8 @@ const data: IData[] = [
         color: "#0288D1", 
         textColor: "white",
         fechaentrada: "",
-        status: ENUM_TIPOS_STATUS.prepagado
+        status: ENUM_TIPOS_STATUS.prepagado,
+        vehiculoSeleccionado: undefined
     },
     // { 
     //     start_date: '2021-11-18 10:00', 
@@ -71,6 +70,7 @@ const data: IData[] = [
     //     fechaentrada: ""
     // }
 ];
+
 
 
 export class SchedulerContainer extends React.Component<ContainerProps, ContainerState>
@@ -95,10 +95,10 @@ export class SchedulerContainer extends React.Component<ContainerProps, Containe
         // const text = ev && ev.text ? ` (${ev.text})` : '';
         // const message = `event ${action}: ${id} ${text}`;
 
-        console.log("tenemos antes=" + data.length);
+        console.log("tenemos antes=" + dataEventos.length);
         switch (textEv) {
             case ENUM_TIPOS_EVENTOS.create:
-                data.push(ev);
+                dataEventos.push(ev);
                 break;
 
             case ENUM_TIPOS_EVENTOS.update:
@@ -111,11 +111,11 @@ export class SchedulerContainer extends React.Component<ContainerProps, Containe
 
         }
 
-        console.log("tenemos despues=" + data.length);
-        console.log("updated =" + JSON.stringify(ev) + " ev.text" + ev.text + " data=" + JSON.stringify(data));
+        console.log("tenemos despues=" + dataEventos.length);
+        console.log("updated =" + JSON.stringify(ev) + " ev.text" + ev.text + " data=" + JSON.stringify(dataEventos));
     }
 
-    validateData = (objectToValidate: IData, objectSelected: IData) =>
+    validateData = (objectToValidate: IDataEventos, objectSelected: IDataEventos) =>
     {
 
         // la fecha de entrada mantiene la original
@@ -128,13 +128,13 @@ export class SchedulerContainer extends React.Component<ContainerProps, Containe
         return objectToValidate;
     }
 
-    updateData = (ev: IData) => {
+    updateData = (ev: IDataEventos) => {
 
-        for (let i = 0; i < data.length; i++) {
+        for (let i = 0; i < dataEventos.length; i++) {
 
-            if (ev.id === data[i].id) {
-                const datosValidados = this.validateData(ev, data[i]) ;
-                data[i] = datosValidados;
+            if (ev.id === dataEventos[i].id) {
+                const datosValidados = this.validateData(ev, dataEventos[i]) ;
+                dataEventos[i] = datosValidados;
                 break;
             }
 
@@ -144,18 +144,18 @@ export class SchedulerContainer extends React.Component<ContainerProps, Containe
 
     deleteData = async (ev: any) => {
 
-        console.log("data length=" + data.length);
-        for (let i = 0; i < data.length; i++) 
+        console.log("data length=" + dataEventos.length);
+        for (let i = 0; i < dataEventos.length; i++) 
         {
 
-            if (ev.id === data[i].id) {
-                data.splice(i, 1)
+            if (ev.id === dataEventos[i].id) {
+                dataEventos.splice(i, 1)
                 break;
             }
 
         }
 
-        console.log("data length=" + data.length);
+        console.log("data length=" + dataEventos.length);
 
     };
 
@@ -164,15 +164,48 @@ export class SchedulerContainer extends React.Component<ContainerProps, Containe
 
     };
 
-    
+
+    replaceTemplates(template: any, newTextReplace: any, idToReplace: string) {
+
+        const htmlTemplate = template.replace(new RegExp(idToReplace), newTextReplace);
+        return htmlTemplate;
+
+    }
+
+    convertCarsToHTML(cars: IDataCoches[]) {
+
+        let htmlSectionCars = `
+            <select id="vehiculoSeleccionado" name="vehiculoSeleccionado" class="carseleccionado">
+            <option  value="ninguno" selected>Elegir coche</option>
+        `;
+        
+        for (let i = 0; i < cars.length; i++) {
+
+            htmlSectionCars += `
+                <option  value="${cars[i].vehiculo}">${cars[i].descripcion}</option>
+            `;
+
+        }
+
+        htmlSectionCars += "</select> ";
+
+        return htmlSectionCars;
+
+    }
+
     render()
     {
+
+        const carsConvertedHtml = this.convertCarsToHTML(datosCoches);
+        const htmlTemplate = this.replaceTemplates(htmlLightBoxTemplatePreserva, carsConvertedHtml, "#seccionCoches#");
+
         return (
             <>
                 {
                     (this.state.borrado === true) ? null :
                         <SchedulerWrapper
-                            events={data}
+                            events={dataEventos}
+                            htmlLightBoxTemplate={htmlTemplate}
                             timeFormatState={true}
                             onDataUpdated={this.logDataUpdate}
                             onClick={this.clickeado}
@@ -184,111 +217,3 @@ export class SchedulerContainer extends React.Component<ContainerProps, Containe
     }
 
 }
-
-export const SchedulerContainer2: React.FC<ContainerProps> = ({ name }) => {
-    
-
-    // let deleted = useState(false);
-    
-    
-
-    useIonViewDidEnter(() => {
-        console.log('ionViewDidEnter event fired');
-    });
-
-    useIonViewDidLeave(() => {
-        console.log('ionViewDidLeave event fired');
-    });
-
-    useIonViewWillEnter(() => {
-        console.log('ionViewWillEnter event fired');
-    });
-
-    useIonViewWillLeave(() => {
-        console.log('ionViewWillLeave event fired');
-        // deleted = useState(true);
-    });
-
-
-    const logDataUpdate = (textEv: string, ev: any, id: any) => {
-        // const text = ev && ev.text ? ` (${ev.text})` : '';
-        // const message = `event ${action}: ${id} ${text}`;
-
-        console.log("tenemos antes=" + data.length);
-        switch (textEv)
-        {
-            case ENUM_TIPOS_EVENTOS.create:
-                data.push(ev);
-            break;
-
-            case ENUM_TIPOS_EVENTOS.update:
-                updateData(ev);
-            break;
-            
-            case ENUM_TIPOS_EVENTOS.delete:
-                deleteData(ev);
-            break;
-
-
-        }
-        
-        console.log("tenemos despues=" + data.length);
-        console.log("updated =" + JSON.stringify(ev) + " ev.text" + ev.text + " data=" + JSON.stringify(data));
-    }
-
-    const updateData = async (ev: any) =>
-    {
-
-        for (let i = 0; i < data.length; i++) {
-
-            if (ev.id === data[i].id) {
-                data[i] = ev;
-                break;
-            }
-
-        }
-
-    };
-    
-    const deleteData = async (ev: any) => {
-
-        console.log("data length=" + data.length);
-        for(let i = 0; i < data.length; i++)
-        {
-
-            if (ev.id === data[i].id)
-            {
-                // data.splice(i);
-                data.splice(i, 1)
-                break;
-            }
-
-        }
-
-        console.log("data length=" + data.length);
-
-    };
-
-    const clickeado = () =>
-    {
-        console.log("sdddd");
-
-    };
-
-    return(
-        <>
-             
-                
-                <SchedulerWrapper
-                    events={data}
-                    timeFormatState={true}
-                    onDataUpdated={logDataUpdate}
-                    onClick={clickeado}
-                />
-            
-        </>
-    );
-    
-    
-
-};
