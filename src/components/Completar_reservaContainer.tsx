@@ -18,62 +18,12 @@ import {
     categoriasFacturacion,
     categoriasMultas,
     categoriasPlaning
-} from "./Categorias";
+} from "../datos/listadoCategorias";
 
 
 const Completar_reservaContainer: React.FC = () => {
 
-    // const clicked = async () => {
-    //     console.log("clicked")
-
-    // };
-
-    // const GetListCategories = (categorias: IItemCategoria[]) => {
-
-    //     const listadoCategorias = [];
-    //     for (const index in categorias) {
-    //         const elemento = categorias[index];
-    //         // console.log("index=" + index + "listado=" + elemento);
-
-    //         listadoCategorias.push(
-    //             <div id="row" key={index} style={{ width: "200px" }}>
-    //                 <IonCard href={elemento.url} className={`cursorclick noselect ${elemento.colorBackground}`} type={"button"} >
-    //                     <IonImg src={elemento.image} />
-    //                     <IonCardHeader>
-    //                         <IonCardTitle className="tituloCard">{elemento.cardTitle}</IonCardTitle>
-    //                     </IonCardHeader>
-    //                     <IonCardContent className="tituloCard">
-    //                         {elemento.cardContent}
-    //                         <IonButton className={`${elemento.colorBoton}`}>Siguiente &gt;</IonButton>
-    //                     </IonCardContent>
-
-    //                 </IonCard>
-    //             </div>
-    //         );
-
-    //     }
-
-    //     return listadoCategorias;
-    // };
-
-    // const listadoPlaning = GetListCategories(categoriasPlaning);
-    // const listadoContratos = GetListCategories(categoriasContratos);
-    // const listadoFacturacion = GetListCategories(categoriasFacturacion);
-    // const listadoInformes = GetListCategories(categoriasInformes);
-    // const listadoMultas = GetListCategories(categoriasMultas);
-
-
-    // return (
-    //     <>
-    //         <IonContent>
-    //             <div className="centrado">{listadoPlaning}</div>
-    //             <div className="centrado">{listadoContratos}</div>
-    //             <div className="centrado">{listadoFacturacion}</div>
-    //         </IonContent>
-    //     </>
-    // );
-
-    return(<>complddsdfsdf</>);
+    return(<>Reserva Container</>);
     
 };
 

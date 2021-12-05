@@ -12,7 +12,7 @@ import {
 
 
 
-import * as categoriasManager from "./Categorias";
+import * as categoriasManager from "../datos/listadoCategorias";
 
 
 // declare var scheduler: any;
@@ -63,8 +63,6 @@ const DashboardContainer: any = () => {
     // const listadoMultas = GetListCategories(categoriasManager.categoriasMultas);
 
     
-
-   
 
     return (
         <>
