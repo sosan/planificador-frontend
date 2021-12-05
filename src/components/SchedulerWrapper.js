@@ -154,7 +154,6 @@ export default class SchedulerWrapper extends Component {
     }
 
 
-
     componentDidMount() 
     {
         const { events, htmlLightBoxTemplate } = this.props;
@@ -237,13 +236,10 @@ export default class SchedulerWrapper extends Component {
                 const boton_mas_lightbox = document.getElementById('boton_mas_lightbox');
                 boton_mas_lightbox.addEventListener("click", anadirDias, true);
 
-
-
             },
             get_value: function (node, ev) {
 
                 console.log("antes valores ev get=" + JSON.stringify(ev));
-                // const valoresLigBox = this.obtenerValoresLightBox();
 
                 ev["status"] = document.getElementById("status").value;
                 ev["notareserva"] = document.getElementById("notareserva").value;
@@ -278,7 +274,6 @@ export default class SchedulerWrapper extends Component {
                     }
                 }
 
-                // ev = {ev, ...valoresLigBox};
                 console.log("despues valores ev get=" + JSON.stringify(ev));
 
             },
@@ -315,9 +310,7 @@ export default class SchedulerWrapper extends Component {
         ];
 
         this.initSchedulerEvents();
-
         
-        // const {  } = this.props.cochesDatos;
         scheduler.init(this.schedulerContainer, new Date(), "week");
         
         scheduler.clearAll();
