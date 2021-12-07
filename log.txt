@@ -1,0 +1,365 @@
+> react-scripts build
+Creating an optimized production build...
+Compiled successfully.
+
+File sizes after gzip:
+
+  137.77 KB  build/static/js/4.6353ac63.chunk.js
+  32.7 KB    build/static/css/4.e066df47.chunk.css
+  30.11 KB   build/static/js/56.51b0a0a6.chunk.js
+  26.37 KB   build/static/js/54.6ee45e0e.chunk.js
+  10.69 KB   build/static/js/10.02d9c1ca.chunk.js
+  10.26 KB   build/static/js/7.115e9028.chunk.js
+  7.93 KB    build/static/js/26.eed9e0ad.chunk.js
+  6.9 KB     build/static/js/6.11221501.chunk.js
+  6.7 KB     build/static/js/main.55f3d987.chunk.js
+  6.01 KB    build/static/js/11.8c55be87.chunk.js
+  5.91 KB    build/static/js/48.0dc0b009.chunk.js
+  5.59 KB    build/static/js/28.a58c1509.chunk.js
+  5.56 KB    build/static/js/polyfills-dom.725162c7.chunk.js
+  5.38 KB    build/static/js/34.82453ca6.chunk.js
+  5.22 KB    build/static/js/19.72e36487.chunk.js
+  4.7 KB     build/static/js/5.a3f1bafa.chunk.js
+  4.66 KB    build/static/js/31.39f19167.chunk.js
+  4.63 KB    build/static/js/14.52959802.chunk.js
+  4.59 KB    build/static/js/32.418512b3.chunk.js
+  4.47 KB    build/static/js/33.1734c37b.chunk.js
+  4.36 KB    build/static/js/25.6ce6de45.chunk.js
+  4.26 KB    build/static/js/8.2e942644.chunk.js
+  4.08 KB    build/static/js/35.bb9a44f1.chunk.js
+  3.99 KB    build/static/js/23.37aa7526.chunk.js
+  3.79 KB    build/static/js/36.cee8c22e.chunk.js
+  3.59 KB    build/static/js/39.f5d789fa.chunk.js
+  3.54 KB    build/static/js/24.0b0cdcc7.chunk.js
+  3.45 KB    build/static/js/9.f3ff8a4f.chunk.js
+  3.42 KB    build/static/js/40.ddc658c2.chunk.js
+  3.41 KB    build/static/js/12.3ec7624f.chunk.js
+  3.16 KB    build/static/js/50.4b7ea520.chunk.js
+  3 KB       build/static/js/30.6e5dbd40.chunk.js
+  2.87 KB    build/static/js/38.6b1969a9.chunk.js
+  2.83 KB    build/static/js/18.2cb2d8b0.chunk.js
+  2.7 KB     build/static/css/main.75aaeeaa.chunk.css
+  2.5 KB     build/static/js/16.10dbc68f.chunk.js
+  2.49 KB    build/static/js/27.bd6cb248.chunk.js
+  2.44 KB    build/static/js/20.f10a5932.chunk.js
+  2.34 KB    build/static/js/21.ee179aa6.chunk.js
+  2.3 KB     build/static/js/29.ebb700d8.chunk.js
+  2.07 KB    build/static/js/52.6aa6397a.chunk.js
+  2.01 KB    build/static/js/42.db73e927.chunk.js
+  2 KB       build/static/js/13.1482c5b8.chunk.js
+  1.93 KB    build/static/js/15.8a9d2273.chunk.js
+  1.73 KB    build/static/js/57.3dcd240c.chunk.js
+  1.72 KB    build/static/js/44.606f72ab.chunk.js
+  1.71 KB    build/static/js/46.a5bfd2b7.chunk.js
+  1.68 KB    build/static/js/runtime-main.b848b74d.js
+  1.59 KB    build/static/js/22.4cfd3334.chunk.js
+  1.53 KB    build/static/js/49.e2f553b4.chunk.js
+  1.41 KB    build/static/js/58.0b8a406c.chunk.js
+  1.25 KB    build/static/js/17.a27a1edf.chunk.js
+  1.15 KB    build/static/js/47.e13da77f.chunk.js
+  971 B      build/static/js/55.17062f01.chunk.js
+  779 B      build/static/js/45.e5e37b1d.chunk.js
+  713 B      build/static/js/43.0fd9fd60.chunk.js
+  706 B      build/static/js/51.53e2d62b.chunk.js
+  693 B      build/static/js/37.ffc995c0.chunk.js
+  488 B      build/static/js/41.ecccd9cf.chunk.js
+  484 B      build/static/js/0.f88255d5.chunk.js
+  472 B      build/static/js/53.c35daaa9.chunk.js
+
+The project was built assuming it is hosted at /.
+You can control this with the homepage field in your package.json.
+
+The build folder is ready to be deployed.
+You may serve it with a static server:
+
+  serve -s build
+
+Find out more about deployment here:
+
+  https://cra.link/deployment
+
+> capacitor sync android
+[capacitor] 2021-12-07T19:46:41.563Z capacitor:config config: {
+[capacitor]   android: {
+[capacitor]     name: 'android',
+[capacitor]     minVersion: '21',
+[capacitor]     studioPath: LazyPromise [Promise] {
+[capacitor]       <pending>,
+[capacitor]       _executor: [AsyncFunction (anonymous)]
+[capacitor]     },
+[capacitor]     platformDir: 'android',
+[capacitor]     platformDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android',
+[capacitor]     cordovaPluginsDir: 'capacitor-cordova-android-plugins',
+[capacitor]     cordovaPluginsDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/capacitor-cordova-android-plugins',
+[capacitor]     appDir: 'app',
+[capacitor]     appDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app',
+[capacitor]     srcDir: 'app/src',
+[capacitor]     srcDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app/src',
+[capacitor]     srcMainDir: 'app/src/main',
+[capacitor]     srcMainDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app/src/main',
+[capacitor]     assetsDir: 'app/src/main/assets',
+[capacitor]     assetsDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app/src/main/assets',
+[capacitor]     webDir: 'app/src/main/assets/public',
+[capacitor]     webDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app/src/main/assets/public',
+[capacitor]     resDir: 'app/src/main/res',
+[capacitor]     resDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app/src/main/res',
+[capacitor]     apkName: 'app-debug.apk',
+[capacitor]     buildOutputDir: 'app/build/outputs/apk//debug',
+[capacitor]     buildOutputDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app/build/outputs/apk/debug'
+[capacitor]   },
+[capacitor]   ios: {
+[capacitor]     name: 'ios',
+[capacitor]     minVersion: '12.0',
+[capacitor]     platformDir: 'ios',
+[capacitor]     platformDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/ios',
+[capacitor]     scheme: 'App',
+[capacitor]     cordovaPluginsDir: 'capacitor-cordova-ios-plugins',
+[capacitor]     cordovaPluginsDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/ios/capacitor-cordova-ios-plugins',
+[capacitor]     nativeProjectDir: 'App',
+[capacitor]     nativeProjectDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/ios/App',
+[capacitor]     nativeTargetDir: 'App/App',
+[capacitor]     nativeTargetDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/ios/App/App',
+[capacitor]     nativeXcodeProjDir: 'App/App.xcodeproj',
+[capacitor]     nativeXcodeProjDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/ios/App/App.xcodeproj',
+[capacitor]     nativeXcodeWorkspaceDir: LazyPromise [Promise] {
+[capacitor]       <pending>,
+[capacitor]       _executor: [AsyncFunction (anonymous)]
+[capacitor]     },
+[capacitor]     nativeXcodeWorkspaceDirAbs: LazyPromise [Promise] {
+[capacitor]       <pending>,
+[capacitor]       _executor: [AsyncFunction (anonymous)]
+[capacitor]     },
+[capacitor]     webDir: LazyPromise [Promise] {
+[capacitor]       <pending>,
+[capacitor]       _executor: [AsyncFunction (anonymous)]
+[capacitor]     },
+[capacitor]     webDirAbs: LazyPromise [Promise] {
+[capacitor]       <pending>,
+[capacitor]       _executor: [AsyncFunction (anonymous)]
+[capacitor]     },
+[capacitor]     podPath: 'pod'
+[capacitor]   },
+[capacitor]   web: {
+[capacitor]     name: 'web',
+[capacitor]     platformDir: 'build',
+[capacitor]     platformDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/build'
+[capacitor]   },
+[capacitor]   cli: {
+[capacitor]     rootDir: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/node_modules/@capacitor/cli',
+[capacitor]     assetsDir: 'assets',
+[capacitor]     assetsDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/node_modules/@capacitor/cli/assets',
+[capacitor]     assets: { ios: [Object], android: [Object] },
+[capacitor]     package: {
+[capacitor]       name: '@capacitor/cli',
+[capacitor]       version: '3.2.5',
+[capacitor]       description: 'Capacitor: Cross-platform apps with JavaScript and the web',
+[capacitor]       homepage: 'https://capacitorjs.com',
+[capacitor]       author: 'Ionic Team <hi@ionic.io> (https://ionic.io)',
+[capacitor]       license: 'MIT',
+[capacitor]       repository: [Object],
+[capacitor]       bugs: [Object],
+[capacitor]       files: [Array],
+[capacitor]       keywords: [Array],
+[capacitor]       engines: [Object],
+[capacitor]       main: 'dist/index.js',
+[capacitor]       types: 'dist/declarations.d.ts',
+[capacitor]       bin: [Object],
+[capacitor]       scripts: [Object],
+[capacitor]       dependencies: [Object],
+[capacitor]       devDependencies: [Object],
+[capacitor]       jest: [Object],
+[capacitor]       publishConfig: [Object],
+[capacitor]       gitHead: 'cc2960572ad70a0272c3ea1c44dbee14acf6e2ec'
+[capacitor]     },
+[capacitor]     os: 'linux'
+[capacitor]   },
+[capacitor]   app: {
+[capacitor]     rootDir: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend',
+[capacitor]     appId: 'planificador.frontend.com',
+[capacitor]     appName: 'planificador_frontend',
+[capacitor]     webDir: 'build',
+[capacitor]     webDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/build',
+[capacitor]     package: {
+[capacitor]       name: 'planificador-frontend',
+[capacitor]       version: '0.0.1',
+[capacitor]       private: true,
+[capacitor]       dependencies: [Object],
+[capacitor]       scripts: [Object],
+[capacitor]       eslintConfig: [Object],
+[capacitor]       browserslist: [Object],
+[capacitor]       devDependencies: [Object],
+[capacitor]       description: 'An Ionic project'
+[capacitor]     },
+[capacitor]     extConfigType: 'json',
+[capacitor]     extConfigName: 'capacitor.config.json',
+[capacitor]     extConfigFilePath: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/capacitor.config.json',
+[capacitor]     extConfig: {
+[capacitor]       appId: 'planificador.frontend.com',
+[capacitor]       appName: 'planificador_frontend',
+[capacitor]       webDir: 'build',
+[capacitor]       bundledWebRuntime: false
+[capacitor]     },
+[capacitor]     bundledWebRuntime: false
+[capacitor]   }
+[capacitor] }
+[capacitor] ✔ Copying web assets from build to android/app/src/main/assets/public in 941.98ms
+[capacitor] ✔ Creating capacitor.config.json in android/app/src/main/assets in 6.06ms
+[capacitor] ✔ copy android in 1.03s
+[capacitor] ✔ Updating Android plugins in 11.79ms
+[capacitor] [info] Found 4 Capacitor plugins for android:
+[capacitor]        @capacitor/app@1.0.5
+[capacitor]        @capacitor/haptics@1.1.2
+[capacitor]        @capacitor/keyboard@1.1.2
+[capacitor]        @capacitor/status-bar@1.0.5
+[capacitor] 2021-12-07T19:46:42.982Z capacitor:android:update Searching 1 source files in '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/node_modules/@capacitor/app/android/src/main' by /^@(?:CapacitorPlugin|NativePlugin)[\s\S]+?class ([\w]+)/gm regex
+[capacitor] 2021-12-07T19:46:42.983Z capacitor:android:update Searching '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/node_modules/@capacitor/app/android/src/main/java/com/capacitorjs/plugins/app/AppPlugin.java' for package by /^package ([\w.]+);?$/gm regex
+[capacitor] 2021-12-07T19:46:42.984Z capacitor:android:update 'com.capacitorjs.plugins.app.AppPlugin' is a suitable plugin class
+[capacitor] 2021-12-07T19:46:42.996Z capacitor:android:update Searching 6 source files in '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/node_modules/@capacitor/haptics/android/src/main' by /^@(?:CapacitorPlugin|NativePlugin)[\s\S]+?class ([\w]+)/gm regex
+[capacitor] 2021-12-07T19:46:42.998Z capacitor:android:update Searching '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/node_modules/@capacitor/haptics/android/src/main/java/com/capacitorjs/plugins/haptics/HapticsPlugin.java' for package by /^package ([\w.]+);?$/gm regex
+[capacitor] 2021-12-07T19:46:42.998Z capacitor:android:update 'com.capacitorjs.plugins.haptics.HapticsPlugin' is a suitable plugin class
+[capacitor] 2021-12-07T19:46:43.008Z capacitor:android:update Searching 2 source files in '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/node_modules/@capacitor/keyboard/android/src/main' by /^@(?:CapacitorPlugin|NativePlugin)[\s\S]+?class ([\w]+)/gm regex
+[capacitor] 2021-12-07T19:46:43.009Z capacitor:android:update Searching '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/node_modules/@capacitor/keyboard/android/src/main/java/com/capacitorjs/plugins/keyboard/KeyboardPlugin.java' for package by /^package ([\w.]+);?$/gm regex
+[capacitor] 2021-12-07T19:46:43.009Z capacitor:android:update 'com.capacitorjs.plugins.keyboard.KeyboardPlugin' is a suitable plugin class
+[capacitor] 2021-12-07T19:46:43.018Z capacitor:android:update Searching 3 source files in '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/node_modules/@capacitor/status-bar/android/src/main' by /^@(?:CapacitorPlugin|NativePlugin)[\s\S]+?class ([\w]+)/gm regex
+[capacitor] 2021-12-07T19:46:43.020Z capacitor:android:update Searching '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/node_modules/@capacitor/status-bar/android/src/main/java/com/capacitorjs/plugins/statusbar/StatusBarPlugin.java' for package by /^package ([\w.]+);?$/gm regex
+[capacitor] 2021-12-07T19:46:43.020Z capacitor:android:update 'com.capacitorjs.plugins.statusbar.StatusBarPlugin' is a suitable plugin class
+[capacitor] ✔ update android in 170.49ms
+[capacitor] [info] Sync finished in 1.207s
+
+[[40mINFO[49m] Ready for use in your Native IDE!
+       
+       To continue, build your project using Android Studio!
+
+> capacitor open android
+[capacitor] 2021-12-07T19:46:43.572Z capacitor:config config: {
+[capacitor]   android: {
+[capacitor]     name: 'android',
+[capacitor]     minVersion: '21',
+[capacitor]     studioPath: LazyPromise [Promise] {
+[capacitor]       <pending>,
+[capacitor]       _executor: [AsyncFunction (anonymous)]
+[capacitor]     },
+[capacitor]     platformDir: 'android',
+[capacitor]     platformDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android',
+[capacitor]     cordovaPluginsDir: 'capacitor-cordova-android-plugins',
+[capacitor]     cordovaPluginsDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/capacitor-cordova-android-plugins',
+[capacitor]     appDir: 'app',
+[capacitor]     appDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app',
+[capacitor]     srcDir: 'app/src',
+[capacitor]     srcDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app/src',
+[capacitor]     srcMainDir: 'app/src/main',
+[capacitor]     srcMainDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app/src/main',
+[capacitor]     assetsDir: 'app/src/main/assets',
+[capacitor]     assetsDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app/src/main/assets',
+[capacitor]     webDir: 'app/src/main/assets/public',
+[capacitor]     webDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app/src/main/assets/public',
+[capacitor]     resDir: 'app/src/main/res',
+[capacitor]     resDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app/src/main/res',
+[capacitor]     apkName: 'app-debug.apk',
+[capacitor]     buildOutputDir: 'app/build/outputs/apk//debug',
+[capacitor]     buildOutputDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app/build/outputs/apk/debug'
+[capacitor]   },
+[capacitor]   ios: {
+[capacitor]     name: 'ios',
+[capacitor]     minVersion: '12.0',
+[capacitor]     platformDir: 'ios',
+[capacitor]     platformDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/ios',
+[capacitor]     scheme: 'App',
+[capacitor]     cordovaPluginsDir: 'capacitor-cordova-ios-plugins',
+[capacitor]     cordovaPluginsDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/ios/capacitor-cordova-ios-plugins',
+[capacitor]     nativeProjectDir: 'App',
+[capacitor]     nativeProjectDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/ios/App',
+[capacitor]     nativeTargetDir: 'App/App',
+[capacitor]     nativeTargetDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/ios/App/App',
+[capacitor]     nativeXcodeProjDir: 'App/App.xcodeproj',
+[capacitor]     nativeXcodeProjDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/ios/App/App.xcodeproj',
+[capacitor]     nativeXcodeWorkspaceDir: LazyPromise [Promise] {
+[capacitor]       <pending>,
+[capacitor]       _executor: [AsyncFunction (anonymous)]
+[capacitor]     },
+[capacitor]     nativeXcodeWorkspaceDirAbs: LazyPromise [Promise] {
+[capacitor]       <pending>,
+[capacitor]       _executor: [AsyncFunction (anonymous)]
+[capacitor]     },
+[capacitor]     webDir: LazyPromise [Promise] {
+[capacitor]       <pending>,
+[capacitor]       _executor: [AsyncFunction (anonymous)]
+[capacitor]     },
+[capacitor]     webDirAbs: LazyPromise [Promise] {
+[capacitor]       <pending>,
+[capacitor]       _executor: [AsyncFunction (anonymous)]
+[capacitor]     },
+[capacitor]     podPath: 'pod'
+[capacitor]   },
+[capacitor]   web: {
+[capacitor]     name: 'web',
+[capacitor]     platformDir: 'build',
+[capacitor]     platformDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/build'
+[capacitor]   },
+[capacitor]   cli: {
+[capacitor]     rootDir: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/node_modules/@capacitor/cli',
+[capacitor]     assetsDir: 'assets',
+[capacitor]     assetsDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/node_modules/@capacitor/cli/assets',
+[capacitor]     assets: { ios: [Object], android: [Object] },
+[capacitor]     package: {
+[capacitor]       name: '@capacitor/cli',
+[capacitor]       version: '3.2.5',
+[capacitor]       description: 'Capacitor: Cross-platform apps with JavaScript and the web',
+[capacitor]       homepage: 'https://capacitorjs.com',
+[capacitor]       author: 'Ionic Team <hi@ionic.io> (https://ionic.io)',
+[capacitor]       license: 'MIT',
+[capacitor]       repository: [Object],
+[capacitor]       bugs: [Object],
+[capacitor]       files: [Array],
+[capacitor]       keywords: [Array],
+[capacitor]       engines: [Object],
+[capacitor]       main: 'dist/index.js',
+[capacitor]       types: 'dist/declarations.d.ts',
+[capacitor]       bin: [Object],
+[capacitor]       scripts: [Object],
+[capacitor]       dependencies: [Object],
+[capacitor]       devDependencies: [Object],
+[capacitor]       jest: [Object],
+[capacitor]       publishConfig: [Object],
+[capacitor]       gitHead: 'cc2960572ad70a0272c3ea1c44dbee14acf6e2ec'
+[capacitor]     },
+[capacitor]     os: 'linux'
+[capacitor]   },
+[capacitor]   app: {
+[capacitor]     rootDir: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend',
+[capacitor]     appId: 'planificador.frontend.com',
+[capacitor]     appName: 'planificador_frontend',
+[capacitor]     webDir: 'build',
+[capacitor]     webDirAbs: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/build',
+[capacitor]     package: {
+[capacitor]       name: 'planificador-frontend',
+[capacitor]       version: '0.0.1',
+[capacitor]       private: true,
+[capacitor]       dependencies: [Object],
+[capacitor]       scripts: [Object],
+[capacitor]       eslintConfig: [Object],
+[capacitor]       browserslist: [Object],
+[capacitor]       devDependencies: [Object],
+[capacitor]       description: 'An Ionic project'
+[capacitor]     },
+[capacitor]     extConfigType: 'json',
+[capacitor]     extConfigName: 'capacitor.config.json',
+[capacitor]     extConfigFilePath: '/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/capacitor.config.json',
+[capacitor]     extConfig: {
+[capacitor]       appId: 'planificador.frontend.com',
+[capacitor]       appName: 'planificador_frontend',
+[capacitor]       webDir: 'build',
+[capacitor]       bundledWebRuntime: false
+[capacitor]     },
+[capacitor]     bundledWebRuntime: false
+[capacitor]   }
+[capacitor] }
+[capacitor] 2021-12-07T19:46:43.630Z capacitor:android:open Error opening Android Studio: Error: Android Studio does not exist at: /usr/local/android-studio/bin/studio.sh
+[capacitor]     at Object.openAndroid (/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/node_modules/@capacitor/cli/dist/android/open.js:16:19)
+[capacitor]     at async openCommand (/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/node_modules/@capacitor/cli/dist/tasks/open.js:32:13)
+[capacitor]     at async /media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/node_modules/@capacitor/cli/dist/index.js:104:9
+[capacitor]     at async /media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/node_modules/@capacitor/cli/dist/telemetry.js:26:13
+[capacitor]     at async Command.<anonymous> (/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/node_modules/@capacitor/cli/dist/util/cli.js:12:13)
+[capacitor] [error] Unable to launch Android Studio. Is it installed?
+[capacitor]         Attempted to open Android Studio at: /usr/local/android-studio/bin/studio.sh
+[capacitor]         You can configure this with the CAPACITOR_ANDROID_STUDIO_PATH environment variable.
