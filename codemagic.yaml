@@ -10,6 +10,7 @@ workflows:
         - other
       # Add the group environment variables in Codemagic UI (either in Application/Team variables) - https://docs.codemagic.io/variables/environment-variable-groups/
       node: latest
+      
     triggering:
       events:
         - push
@@ -23,6 +24,8 @@ workflows:
       - name: Install npm dependencies for Ionic Capacitor project
         script: |
           npm install
+      - name: Build ionic web for Capacitor
+        script: |
           npm run build
       - name: Set Android SDK location
         script: |
