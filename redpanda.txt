@@ -1,0 +1,384 @@
+matthew zeier 16 oct. a la(s) 19:04
+Does anyone have a good comparison between redpanda vs. kafka/zookeeper in terms of EC2 footprint? 
+I'm trying to get a gauge of AWS costs. We're looking at Kafka as an alternative to Kinesis in our agent ingestion pipeline. 
+We're currently ingesting about 600MB/sec but want to play for 3-5x growth.
+Is this something most run on instances or kubernetes?
+70 respuestas
+
+Alexander Gallego:vectorized:  hace 23 días
+welcome @matthew zeier - i’d say probably 5 or 7 medium computers should do it  - 
+we recommend the i3en types in general. basically anything that has 2Gigs/Core
+
+Alexander Gallego:vectorized:  hace 23 días
+we help quite a few folks w/ that transition
+
+Alexander Gallego:vectorized:  hace 23 días
+happy to help you on your own or engage w/ the solutions eng team if interested in comercial support/features.
+
+Alexander Gallego:vectorized:  hace 23 días
+let me know if you get stuck
+
+matthew zeier  hace 23 días
+that's useful. can followup on monday over email perhaps. i'll dm you my contact?
+
+matthew zeier  hace 23 días
+happen to know if the Kafka S3 connector can work?
+
+Lachlan Brown:vectorized:  hace 23 días
+Hi @matthew zeier , email me at lachlan@vectorized.io of you would like to talk with our engineers on architecture/sizing/questions (editado) 
+
+Alexander Gallego:vectorized:  hace 23 días
+@matthew zeier yup; all kafka-connect ecosystem works
+
+Alexander Gallego:vectorized:  hace 23 días
+mongodb, scylla, clickhouse, memsql
+
+matthew zeier  hace 23 días
+@Guru Karaje ^^
+
+Alexander Gallego:vectorized:  hace 23 días
+basically, the kafka-connect uses the produce-consume api, so it just works.
+
+Alexander Gallego:vectorized:  hace 23 días
+what other connectors do you use
+
+matthew zeier  hace 23 días
+okay got it. that was the one i was asked to ask about
+
+matthew zeier  hace 23 días
+I'm currently adapting your ansible playbook for our enviro
+
+Alexander Gallego:vectorized:  hace 23 días
+what other systems are you connecting to it, is it just bench’ing atm?
+
+matthew zeier  hace 23 días
+partly the latter but the ingestion path includes ingesting from s3
+
+matthew zeier  hace 23 días
+@Guru Karaje knows the specifics
+
+Alexander Gallego:vectorized:  hace 23 días
+right on.  also recommend testing out the local dev env too in case you are writing apps/testing things w/ docker.
+
+matthew zeier  hace 23 días
+the services are in kubernetes. i'm not sure if it makes sense to run this in the same cluster or standalone instances
+
+Alexander Gallego:vectorized:  hace 23 días
+for benching and for ease of use, the ansible makes sense, but we do run in k8s as well, just much more complex to get it up and running in k8s
+
+matthew zeier  hace 23 días
+yeah i 'm not convinced i need the complexity of kubernetes
+
+matthew zeier  hace 23 días
+or what the benefit of that is vs well managed terraform/ansible
+
+Alexander Gallego:vectorized:  hace 23 días
+yeah; happy to help w/ either obvi, but whatever makes sense for you and the team.
+having access to the i3en hardware makes a  difference in tail latencies. (editado) 
+
+matthew zeier  hace 23 días
+okay i have a single node instance up on an i3.2xl.
+
+matthew zeier  hace 23 días
+I'm sure there
+
+matthew zeier  hace 23 días
+I'm sure there's a reason but. 
+your install-redpanda.yaml playbook shell'd out and wasn't idempotent. I used the native apt_key and apt_repository modules instead.
+
+matthew zeier  hace 23 días
+I also did something similiar for install-node-deps and the unarchive -
+
+matthew zeier  hace 23 días
+- name: Check if /opt/kafka-dev exists
+    stat: 
+      path: /opt/kafka-dev
+    register: kafka_dev_link
+
+  - name: install kafka binaries
+    unarchive:
+      src: 'https://s3-us-west-2.amazonaws.com/kafka-packages/kafka_2.12-2.4.0.tgz'
+      dest: /opt/
+      remote_src: yes
+      creates: /opt/kafka_2.12-2.4.0
+    when: not kafka_dev_link.stat.exists
+
+  - name: create kafka-dev symlink directory referenced in tests
+    file:
+      src: /opt/kafka_2.12-2.4.0
+      dest: /opt/kafka-dev
+      state: link
+    when: not kafka_dev_link.stat.exists
+
+matthew zeier  hace 23 días
+otherwise, each time this runs it would re-download
+
+matthew zeier  hace 23 días
+and I opted for LVM over md from prior history and LVM has a native module vs. mdadm
+
+matthew zeier  hace 23 días
+i don't recall seeing any practical differences with FoundationDB on a LVM stripe
+
+Alexander Gallego:vectorized:  hace 22 días
+I can’t recall but lvm had some kernel bug. mdadm has worked in prod for a few years. 
+
+Alexander Gallego:vectorized:  hace 22 días
+Can you submit a patch with the other idempotent fixes.
+
+Alexander Gallego:vectorized:  hace 22 días
+That would be great
+
+matthew zeier  hace 22 días
+Sure thing. Needs a bit more testing.
+
+matthew zeier  hace 22 días
+could use some help - i have a single node up and running. joining the second one is failing
+
+matthew zeier  hace 22 días
+second instance 
+TASK [redpanda : configure redpanda - dry-run] ***********************************************************************************************************************************
+ok: [redpanda-2c-dev3-2] => {
+    "msg": [
+        "rpk config set cluster_id 'redpanda-dev3'",
+        "rpk config set organization 'redpanda-dev3'",
+        "rpk config set redpanda.advertised_kafka_api '{",
+        "  address: 10.199.190.135,",
+        "  port: 9092",
+        "}' --format yaml",
+        "sudo rpk mode production",
+        "",
+        "sudo rpk config bootstrap \\",
+        "  --id 2 \\",
+        "  --self 10.199.190.135 \\",
+        "  --ips 10.199.182.189",
+        ""
+    ]
+}
+Contraer
+
+
+
+
+matthew zeier  hace 22 días
+the first one was started with this config
+first instance 
+TASK [redpanda : configure redpanda - dry-run] ***********************************************************************************************************************************
+ok: [redpanda-2c-dev3-1] => {
+    "msg": [
+        "rpk config set cluster_id 'redpanda-dev3'",
+        "rpk config set organization 'redpanda-dev3'",
+        "rpk config set redpanda.advertised_kafka_api '{",
+        "  address: 10.199.182.189,",
+        "  port: 9092",
+        "}' --format yaml",
+        "sudo rpk mode production",
+        "",
+        "sudo rpk config bootstrap \\",
+        "  --id 1  \\",
+        "  --self 10.199.182.189",
+        "",
+        ""
+    ]
+}
+Contraer
+
+
+
+
+matthew zeier  hace 22 días
+root@redpanda-2c-dev3-2-i-0912a924afbc15f1d:/home/ubuntu# journalctl -u redpanda | grep ERROR
+Oct 17 18:23:59 redpanda-2c-dev3-2-i-0912a924afbc15f1d rpk[16420]: ERROR 2021-10-17 18:23:59,077 [shard 0] cluster - controller_backend.cc:346 - Error while reconciling topics - seastar::abort_requested_exception (abort requested)
+
+matthew zeier  hace 22 días
+first/seed node (id=1) config 
+root@redpanda-2c-dev3-1-i-08028ef782c5597fd:~# cat /etc/redpanda/redpanda.yaml
+cluster_id: redpanda-dev3
+config_file: /etc/redpanda/redpanda.yaml
+node_uuid: kF6BpQCnVDzJbap4xLaQirPFEGMKnvzq5qzgSb7BN8prgseDg
+organization: redpanda-dev3
+pandaproxy: {}
+redpanda:
+  admin:
+  - address: 10.199.182.189
+    port: 9644
+  advertised_kafka_api:
+  - address: 10.199.182.189
+    port: 9092
+  advertised_rpc_api:
+    address: 10.199.182.189
+    port: 33145
+  auto_create_topics_enabled: true
+  data_directory: /var/lib/redpanda/data
+  developer_mode: false
+  kafka_api:
+  - address: 10.199.182.189
+    port: 9092
+  node_id: 1
+  rpc_server:
+    address: 10.199.182.189
+    port: 33145
+  seed_servers: []
+rpk:
+  coredump_dir: /var/lib/redpanda/coredump
+  enable_memory_locking: false
+  enable_usage_stats: true
+  overprovisioned: false
+  tune_aio_events: true
+  tune_ballast_file: true
+  tune_clocksource: true
+  tune_coredump: false
+  tune_cpu: true
+  tune_disk_irq: true
+  tune_disk_nomerges: true
+  tune_disk_scheduler: true
+  tune_disk_write_cache: true
+  tune_fstrim: true
+  tune_network: true
+  tune_swappiness: true
+  tune_transparent_hugepages: false
+schema_registry: {}
+Contraer
+
+
+
+
+matthew zeier  hace 22 días
+second node (not joining) 
+root@redpanda-2c-dev3-2-i-0912a924afbc15f1d:/home/ubuntu# cat /etc/redpanda/redpanda.yaml
+cluster_id: redpanda-dev3
+config_file: /etc/redpanda/redpanda.yaml
+node_uuid: SC1wPAmyHnzpHx3dWuYJU9acQpv4i9Y2reXjPn2k8MbDWCKKE
+organization: redpanda-dev3
+Haz clic para expandir contenido en línea (49 líneas)
+
+
+
+Alexander Gallego:vectorized:  hace 22 días
+currently, only the first node needs to have an empty seed servers
+
+Alexander Gallego:vectorized:  hace 22 días
+everyone else needs the ip of the seed server
+
+Alexander Gallego:vectorized:  hace 22 días
+this is changing this quarter with a global config object, but atm that’s a requirement
+
+Alexander Gallego:vectorized:  hace 22 días
+@matthew zeier not sure about the abort-source requested.
+
+Alexander Gallego:vectorized:  hace 22 días
+need more logs.
+
+Alexander Gallego:vectorized:  hace 22 días
+feel free to open up a github discussion for long debug sessions (slack is for quick things usually) but history gets deleted at some point
+
+Alexander Gallego:vectorized:  hace 22 días
+in any case, maybe @Roko Kruze can help after our call too
+
+Alexander Gallego:vectorized:  hace 22 días
+if you have access to more logs, feel free to post here when you get a chance
+
+matthew zeier  hace 22 días
+https://github.com/vectorizedio/redpanda/issues/2667
+GitHubGitHub
+second node errors trying to join, seastar::abort_requested_exception (abort requested) · Issue #2667 · vectorizedio/redpanda
+I have a single node cluster and I&#39;m trying to join a second node. I have a modified version of the Ansible playbook but it&#39;s basically the same shell commands. Before the shell commands ar... (79 kB)
+https://github.com/vectorizedio/redpanda/issues/2667
+
+
+matthew zeier  hace 22 días
+posted logs and configs there
+
+Guru Karaje  hace 21 días
+Hi @Alexander Gallego nice to meet you. Thank you for all the help so far with setting up red panda.
+
+Guru Karaje  hace 21 días
+We want to set up S3 connector to consume messages from the topic and upload to S3. Do you have any recommendations for sizing the S3 connector and the connect cluster?
+
+Alexander Gallego:vectorized:  hace 21 días
+it depends on throughput and latency. In general s3 has a prefix bucket algorithm
+
+Alexander Gallego:vectorized:  hace 21 días
+so some times that’s your bottleneck
+
+Alexander Gallego:vectorized:  hace 21 días
+some times is your network
+
+Alexander Gallego:vectorized:  hace 21 días
+some times is your compression algorithm
+
+Alexander Gallego:vectorized:  hace 21 días
+(cpu)
+
+Alexander Gallego:vectorized:  hace 21 días
+so need more details, but in general a good rule of thumb is start w/ 16 partitions for largish topics
+
+Guru Karaje  hace 21 días
+Thanks,
+
+Alexander Gallego:vectorized:  hace 21 días
+i think the kafka connect has a partition count too that you can setup the partitioning scheme
+
+Alexander Gallego:vectorized:  hace 21 días
+use zstd or lz4 as compressors into redpanda for decent throughput and CPU utilization
+
+Guru Karaje  hace 21 días
+In terms of EC2 machine instance size, what do you recommend for running connect cluster?
+
+Guru Karaje  hace 21 días
+we use snappy compression - somewhat closer to lz4 in performance and resource util
+
+Alexander Gallego:vectorized:  hace 21 días
+snappy is solid
+
+Guru Karaje  hace 21 días
+and avro encoded messages
+
+Alexander Gallego:vectorized:  hace 21 días
+cool, did you check out our schema registry too (avro supported)
+
+Alexander Gallego:vectorized:  hace 21 días
+are you cpu or network abound?
+
+matthew zeier  hace 21 días
+"yes" haha.
+
+matthew zeier  hace 21 días
+the current test cluster is 3x i3.2xlarge and part of the effort is to figure out the right instance sizing
+
+
+
+https://www.mellanox.com/related-docs/prod_acceleration_software/VMA_8_6_10_Installation_Guide.pdf
+https://www.mellanox.com/products/software/accelerator-software/vma
+
+https://medium.com/event-driven-utopia/real-time-streaming-for-mortals-how-redpanda-and-materialize-making-it-a-reality-18ac0bdc6f43
+
+https://github.com/materializeinc/ecommerce-demo
+
+UI kafka
+https://github.com/cloudhut/kowl
+
+sobre la misma maquina con 8cpus y 64 gigas en entornos seguros(fsync), kafka/pulsar alcanzan los 1.2Gb/s(1kk req/s) pero con latencias por encima de 3 segundos. en cambio las latencia de redpanda siguen en ms
+para simplificar la infra y rebajar las latencias, kafka/pulsar/redpanda no lo meteria en kubernetes, unas instancias y palante.
+tema cloud es chungo mantener 300Mb/s sostenidos durante horas.
+
+en cloud despues de tener sostenidos 1Gb/s durante horas, te provocan un softcap de 200-500Mb/s. para quitar el softcap toca upgrade a la instancia o ponerse contacto con el proveedor $$$
+
+
+
+https://www.sobyte.net/post/2021-10/redis-large-cluster/
+https://piotrminkowski.com/2021/11/11/kafka-streams-with-spring-cloud-stream/
+https://www.youtube.com/watch?v=C0V5YxCIjD4
+
+kafka.m5.2xlarge – vCPU: 8, Memoria (GiB): 32	0,936 USD
+kafka.m5.4xlarge – vCPU: 16, Memoria (GiB): 64	1,872 USD
+kafka.m5.8xlarge – vCPU: 32, Memoria (GiB): 128	3,749 USD
+kafka.m5.12xlarge – vCPU: 48, Memoria (GiB): 192	5,616 USD
+kafka.m5.16xlarge – vCPU: 64, Memoria (GiB): 256	7,499 USD
+kafka.m5.24xlarge – vCPU: 96, Memoria (GiB): 394	11,232 USD
+
+
+en la ESNOG me sorprendio que sacaran que el tcp tiene serios problemas que estan afectando a la innovacion en productos y que en muy poco tiempo tenian pensando una serie de medidas(por ejemplo, china 2023 toda ipv6, ...)
+me parece curioso que tire hacia http3 (lleva mas de 10 años) y sea primo hermano del udp,
+
+https://www.youtube.com/watch?v=Dljgk6kl3X4
+https://learnthisdev.com/my-courses
