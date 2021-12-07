@@ -9,7 +9,7 @@
 /coverage
 
 # production
-/build
+
 
 # misc
 .DS_Store
@@ -29,3 +29,4 @@ yarn-error.log*
 
 *.local
 redpanda.txt
+./android/app/build/outputs/apk/debug/*.apk
