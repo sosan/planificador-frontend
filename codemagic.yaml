@@ -22,16 +22,31 @@ workflows:
         environment:
           node: 16.13.1
         scripts:
-          - export NODE_OPTIONS=--openssl-legacy-provider
-          - npm i -g @ionic/cli
-          - npm install @capacitor/core
-          - npm install @capacitor/cli --save-dev
-          - npm install
-          - ionic capacitor build android --prod
-          - cd /Users/builder/clone/android
-          - ./gradlew build
-          # - cd android && ./gradlew assembleDebug
+          - name: Set NODE_OPTIONS
+            script: export NODE_OPTIONS=--openssl-legacy-provider
 
+          - name: Install Ionic Client
+            script: npm i -g @ionic/cli
 
+          - name: Install capacitor
+            script: |
+              npm install @capacitor/core
+              npm install @capacitor/cli --save-dev
+
+          - name: NPM Install dependencies
+            script: npm install
+
+          - name: Capacitor Prepare BUILD
+            script: ionic capacitor build android --prod
+
+          - name: Build Android APK
+            working_directory: android
+            script: ./gradlew assembleRelease
+          
+          # - name: Gradlew Build
+          #   script: |
+          #     cd /Users/builder/clone/android
+          #     ./gradlew build
+          
         artifacts:
           - android/app/build/outputs/**/*.apk
