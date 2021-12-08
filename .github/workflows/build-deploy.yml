@@ -60,8 +60,8 @@ jobs:
         id: read_release
         shell: bash
         run: |
-          ls ./android/app/build/outputs/apk/
-
+          ls ./android/app/build/outputs/apk/release && \
+          ls ./android/app/build/outputs/apk/debug
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
