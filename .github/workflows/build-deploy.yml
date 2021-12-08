@@ -27,10 +27,12 @@ jobs:
         run: npm install
 
       - name: Build Ionic App
-        run: ionic build
+        # run: ionic build
+        run: npm run build
 
-      - name: Copy Android
-        run: ionic capacitor sync --prod
+      - name: Sync Capacitor
+        run: npx cap sync
+        # run: ionic capacitor sync --prod
 
       # - name: Build Android Dev APK
       #   run: ionic capacitor build android
