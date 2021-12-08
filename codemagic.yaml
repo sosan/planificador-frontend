@@ -45,7 +45,7 @@ workflows:
           script: npm install
 
         - name: Capacitor Prepare BUILD
-          script: ionic capacitor build android --prod
+          script: ionic capacitor build android --prod --no-open
 
         - name: Set gradlew ejecutable
           working_directory: android

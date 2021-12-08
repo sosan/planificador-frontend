@@ -48,17 +48,15 @@ jobs:
       #   run: ionic capacitor build android
 
       - name: Build Android Release APK
-        run: ionic capacitor build android --release --prod
-      
-      # - name: Install gradle
-        # run:  sdk install gradle 7.3.1
+        run: ionic capacitor build android --prod --no-open
 
       - name: Make gradlew executable
+        working-directory: ./android/
         run: chmod +x ./gradlew
 
       - name: Generate the Android App Bundle
         working-directory: ./android/
-        run: ./gradlew bundle
+        run: ./gradlew assembleRelease
 
       - name: Upload dev APK
         uses: actions/upload-artifact@v1
