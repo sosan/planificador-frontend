@@ -28,7 +28,6 @@ workflows:
           - npm install @capacitor/cli --save-dev
           - npm install
           - ionic capacitor build android --prod
-          - cd android
-          - ./gradlew assembleDebug
+          - cd android && ./gradlew assembleDebug
         artifacts:
           - android/app/build/outputs/**/*.apk
