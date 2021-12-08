@@ -58,10 +58,10 @@ jobs:
         working-directory: ./android/
         run: ./gradlew assembleRelease
 
-      - name: Upload dev APK
+      - name: Upload APK
         uses: actions/upload-artifact@v1
         with:
-          name: app-dev
+          name: app-apk
           path: android/app/build/outputs/apk/dietario.apk
 
       # - name: Upload release bundle
