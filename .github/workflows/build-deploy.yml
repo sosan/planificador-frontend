@@ -54,8 +54,8 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v1
         with:
-          name: app-apk
-          path: android/app/build/outputs/apk/dietario.apk
+          name: dietario
+          path: ./android/app/build/outputs/apk/
 
       # - name: Upload release bundle
       #   uses: actions/upload-artifact@v1
