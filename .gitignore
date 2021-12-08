@@ -30,3 +30,4 @@ yarn-error.log*
 *.local
 redpanda.txt
 ./android/app/build/outputs/apk/debug/*.apk
+act
