@@ -5,7 +5,7 @@ jobs:
   build:
     name: Build APK
     runs-on: ubuntu-latest
-    # if: "contains(github.event.head_commit.message, '/d')"
+    if: "contains(github.event.head_commit.message, '/d')"
     steps:
       - name: Checkout source
         uses: actions/checkout@v2
@@ -56,11 +56,18 @@ jobs:
           name: dietario
           path: ./android/app/build/outputs/apk/
       
+      - name: List archives
+        id: read_release
+        shell: bash
+        run: |
+          ls ./android/app/build/outputs/apk/
+
+
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ./android/app/build/outputs/apk/*.*
+          file: ./android/app/build/outputs/apk/
           asset_name: mything
           tag: ${{ github.ref }}
           overwrite: true
