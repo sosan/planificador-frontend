@@ -21,7 +21,10 @@ jobs:
           node-version: 16.13.1
 
       - name: Install Ionic
-        run: npm install -g @ionic/cli
+        run: |
+          npm install -g @ionic/cli
+          npm install @capacitor/core
+          npm install @capacitor/cli --save-dev
 
       - name: Install app dependencies
         run: npm install
