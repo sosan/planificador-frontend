@@ -39,14 +39,13 @@ workflows:
           - name: Capacitor Prepare BUILD
             script: ionic capacitor build android --prod
 
+          - name: Set gradlew ejecutable
+            working_directory: android
+            script: chmod +x ./gradlew
+
           - name: Build Android APK
             working_directory: android
             script: ./gradlew assembleRelease
-          
-          # - name: Gradlew Build
-          #   script: |
-          #     cd /Users/builder/clone/android
-          #     ./gradlew build
           
         artifacts:
           - android/app/build/outputs/**/*.apk
