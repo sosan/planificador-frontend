@@ -1,8 +1,8 @@
 name: Build Android
-on:
+on: 
   push:
-      tags:
-      - '*'
+    tags:
+    - '*'
 jobs:
   build:
     name: Build APK
