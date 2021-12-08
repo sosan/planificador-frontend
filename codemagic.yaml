@@ -18,34 +18,45 @@ workflows:
     #         - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.app
     #         - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
     ionic-capacitor-android-app:
-        name: Ionic Capacitor Android App
-        environment:
-          node: 16.13.1
-        scripts:
-          - name: Set NODE_OPTIONS
-            script: export NODE_OPTIONS=--openssl-legacy-provider
+      triggering:
+        events:
+          - push
+        cancel_previous_builds: true
+      when:
+        changeset:
+          includes:
+            - '/d'
+      name: Ionic Capacitor Android App
+      environment:
+        node: 16.13.1
+      scripts:
+        - name: Set NODE_OPTIONS
+          script: export NODE_OPTIONS=--openssl-legacy-provider
 
-          - name: Install Ionic Client
-            script: npm i -g @ionic/cli
+        - name: Install Ionic Client
+          script: npm i -g @ionic/cli
 
-          - name: Install capacitor
-            script: |
-              npm install @capacitor/core
-              npm install @capacitor/cli --save-dev
+        - name: Install capacitor
+          script: |
+            npm install @capacitor/core
+            npm install @capacitor/cli --save-dev
 
-          - name: NPM Install dependencies
-            script: npm install
+        - name: NPM Install dependencies
+          script: npm install
 
-          - name: Capacitor Prepare BUILD
-            script: ionic capacitor build android --prod
+        - name: Capacitor Prepare BUILD
+          script: ionic capacitor build android --prod
 
-          - name: Set gradlew ejecutable
-            working_directory: android
-            script: chmod +x ./gradlew
+        - name: Set gradlew ejecutable
+          working_directory: android
+          script: chmod +x ./gradlew
 
-          - name: Build Android APK
-            working_directory: android
-            script: ./gradlew assembleRelease
-          
-        artifacts:
-          - android/app/build/outputs/**/*.apk
+        - name: Build Android APK
+          working_directory: android
+          script: ./gradlew assembleRelease
+      artifacts:
+        - android/app/build/outputs/**/*.apk
+      publishing:
+        email:
+          recipients:
+            - josloe@gmail.com
