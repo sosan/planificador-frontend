@@ -20,12 +20,15 @@ workflows:
     ionic-capacitor-android-app:
         name: Ionic Capacitor Android App
         environment:
-            node: latest
+          node: 16.13.1
         scripts:
-            - npm install     
-            - npx cap sync
-            - |
-              cd android
-              ./gradlew assembleDebug
+          - export NODE_OPTIONS=--openssl-legacy-provider
+          - npm i -g @ionic/cli
+          - npm install @capacitor/core
+          - npm install @capacitor/cli --save-dev
+          - npm install
+          - ionic capacitor build android --prod
+          # - cd android
+          # - ./gradlew assembleDebug
         artifacts:
-            - android/app/build/outputs/**/*.apk
+          - android/app/build/outputs/**/*.apk
