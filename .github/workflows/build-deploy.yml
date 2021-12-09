@@ -1,6 +1,4 @@
-name: Build Android
-# on: [push]
-
+name: Build For Android
 on:
   push:
     tags:
@@ -10,7 +8,6 @@ jobs:
   build:
     name: Build APK
     runs-on: ubuntu-latest
-    # if: "contains(github.event.head_commit.message, '/d')"
     steps:
       - name: Checkout source
         uses: actions/checkout@v2
@@ -37,12 +34,10 @@ jobs:
         run: npm install
 
       - name: Build Ionic App
-        # run: ionic build
         run: npm run build
 
       - name: Sync Capacitor
         run: npx cap sync
-        # run: ionic capacitor sync --prod
 
       - name: Build Android Release APK
         run: ionic capacitor build android --prod --no-open
@@ -76,9 +71,3 @@ jobs:
           tag: ${{ github.ref }}
           overwrite: true
           body: "Nueva version"
-
-      # - name: Upload release bundle
-      #   uses: actions/upload-artifact@v1
-      #   with:
-      #     name: app-release
-      #     path: apk/app.aab
