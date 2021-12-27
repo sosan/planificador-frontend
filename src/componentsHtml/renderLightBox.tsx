@@ -69,7 +69,7 @@ export let htmlLightBoxTemplatePreserva = `
         </div>
     </div>
     <div class='' >
-        <span>Garajes</span>
+        <span>Flotas externas:</span>
         <div class='seccion_garajes' >
             <div class='radiobotones_enlinea' >
                 <input class='radio_boton' id='belming' type='radio' name='garaje' value='belming' nonce="#c9dcff">

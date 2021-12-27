@@ -90,7 +90,6 @@ export default class SchedulerWrapper extends Component {
         document.removeEventListener("click", anadirDias(), true);
     }
 
-  
 
     initSchedulerEvents() {
         if (scheduler._$initialized) {

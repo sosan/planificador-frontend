@@ -203,6 +203,7 @@ export class SchedulerContainer extends React.Component<ContainerProps, Containe
             <>
                 {
                     (this.state.borrado === true) ? null :
+                        
                         <SchedulerWrapper
                             events={dataEventos}
                             htmlLightBoxTemplate={htmlTemplate}
