@@ -1,6 +1,6 @@
 import React from 'react';
 import TimelineWrapper, { ENUM_TIPOS_EVENTOS } from "./TimelineWrapper";
-import { IDataCoches, datosCoches, items } from "../datos/coches";
+import { IDataCoches, dataCars, items, ORDEN_LISTADO_CLASE_COCHES } from "../datos/coches";
 import { htmlLightBoxTemplatePreserva } from "../componentsHtml/renderLightBox";
 
 import moment from 'moment';
@@ -45,6 +45,8 @@ export interface IDataEventos {
 };
 
 
+
+
 const dataEventos: IDataEventos[] = [
     {
         start_date: '2021-11-17 6:00',
@@ -61,37 +63,43 @@ const dataEventos: IDataEventos[] = [
         status: ENUM_TIPOS_STATUS.prepagado,
         vehiculoSeleccionado: undefined
     },
-   
+
 ];
 
+type typeGroup =
+{
+    id: number, 
+    title: string,
+    clasevehiculo: string,
+    modelo: string,
+    rightTitle?: string,
+    height?: number,
+    width?: number,
+    bgColor?: string,
+    stackItems?: boolean,
+
+}
 
 
 export class SchedulerContainer extends React.Component<ContainerProps, ContainerState>
 {
-
-    defaultTimeStart: any;
-    defaultTimeEnd: any;
-
+    groups: typeGroup[];
+    
     constructor(props: any) {
         super(props);
         this.state = {
             borrado: false
         };
-
-        const defaultTimeStart = moment()
-            .startOf("day")
-            .add(-10, "day")
-            .toDate();
-        const defaultTimeEnd = moment()
-            .startOf("day")
-            .add(10, "day")
-            .toDate();
+        
+        this.groups = this.createGroupForCars(dataCars);
 
     }
 
     logDataUpdate = (textEv: string, ev: any, id: any) => {
 
     }
+
+
 
     componentWillUnmount() {
         // console.log("desmontado");
@@ -106,63 +114,61 @@ export class SchedulerContainer extends React.Component<ContainerProps, Containe
 
     }
 
-    convertCarsToHTML(cars: IDataCoches[]) {
 
-        let htmlSectionCars = `
-            <select id="vehiculoSeleccionado" name="vehiculoSeleccionado" class="carseleccionado">
-            <option  value="ninguno" selected>Elegir coche</option>
-        `;
+    createGroupForCars(cars: IDataCoches[] )
+    {
+        let groupCreated: typeGroup[] = [];
 
-        for (let i = 0; i < cars.length; i++) {
-
-            htmlSectionCars += `
-                <option  value="${cars[i].vehiculo}">${cars[i].descripcion}</option>
-            `;
-
+        for (let i = 0; i < cars.length; i++)
+        {
+            groupCreated.push(
+            {
+                "id": i,
+                "title": `${cars[i].descripcion}`,
+                "clasevehiculo": `${cars[i].clasevehiculo}`,
+                "modelo": `${cars[i].modelo}`,
+                "rightTitle": "",
+                "height": 50,
+                "stackItems": true,
+            });
+            
         }
 
-        htmlSectionCars += "</select> ";
+        groupCreated = this.orderGroupCars(groupCreated, ORDEN_LISTADO_CLASE_COCHES);
+        return groupCreated;
+    }
 
-        return htmlSectionCars;
+    orderGroupCars(cars: typeGroup[], ordenListadoCoches: string[] )
+    {
+        let groupOrdered: typeGroup[] = [];
+        for (let i = 0; i < ordenListadoCoches.length; i++)
+        {
 
+            for (let j = 0; j < cars.length; j++)
+            {
+
+                if (cars[j].clasevehiculo === ordenListadoCoches[i])
+                {
+                    groupOrdered.push(cars[j]);
+                }
+
+            }
+        }
+
+        return groupOrdered;
     }
 
     render() {
-
-        const carsConvertedHtml = this.convertCarsToHTML(datosCoches);
-        const htmlTemplate = this.replaceTemplates(htmlLightBoxTemplatePreserva, carsConvertedHtml, "#seccionCoches#");
-        const groups = [
-            {
-                id: 1, 
-                title: 'group 1',
-                rightTitle: 'title in the right sidebar',
-                height: 50,
-                bgColor: "#cccccc"
-            },
-            {
-                id: 2,
-                title: 'group 2',
-                rightTitle: 'title in the right sidebar',
-                height: 50,
-            }
-        ];
-
-        
 
         return (
             <>
                 {
                     (this.state.borrado === true) ? null :
                         <TimelineWrapper
-                            groups={groups}
+                            groups={this.groups}
                             items={items}
-                            // defaultTimeStart={moment().add(-25, 'day').valueOf()}
-                            // defaultTimeEnd={moment().add(25, 'day').valueOf()}
-                            
-                            defaultTimeStart={this.defaultTimeStart }
-                            defaultTimeEnd={this.defaultTimeEnd}
-                            // visibleTimeStart={moment().add(-5, 'day').valueOf()}
-                            // visibleTimeEnd={moment().add(5, 'day').valueOf()}
+                            // visibleTimeStart={this.defaultTimeStart}
+                            // visibleTimeEnd={this.defaultTimeEnd}
                         />
                 }
 

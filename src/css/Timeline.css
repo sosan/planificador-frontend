@@ -5,5 +5,33 @@
 
 .altura-items
 {
-    height: 100px !important;
+    height: 45px !important;
+}
+
+.custom-group
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+
+}
+
+
+.anchura_minimo
+{
+    flex-basis: 50px;
+    text-align: center;
+}
+
+.anchura_minimo_modelo
+{
+    text-align: end;
+    text-overflow: ellipsis;
+    margin-right: 10px;
+    
+}
+
+.title
+{
+    font-size: 13px;
 }

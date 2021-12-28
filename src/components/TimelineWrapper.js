@@ -8,6 +8,7 @@ import Timeline, {
     TimelineHeaders,
     DateHeader,
     SidebarHeader,
+    CustomHeader,
     TodayMarker,
     TimelineMarkers,
     CustomMarker
@@ -40,12 +41,10 @@ export default class TimelineWrapper extends Component {
     constructor(props) {
         super(props);
         
-        // this.state = {};
-
         const _defaultTimeStart = moment().add(-2, 'day');
         const _defaultTimeEnd = moment().add(2, 'day');
-        const _visibleTimeStart = moment().add(-25, 'day').valueOf();
-        const _visibleTimeEnd = moment().add(25, 'day').valueOf();
+        const _visibleTimeStart = moment().add(-5, 'day').valueOf();
+        const _visibleTimeEnd = moment().add(15, 'day').valueOf();
 
         this.state = { 
             groups: this.props.groups,
@@ -82,6 +81,16 @@ export default class TimelineWrapper extends Component {
 
     };
 
+    groupRenderer = ({ group }) => {
+        return (
+            <div className="custom-group">
+                <span className="title anchura_minimo">{group.title}</span>
+                <span className="title anchura_minimo">{group.clasevehiculo}</span>
+                <span className="title anchura_minimo anchura_minimo_modelo">{group.modelo}</span>
+            </div>
+        )
+    }
+
 
     handleItemMove = (itemId, dragTime, newGroupOrder) => {
         
@@ -90,39 +99,18 @@ export default class TimelineWrapper extends Component {
         const { items, groups } = this.state;
 
         const group = groups[newGroupOrder];
-        // this.setState({
-        //     items: items.map(item =>
-        //         item.id === itemId
-        //             ? Object.assign({}, item, {
-        //                 start_time: dragTime,
-        //                 end_time: dragTime + (item.end_time - item.start_time),
-        //                 group: group.id
-        //             })
-        //             : item
-        //     )
-        // });
 
-
-        // console.log("antes " + JSON.stringify(items));
         let devItems = [];
         for (let i = 0; i < items.length; i++) 
         {
             if (items[i].id === itemId) 
             {
-                // items[i].start_time = dragTime;
-                // items[i].end_time = dragTime + (items[i].end_time - items[i].start_time);
-                // items[i].group = group.id;
-                
-                
                 const fechaDestino = new Date(dragTime);
-                
-                // const endTimeConversion = new Date(items[i].end_time);
-                // const startTimeConversion = new Date(items[i].start_time);
                 const fechaDestinoStart = fechaDestino.setHours(0, 0, 0, 0);
                 const fechaDestinoEnd = fechaDestino.setHours(23, 59, 59, 0);
                 
-                items[i].start_time = new Date(fechaDestinoStart);
-                items[i].end_time = new Date(fechaDestinoEnd);
+                items[i].start_time = moment(fechaDestinoStart); //new Date(fechaDestinoStart);
+                items[i].end_time = moment(fechaDestinoEnd); //new Date(fechaDestinoEnd);
                 items[i].group = group.id;
                 
             }
@@ -131,10 +119,7 @@ export default class TimelineWrapper extends Component {
         }
         
         this.setState({ "items": devItems});
-        // console.log("despues " + JSON.stringify(items));
-
-
-        console.log(`Moved ${itemId} ${dragTime} ${newGroupOrder}`);
+        
     };
 
     handleItemResize = (itemId, time, edge) => {
@@ -172,15 +157,6 @@ export default class TimelineWrapper extends Component {
     
     render() {
 
-        // const { 
-        //     groups,
-        //     items,
-        //     defaultTimeStart,
-        //     defaultTimeEnd,
-        //     visibleTimeStart,
-        //     visibleTimeEnd
-        // } = this.state;
-
         return (
             <div>
                 <Timeline
@@ -194,16 +170,19 @@ export default class TimelineWrapper extends Component {
                     fullUpdate
                     dragSnap={DRAG_SNAP}
                     itemTouchSendsClick={false}
-                    stackItems
-                    itemHeightRatio={0.75}
+                    groupRenderer={this.groupRenderer}
+                    stackItems={true}
+                    sidebarWidth={270}
+                    itemHeightRatio={1}
                     canMove={true}
                     canResize={"both"}
                     onItemMove={this.handleItemMove}
-                    onTimeChange={this.handleTimeChange}
                     onItemResize={this.handleItemResize}
-                    
-                    // itemRenderer={this.itemRenderer}
                     useResizeHandle={true}
+                    onTimeChange={this.handleTimeChange}
+                    // minZoom={10 * 24 * 60 * 60 * 1000}
+                    // maxZoom={10 * 24 * 60 * 60 * 1000}
+                    // itemRenderer={this.itemRenderer}
                 >
                     <TimelineMarkers>
                         <TodayMarker>
@@ -211,12 +190,57 @@ export default class TimelineWrapper extends Component {
                                 <div style={{ ...styles, backgroundColor: "red", width: "4px" }} />
                             }
                         </TodayMarker>
-
                     </TimelineMarkers>
 
-                    <TimelineHeaders className="sticky">
-                        <DateHeader unit="primaryHeader" />
-                        <DateHeader />
+                    <TimelineHeaders>
+                        <SidebarHeader>
+                            {({ getRootProps }) => {
+                                return <div {...getRootProps()}>Left</div>
+                            }}
+                        </SidebarHeader>
+                        <DateHeader unit="month" />
+                        <DateHeader unit="day" style={{ height: 50 }} />
+                        {/* <CustomHeader height={50} headerData={{ someData: 'data' }} unit="year">
+                            {({
+                                headerContext: { intervals },
+                                getRootProps,
+                                getIntervalProps,
+                                showPeriod,
+                                data,
+                            }) => {
+                                return (
+                                    <div {...getRootProps()}>
+                                        {intervals.map(interval => {
+                                            const intervalStyle = {
+                                                lineHeight: '30px',
+                                                textAlign: 'center',
+                                                borderLeft: '1px solid black',
+                                                cursor: 'pointer',
+                                                backgroundColor: 'gray',
+                                                color: 'white'
+                                            }
+                                            return (
+                                                <div
+                                                    onClick={() => {
+                                                        showPeriod(interval.startTime, interval.endTime)
+                                                    }}
+                                                    {...getIntervalProps({
+                                                        interval,
+                                                        style: intervalStyle
+                                                    })}
+                                                >
+                                                    <div className="sticky">
+                                                        {interval.startTime.format('YYYY')}
+                                                    </div>
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                )
+                            }}
+                        </CustomHeader> */}
+                        
+                       
                     </TimelineHeaders>
                 </Timeline>
             </div>

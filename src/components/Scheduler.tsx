@@ -1,6 +1,6 @@
 import React from 'react';
 import SchedulerWrapper from './SchedulerWrapper';
-import { IDataCoches, datosCoches } from "../datos/coches"
+import { IDataCoches, dataCars } from "../datos/coches"
 import { htmlLightBoxTemplatePreserva } from "../componentsHtml/renderLightBox";
 import { ENUM_TIPOS_EVENTOS } from "./SchedulerWrapper";
 
@@ -196,7 +196,7 @@ export class SchedulerContainer extends React.Component<ContainerProps, Containe
     render()
     {
 
-        const carsConvertedHtml = this.convertCarsToHTML(datosCoches);
+        const carsConvertedHtml = this.convertCarsToHTML(dataCars);
         const htmlTemplate = this.replaceTemplates(htmlLightBoxTemplatePreserva, carsConvertedHtml, "#seccionCoches#");
 
         return (

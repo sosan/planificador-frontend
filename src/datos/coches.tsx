@@ -35,6 +35,16 @@ export const items = [
     
 ]
 
+export const ORDEN_LISTADO_CLASE_COCHES = [
+    "basico",
+    "openAutomatic",
+    "5pax",
+    "7pax",
+    "motos1",
+    "motos2",
+
+];
+
 
 
 export interface IDataCoches {
@@ -46,6 +56,7 @@ export interface IDataCoches {
     "vehiculo": string,
     "descripcion": string,
     "clasevehiculo": string,
+    "modelo": string,
     "pax": number,
     "puertas": number,
     "conbustible": string,
@@ -59,11 +70,12 @@ export interface IDataCoches {
 
 };
 
-export const datosCoches: IDataCoches[] = [{
+export const dataCars: IDataCoches[] = [{
     "_id": "606651cbf59ae674f6c47279",
     "vehiculo": "suzukyBurgman125",
     "descripcion": "Suzuky Burgman 125",
     "clasevehiculo": "motos2",
+    "modelo": "125",
     "pax": 2,
     "puertas": 0,
     "conbustible": "95 oct",
@@ -82,6 +94,7 @@ export const datosCoches: IDataCoches[] = [{
     "vehiculo": "citroenC1open",
     "descripcion": "Citröen C1 Open",
     "clasevehiculo": "openAutomatic",
+    "modelo": "C1",
     "pax": 4,
     "puertas": 4,
     "conbustible": "95 oct",
@@ -98,6 +111,7 @@ export const datosCoches: IDataCoches[] = [{
     "vehiculo": "toyotaAygoOpen",
     "descripcion": "Toyota Aygo Open",
     "clasevehiculo": "openAutomatic",
+    "modelo": "CAM",
     "pax": 4,
     "puertas": 4,
     "conbustible": "95 oct",
@@ -114,6 +128,7 @@ export const datosCoches: IDataCoches[] = [{
     "vehiculo": "peugeot108",
     "descripcion": "Peugeot 108",
     "clasevehiculo": "basico",
+    "modelo": "108",
     "pax": 4,
     "puertas": 4,
     "conbustible": "95 oct",
@@ -130,6 +145,7 @@ export const datosCoches: IDataCoches[] = [{
     "vehiculo": "toyotaAygo",
     "descripcion": "Toyota Aygo",
     "clasevehiculo": "basico",
+    "modelo": "CAM",
     "pax": 4,
     "puertas": 4,
     "conbustible": "95 oct",
@@ -146,6 +162,7 @@ export const datosCoches: IDataCoches[] = [{
     "vehiculo": "peugeot807",
     "descripcion": "Peugeot 807",
     "clasevehiculo": "7pax",
+    "modelo": "807",
     "pax": 7,
     "puertas": 4,
     "conbustible": "diesel",
@@ -162,6 +179,7 @@ export const datosCoches: IDataCoches[] = [{
     "vehiculo": "citroenC1",
     "descripcion": "Citröen C1",
     "clasevehiculo": "basico",
+    "modelo": "C1",
     "pax": 4,
     "puertas": 4,
     "conbustible": "95 oct",
@@ -178,6 +196,7 @@ export const datosCoches: IDataCoches[] = [{
     "vehiculo": "piaggioLiberty125",
     "descripcion": "Piaggio Liberty 125",
     "clasevehiculo": "motos1",
+    "modelo": "125",
     "pax": 2,
     "puertas": 0,
     "conbustible": "95 oct",
@@ -194,6 +213,7 @@ export const datosCoches: IDataCoches[] = [{
     "vehiculo": "citroenC3",
     "descripcion": "Citröen C3",
     "clasevehiculo": "5pax",
+    "modelo": "C3",
     "pax": 5,
     "puertas": 4,
     "conbustible": "95 oct",
@@ -210,6 +230,7 @@ export const datosCoches: IDataCoches[] = [{
     "vehiculo": "citroenC1Automatic",
     "descripcion": "Citröen C1 Auto",
     "clasevehiculo": "openAutomatic",
+    "modelo": "C1",
     "pax": 4,
     "puertas": 4,
     "conbustible": "95 oct",
@@ -226,6 +247,7 @@ export const datosCoches: IDataCoches[] = [{
     "vehiculo": "peugeot208",
     "descripcion": "Peugeot 208",
     "clasevehiculo": "5pax",
+    "modelo": "208",
     "pax": 5,
     "puertas": 4,
     "conbustible": "95 oct",
