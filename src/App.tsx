@@ -28,11 +28,6 @@ const App: React.FC = () => {
 
   const [showLoading, setShowLoading] = useState(true);
 
-  // setTimeout(() => {
-  //   setShowLoading(false);
-  // }, 2000);
-
-
   return (
     <IonApp>
       <IonLoading

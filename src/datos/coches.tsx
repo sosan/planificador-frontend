@@ -1,4 +1,5 @@
 import moment from "moment";
+import {LISTADO_IMAGENES_COCHES} from "./imagenescoches"
 
 export const items = [
     {
@@ -48,24 +49,24 @@ export const ORDEN_LISTADO_CLASE_COCHES = [
 
 
 export interface IDataCoches {
-    "_id": string,
-
-    "matricula": string,
-    "precio": number,
-
-    "vehiculo": string,
-    "descripcion": string,
-    "clasevehiculo": string,
-    "modelo": string,
-    "pax": number,
-    "puertas": number,
-    "conbustible": string,
-    "transmision": string,
-    "topCase": number,
-    "aireacondicionado": boolean,
-    "franquicia": number,
-    "entregado": boolean,
-    "devuelto": boolean,
+    "_id": string;
+    "matricula": string;
+    "precio": number;
+    "vehiculo": string;
+    "descripcion": string;
+    "clasevehiculo": string;
+    "modelo": string;
+    "pax": number;
+    "puertas": number;
+    "conbustible": string;
+    "transmision": string;
+    "topCase": number;
+    "aireacondicionado": boolean;
+    "franquicia": number;
+    "entregado": boolean;
+    "devuelto": boolean;
+    "srcImage": any;
+    "altImage": string;
 
 
 };
@@ -86,7 +87,9 @@ export const dataCars: IDataCoches[] = [{
     "entregado": false,
     "devuelto": false,
     "matricula": "",
-    "precio": 100
+    "precio": 100,
+    "srcImage": LISTADO_IMAGENES_COCHES.suzukyBurgman125,
+    "altImage": ""
 
     
 }, {
@@ -105,7 +108,9 @@ export const dataCars: IDataCoches[] = [{
     "entregado": false,
     "devuelto": false,
     "matricula": "",
-    "precio": 100
+    "precio": 100,
+    "srcImage": LISTADO_IMAGENES_COCHES.citroenC1open,
+    "altImage": ""
 }, {
     "_id": "606651cbf59ae674f6c4727b",
     "vehiculo": "toyotaAygoOpen",
@@ -122,7 +127,9 @@ export const dataCars: IDataCoches[] = [{
     "entregado": false,
     "devuelto": false,
     "matricula": "",
-    "precio": 100
+    "precio": 100,
+    "srcImage": LISTADO_IMAGENES_COCHES.toyotaAygoOpen,
+    "altImage": ""
 }, {
     "_id": "606651cbf59ae674f6c4727c",
     "vehiculo": "peugeot108",
@@ -139,7 +146,10 @@ export const dataCars: IDataCoches[] = [{
     "entregado": false,
     "devuelto": false,
     "matricula": "",
-    "precio": 100
+    "precio": 100,
+    "srcImage": LISTADO_IMAGENES_COCHES.peugeot108,
+    "altImage": ""
+    
 }, {
     "_id": "606651cbf59ae674f6c4727d",
     "vehiculo": "toyotaAygo",
@@ -156,7 +166,10 @@ export const dataCars: IDataCoches[] = [{
     "entregado": false,
     "devuelto": false,
     "matricula": "",
-    "precio": 100
+    "precio": 100,
+    "srcImage": LISTADO_IMAGENES_COCHES.toyotaAygo,
+    "altImage": ""
+
 }, {
     "_id": "606651cbf59ae674f6c4727e",
     "vehiculo": "peugeot807",
@@ -173,7 +186,9 @@ export const dataCars: IDataCoches[] = [{
     "entregado": false,
     "devuelto": false,
     "matricula": "",
-    "precio": 100
+    "precio": 100,
+    "srcImage": LISTADO_IMAGENES_COCHES.peugeot807,
+    "altImage": ""
 }, {
     "_id": "606651cbf59ae674f6c4727f",
     "vehiculo": "citroenC1",
@@ -190,7 +205,9 @@ export const dataCars: IDataCoches[] = [{
     "entregado": false,
     "devuelto": false,
     "matricula": "",
-    "precio": 100
+    "precio": 100,
+    "srcImage": LISTADO_IMAGENES_COCHES.citroenC1,
+    "altImage": ""
 }, {
     "_id": "606651cbf59ae674f6c47280",
     "vehiculo": "piaggioLiberty125",
@@ -207,7 +224,9 @@ export const dataCars: IDataCoches[] = [{
     "entregado": false,
     "devuelto": false,
     "matricula": "",
-    "precio": 100
+    "precio": 100,
+    "srcImage": LISTADO_IMAGENES_COCHES.piaggioLiberty125,
+    "altImage": ""
 }, {
     "_id": "606651cbf59ae674f6c47281",
     "vehiculo": "citroenC3",
@@ -224,7 +243,9 @@ export const dataCars: IDataCoches[] = [{
     "entregado": false,
     "devuelto": false,
     "matricula": "",
-    "precio": 100
+    "precio": 100,
+    "srcImage": LISTADO_IMAGENES_COCHES.citroenC3,
+    "altImage": ""
 }, {
     "_id": "606651cbf59ae674f6c47282",
     "vehiculo": "citroenC1Automatic",
@@ -241,7 +262,9 @@ export const dataCars: IDataCoches[] = [{
     "entregado": false,
     "devuelto": false,
     "matricula": "",
-    "precio": 100
+    "precio": 100,
+    "srcImage": LISTADO_IMAGENES_COCHES.citroenC1Automatic,
+    "altImage": ""
 }, {
     "_id":  "60da00ceaa9590bf3e752794",
     "vehiculo": "peugeot208",
@@ -258,5 +281,7 @@ export const dataCars: IDataCoches[] = [{
     "entregado": false,
     "devuelto": false,
     "matricula": "",
-    "precio": 100
+    "precio": 100,
+    "srcImage": LISTADO_IMAGENES_COCHES.peugeot208,
+    "altImage": ""
 }]

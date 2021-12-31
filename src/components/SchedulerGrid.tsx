@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { Component,  } from 'react';
 import TimelineWrapper, { ENUM_TIPOS_EVENTOS } from "./TimelineWrapper";
 import { IDataCoches, dataCars, items, ORDEN_LISTADO_CLASE_COCHES } from "../datos/coches";
-import { htmlLightBoxTemplatePreserva } from "../componentsHtml/renderLightBox";
 
-import moment from 'moment';
+// import moment from 'moment';
+// import { htmlLightBoxTemplatePreserva } from "../componentsHtml/renderLightBox";
 import "react-calendar-timeline/lib/Timeline.css";
 import "../css/Timeline.css";
 
+import imagencitroenC1open from "../images/CitroenC1_open.webp";
 
 
 
@@ -71,7 +72,9 @@ type typeGroup =
     id: number, 
     title: string,
     clasevehiculo: string,
+    vehiculo: string,
     modelo: string,
+    srcImage?: any,
     rightTitle?: string,
     height?: number,
     width?: number,
@@ -81,21 +84,24 @@ type typeGroup =
 }
 
 
-export class SchedulerContainer extends React.Component<ContainerProps, ContainerState>
+export class SchedulerContainer extends Component<ContainerProps, ContainerState>
 {
     groups: typeGroup[];
     
     constructor(props: any) {
         super(props);
         this.state = {
-            borrado: false
+            borrado: false,
+            
         };
         
         this.groups = this.createGroupForCars(dataCars);
 
     }
 
-    logDataUpdate = (textEv: string, ev: any, id: any) => {
+    onDoubleClicked = (groupId: any, time: any, evento: any) => {
+        console.log("clickedado desde grupo=" + groupId + " time=" + time + " evento=" + evento );
+
 
     }
 
@@ -105,15 +111,6 @@ export class SchedulerContainer extends React.Component<ContainerProps, Containe
         // console.log("desmontado");
         // this.setState({ borrado: true });
     }
-
-
-    replaceTemplates(template: any, newTextReplace: any, idToReplace: string) {
-
-        const htmlTemplate = template.replace(new RegExp(idToReplace), newTextReplace);
-        return htmlTemplate;
-
-    }
-
 
     createGroupForCars(cars: IDataCoches[] )
     {
@@ -126,7 +123,9 @@ export class SchedulerContainer extends React.Component<ContainerProps, Containe
                 "id": i,
                 "title": `${cars[i].descripcion}`,
                 "clasevehiculo": `${cars[i].clasevehiculo}`,
+                "vehiculo": `${cars[i].vehiculo}`,
                 "modelo": `${cars[i].modelo}`,
+                "srcImage": imagencitroenC1open,
                 "rightTitle": "",
                 "height": 50,
                 "stackItems": true,
@@ -134,8 +133,31 @@ export class SchedulerContainer extends React.Component<ContainerProps, Containe
             
         }
 
+        // groupCreated = this.createImagesGroups(groupCreated, LISTADO_IMAGENES_COCHES);
+
         groupCreated = this.orderGroupCars(groupCreated, ORDEN_LISTADO_CLASE_COCHES);
         return groupCreated;
+    }
+
+    createImagesGroups(cars: typeGroup[], listadoImagenesCoches: any)
+    {
+        let _group: typeGroup[] = [];
+
+        // for (let key in listadoImagenesCoches)
+        // {
+            for (let i = 0; i < cars.length; i++)
+            {
+                const key = cars[i].vehiculo;
+
+                cars[i].srcImage = listadoImagenesCoches[key]
+                _group.push(cars[i]);
+                
+
+            }
+
+        // }
+
+        return _group;
     }
 
     orderGroupCars(cars: typeGroup[], ordenListadoCoches: string[] )
@@ -150,6 +172,7 @@ export class SchedulerContainer extends React.Component<ContainerProps, Containe
                 if (cars[j].clasevehiculo === ordenListadoCoches[i])
                 {
                     groupOrdered.push(cars[j]);
+                    
                 }
 
             }
@@ -167,8 +190,7 @@ export class SchedulerContainer extends React.Component<ContainerProps, Containe
                         <TimelineWrapper
                             groups={this.groups}
                             items={items}
-                            // visibleTimeStart={this.defaultTimeStart}
-                            // visibleTimeEnd={this.defaultTimeEnd}
+                            onDoubleClicked={this.onDoubleClicked}
                         />
                 }
 

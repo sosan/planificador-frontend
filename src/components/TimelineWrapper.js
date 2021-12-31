@@ -1,4 +1,17 @@
 import React, { Component,  } from 'react';
+import {
+    IonItem,
+    IonAvatar,
+    IonImg,
+    IonThumbnail,
+    IonLabel
+
+
+} from '@ionic/react';
+
+import { LISTADO_IMAGENES_COCHES } from "../datos/imagenescoches";
+import imagencitroenC1open from "../images/CitroenC1_open.webp";
+
 import { IDataEventos } from "./SchedulerGrid";
 
 import moment from 'moment';
@@ -11,7 +24,7 @@ import Timeline, {
     CustomHeader,
     TodayMarker,
     TimelineMarkers,
-    CustomMarker
+    
 } from "react-calendar-timeline";
 import containerResizeDetector from "react-calendar-timeline/lib/resize-detector/container";
 
@@ -49,6 +62,7 @@ export default class TimelineWrapper extends Component {
         this.state = { 
             groups: this.props.groups,
             items: this.props.items,
+            onDoubleClicked: this.props.onDoubleClicked,
             defaultTimeStart: _defaultTimeStart,
             defaultTimeEnd: _defaultTimeEnd,
             visibleTimeStart: _visibleTimeStart,
@@ -59,10 +73,7 @@ export default class TimelineWrapper extends Component {
 
     }
 
-    componentDidMount() {
-        
-    }
-
+    
     itemRenderer = ({ item, timelineContext, itemContext, getItemProps, getResizeProps }) => {
         const { left: leftResizeProps, right: rightResizeProps } = getResizeProps();
         // const backgroundColor = itemContext.selected ? (itemContext.dragging ? "red" : item.selectedBgColor) : item.bgColor;
@@ -81,15 +92,31 @@ export default class TimelineWrapper extends Component {
 
     };
 
-    groupRenderer = ({ group }) => {
+    groupRenderer = ( {group} ) => {
+
+        // group = this.createImagesGroups(group, LISTADO_IMAGENES_COCHES);
+        const key = group.vehiculo;
+        group["srcImage"] = LISTADO_IMAGENES_COCHES[key];
+
         return (
-            <div className="custom-group">
-                <span className="title anchura_minimo">{group.title}</span>
-                <span className="title anchura_minimo">{group.clasevehiculo}</span>
-                <span className="title anchura_minimo anchura_minimo_modelo">{group.modelo}</span>
-            </div>
+            <>
+            <IonItem className="flex-izquierda">
+                    <IonImg src={group.srcImage} className="anchura_vehiculo"  alt="" />
+                {/* <IonThumbnail slot="start">
+                </IonThumbnail> */}
+                
+                <IonLabel className="custom-group">
+                        <span className="title anchura_minimo">{group.title}</span>
+                        <span className="title anchura_minimo">{group.clasevehiculo}</span>
+                        <span className="title anchura_minimo anchura_minimo_modelo">{group.modelo}</span>
+
+                </IonLabel>
+            </IonItem>
+            </>
         )
     }
+
+   
 
 
     handleItemMove = (itemId, dragTime, newGroupOrder) => {
@@ -141,11 +168,11 @@ export default class TimelineWrapper extends Component {
     };
 
     handleTimeChange = (visibleTimeStart, visibleTimeEnd) => {
-        console.log(
-            "time change",
-            moment(visibleTimeStart, "x").format(),
-            moment(visibleTimeEnd, "x").format()
-        );
+        // console.log(
+        //     "time change",
+        //     moment(visibleTimeStart, "x").format(),
+        //     moment(visibleTimeEnd, "x").format()
+        // );
         this.setState({
             visibleTimeStart,
             visibleTimeEnd,
@@ -153,6 +180,25 @@ export default class TimelineWrapper extends Component {
         });
     };
 
+
+    // onCanvasDoubleClick(groupId, time, evento)
+    // {
+    //     console.log("show popup");
+    // }
+
+
+    // onCanvasClick(groupId, time, e)
+    // {
+    //     console.log("clicked")
+    // }
+
+
+    
+
+    componentDidMount() {
+        
+
+    }
 
     
     render() {
@@ -180,8 +226,7 @@ export default class TimelineWrapper extends Component {
                     onItemResize={this.handleItemResize}
                     useResizeHandle={true}
                     onTimeChange={this.handleTimeChange}
-                    // minZoom={10 * 24 * 60 * 60 * 1000}
-                    // maxZoom={10 * 24 * 60 * 60 * 1000}
+                    onCanvasDoubleClick={(groupId, time, evento) => { this.props.onDoubleClicked(groupId, time, evento); } }
                     // itemRenderer={this.itemRenderer}
                 >
                     <TimelineMarkers>
@@ -200,47 +245,6 @@ export default class TimelineWrapper extends Component {
                         </SidebarHeader>
                         <DateHeader unit="month" />
                         <DateHeader unit="day" style={{ height: 50 }} />
-                        {/* <CustomHeader height={50} headerData={{ someData: 'data' }} unit="year">
-                            {({
-                                headerContext: { intervals },
-                                getRootProps,
-                                getIntervalProps,
-                                showPeriod,
-                                data,
-                            }) => {
-                                return (
-                                    <div {...getRootProps()}>
-                                        {intervals.map(interval => {
-                                            const intervalStyle = {
-                                                lineHeight: '30px',
-                                                textAlign: 'center',
-                                                borderLeft: '1px solid black',
-                                                cursor: 'pointer',
-                                                backgroundColor: 'gray',
-                                                color: 'white'
-                                            }
-                                            return (
-                                                <div
-                                                    onClick={() => {
-                                                        showPeriod(interval.startTime, interval.endTime)
-                                                    }}
-                                                    {...getIntervalProps({
-                                                        interval,
-                                                        style: intervalStyle
-                                                    })}
-                                                >
-                                                    <div className="sticky">
-                                                        {interval.startTime.format('YYYY')}
-                                                    </div>
-                                                </div>
-                                            )
-                                        })}
-                                    </div>
-                                )
-                            }}
-                        </CustomHeader> */}
-                        
-                       
                     </TimelineHeaders>
                 </Timeline>
             </div>
