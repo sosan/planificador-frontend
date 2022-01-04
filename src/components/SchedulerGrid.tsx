@@ -1,14 +1,12 @@
-import React, { Component,  } from 'react';
+import React, { Component, useState  } from 'react';
 import TimelineWrapper, { ENUM_TIPOS_EVENTOS } from "./TimelineWrapper";
 import { IDataCoches, dataCars, items, ORDEN_LISTADO_CLASE_COCHES } from "../datos/coches";
+import { ModalDialog } from "./Modal";
 
-// import moment from 'moment';
-// import { htmlLightBoxTemplatePreserva } from "../componentsHtml/renderLightBox";
 import "react-calendar-timeline/lib/Timeline.css";
 import "../css/Timeline.css";
 
 import imagencitroenC1open from "../images/CitroenC1_open.webp";
-
 
 
 interface ContainerProps {
@@ -16,6 +14,7 @@ interface ContainerProps {
 }
 type ContainerState = {
     borrado: boolean;
+    modalVisible: boolean;
 }
 
 
@@ -92,6 +91,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         super(props);
         this.state = {
             borrado: false,
+            modalVisible: false,
             
         };
         
@@ -101,15 +101,11 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     onDoubleClicked = (groupId: any, time: any, evento: any) => {
         console.log("clickedado desde grupo=" + groupId + " time=" + time + " evento=" + evento );
-
+        this.setState({"modalVisible": true });
 
     }
 
-
-
     componentWillUnmount() {
-        // console.log("desmontado");
-        // this.setState({ borrado: true });
     }
 
     createGroupForCars(cars: IDataCoches[] )
@@ -133,8 +129,6 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             
         }
 
-        // groupCreated = this.createImagesGroups(groupCreated, LISTADO_IMAGENES_COCHES);
-
         groupCreated = this.orderGroupCars(groupCreated, ORDEN_LISTADO_CLASE_COCHES);
         return groupCreated;
     }
@@ -143,19 +137,14 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
     {
         let _group: typeGroup[] = [];
 
-        // for (let key in listadoImagenesCoches)
-        // {
-            for (let i = 0; i < cars.length; i++)
-            {
-                const key = cars[i].vehiculo;
+        for (let i = 0; i < cars.length; i++)
+        {
+            const key = cars[i].vehiculo;
 
-                cars[i].srcImage = listadoImagenesCoches[key]
-                _group.push(cars[i]);
-                
+            cars[i].srcImage = listadoImagenesCoches[key]
+            _group.push(cars[i]);
 
-            }
-
-        // }
+        }
 
         return _group;
     }
@@ -181,8 +170,25 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         return groupOrdered;
     }
 
-    render() {
+    onCloseModal = () => {
+        
+        this.setState({"modalVisible": false});
 
+    }
+
+    onModalDidDismiss = async () => {
+        
+        this.setState({ "modalVisible": false });
+    }
+
+    // onClickedCanvas(groupId: any, time: any, evento: any)
+    // {
+    //     // console.log("clcikec canvas");
+    // }
+
+  
+    render() {
+        console.log("SchedulerGrid this.state.modalvisible=" + this.state.modalVisible);
         return (
             <>
                 {
@@ -191,9 +197,22 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                             groups={this.groups}
                             items={items}
                             onDoubleClicked={this.onDoubleClicked}
-                        />
-                }
+                            
+                    />
 
+                }
+                
+                {
+                    
+                    // (this.state.modalVisible === false) ? null :
+                    <ModalDialog 
+                        isVisible={this.state.modalVisible}
+                        onCloseModal={ this.onCloseModal } 
+                        onModalDidDismiss={this.onModalDidDismiss }
+                    />
+                        
+                    
+                }
             </>
         );
     }
