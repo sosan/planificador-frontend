@@ -89,6 +89,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
     
     constructor(props: any) {
         super(props);
+
         this.state = {
             borrado: false,
             modalVisible: false,
@@ -181,14 +182,9 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         this.setState({ "modalVisible": false });
     }
 
-    // onClickedCanvas(groupId: any, time: any, evento: any)
-    // {
-    //     // console.log("clcikec canvas");
-    // }
-
-  
     render() {
-        console.log("SchedulerGrid this.state.modalvisible=" + this.state.modalVisible);
+        // console.log("SchedulerGrid this.state.modalvisible=" + this.state.modalVisible);
+        
         return (
             <>
                 {
