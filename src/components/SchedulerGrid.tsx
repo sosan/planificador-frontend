@@ -198,9 +198,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
                 }
                 
-                {
                     
-                    // (this.state.modalVisible === false) ? null :
                     <ModalDialog 
                         isVisible={this.state.modalVisible}
                         onCloseModal={ this.onCloseModal } 
@@ -208,7 +206,6 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                     />
                         
                     
-                }
             </>
         );
     }
