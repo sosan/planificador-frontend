@@ -1,8 +1,8 @@
 import React from 'react';
-import SchedulerWrapper from './SchedulerWrapper';
+import SchedulerWrapper from './SchedulerWrapper_borrar';
 import { IDataCoches, dataCars } from "../datos/coches"
 import { htmlLightBoxTemplatePreserva } from "../componentsHtml/renderLightBox";
-import { ENUM_TIPOS_EVENTOS } from "./SchedulerWrapper";
+import { ENUM_TIPOS_EVENTOS } from "./SchedulerWrapper_borrar";
 
 
 

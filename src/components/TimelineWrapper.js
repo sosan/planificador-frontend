@@ -1,16 +1,13 @@
 import React, { Component,  } from 'react';
 import {
     IonItem,
-    IonAvatar,
     IonImg,
-    IonThumbnail,
     IonLabel
 
 
 } from '@ionic/react';
 
 import { LISTADO_IMAGENES_COCHES } from "../datos/imagenescoches";
-import imagencitroenC1open from "../images/CitroenC1_open.webp";
 
 import { IDataEventos } from "./SchedulerGrid";
 
@@ -92,32 +89,25 @@ export default class TimelineWrapper extends Component {
 
     };
 
-    groupRenderer = ( {group} ) => {
+    groupRenderer = ( {group: elementGroup} ) => {
 
         // group = this.createImagesGroups(group, LISTADO_IMAGENES_COCHES);
-        const key = group.vehiculo;
-        group["srcImage"] = LISTADO_IMAGENES_COCHES[key];
+        const key = elementGroup.vehiculo;
+        elementGroup["srcImage"] = LISTADO_IMAGENES_COCHES[key];
 
         return (
             <>
             <IonItem className="flex-izquierda">
-                    <IonImg src={group.srcImage} className="anchura_vehiculo"  alt="" />
-                {/* <IonThumbnail slot="start">
-                </IonThumbnail> */}
-                
+                <IonImg src={elementGroup.srcImage} className="anchura_vehiculo"  alt="" />
                 <IonLabel className="custom-group">
-                        <span className="title anchura_minimo">{group.title}</span>
-                        <span className="title anchura_minimo">{group.clasevehiculo}</span>
-                        <span className="title anchura_minimo anchura_minimo_modelo">{group.modelo}</span>
-
+                    <span className="title anchura_minimo">{elementGroup.title}</span>
+                    <span className="title anchura_minimo">{elementGroup.clasevehiculo}</span>
+                    <span className="title anchura_minimo anchura_minimo_modelo">{elementGroup.modelo}</span>
                 </IonLabel>
             </IonItem>
             </>
         )
     }
-
-   
-
 
     handleItemMove = (itemId, dragTime, newGroupOrder) => {
         
@@ -136,8 +126,8 @@ export default class TimelineWrapper extends Component {
                 const fechaDestinoStart = fechaDestino.setHours(0, 0, 0, 0);
                 const fechaDestinoEnd = fechaDestino.setHours(23, 59, 59, 0);
                 
-                items[i].start_time = moment(fechaDestinoStart); //new Date(fechaDestinoStart);
-                items[i].end_time = moment(fechaDestinoEnd); //new Date(fechaDestinoEnd);
+                items[i].start_time = moment(fechaDestinoStart);
+                items[i].end_time = moment(fechaDestinoEnd);
                 items[i].group = group.id;
                 
             }
@@ -168,11 +158,7 @@ export default class TimelineWrapper extends Component {
     };
 
     handleTimeChange = (visibleTimeStart, visibleTimeEnd) => {
-        // console.log(
-        //     "time change",
-        //     moment(visibleTimeStart, "x").format(),
-        //     moment(visibleTimeEnd, "x").format()
-        // );
+        
         this.setState({
             visibleTimeStart,
             visibleTimeEnd,
@@ -180,23 +166,7 @@ export default class TimelineWrapper extends Component {
         });
     };
 
-
-    // onCanvasDoubleClick(groupId, time, evento)
-    // {
-    //     console.log("show popup");
-    // }
-
-
-    // onCanvasClick(groupId, time, e)
-    // {
-    //     console.log("clicked")
-    // }
-
-
-    
-
     componentDidMount() {
-        
 
     }
 
