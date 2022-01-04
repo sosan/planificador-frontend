@@ -1,4 +1,4 @@
-import { IonBackdrop, IonButton, IonCol, IonGrid, IonItem, IonList, IonModal, IonRow } from '@ionic/react';
+import { IonBackdrop, IonButton, IonCol, IonGrid, IonInput, IonItem, IonLabel, IonList, IonModal, IonRow } from '@ionic/react';
 import React, { Component, useState } from 'react';
 import "../css/Modal.css";
 
@@ -55,9 +55,9 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                     // cssClass='modal_general'
                 >
                     <IonGrid className="grid_cabecera">
-                        <IonRow>
+                        <IonRow className="centradovertical">
                             <IonCol size="8">
-                                <p>This is modal content</p>
+                                <h1>Rellenar Reserva</h1>
                             </IonCol>
                             <IonCol >
                                 <IonButton onClick={() => {this.state.onCloseModal(); } }>Cerrar Modal</IonButton>
@@ -66,10 +66,14 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                         <IonRow>
                             <IonList className="ancho_100">
                                 <IonItem>
-                                    123
+                                    <IonLabel position='floating' className="">Nota de reserva</IonLabel>
+                                    <IonInput name='notareserva'></IonInput>
                                 </IonItem>
                                 <IonItem>
-                                    123
+                                    <IonLabel className="">Cantidad de dias</IonLabel>
+                                    <IonButton className="boton_ligthbox boton_menos_lightbox" fill='solid' size='large' shape="round"  color="#3a7202">-</IonButton>
+                                    <IonInput className="input_numero_dias" name='numerodias' value={3} type='number' min='1' max='99999' autocomplete="off"  />
+                                    <IonButton className="boton_ligthbox boton_mas_lightbox">+</IonButton>
                                 </IonItem>
                                 <IonItem>
                                     123

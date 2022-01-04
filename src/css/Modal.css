@@ -4,7 +4,62 @@
 
 }
 
+.centradovertical
+{
+    align-items: center !important;
+}
+
 .ancho_100
 {
     width: 100%;
+}
+
+.input_numero_dias
+{
+
+    height: 50px !important;
+    width: 100px !important;
+    margin-top: 1px !important;
+    background-color: transparent;
+    color: rgb(255, 255, 255) !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
+    text-align: center !important;
+}
+
+.boton_ligthbox
+{
+    font-size: 20px !important;
+    font-weight: 900 !important;
+    border-radius: 10px !important;
+    text-transform: uppercase !important;
+    /* border: 1px solid #fff !important; */
+    color: #e6e6e6 !important;
+    /* padding: 15px 25px !important; */
+
+}
+
+.boton_mas_lightbox
+{
+    
+    background-color: rgb(58,114,2) !important;
+    
+}
+
+.boton_menos_lightbox
+{
+    background-color: rgb(0, 41, 175) !important;
+}
+
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none !important;
+  margin: 0 !important;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield !important;
 }
