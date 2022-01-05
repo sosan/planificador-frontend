@@ -59,7 +59,11 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
     
 
     render() {
-        
+
+        const fechaAhora = new Date();
+        const textoFechaMinutos = `${fechaAhora.getDate()}-${fechaAhora.getMonth() + 1}-${fechaAhora.getFullYear()} ${fechaAhora.getHours().toString().padStart(2, "00")}:${fechaAhora.getMinutes().toString().padStart(2, "00")}`;
+        const textoFecha = `${fechaAhora.getDate()}-${fechaAhora.getMonth() + 1}-${fechaAhora.getFullYear()}`;
+
         return(
             <>
                 <IonModal 
@@ -70,6 +74,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                         <IonRow className="centradovertical">
                             <IonCol size="8">
                                 <h1>Rellenar Reserva</h1>
+                                <span>{textoFechaMinutos}</span>
                             </IonCol>
                             <IonCol >
                                 <IonButton onClick={() => {this.props.onCloseModal(); } }>Cerrar Modal</IonButton>
@@ -80,6 +85,10 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 <IonItem>
                                     <IonLabel position='floating' className="">Nota de reserva</IonLabel>
                                     <IonInput name='notareserva'></IonInput>
+                                </IonItem>
+                                <IonItem>
+                                    <IonLabel className="">Fecha</IonLabel>
+                                    <IonLabel className="">{textoFecha}</IonLabel>
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel className="">Cantidad de dias</IonLabel>
