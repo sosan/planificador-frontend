@@ -189,7 +189,6 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
     }
 
     render() {
-        // console.log("SchedulerGrid this.state.modalvisible=" + this.state.modalVisible);
         
         return (
             <>

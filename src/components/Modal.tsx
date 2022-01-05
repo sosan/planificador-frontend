@@ -1,9 +1,21 @@
-import { IonBackdrop, IonButton, IonCol, IonGrid, IonInput, IonItem, IonLabel, IonList, IonModal, IonRow, IonSelect, IonSelectOption } from '@ionic/react';
 import React, { Component, useState } from 'react';
-import "../css/Modal.css";
+import { IonButton,
+    IonCol,
+    IonGrid,
+    IonInput,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonModal,
+    IonRow,
+    IonSelect,
+    IonSelectOption 
+} from '@ionic/react';
+
 import { IlistColaborators }  from "../datos/listadoColaboradores";
 import { IDataCoches } from "../datos/coches";
 import { IlistFlotas } from "../datos/listadoFlotas";
+import "../css/Modal.css";
 
 interface ContainerProps {
     isVisible: boolean;
@@ -15,7 +27,6 @@ interface ContainerProps {
 }
 type ContainerState = {
     isVisible: boolean;
-    // onCloseModal: any;
 }
 
 
@@ -30,31 +41,12 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         super(props);
         this.state = {
             "isVisible": this.props.isVisible,
-            // "onCloseModal": this.props.onCloseModal,
+
         };
-
-        console.log("dentro de ==> despues estado isvisible" + this.state.isVisible);
-
-        
-        // this.htmlSelectionCars: any;
-        for (let i = 0; i < this.props.dataCars.length; i++) {
-
-            // console.log("i=" + i + this.props.dataCars[i].vehiculo);
-            // this.htmlSelectionCars += 
-            //     <IonSelectOption value={this.props.dataCars[i].vehiculo}>${this.props.dataCars[i].descripcion}</IonSelectOption>
-            // ;
-            // console.log("htmlselc=" +  JSON.stringify(this.htmlSelectionCars));
-
-        }
-
-
     }
 
     componentDidMount()
     {
-        // this.setState( {
-        //     "isVisible": this.props.isVisible,
-        // });
     }
 
    
@@ -62,7 +54,6 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
     componentDidUpdate()
     {
 
-        // console.log("this.state.isvisible" + this.state.isVisible);
     }
 
     
