@@ -69,3 +69,11 @@ input[type=number] {
     --width: 300px !important;
 }
 
+.modal-wrapper
+{
+    height: 700px !important;
+    
+
+}
+
+

@@ -24,9 +24,15 @@ interface ContainerProps {
     dataCars: IDataCoches[];
     listColaborators: IlistColaborators[];
     listFlotas: IlistFlotas[];
+    tiempoClick: any;
+    groupId: any;
+
 }
 type ContainerState = {
     isVisible: boolean;
+    tiempoClick?: any;
+    groupId?: any;
+    cantidadDias: number;
 }
 
 
@@ -34,35 +40,62 @@ type ContainerState = {
 export class ModalDialog extends Component<ContainerProps, ContainerState>
 {
 
-    htmlSelectionCars: any;
-
     constructor(props: any)
     {
         super(props);
         this.state = {
             "isVisible": this.props.isVisible,
-
+            "cantidadDias": 3,
         };
+        
     }
 
     componentDidMount()
     {
+
+        console.log("montado=" + this.state.tiempoClick + "" + this.state.groupId );
     }
 
    
 
     componentDidUpdate()
     {
-
+        console.log("updated=" + this.props.tiempoClick + " grupo=" + this.props.groupId);
     }
 
-    
+
+    restarDias()
+    {
+        console.log("restart");
+        let cantidadDias = this.state.cantidadDias;
+        cantidadDias--;
+        if (cantidadDias < 1)
+        {
+            cantidadDias = 1;
+        }
+        
+        this.setState({"cantidadDias": cantidadDias });
+    }
+
+    sumarDias()
+    {
+        console.log("sumar");
+        let cantidadDias = this.state.cantidadDias;
+        cantidadDias++;
+        this.setState({ "cantidadDias": cantidadDias });
+        
+    }
 
     render() {
 
+        const fechaRecogida = new Date(this.props.tiempoClick);
+        const textoFechaRecogida = `${fechaRecogida.getDate().toString().padStart(2, "00")}-${(fechaRecogida.getMonth() + 1).toString().padStart(2, "00")}-${fechaRecogida.getFullYear()}`;
+        
         const fechaAhora = new Date();
-        const textoFechaMinutos = `${fechaAhora.getDate()}-${fechaAhora.getMonth() + 1}-${fechaAhora.getFullYear()} ${fechaAhora.getHours().toString().padStart(2, "00")}:${fechaAhora.getMinutes().toString().padStart(2, "00")}`;
-        const textoFecha = `${fechaAhora.getDate()}-${fechaAhora.getMonth() + 1}-${fechaAhora.getFullYear()}`;
+        const textoFechaMinutos = `${fechaAhora.getDate().toString().padStart(2, "00")}-${(fechaAhora.getMonth() + 1).toString().padStart(2, "00")}-${fechaAhora.getFullYear()} ${fechaAhora.getHours().toString().padStart(2, "00")}:${fechaAhora.getMinutes().toString().padStart(2, "00")}`;
+
+        const fechaDevolucion = new Date( fechaRecogida.setDate(fechaRecogida.getDate() + (this.state.cantidadDias - 1) ));
+        const textoFechaDevolucion = `${fechaDevolucion.getDate().toString().padStart(2, "00")}-${(fechaDevolucion.getMonth() + 1).toString().padStart(2, "00")}-${fechaDevolucion.getFullYear()}`;;
 
         return(
             <>
@@ -74,7 +107,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                         <IonRow className="centradovertical">
                             <IonCol size="8">
                                 <h1>Rellenar Reserva</h1>
-                                <span>{textoFechaMinutos}</span>
+                                <span>Fecha alta: {textoFechaMinutos}</span>
                             </IonCol>
                             <IonCol >
                                 <IonButton onClick={() => {this.props.onCloseModal(); } }>Cerrar Modal</IonButton>
@@ -87,14 +120,22 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                     <IonInput name='notareserva'></IonInput>
                                 </IonItem>
                                 <IonItem>
-                                    <IonLabel className="">Fecha</IonLabel>
-                                    <IonLabel className="">{textoFecha}</IonLabel>
+                                    <IonLabel className="">Matricula</IonLabel>
+                                    <IonLabel className="">Matricula</IonLabel>
+                                </IonItem>
+                                <IonItem>
+                                    <IonLabel className="">Fecha Recogida</IonLabel>
+                                    <IonLabel className="">{textoFechaRecogida}</IonLabel>
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel className="">Cantidad de dias</IonLabel>
-                                    <IonButton className="boton_ligthbox boton_menos_lightbox" fill='solid' size='large' shape="round"  color="#ffffff">-</IonButton>
-                                    <IonInput className="input_numero_dias" name='numerodias' value={3} type='number' min='1' max='99999' autocomplete="off"  />
-                                    <IonButton className="boton_ligthbox boton_mas_lightbox" fill='solid' size='large' shape="round" color="#ffffff">+</IonButton>
+                                    <IonButton onClick={() => { this.restarDias(); }} className="boton_ligthbox boton_menos_lightbox" fill='solid' size='large' shape="round"  color="#ffffff">-</IonButton>
+                                    <IonInput className="input_numero_dias" name='numerodias' value={this.state.cantidadDias} type='number' min='1' max='99999' autocomplete="off"  />
+                                    <IonButton onClick={() => { this.sumarDias(); }} className="boton_ligthbox boton_mas_lightbox" fill='solid' size='large' shape="round" color="#ffffff">+</IonButton>
+                                </IonItem>
+                                <IonItem>
+                                    <IonLabel className="">Fecha Devolucion</IonLabel>
+                                    <IonLabel className="">{textoFechaDevolucion}</IonLabel>
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel className="">Estado</IonLabel>

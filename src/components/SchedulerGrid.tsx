@@ -21,6 +21,8 @@ interface ContainerProps {
 type ContainerState = {
     borrado: boolean;
     modalVisible: boolean;
+    tiempoClick?: any;
+    groupId?: any;
 }
 
 
@@ -108,7 +110,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     onDoubleClicked = (groupId: any, time: any, evento: any) => {
         console.log("clickedado desde grupo=" + groupId + " time=" + time + " evento=" + evento );
-        this.setState({"modalVisible": true });
+        this.setState({ "modalVisible": true, "tiempoClick": time, "groupId": groupId });
 
     }
 
@@ -205,6 +207,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
                 <ModalDialog 
                     isVisible={this.state.modalVisible}
+                    tiempoClick={this.state.tiempoClick}
+                    groupId={this.state.groupId}
                     onCloseModal={ this.onCloseModal } 
                     onModalDidDismiss={this.onModalDidDismiss }
                     dataCars={dataCars}
