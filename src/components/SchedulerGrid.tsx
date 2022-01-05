@@ -1,7 +1,13 @@
 import React, { Component, useState  } from 'react';
 import TimelineWrapper, { ENUM_TIPOS_EVENTOS } from "./TimelineWrapper";
 import { IDataCoches, dataCars, items, ORDEN_LISTADO_CLASE_COCHES } from "../datos/coches";
+import { listColaborators } from "../datos/listadoColaboradores";
+import { listFlotas } from "../datos/listadoFlotas";
+
+
+
 import { ModalDialog } from "./Modal";
+
 
 import "react-calendar-timeline/lib/Timeline.css";
 import "../css/Timeline.css";
@@ -197,15 +203,16 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                     />
 
                 }
-                
-                    
-                    <ModalDialog 
-                        isVisible={this.state.modalVisible}
-                        onCloseModal={ this.onCloseModal } 
-                        onModalDidDismiss={this.onModalDidDismiss }
-                    />
-                        
-                    
+
+                <ModalDialog 
+                    isVisible={this.state.modalVisible}
+                    onCloseModal={ this.onCloseModal } 
+                    onModalDidDismiss={this.onModalDidDismiss }
+                    dataCars={dataCars}
+                    listColaborators={listColaborators}
+                    listFlotas={listFlotas}
+                />
+
             </>
         );
     }

@@ -63,3 +63,9 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield !important;
 }
+
+.sc-ion-alert-md-h
+{
+    --width: 300px !important;
+}
+
