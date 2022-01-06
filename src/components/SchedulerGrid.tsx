@@ -11,6 +11,7 @@ import "../css/Timeline.css";
 
 import imagencitroenC1open from "../images/CitroenC1_open.webp";
 
+const DRAG_SNAP = 60 * 60 * 24 * 1000;
 
 interface ContainerProps {
     name: string;
@@ -21,6 +22,7 @@ type ContainerState = {
     tiempoClick?: any;
     matricula?: string;
     vehiculo?: string;
+    cantidadDias: number;
 }
 
 
@@ -100,6 +102,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         this.state = {
             borrado: false,
             modalVisible: false,
+            cantidadDias: 3
             
         };
         
@@ -110,13 +113,16 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
     onDoubleClicked = async (groupId: any, time: any, evento: any) => {
         console.log("clickedado desde grupo=" + groupId + " time=" + time + " evento=" + evento );
 
+        if (time + DRAG_SNAP < new Date().getTime()) return;
+
         const [matricula, vehiculo] = await this.searchByID(groupId, this.groups);
         this.setState(
         { 
             "modalVisible": true,
             "tiempoClick": time,
             "matricula": matricula,
-            "vehiculo": vehiculo 
+            "vehiculo": vehiculo,
+            "cantidadDias": 3
         });
 
     }
@@ -208,7 +214,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     onCloseModal = () => {
         
-        this.setState({"modalVisible": false});
+        this.setState({"modalVisible": false, "cantidadDias": 3});
 
     }
 
@@ -235,6 +241,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 <ModalDialog 
                     isVisible={this.state.modalVisible}
                     tiempoClick={this.state.tiempoClick}
+                    cantidadDias={this.state.cantidadDias}
                     matricula={this.state.matricula}
                     vehiculo={this.state.vehiculo}
                     onCloseModal={ this.onCloseModal } 

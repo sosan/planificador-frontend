@@ -27,6 +27,7 @@ interface ContainerProps {
     tiempoClick: any;
     matricula?: string;
     vehiculo?: string;
+    cantidadDias: number;
 
 }
 type ContainerState = {
@@ -40,12 +41,13 @@ type ContainerState = {
 export class ModalDialog extends Component<ContainerProps, ContainerState>
 {
 
+
     constructor(props: any)
     {
         super(props);
         this.state = {
             "isVisible": this.props.isVisible,
-            "cantidadDias": 3,
+            "cantidadDias": this.props.cantidadDias || 3,
             
         };
         
@@ -54,14 +56,26 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
     componentDidMount()
     {
 
-        console.log("montado=" + this.state.tiempoClick  );
+        console.log("modal montado=" + this.state.tiempoClick  );
     }
 
    
 
     componentDidUpdate()
     {
-        console.log("updated=" + this.props.tiempoClick );
+        console.log("modal updated=" + this.props.tiempoClick );
+        
+    }
+    
+    static getDerivedStateFromProps(newProps: ContainerProps, newState: ContainerState) {
+        
+        if (newProps.isVisible === false)
+        {
+            return { "cantidadDias": 3 };
+
+        }
+        // return { "cantidadDias": newState.cantidadDias };
+
     }
 
 
@@ -96,6 +110,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
         const fechaDevolucion = new Date( fechaRecogida.setDate(fechaRecogida.getDate() + (this.state.cantidadDias - 1) ));
         const textoFechaDevolucion = `${fechaDevolucion.getDate().toString().padStart(2, "00")}-${(fechaDevolucion.getMonth() + 1).toString().padStart(2, "00")}-${fechaDevolucion.getFullYear()}`;;
+
 
         return(
             <>
@@ -149,7 +164,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                         <IonSelectOption value={"100pagado"}>100% Pagado</IonSelectOption>
                                     </IonSelect>
                                 </IonItem>
-                                <IonItem>
+                                {/* <IonItem>
                                     <IonLabel className="">Vehiculos</IonLabel>
                                     <IonSelect key="vehiculos" id="vehiculos" name='vehiculos' className="vehiculos_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                                         {
@@ -158,7 +173,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                             })
                                         }
                                     </IonSelect>
-                                </IonItem>
+                                </IonItem> */}
                                 <IonItem>
                                     <IonLabel className="">Colaboradores</IonLabel>
                                     <IonSelect key="colaboradores" id="colaboradores" name='colaboradores' className="colaboradores_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
