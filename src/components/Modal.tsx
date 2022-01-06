@@ -150,7 +150,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                     <IonSelect id="vehiculos" name='vehiculos' className="vehiculos_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                                         {
                                             this.props.dataCars.map( (elemento: any) => {
-                                                return <IonSelectOption key={elemento.vehiculo} value={elemento.vehiculo}>{elemento.descripcion}</IonSelectOption>;
+                                                return <IonSelectOption key={elemento.matricula} value={elemento.vehiculo}>{elemento.descripcion}</IonSelectOption>;
                                             })
                                         }
                                     </IonSelect>

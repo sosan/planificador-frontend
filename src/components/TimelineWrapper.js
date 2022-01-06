@@ -91,7 +91,6 @@ export default class TimelineWrapper extends Component {
 
     groupRenderer = ( {group: elementGroup} ) => {
 
-        // group = this.createImagesGroups(group, LISTADO_IMAGENES_COCHES);
         const key = elementGroup.vehiculo;
         elementGroup["srcImage"] = LISTADO_IMAGENES_COCHES[key];
 
@@ -210,7 +209,7 @@ export default class TimelineWrapper extends Component {
                     <TimelineHeaders>
                         <SidebarHeader>
                             {({ getRootProps }) => {
-                                return <div {...getRootProps()}>Left</div>
+                                return <div {...getRootProps()}>Busqueda....</div>
                             }}
                         </SidebarHeader>
                         <DateHeader unit="month" />
