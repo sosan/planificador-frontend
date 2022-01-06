@@ -97,9 +97,9 @@ export default class TimelineWrapper extends Component {
         return (
             <>
             <IonItem className="flex-izquierda">
-                <IonImg src={elementGroup.srcImage} className="anchura_vehiculo"  alt="" />
+                {/* <IonImg src={elementGroup.srcImage} className="anchura_vehiculo"  alt="" /> */}
                 <IonLabel className="custom-group">
-                    <span className="title anchura_minimo">{elementGroup.title}</span>
+                    <span className="title anchura_minimo">{elementGroup.matricula}</span>
                     <span className="title anchura_minimo">{elementGroup.clasevehiculo}</span>
                     <span className="title anchura_minimo anchura_minimo_modelo">{elementGroup.modelo}</span>
                 </IonLabel>

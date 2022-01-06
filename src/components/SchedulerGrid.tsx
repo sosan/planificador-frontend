@@ -3,9 +3,6 @@ import TimelineWrapper, { ENUM_TIPOS_EVENTOS } from "./TimelineWrapper";
 import { IDataCoches, dataCars, items, ORDEN_LISTADO_CLASE_COCHES } from "../datos/coches";
 import { listColaborators } from "../datos/listadoColaboradores";
 import { listFlotas } from "../datos/listadoFlotas";
-
-
-
 import { ModalDialog } from "./Modal";
 
 
@@ -22,7 +19,8 @@ type ContainerState = {
     borrado: boolean;
     modalVisible: boolean;
     tiempoClick?: any;
-    groupId?: any;
+    matricula?: string;
+    vehiculo?: string;
 }
 
 
@@ -87,6 +85,7 @@ type typeGroup =
     width?: number,
     bgColor?: string,
     stackItems?: boolean,
+    matricula: string;
 
 }
 
@@ -108,9 +107,36 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     }
 
-    onDoubleClicked = (groupId: any, time: any, evento: any) => {
+    onDoubleClicked = async (groupId: any, time: any, evento: any) => {
         console.log("clickedado desde grupo=" + groupId + " time=" + time + " evento=" + evento );
-        this.setState({ "modalVisible": true, "tiempoClick": time, "groupId": groupId });
+
+        const [matricula, vehiculo] = await this.searchByID(groupId, this.groups);
+        this.setState(
+        { 
+            "modalVisible": true,
+            "tiempoClick": time,
+            "matricula": matricula,
+            "vehiculo": vehiculo 
+        });
+
+    }
+
+    async searchByID(_id: number, grupos: typeGroup[])
+    {
+
+        let matricula = "", vehiculo = "";
+
+        for (let i = 0; i < this.groups.length; i++)
+        {
+            if (this.groups[i].id === _id)
+            {
+                matricula = this.groups[i].matricula;
+                vehiculo = this.groups[i].title;
+                break;
+            }
+        }
+
+        return [matricula, vehiculo];
 
     }
 
@@ -134,6 +160,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 "rightTitle": "",
                 "height": 50,
                 "stackItems": true,
+                "matricula": `${cars[i].matricula}`
             });
             
         }
@@ -208,7 +235,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 <ModalDialog 
                     isVisible={this.state.modalVisible}
                     tiempoClick={this.state.tiempoClick}
-                    groupId={this.state.groupId}
+                    matricula={this.state.matricula}
+                    vehiculo={this.state.vehiculo}
                     onCloseModal={ this.onCloseModal } 
                     onModalDidDismiss={this.onModalDidDismiss }
                     dataCars={dataCars}

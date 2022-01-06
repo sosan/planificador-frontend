@@ -25,13 +25,13 @@ interface ContainerProps {
     listColaborators: IlistColaborators[];
     listFlotas: IlistFlotas[];
     tiempoClick: any;
-    groupId: any;
+    matricula?: string;
+    vehiculo?: string;
 
 }
 type ContainerState = {
     isVisible: boolean;
     tiempoClick?: any;
-    groupId?: any;
     cantidadDias: number;
 }
 
@@ -46,6 +46,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         this.state = {
             "isVisible": this.props.isVisible,
             "cantidadDias": 3,
+            
         };
         
     }
@@ -53,20 +54,20 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
     componentDidMount()
     {
 
-        console.log("montado=" + this.state.tiempoClick + "" + this.state.groupId );
+        console.log("montado=" + this.state.tiempoClick  );
     }
 
    
 
     componentDidUpdate()
     {
-        console.log("updated=" + this.props.tiempoClick + " grupo=" + this.props.groupId);
+        console.log("updated=" + this.props.tiempoClick );
     }
 
 
     restarDias()
     {
-        console.log("restart");
+
         let cantidadDias = this.state.cantidadDias;
         cantidadDias--;
         if (cantidadDias < 1)
@@ -79,7 +80,6 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
     sumarDias()
     {
-        console.log("sumar");
         let cantidadDias = this.state.cantidadDias;
         cantidadDias++;
         this.setState({ "cantidadDias": cantidadDias });
@@ -121,7 +121,11 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel className="">Matricula</IonLabel>
-                                    <IonLabel className="">Matricula</IonLabel>
+                                    <IonLabel className="">{this.props.matricula}</IonLabel>
+                                </IonItem>
+                                <IonItem>
+                                    <IonLabel className="">Vehiculo</IonLabel>
+                                    <IonLabel className="">{this.props.vehiculo}</IonLabel>
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel className="">Fecha Recogida</IonLabel>
@@ -147,17 +151,17 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel className="">Vehiculos</IonLabel>
-                                    <IonSelect id="vehiculos" name='vehiculos' className="vehiculos_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                    <IonSelect key="vehiculos" id="vehiculos" name='vehiculos' className="vehiculos_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                                         {
                                             this.props.dataCars.map( (elemento: any) => {
-                                                return <IonSelectOption key={elemento.matricula} value={elemento.vehiculo}>{elemento.descripcion}</IonSelectOption>;
+                                                return <IonSelectOption key={elemento._id} value={elemento.vehiculo}>{elemento.descripcion}</IonSelectOption>;
                                             })
                                         }
                                     </IonSelect>
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel className="">Colaboradores</IonLabel>
-                                    <IonSelect id="colaboradores" name='colaboradores' className="colaboradores_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                    <IonSelect key="colaboradores" id="colaboradores" name='colaboradores' className="colaboradores_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                                         {
                                             this.props.listColaborators.map((elemento: IlistColaborators) => {
                                                 return <IonSelectOption key={elemento.id} value={elemento.id}>{elemento.descripcion}</IonSelectOption>;
