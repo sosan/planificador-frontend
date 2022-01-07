@@ -1,6 +1,8 @@
 import React, { Component, useState } from 'react';
 import { IonButton,
+    IonButtons,
     IonCol,
+    IonDatetime,
     IonGrid,
     IonInput,
     IonItem,
@@ -12,10 +14,13 @@ import { IonButton,
     IonSelectOption 
 } from '@ionic/react';
 
+
+
 import { IlistColaborators }  from "../datos/listadoColaboradores";
 import { IDataCoches } from "../datos/coches";
 import { IlistFlotas } from "../datos/listadoFlotas";
 import "../css/Modal.css";
+import { InputChangeEventDetail } from '@ionic/core';
 
 interface ContainerProps {
     isVisible: boolean;
@@ -28,12 +33,15 @@ interface ContainerProps {
     matricula?: string;
     vehiculo?: string;
     cantidadDias: number;
+    dataCarsVisible: boolean;
+    textoFechaDevolucionVisible: boolean;
 
 }
 type ContainerState = {
     isVisible: boolean;
     tiempoClick?: any;
     cantidadDias: number;
+    textoFechaDevolucionVisible: boolean;
 }
 
 
@@ -41,6 +49,7 @@ type ContainerState = {
 export class ModalDialog extends Component<ContainerProps, ContainerState>
 {
 
+    customDatetime: any ;
 
     constructor(props: any)
     {
@@ -48,9 +57,11 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         this.state = {
             "isVisible": this.props.isVisible,
             "cantidadDias": this.props.cantidadDias || 3,
+            "textoFechaDevolucionVisible": this.props.textoFechaDevolucionVisible
+            
             
         };
-        
+        // this.customDatetime = useRef();
     }
 
     componentDidMount()
@@ -74,7 +85,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             return { "cantidadDias": 3 };
 
         }
-        // return { "cantidadDias": newState.cantidadDias };
+        return { "cantidadDias": newState.cantidadDias };
 
     }
 
@@ -100,6 +111,33 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         
     }
 
+    elegirFechaRecogida(evento: CustomEvent<InputChangeEventDetail>)
+    {
+        // const dias = new Date(evento.detail.value.toString() as string );
+        this.setState({"cantidadDias": 3, "textoFechaDevolucionVisible": true })
+    }
+
+    cambiarDias(evento: CustomEvent<InputChangeEventDetail>)
+    {
+        // console.log("eee=" + JSON.stringify(evento) + " detalle=" + evento.detail.value);
+        const dias = parseInt( evento.detail.value as string) ;
+        this.setState({ "cantidadDias": dias, "textoFechaDevolucionVisible": true });
+    }
+
+    confirm()
+    {
+        if (this.customDatetime === undefined) return;
+
+        this.customDatetime.confirm();
+    }
+
+    reset()
+    {
+        if (this.customDatetime === undefined) return;
+
+        this.customDatetime.reset();
+    };
+
     render() {
 
         const fechaRecogida = new Date(this.props.tiempoClick);
@@ -109,7 +147,11 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         const textoFechaMinutos = `${fechaAhora.getDate().toString().padStart(2, "00")}-${(fechaAhora.getMonth() + 1).toString().padStart(2, "00")}-${fechaAhora.getFullYear()} ${fechaAhora.getHours().toString().padStart(2, "00")}:${fechaAhora.getMinutes().toString().padStart(2, "00")}`;
 
         const fechaDevolucion = new Date( fechaRecogida.setDate(fechaRecogida.getDate() + (this.state.cantidadDias - 1) ));
-        const textoFechaDevolucion = `${fechaDevolucion.getDate().toString().padStart(2, "00")}-${(fechaDevolucion.getMonth() + 1).toString().padStart(2, "00")}-${fechaDevolucion.getFullYear()}`;;
+        let textoFechaDevolucion = "";
+        if (this.props.textoFechaDevolucionVisible === true)
+        {
+            textoFechaDevolucion = `${fechaDevolucion.getDate().toString().padStart(2, "00")}-${(fechaDevolucion.getMonth() + 1).toString().padStart(2, "00")}-${fechaDevolucion.getFullYear()}`;;
+        }
 
 
         return(
@@ -140,16 +182,41 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel className="">Vehiculo</IonLabel>
-                                    <IonLabel className="">{this.props.vehiculo}</IonLabel>
+                                    {
+                                        (this.props.dataCarsVisible === false) ? <IonLabel className="">{this.props.vehiculo}</IonLabel> :
+                                            <IonSelect key="vehiculos" id="vehiculos" name='vehiculos' className="vehiculos_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                                {
+                                                    this.props.dataCars.map((elemento: any) => {
+                                                        return <IonSelectOption key={elemento._id} value={elemento.vehiculo}>{elemento.descripcion}</IonSelectOption>;
+                                                    })
+                                                }
+                                            </IonSelect>
+                                            
+                                    }
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel className="">Fecha Recogida</IonLabel>
-                                    <IonLabel className="">{textoFechaRecogida}</IonLabel>
+                                    <IonLabel className="">
+                                        {
+                                            (this.props.dataCarsVisible === false) ? textoFechaRecogida :
+                                                <IonDatetime ref={this.customDatetime}
+                                                onIonChange={ (evento) => { this.elegirFechaRecogida(evento) }} 
+                                                displayFormat='DD-MM-YYYY' hour-cycle="h23" first-day-of-week={1} yearValues="2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034">
+                                                    <div slot="title">Elegir fecha recogida</div>
+                                                    {/* <IonButtons slot="buttons">
+                                                        <IonButton onClick={() => this.confirm()}>Good to go!</IonButton>
+                                                        <IonButton onClick={() => this.reset()}>Reset</IonButton>
+                                                    </IonButtons> */}
+                                                </IonDatetime>
+
+                                            
+                                        }
+                                    </IonLabel>
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel className="">Cantidad de dias</IonLabel>
                                     <IonButton onClick={() => { this.restarDias(); }} className="boton_ligthbox boton_menos_lightbox" fill='solid' size='large' shape="round"  color="#ffffff">-</IonButton>
-                                    <IonInput className="input_numero_dias" name='numerodias' value={this.state.cantidadDias} type='number' min='1' max='99999' autocomplete="off"  />
+                                    <IonInput onIonChange={(evento) => { this.cambiarDias(evento) }} className="input_numero_dias" name='numerodias' value={this.state.cantidadDias} type='number' min='1' max='99999' autocomplete="off" inputmode="numeric" />
                                     <IonButton onClick={() => { this.sumarDias(); }} className="boton_ligthbox boton_mas_lightbox" fill='solid' size='large' shape="round" color="#ffffff">+</IonButton>
                                 </IonItem>
                                 <IonItem>

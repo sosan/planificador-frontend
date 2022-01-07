@@ -6,10 +6,11 @@ import { listFlotas } from "../datos/listadoFlotas";
 import { ModalDialog } from "./Modal";
 
 
-import "react-calendar-timeline/lib/Timeline.css";
+// import "react-calendar-timeline/lib/Timeline.css";
 import "../css/Timeline.css";
 
 import imagencitroenC1open from "../images/CitroenC1_open.webp";
+import { IonFab, IonFabButton, IonItem, IonLabel, IonList, IonListHeader } from '@ionic/react';
 
 const DRAG_SNAP = 60 * 60 * 24 * 1000;
 
@@ -18,11 +19,13 @@ interface ContainerProps {
 }
 type ContainerState = {
     borrado: boolean;
-    modalVisible: boolean;
+    modalReservasVisible: boolean;
     tiempoClick?: any;
     matricula?: string;
     vehiculo?: string;
     cantidadDias: number;
+    dataCarsVisible: boolean;
+    textoFechaDevolucionVisible: boolean;
 }
 
 
@@ -94,35 +97,40 @@ type typeGroup =
 
 export class SchedulerContainer extends Component<ContainerProps, ContainerState>
 {
-    groups: typeGroup[];
+    groupsReserva: typeGroup[];
+    groupsPreReserva: typeGroup[];
     
     constructor(props: any) {
         super(props);
 
         this.state = {
             borrado: false,
-            modalVisible: false,
-            cantidadDias: 3
-            
+            modalReservasVisible: false,
+            cantidadDias: 3,
+            dataCarsVisible: false,
+            "textoFechaDevolucionVisible": true
         };
         
-        this.groups = this.createGroupForCars(dataCars);
+        this.groupsReserva = this.createGroupForCars(dataCars);
+        this.groupsPreReserva = [];
 
     }
 
-    onDoubleClicked = async (groupId: any, time: any, evento: any) => {
+    onDoubleClickedTimeline = async (groupId: any, time: any, evento: any) => {
         console.log("clickedado desde grupo=" + groupId + " time=" + time + " evento=" + evento );
 
         if (time + DRAG_SNAP < new Date().getTime()) return;
 
-        const [matricula, vehiculo] = await this.searchByID(groupId, this.groups);
+        const [matricula, vehiculo] = await this.searchByID(groupId, this.groupsReserva);
         this.setState(
         { 
-            "modalVisible": true,
+            "modalReservasVisible": true,
             "tiempoClick": time,
             "matricula": matricula,
             "vehiculo": vehiculo,
-            "cantidadDias": 3
+            "cantidadDias": 3,
+            "dataCarsVisible": false,
+            "textoFechaDevolucionVisible": true
         });
 
     }
@@ -132,12 +140,12 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
         let matricula = "", vehiculo = "";
 
-        for (let i = 0; i < this.groups.length; i++)
+        for (let i = 0; i < this.groupsReserva.length; i++)
         {
-            if (this.groups[i].id === _id)
+            if (this.groupsReserva[i].id === _id)
             {
-                matricula = this.groups[i].matricula;
-                vehiculo = this.groups[i].title;
+                matricula = this.groupsReserva[i].matricula;
+                vehiculo = this.groupsReserva[i].title;
                 break;
             }
         }
@@ -214,43 +222,67 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     onCloseModal = () => {
         
-        this.setState({"modalVisible": false, "cantidadDias": 3});
+        this.setState({"modalReservasVisible": false, "cantidadDias": 3});
 
     }
 
     onModalDidDismiss = async () => {
         
-        this.setState({ "modalVisible": false });
+        this.setState({ "modalReservasVisible": false, "cantidadDias": 3 });
     }
+
+    anadirPreReserva = () => {
+        console.log("anadir HO");
+        this.setState({ 
+            "modalReservasVisible": true, 
+            "cantidadDias": 3,
+            "tiempoClick": new Date().getTime(),
+            "matricula": "No asignada",
+            "dataCarsVisible": true,
+            "textoFechaDevolucionVisible": false,
+            
+        });
+    };
 
     render() {
         
         return (
             <>
-                {
-                    (this.state.borrado === true) ? null :
-                        <TimelineWrapper
-                            groups={this.groups}
-                            items={items}
-                            onDoubleClicked={this.onDoubleClicked}
-                            
-                    />
+                {/* <IonFab className="poscion-fija-anadir-reserva" slot="fixed" vertical="bottom" horizontal="end" >
+                    <IonFabButton className="boton-anadir-prereserva">+ Añadir</IonFabButton>
+                </IonFab> */}
+                
+                <TimelineWrapper 
+                    anadirBotonPreservar={true}
+                    groups={this.groupsPreReserva}
+                    onClickAnadirPreReserva={this.anadirPreReserva}
+                    items={[]}
+                    
+                />
+                
 
-                }
-
+                <TimelineWrapper
+                    anadirBotonPreservar={false}
+                    marginTop={50}
+                    groups={this.groupsReserva}
+                    items={items}
+                    onDoubleClicked={this.onDoubleClickedTimeline}
+                />
                 <ModalDialog 
-                    isVisible={this.state.modalVisible}
+                    isVisible={this.state.modalReservasVisible}
+                    textoFechaDevolucionVisible={this.state.textoFechaDevolucionVisible}
                     tiempoClick={this.state.tiempoClick}
                     cantidadDias={this.state.cantidadDias}
                     matricula={this.state.matricula}
                     vehiculo={this.state.vehiculo}
                     onCloseModal={ this.onCloseModal } 
                     onModalDidDismiss={this.onModalDidDismiss }
+                    dataCarsVisible={this.state.dataCarsVisible}
                     dataCars={dataCars}
                     listColaborators={listColaborators}
                     listFlotas={listFlotas}
                 />
-
+                
             </>
         );
     }

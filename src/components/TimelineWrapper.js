@@ -2,6 +2,8 @@ import React, { Component,  } from 'react';
 import {
     IonItem,
     IonImg,
+    IonFab,
+    IonFabButton,
     IonLabel
 
 
@@ -97,16 +99,16 @@ export default class TimelineWrapper extends Component {
         return (
             <>
             <IonItem className="flex-izquierda">
-                {/* <IonImg src={elementGroup.srcImage} className="anchura_vehiculo"  alt="" /> */}
                 <IonLabel className="custom-group">
-                    <span className="title anchura_minimo">{elementGroup.matricula}</span>
-                    <span className="title anchura_minimo">{elementGroup.clasevehiculo}</span>
-                    <span className="title anchura_minimo anchura_minimo_modelo">{elementGroup.modelo}</span>
+                    <span className="title anchura_minimo alineacion-matricula">{elementGroup.matricula}</span>
+                    <span className="title anchura_minimo alineacion-clasevehiculo">{elementGroup.clasevehiculo}</span>
+                    <span className="title anchura_minimo anchura_minimo_modelo alineacion-modelo">{elementGroup.modelo}</span>
                 </IonLabel>
             </IonItem>
             </>
         )
     }
+
 
     handleItemMove = (itemId, dragTime, newGroupOrder) => {
         
@@ -173,7 +175,7 @@ export default class TimelineWrapper extends Component {
     render() {
 
         return (
-            <div>
+            <div style={{ marginTop: `${this.props.marginTop}px` }}>
                 <Timeline
                     groups={this.state.groups}
                     items={this.state.items}
@@ -182,18 +184,23 @@ export default class TimelineWrapper extends Component {
                     defaultTimeEnd={this.state.defaultTimeEnd}
                     visibleTimeStart={this.state.visibleTimeStart}
                     visibleTimeEnd={this.state.visibleTimeEnd}
+                    
+                    useResizeHandle={true}
                     fullUpdate
                     dragSnap={DRAG_SNAP}
                     itemTouchSendsClick={false}
                     groupRenderer={this.groupRenderer}
+                    
                     stackItems={true}
                     sidebarWidth={270}
+                    // sidebarContent={this.renderSidebarHeader()}
+
                     itemHeightRatio={1}
                     canMove={true}
                     canResize={"both"}
+                    
                     onItemMove={this.handleItemMove}
                     onItemResize={this.handleItemResize}
-                    useResizeHandle={true}
                     onTimeChange={this.handleTimeChange}
                     onCanvasDoubleClick={(groupId, time, evento) => { this.props.onDoubleClicked(groupId, time, evento); } }
                     // itemRenderer={this.itemRenderer}
@@ -209,7 +216,15 @@ export default class TimelineWrapper extends Component {
                     <TimelineHeaders>
                         <SidebarHeader>
                             {({ getRootProps }) => {
-                                return <div {...getRootProps()}>Busqueda....</div>
+                                
+                                return <div {...getRootProps()}>
+                                    {
+                                        (this.props.anadirBotonPreservar === false) ? null:
+                                            <IonFab className="poscion-fija-anadir-reserva" slot="fixed" vertical="top" horizontal="start" >
+                                                <IonFabButton onClick={this.props.onClickAnadirPreReserva } className="boton-anadir-prereserva">+ Añadir</IonFabButton>
+                                            </IonFab>
+                                    }
+                                </div>
                             }}
                         </SidebarHeader>
                         <DateHeader unit="month" />
