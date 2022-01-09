@@ -99,7 +99,9 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 {
     groupsReserva: typeGroup[];
     groupsPreReserva: typeGroup[];
-    
+    listadoClaseVehiculos: string[];
+    listadoModelosVehiculos: string[];
+
     constructor(props: any) {
         super(props);
 
@@ -108,13 +110,19 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             modalReservasVisible: false,
             cantidadDias: 3,
             dataCarsVisible: false,
-            "textoFechaDevolucionVisible": true
+            textoFechaDevolucionVisible: false,
         };
         
-        this.groupsReserva = this.createGroupForCars(dataCars);
+        let groupsData = this.createGroupForCars(dataCars);
+
+        this.groupsReserva = groupsData.groupCreated;
+        this.listadoClaseVehiculos = groupsData.arrayListadoClasesVehiculos; 
+        this.listadoModelosVehiculos = groupsData.arrayListadoModelosVehiculos;
+        
         this.groupsPreReserva = [];
 
     }
+
 
     onDoubleClickedTimeline = async (groupId: any, time: any, evento: any) => {
         console.log("clickedado desde grupo=" + groupId + " time=" + time + " evento=" + evento );
@@ -157,12 +165,17 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
     componentWillUnmount() {
     }
 
+    
     createGroupForCars(cars: IDataCoches[] )
     {
         let groupCreated: typeGroup[] = [];
-
+        let listadoModelosVehiculos: Set<string> = new Set<string>();
+        let listadoClasesVehiculos: Set<string> = new Set<string>();
+        
         for (let i = 0; i < cars.length; i++)
         {
+            listadoClasesVehiculos.add(cars[i].clasevehiculo);
+            listadoModelosVehiculos.add(cars[i].modelo);
             groupCreated.push(
             {
                 "id": i,
@@ -179,8 +192,14 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             
         }
 
+        
         groupCreated = this.orderGroupCars(groupCreated, ORDEN_LISTADO_CLASE_COCHES);
-        return groupCreated;
+        const arrayListadoClasesVehiculos = Array.from(listadoClasesVehiculos);
+        const arrayListadoModelosVehiculos = Array.from(listadoModelosVehiculos);
+        
+        console.log("Modelos vehiculos" + JSON.stringify(arrayListadoModelosVehiculos));
+        console.log("Clases vehiculos" + JSON.stringify(arrayListadoClasesVehiculos));
+        return { groupCreated, arrayListadoClasesVehiculos, arrayListadoModelosVehiculos } ;
     }
 
     createImagesGroups(cars: typeGroup[], listadoImagenesCoches: any)
@@ -232,7 +251,6 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
     }
 
     anadirPreReserva = () => {
-        console.log("anadir HO");
         this.setState({ 
             "modalReservasVisible": true, 
             "cantidadDias": 3,
@@ -242,6 +260,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             "textoFechaDevolucionVisible": false,
             
         });
+        console.log("anadir textoFechaDevolucionVisible=" + this.state.textoFechaDevolucionVisible);
     };
 
     render() {
@@ -275,6 +294,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                     cantidadDias={this.state.cantidadDias}
                     matricula={this.state.matricula}
                     vehiculo={this.state.vehiculo}
+                    listadoClaseVehiculos={this.listadoClaseVehiculos}
+                    listadoModelosVehiculos={this.listadoModelosVehiculos}
                     onCloseModal={ this.onCloseModal } 
                     onModalDidDismiss={this.onModalDidDismiss }
                     dataCarsVisible={this.state.dataCarsVisible}

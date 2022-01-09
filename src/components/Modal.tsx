@@ -35,6 +35,8 @@ interface ContainerProps {
     cantidadDias: number;
     dataCarsVisible: boolean;
     textoFechaDevolucionVisible: boolean;
+    listadoClaseVehiculos: string[];
+    listadoModelosVehiculos: string[];
 
 }
 type ContainerState = {
@@ -61,7 +63,10 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             
             
         };
-        // this.customDatetime = useRef();
+
+        console.log("this.props.textoFechaDevolucionVisible" + this.props.textoFechaDevolucionVisible);
+        console.log("this.state.textoFechaDevolucionVisible" + this.state.textoFechaDevolucionVisible);
+
     }
 
     componentDidMount()
@@ -114,12 +119,13 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
     elegirFechaRecogida(evento: CustomEvent<InputChangeEventDetail>)
     {
         // const dias = new Date(evento.detail.value.toString() as string );
+        console.log("elegirfecharecogida textoFechaDevolucionVisible" + this.state.textoFechaDevolucionVisible);
         this.setState({"cantidadDias": 3, "textoFechaDevolucionVisible": true })
     }
 
     cambiarDias(evento: CustomEvent<InputChangeEventDetail>)
     {
-        // console.log("eee=" + JSON.stringify(evento) + " detalle=" + evento.detail.value);
+        console.log("cambiardias textoFechaDevolucionVisible" + this.state.textoFechaDevolucionVisible);
         const dias = parseInt( evento.detail.value as string) ;
         this.setState({ "cantidadDias": dias, "textoFechaDevolucionVisible": true });
     }
@@ -148,10 +154,11 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
         const fechaDevolucion = new Date( fechaRecogida.setDate(fechaRecogida.getDate() + (this.state.cantidadDias - 1) ));
         let textoFechaDevolucion = "";
-        if (this.props.textoFechaDevolucionVisible === true)
+        if (this.props.textoFechaDevolucionVisible === true || this.state.textoFechaDevolucionVisible === true)
         {
             textoFechaDevolucion = `${fechaDevolucion.getDate().toString().padStart(2, "00")}-${(fechaDevolucion.getMonth() + 1).toString().padStart(2, "00")}-${fechaDevolucion.getFullYear()}`;;
         }
+
 
 
         return(
@@ -181,13 +188,17 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                     <IonLabel className="">{this.props.matricula}</IonLabel>
                                 </IonItem>
                                 <IonItem>
-                                    <IonLabel className="">Vehiculo</IonLabel>
+                                    {
+                                        (this.props.dataCarsVisible === false) ?  <IonLabel className="">Vehiculo</IonLabel> :
+                                            <IonLabel className="">Modelo Vehiculo</IonLabel>
+                                    }
+
                                     {
                                         (this.props.dataCarsVisible === false) ? <IonLabel className="">{this.props.vehiculo}</IonLabel> :
                                             <IonSelect key="vehiculos" id="vehiculos" name='vehiculos' className="vehiculos_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                                                 {
-                                                    this.props.dataCars.map((elemento: any) => {
-                                                        return <IonSelectOption key={elemento._id} value={elemento.vehiculo}>{elemento.descripcion}</IonSelectOption>;
+                                                    this.props.listadoModelosVehiculos.map((elemento: string) => {
+                                                        return <IonSelectOption key={elemento.toLowerCase()} value={elemento.toLowerCase()}>{elemento}</IonSelectOption>;
                                                     })
                                                 }
                                             </IonSelect>
@@ -195,18 +206,23 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                     }
                                 </IonItem>
                                 <IonItem>
+                                    <IonLabel className="">Clase</IonLabel>
+                                    <IonSelect key="clase" id="clase" name='clase' className="clase_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                        {
+                                            this.props.listadoClaseVehiculos.map((elemento: string) => {
+                                                return <IonSelectOption key={elemento.toLowerCase()} value={elemento.toLowerCase()}>{elemento}</IonSelectOption>;
+                                            })
+                                        }
+                                    </IonSelect>
+                                </IonItem>
+                                <IonItem>
                                     <IonLabel className="">Fecha Recogida</IonLabel>
                                     <IonLabel className="">
                                         {
                                             (this.props.dataCarsVisible === false) ? textoFechaRecogida :
-                                                <IonDatetime ref={this.customDatetime}
-                                                onIonChange={ (evento) => { this.elegirFechaRecogida(evento) }} 
-                                                displayFormat='DD-MM-YYYY' hour-cycle="h23" first-day-of-week={1} yearValues="2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034">
-                                                    <div slot="title">Elegir fecha recogida</div>
-                                                    {/* <IonButtons slot="buttons">
-                                                        <IonButton onClick={() => this.confirm()}>Good to go!</IonButton>
-                                                        <IonButton onClick={() => this.reset()}>Reset</IonButton>
-                                                    </IonButtons> */}
+                                                <IonDatetime ref={this.customDatetime} onIonChange={(evento) => { this.elegirFechaRecogida(evento) }} displayFormat='DD-MM-YYYY' hour-cycle="h23" first-day-of-week={1} yearValues="2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034" cancelText="Cancelar" doneText="Confirmar">
+                                                    
+                                                    
                                                 </IonDatetime>
 
                                             
@@ -224,24 +240,6 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                     <IonLabel className="">{textoFechaDevolucion}</IonLabel>
                                 </IonItem>
                                 <IonItem>
-                                    <IonLabel className="">Estado</IonLabel>
-                                    <IonSelect id="status" name='status' className="status_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
-                                        <IonSelectOption value={"reservado"} >Reservado</IonSelectOption>
-                                        <IonSelectOption value={"prepagado"}>Prepagado</IonSelectOption>
-                                        <IonSelectOption value={"100pagado"}>100% Pagado</IonSelectOption>
-                                    </IonSelect>
-                                </IonItem>
-                                {/* <IonItem>
-                                    <IonLabel className="">Vehiculos</IonLabel>
-                                    <IonSelect key="vehiculos" id="vehiculos" name='vehiculos' className="vehiculos_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
-                                        {
-                                            this.props.dataCars.map( (elemento: any) => {
-                                                return <IonSelectOption key={elemento._id} value={elemento.vehiculo}>{elemento.descripcion}</IonSelectOption>;
-                                            })
-                                        }
-                                    </IonSelect>
-                                </IonItem> */}
-                                <IonItem>
                                     <IonLabel className="">Colaboradores</IonLabel>
                                     <IonSelect key="colaboradores" id="colaboradores" name='colaboradores' className="colaboradores_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                                         {
@@ -251,16 +249,42 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                         }
                                     </IonSelect>
                                 </IonItem>
+                                
                                 <IonItem>
-                                    <IonLabel className="">Flotas externas</IonLabel>
-                                    <IonSelect id="flotas" name='flotas' className="flotas_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                    <IonLabel className="">Estado</IonLabel>
                                         {
-                                            this.props.listFlotas.map((elemento: IlistFlotas) => {
-                                                return <IonSelectOption key={elemento.id} value={elemento.id}>{elemento.descripcion}</IonSelectOption>;
-                                            })
+                                            (this.props.textoFechaDevolucionVisible === false) ? 
+                                                <IonSelect id="status" name='status' value="prereservado" className="status_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                                    <IonSelectOption value="prereservado" >Pre-Reservado</IonSelectOption>
+                                                    <IonSelectOption value="reservado" >Reservado</IonSelectOption>
+                                                    <IonSelectOption value="prepagado">Prepagado</IonSelectOption>
+                                                    <IonSelectOption value="100pagado">100% Pagado</IonSelectOption>
+                                                </IonSelect>
+                                            :
+                                                <IonSelect id="status" name='status' value="" className="status_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                                    <IonSelectOption value="prereservado" >Pre-Reservado</IonSelectOption>
+                                                    <IonSelectOption value="reservado" >Reservado</IonSelectOption>
+                                                    <IonSelectOption value="prepagado">Prepagado</IonSelectOption>
+                                                    <IonSelectOption value="100pagado">100% Pagado</IonSelectOption>
+                                                </IonSelect>
+                                            
                                         }
-                                    </IonSelect>
                                 </IonItem>
+                                {
+                                    (this.props.textoFechaDevolucionVisible === false) ? null
+                                    :
+                                        <IonItem>
+                                            <IonLabel className="">Flotas externas</IonLabel>
+                                            <IonSelect id="flotas" name='flotas' className="flotas_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                                {
+                                                    this.props.listFlotas.map((elemento: IlistFlotas) => {
+                                                        return <IonSelectOption key={elemento.id} value={elemento.id}>{elemento.descripcion}</IonSelectOption>;
+                                                    })
+                                                }
+                                            </IonSelect>
+                                        </IonItem>
+
+                                }
                             </IonList>
                         </IonRow>
                         <IonRow className="centradovertical">
