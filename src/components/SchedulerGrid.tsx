@@ -94,35 +94,35 @@ enum ENUM_TIPOS_STATUS {
 
 
 let listadoPrereservas: IListadoPrereserva[] = [
-    // {
-    //     id: 1,
-    //     group: 1,
-    //     fechaAlta: "asdasd",
-    //     title: 'item 1',
-    //     start_time: new Date(new Date().setHours(0, 0, 0)),
-    //     end_time: new Date(new Date().setHours(23, 59, 59)),
-    //     canMove: true,
-    //     canResize: true,
-    //     canChangeGroup: true,
-    //     notaReserva: "asdasd",
-    //     matricula: "asdasd",
-    //     modeloVehiculo: "asdasd",
-    //     claseVehiculo: "asdasd",
-    //     cantidadDias: 0,
-    //     colaborador: "asdasd",
-    //     flota: "asda",
-    //     estado: "asd",
-    //     itemProps: {
-    //         'data-custom-attribute': 'Random content',
-    //         'aria-hidden': true,
-    //         onDoubleClick: () => { console.log('You clicked double!') },
-    //         className: 'altura-items',
-    //         style: {
-    //             background: '#3796f3',
-    //         }
-    //     }
+    {
+        id: 0,
+        group: 0,
+        fechaAlta: "asdasd",
+        title: ' ',
+        start_time: new Date(new Date().setHours(0, 0, 0)),
+        end_time: new Date(new Date().setHours(23, 59, 59)),
+        canMove: true,
+        canResize: true,
+        canChangeGroup: true,
+        notaReserva: "asdasd",
+        matricula: "asdasd",
+        modeloVehiculo: "asdasd",
+        claseVehiculo: "asdasd",
+        cantidadDias: 0,
+        colaborador: "asdasd",
+        flota: "asda",
+        estado: "asd",
+        itemProps: {
+            // 'data-custom-attribute': 'Random content',
+            // 'aria-hidden': true,
+            // // onDoubleClick: () => { console.log('You clicked double!') },
+            className: 'altura-items',
+            style: {
+                background: 'transparent',
+            }
+        }
 
-    // },
+    },
     // {
     //     id: 2,
     //     fechaAlta: "asdasd",
@@ -204,16 +204,16 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         
         this.groupsPreReserva = [
 
-            // {
-            //     "id": 1,
-            //     "matricula": "state.matricula as string",
-            //     "title": "title",
-            //     "vehiculo": "vehiculo",
-            //     "clasevehiculo": "state.claseVehiculo",
-            //     "modelo": "state.modeloVehiculo",
-            //     "bgColor": "#3796f3",
-            //     "height": 50,
-            // },
+            {
+                "id": 0,
+                "matricula": " ",
+                "title": " ",
+                "vehiculo": " ",
+                "clasevehiculo": " ",
+                "modelo": " ",
+                "bgColor": "#3796f3",
+                "height": 50,
+            },
             // {
             //     "id": 2,
             //     "matricula": "state.matricula as string",
@@ -434,6 +434,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         else
         {
             _id = listadoPrereservas[positionListadoPreReserva as number].id;
+            this.groupsPreReserva[positiongroupsPreReserva as number].matricula = state.matricula as string;
             positiongroupsPreReserva = (positiongroupsPreReserva as number) + 1;
             
         }
