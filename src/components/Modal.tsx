@@ -38,7 +38,16 @@ interface ContainerProps {
     listadoClaseVehiculos: string[];
     listadoModelosVehiculos: string[];
     notaReserva: string;
-    
+    showItem: boolean;
+    fechaAlta?: string;
+    fechaRecogida?: Date;
+    fechaDevolucion?: Date;
+    modeloVehiculo?: string;
+    claseVehiculo?: string;
+    colaborador?: string;
+    flota?: string;
+    estado?: string;
+
 
 }
 export type ContainerState = {
@@ -79,6 +88,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             "estado": "",
             "colaborador": "",
             "flota": ""
+
 
         };
 
@@ -172,11 +182,23 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
     render() {
 
-        const fechaRecogida = new Date(this.props.tiempoClick);
+        let fechaAlta, fechaRecogida ;
+
+
+        if (this.props.showItem === true)
+        {
+            fechaAlta = this.props.fechaAlta;
+            fechaRecogida = new Date(this.props.fechaRecogida as Date);
+        }
+        else
+        {
+            fechaRecogida = new Date(this.props.tiempoClick);
+            
+            const fechaAhora = new Date();
+            fechaAlta = `${fechaAhora.getDate().toString().padStart(2, "00")}-${(fechaAhora.getMonth() + 1).toString().padStart(2, "00")}-${fechaAhora.getFullYear()} ${fechaAhora.getHours().toString().padStart(2, "00")}:${fechaAhora.getMinutes().toString().padStart(2, "00")}`;
+        }
+
         const textoFechaRecogida = `${fechaRecogida.getDate().toString().padStart(2, "00")}-${(fechaRecogida.getMonth() + 1).toString().padStart(2, "00")}-${fechaRecogida.getFullYear()}`;
-        
-        const fechaAhora = new Date();
-        const textoFechaMinutos = `${fechaAhora.getDate().toString().padStart(2, "00")}-${(fechaAhora.getMonth() + 1).toString().padStart(2, "00")}-${fechaAhora.getFullYear()} ${fechaAhora.getHours().toString().padStart(2, "00")}:${fechaAhora.getMinutes().toString().padStart(2, "00")}`;
 
         const fechaDevolucion = new Date( fechaRecogida.setDate(fechaRecogida.getDate() + (this.state.cantidadDias - 1) ));
         let textoFechaDevolucion = "";
@@ -192,7 +214,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                         <IonRow className="centradovertical">
                             <IonCol size="8">
                                 <h1>Rellenar Reserva</h1>
-                                <span>Fecha alta: {textoFechaMinutos}</span>
+                                <span>Fecha alta: {fechaAlta}</span>
                             </IonCol>
                             <IonCol >
                                 <IonButton onClick={() => {this.props.onCloseModal(); } }>Cerrar Modal</IonButton>

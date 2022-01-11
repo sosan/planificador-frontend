@@ -17,6 +17,9 @@ type ContainerState = {
     borrado: boolean;
     modalReservasVisible: boolean;
     tiempoClick?: any;
+    fechaAlta?: string;
+    fechaRecogida?: Date,
+    fechaDevolucion?: Date,
     matricula?: string;
     vehiculo?: string;
     cantidadDias: number;
@@ -24,9 +27,11 @@ type ContainerState = {
     textoFechaDevolucionVisible: boolean;
     notaReserva?: string;
     modeloVehiculo?: string;
+    claseVehiculo?: string;
     colaborador?: string;
     flota?: string;
     estado?: string;
+    showItem: boolean;
 
 }
 
@@ -41,45 +46,45 @@ enum ENUM_TIPOS_STATUS {
     "length" = 4,
 }
 
-export interface IDataEventos {
-    "start_date": string,
-    "end_date": string,
-    "text": string,
-    "id": number,
-    "numeronotas": string,
-    "garaje": string,
-    "personChoosed": string,
-    "numero_dias": number,
-    "color": string,
-    "textColor": string,
-    "fechaentrada": string,
-    "status": ENUM_TIPOS_STATUS,
-    "vehiculoSeleccionado"?: IDataCoches
+// export interface IDataEventos {
+//     "start_date": string,
+//     "end_date": string,
+//     "text": string,
+//     "id": number,
+//     "numeronotas": string,
+//     "garaje": string,
+//     "personChoosed": string,
+//     "numero_dias": number,
+//     "color": string,
+//     "textColor": string,
+//     "fechaentrada": string,
+//     "status": ENUM_TIPOS_STATUS,
+//     "vehiculoSeleccionado"?: IDataCoches
 
-};
+// };
 
 
 
 // 
 
-let dataEventos: IDataEventos[] = [
-    {
-        start_date: '2021-11-17 6:00',
-        end_date: '2021-11-18 8:00',
-        text: 'Event 1',
-        id: 1,
-        numeronotas: "222",
-        garaje: "",
-        personChoosed: "gianni",
-        numero_dias: 3,
-        color: "#0288D1",
-        textColor: "white",
-        fechaentrada: "",
-        status: ENUM_TIPOS_STATUS.prepagado,
-        vehiculoSeleccionado: undefined
-    },
+// let dataEventos: IDataEventos[] = [
+//     {
+//         start_date: '2021-11-17 6:00',
+//         end_date: '2021-11-18 8:00',
+//         text: 'Event 1',
+//         id: 1,
+//         numeronotas: "222",
+//         garaje: "",
+//         personChoosed: "gianni",
+//         numero_dias: 3,
+//         color: "#0288D1",
+//         textColor: "white",
+//         fechaentrada: "",
+//         status: ENUM_TIPOS_STATUS.prepagado,
+//         vehiculoSeleccionado: undefined
+//     },
 
-];
+// ];
 
 
 
@@ -179,6 +184,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         this.state = {
             borrado: false,
             modalReservasVisible: false,
+            showItem: false,
             cantidadDias: 3,
             dataCarsVisible: false,
             textoFechaDevolucionVisible: false,
@@ -353,24 +359,30 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             "textoFechaDevolucionVisible": false,
             
         });
-        console.log("anadir textoFechaDevolucionVisible=" + this.state.textoFechaDevolucionVisible);
+        // console.log("anadir textoFechaDevolucionVisible=" + this.state.textoFechaDevolucionVisible);
     };
  
     onDoubleClickedOverItem = async (state: IListadoPrereserva ) =>
     {
         console.log("onclicked over item state=" + JSON.stringify(state));
         this.setState({
+            "dataCarsVisible": true,
+            "showItem": true,
+            "modalReservasVisible": true,
+            "fechaAlta": state.fechaAlta,
+            "fechaRecogida": state.start_time,
+            "fechaDevolucion": state.end_time,
             "matricula": state.matricula,
             "vehiculo": state.claseVehiculo,
             "cantidadDias": state.cantidadDias,
-            "dataCarsVisible": false,
             "textoFechaDevolucionVisible": true,
             "notaReserva": state.notaReserva,
             "modeloVehiculo": state.modeloVehiculo,
+            "claseVehiculo": state.claseVehiculo,
             "colaborador": state.colaborador,
             "flota": state.flota,
             "estado": state.flota,
-
+            
         });
 
         /**
@@ -396,17 +408,6 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 }
          */
 
-        // const [matricula, vehiculo] = await this.searchByID(state.group, this.groupsPreReserva);
-        // this.setState(
-        //     {
-        //         "modalReservasVisible": true,
-        //         "tiempoClick": time,
-        //         "matricula": matricula,
-        //         "vehiculo": vehiculo,
-        //         "cantidadDias": 3,
-        //         "dataCarsVisible": false,
-        //         "textoFechaDevolucionVisible": true
-        //     });
 
     }
 
@@ -501,9 +502,18 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 />
                 <ModalDialog 
                     isVisible={this.state.modalReservasVisible}
+                    showItem={this.state.showItem}
                     textoFechaDevolucionVisible={this.state.textoFechaDevolucionVisible}
                     tiempoClick={this.state.tiempoClick}
+                    fechaAlta={this.state.fechaAlta as string}
                     notaReserva={this.state.notaReserva as string}
+                    fechaRecogida={this.state.fechaRecogida}
+                    fechaDevolucion={this.state.fechaDevolucion}
+                    modeloVehiculo={this.state.modeloVehiculo}
+                    claseVehiculo={this.state.claseVehiculo}
+                    colaborador={this.state.colaborador}
+                    flota={this.state.flota}
+                    estado={this.state.estado}
                     cantidadDias={this.state.cantidadDias}
                     matricula={this.state.matricula}
                     vehiculo={this.state.vehiculo}
