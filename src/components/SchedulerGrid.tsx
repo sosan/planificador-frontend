@@ -17,6 +17,7 @@ type ContainerState = {
     borrado: boolean;
     modalReservasVisible: boolean;
     tiempoClick?: any;
+    id?: number;
     fechaAlta?: string;
     fechaRecogida?: Date,
     fechaDevolucion?: Date,
@@ -31,7 +32,11 @@ type ContainerState = {
     colaborador?: string;
     flota?: string;
     estado?: string;
+    group?: number;
     showItem: boolean;
+    start_time?: Date,
+    end_time?: Date,
+    
 
 }
 
@@ -89,64 +94,64 @@ enum ENUM_TIPOS_STATUS {
 
 
 let listadoPrereservas: IListadoPrereserva[] = [
-    {
-        id: 1,
-        group: 1,
-        fechaAlta: "asdasd",
-        title: 'item 1',
-        start_time: new Date(new Date().setHours(0, 0, 0)),
-        end_time: new Date(new Date().setHours(23, 59, 59)),
-        canMove: true,
-        canResize: true,
-        canChangeGroup: true,
-        notaReserva: "asdasd",
-        matricula: "asdasd",
-        modeloVehiculo: "asdasd",
-        claseVehiculo: "asdasd",
-        cantidadDias: 0,
-        colaborador: "asdasd",
-        flota: "asda",
-        estado: "asd",
-        itemProps: {
-            'data-custom-attribute': 'Random content',
-            'aria-hidden': true,
-            onDoubleClick: () => { console.log('You clicked double!') },
-            className: 'altura-items',
-            style: {
-                background: '#3796f3',
-            }
-        }
+    // {
+    //     id: 1,
+    //     group: 1,
+    //     fechaAlta: "asdasd",
+    //     title: 'item 1',
+    //     start_time: new Date(new Date().setHours(0, 0, 0)),
+    //     end_time: new Date(new Date().setHours(23, 59, 59)),
+    //     canMove: true,
+    //     canResize: true,
+    //     canChangeGroup: true,
+    //     notaReserva: "asdasd",
+    //     matricula: "asdasd",
+    //     modeloVehiculo: "asdasd",
+    //     claseVehiculo: "asdasd",
+    //     cantidadDias: 0,
+    //     colaborador: "asdasd",
+    //     flota: "asda",
+    //     estado: "asd",
+    //     itemProps: {
+    //         'data-custom-attribute': 'Random content',
+    //         'aria-hidden': true,
+    //         onDoubleClick: () => { console.log('You clicked double!') },
+    //         className: 'altura-items',
+    //         style: {
+    //             background: '#3796f3',
+    //         }
+    //     }
 
-    },
-    {
-        id: 2,
-        fechaAlta: "asdasd",
-        group: 2,
-        title: 'item 2',
-        start_time: new Date(new Date().setHours(0, 0, 0)),
-        end_time: new Date(new Date().setHours(23, 59, 59)),
-        canMove: true,
-        canResize: true,
-        canChangeGroup: true,
-        notaReserva: "asdasd",
-        matricula: "asdasd",
-        modeloVehiculo: "asdasd",
-        claseVehiculo: "asdasd",
-        cantidadDias: 0,
-        colaborador: "asdasd",
-        flota: "asda",
-        estado: "asd",
-        itemProps: {
-            'data-custom-attribute': 'Random content',
-            'aria-hidden': true,
-            onDoubleClick: () => { console.log('You clicked double!') },
-            className: 'altura-items',
-            style: {
-                background: '#3796f3',
-            }
-        }
+    // },
+    // {
+    //     id: 2,
+    //     fechaAlta: "asdasd",
+    //     group: 2,
+    //     title: 'item 2',
+    //     start_time: new Date(new Date().setHours(0, 0, 0)),
+    //     end_time: new Date(new Date().setHours(23, 59, 59)),
+    //     canMove: true,
+    //     canResize: true,
+    //     canChangeGroup: true,
+    //     notaReserva: "asdasd",
+    //     matricula: "asdasd",
+    //     modeloVehiculo: "asdasd",
+    //     claseVehiculo: "asdasd",
+    //     cantidadDias: 0,
+    //     colaborador: "asdasd",
+    //     flota: "asda",
+    //     estado: "asd",
+    //     itemProps: {
+    //         'data-custom-attribute': 'Random content',
+    //         'aria-hidden': true,
+    //         onDoubleClick: () => { console.log('You clicked double!') },
+    //         className: 'altura-items',
+    //         style: {
+    //             background: '#3796f3',
+    //         }
+    //     }
         
-    },
+    // },
 
 
 
@@ -188,6 +193,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             cantidadDias: 3,
             dataCarsVisible: false,
             textoFechaDevolucionVisible: false,
+
         };
         
         let groupsData = this.createGroupForCars(dataCars);
@@ -198,26 +204,26 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         
         this.groupsPreReserva = [
 
-            {
-                "id": 1,
-                "matricula": "state.matricula as string",
-                "title": "title",
-                "vehiculo": "vehiculo",
-                "clasevehiculo": "state.claseVehiculo",
-                "modelo": "state.modeloVehiculo",
-                "bgColor": "#3796f3",
-                "height": 50,
-            },
-            {
-                "id": 2,
-                "matricula": "state.matricula as string",
-                "title": "title",
-                "vehiculo": "vehiculo",
-                "clasevehiculo": "state.claseVehiculo",
-                "modelo": "state.modeloVehiculo",
-                "bgColor": "#3796f3",
-                "height": 50,
-            }
+            // {
+            //     "id": 1,
+            //     "matricula": "state.matricula as string",
+            //     "title": "title",
+            //     "vehiculo": "vehiculo",
+            //     "clasevehiculo": "state.claseVehiculo",
+            //     "modelo": "state.modeloVehiculo",
+            //     "bgColor": "#3796f3",
+            //     "height": 50,
+            // },
+            // {
+            //     "id": 2,
+            //     "matricula": "state.matricula as string",
+            //     "title": "title",
+            //     "vehiculo": "vehiculo",
+            //     "clasevehiculo": "state.claseVehiculo",
+            //     "modelo": "state.modeloVehiculo",
+            //     "bgColor": "#3796f3",
+            //     "height": 50,
+            // }
         ];
 
     }
@@ -357,6 +363,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             "matricula": "No asignada",
             "dataCarsVisible": true,
             "textoFechaDevolucionVisible": false,
+            "id": listadoPrereservas.length + 1
             
         });
         // console.log("anadir textoFechaDevolucionVisible=" + this.state.textoFechaDevolucionVisible);
@@ -385,33 +392,10 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             
         });
 
-        /**
- {
-"id": 3,
-"group": 3,
-"fechaAlta": "Mon Jan 10 2022 21:29:06 GMT+0100 (hora estándar de Europa central)",
-"start_time": "2022-01-09T23:00:00.000Z",
-"end_time": "2022-01-12T22:59:59.000Z",
-"canMove": true,
-"canResize": true,
-"canChangeGroup": true,
-"title": "No asignada",
-"notaReserva": "",
-"matricula": "No asignada",
-"modeloVehiculo": "cam",
-"claseVehiculo": "openautomatic",
-"cantidadDias": 3,
-"colaborador": "thomas",
-"flota": "",
-"estado": "",
-"itemProps": {}
-}
-         */
-
 
     }
 
-    onSaveData = async (state: IContainerModalState) =>
+    onSaveData = async (state: IContainerModalState, _idModal: number) =>
     {
 
         //TODO: realizar comprobaciones de si todos los campos estan rellenados
@@ -420,10 +404,16 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
         //TODO: comprobar si existe o no, si no existe crear
         // si existe actualizar los datos
+        if (state.id === undefined)
+        {
+            state.id = _idModal;
+        }
 
-        let [exist, positiongroupsPreReserva] = await this.searchGroupExist(this.groupsPreReserva, state.matricula as string);
-
-        if (exist === false)
+        let [existGroupPrereserva, positiongroupsPreReserva] = await this.searchGroupExist(this.groupsPreReserva, state.id as number);
+        let [existListadoPrereserva, positionListadoPreReserva ] = await this.searchExistListadoPreservas(listadoPrereservas, state.id as number);
+        
+        let _id = 0;
+        if (existGroupPrereserva === false)
         {
             this.groupsPreReserva.push(
             {
@@ -433,16 +423,23 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 "vehiculo": "vehiculo",
                 "clasevehiculo": state.claseVehiculo as string,
                 "modelo": state.modeloVehiculo as string,
-                "bgColor": "#FF00FF",
+                // "bgColor": "#FF00FF",
                 "height": 50,
     
             });
-
+            _id = listadoPrereservas.length + 1;
             positiongroupsPreReserva = this.groupsPreReserva.length;
 
         }
+        else
+        {
+            _id = listadoPrereservas[positionListadoPreReserva as number].id;
+            positiongroupsPreReserva = (positiongroupsPreReserva as number) + 1;
+            
+        }
+        
 
-        console.log("state=" + JSON.stringify(state));
+        // console.log("state=" + JSON.stringify(state));
 
         const startTime = new Date(state.fechaRecogida as Date);
         const endTime = new Date(state.fechaDevolucion as Date);
@@ -459,8 +456,9 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             state.matricula = "No asignada";
         }
 
+        
         const elementoPrereservas: IListadoPrereserva = {
-            id: listadoPrereservas.length + 1,
+            id: _id,
             group: positiongroupsPreReserva as number,
             fechaAlta: new Date().toString(),
             start_time: startTime,
@@ -480,13 +478,13 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             
         };
 
+
         elementoPrereservas["itemProps"] = {
             onDoubleClick: () => { this.onDoubleClickedOverItem(elementoPrereservas) },
         }
 
-        if (exist === false)
+        if (existGroupPrereserva === false)
         {
-
             listadoPrereservas.push(elementoPrereservas);
         }
         else
@@ -495,22 +493,42 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         }
 
 
-
+        this.setState(
+        { 
+            "modalReservasVisible": false, 
+            "id": elementoPrereservas.id,
+            "group": elementoPrereservas.group,
+            "fechaAlta": elementoPrereservas.fechaAlta,
+            "start_time": elementoPrereservas.start_time,
+            "end_time": elementoPrereservas.end_time,
+            "notaReserva": elementoPrereservas.notaReserva,
+            "matricula": elementoPrereservas.matricula,
+            "modeloVehiculo": elementoPrereservas.modeloVehiculo as string,
+            "claseVehiculo": elementoPrereservas.claseVehiculo as string,
+            "cantidadDias": elementoPrereservas.cantidadDias,
+            "colaborador": elementoPrereservas.colaborador as string,
+            "flota": elementoPrereservas.flota as string,
+            "estado": elementoPrereservas.estado as string,
+            // "cantidadDias": 3,
+            // "canMove": true,
+                // "canResize": true,
+                // "canChangeGroup": true,
+                // "title": state.matricula as string,
+        });
+        
         // console.log("listadoPrereservas=" + JSON.stringify(listadoPrereservas));
-        this.setState({ "modalReservasVisible": false, "cantidadDias": 3 });
-
         // console.log("groupsPreserva=" + JSON.stringify(this.groupsPreReserva));
 
     };
 
-    async searchGroupExist(grupoPrereservas: typeGroup[], matricula: string)
+    async searchGroupExist(grupoPrereservas: typeGroup[], _id: number)
     {
         let exist = false;
         let position = -1;
         for (let i = 0; i < grupoPrereservas.length; i++)
         {
 
-            if (grupoPrereservas[i].matricula === matricula)
+            if (grupoPrereservas[i].id === _id)
             {
                 exist = true;
                 position = i;
@@ -522,8 +540,25 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     }
 
+    async searchExistListadoPreservas(listado: IListadoPrereserva[], _id: number) {
+        let exist = false;
+        let position = -1;
+        for (let i = 0; i < listado.length; i++) {
+
+            if (listado[i].id === _id) {
+                exist = true;
+                position = i;
+                return [exist, position];
+            }
+        }
+
+        return [exist, position];
+
+    }
+
     render() {
-        console.log("render groupsPreserva=" + JSON.stringify(this.groupsPreReserva));
+        
+        console.log("this.state.id=" + this.state.id);
         const t = [...this.groupsPreReserva];
 
         return (
@@ -548,6 +583,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                     showItem={this.state.showItem}
                     textoFechaDevolucionVisible={this.state.textoFechaDevolucionVisible}
                     tiempoClick={this.state.tiempoClick}
+                    id={this.state.id}
                     fechaAlta={this.state.fechaAlta as string}
                     notaReserva={this.state.notaReserva as string}
                     fechaRecogida={this.state.fechaRecogida}

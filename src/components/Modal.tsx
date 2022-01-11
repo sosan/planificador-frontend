@@ -47,6 +47,7 @@ interface ContainerProps {
     colaborador?: string;
     flota?: string;
     estado?: string;
+    id?: number;
 
 
 }
@@ -64,6 +65,7 @@ export type ContainerState = {
     estado?: string;
     colaborador?: string;
     flota?: string;
+    id?: number;
 }
 
 
@@ -88,10 +90,11 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             "estado": this.props.estado,
             "colaborador": this.props.colaborador,
             "flota": this.props.flota,
+            "id": this.props.id
 
         };
 
-        // console.log("this.props.textoFechaDevolucionVisible" + this.props.textoFechaDevolucionVisible);
+        console.log("this.props.id=" + this.props.id + " this.state.id=" + this.state.id);
         // console.log("this.state.textoFechaDevolucionVisible" + this.state.textoFechaDevolucionVisible);
 
     }
@@ -106,18 +109,19 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
     componentDidUpdate()
     {
-        console.log("modal updated=" + this.props.tiempoClick );
+        console.log("modal updated props.id=" + this.props.id + " this.state.id" + this.state.id );
         
     }
     
     static getDerivedStateFromProps(newProps: ContainerProps, newState: ContainerState) {
         
+        console.log("getderived newState.id=" + newProps.id + " newState.id" + newState.id);
         if (newProps.isVisible === false)
         {
             return { "cantidadDias": 3 };
 
         }
-        return { "cantidadDias": newState.cantidadDias };
+        return { "cantidadDias": newState.cantidadDias, "id": newState.id };
 
     }
 
@@ -215,6 +219,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                             <IonCol size="8">
                                 <h1>Rellenar Reserva</h1>
                                 <span>Fecha alta: {fechaAlta}</span>
+                                
                             </IonCol>
                             <IonCol >
                                 <IonButton onClick={() => {this.props.onCloseModal(); } }>Cerrar Modal</IonButton>
@@ -278,17 +283,15 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                     <IonLabel className="">
                                         {
                                             (this.props.dataCarsVisible === false) ? textoFechaRecogida :
-                                                <IonDatetime  onIonChange={(evento) => { this.elegirFechaRecogida(evento) }} displayFormat='DD-MM-YYYY' hour-cycle="h23" first-day-of-week={1} yearValues="2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034" cancelText="Cancelar" doneText="Confirmar">
+                                                <IonDatetime value={this.state.fechaRecogida?.toString()} onIonChange={(evento) => { this.elegirFechaRecogida(evento) }} displayFormat='DD-MM-YYYY' hour-cycle="h23" first-day-of-week={1} yearValues="2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034" cancelText="Cancelar" doneText="Confirmar">
                                                 </IonDatetime>
-
-                                            
                                         }
                                     </IonLabel>
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel className="">Cantidad de dias</IonLabel>
                                     <IonButton onClick={() => { this.restarDias(); }} className="boton_ligthbox boton_menos_lightbox" fill='solid' size='large' shape="round"  color="#ffffff">-</IonButton>
-                                    <IonInput onIonChange={(evento) => { this.onChangeInputNumeroDias(evento) }} className="input_numero_dias" name='numerodias' value={this.state.cantidadDias} type='number' min='1' max='99999' autocomplete="off" inputmode="numeric" />
+                                    <IonInput  onIonChange={(evento) => { this.onChangeInputNumeroDias(evento) }} className="input_numero_dias" name='numerodias' value={this.state.cantidadDias} type='number' min='1' max='99999' autocomplete="off" inputmode="numeric" />
                                     <IonButton onClick={() => { this.sumarDias(); }} className="boton_ligthbox boton_mas_lightbox" fill='solid' size='large' shape="round" color="#ffffff">+</IonButton>
                                 </IonItem>
                                 <IonItem>
@@ -297,7 +300,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel className="">Colaboradores</IonLabel>
-                                    <IonSelect onIonChange={(evento) => { this.setState({ "colaborador": evento.detail.value as string }); }} key="colaboradores" id="colaboradores" name='colaboradores' className="colaboradores_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                    <IonSelect value={this.state.colaborador} onIonChange={(evento) => { this.setState({ "colaborador": evento.detail.value as string }); }} key="colaboradores" id="colaboradores" name='colaboradores' className="colaboradores_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                                         {
                                             this.props.listColaborators.map((elemento: IlistColaborators) => {
                                                 return <IonSelectOption key={elemento.id} value={elemento.id}>{elemento.descripcion}</IonSelectOption>;
@@ -308,7 +311,13 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 
                                 <IonItem>
                                     <IonLabel className="">Estado</IonLabel>
-                                        {
+                                            <IonSelect value={this.state.estado} onIonChange={(evento) => { this.setState({ "estado": evento.detail.value as string }); }} id="status" name='status' className="status_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                                    <IonSelectOption value="prereservado" >Pre-Reservado</IonSelectOption>
+                                                    <IonSelectOption value="reservado" >Reservado</IonSelectOption>
+                                                    <IonSelectOption value="prepagado">Prepagado</IonSelectOption>
+                                                    <IonSelectOption value="100pagado">100% Pagado</IonSelectOption>
+                                                </IonSelect>
+                                        {/* {
                                             (this.props.textoFechaDevolucionVisible === false) ? 
                                             <IonSelect onIonChange={(evento) => { this.setState({ "estado": evento.detail.value as string }); }} id="status" name='status' value="prereservado" className="status_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                                                     <IonSelectOption value="prereservado" >Pre-Reservado</IonSelectOption>
@@ -317,14 +326,8 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                                     <IonSelectOption value="100pagado">100% Pagado</IonSelectOption>
                                                 </IonSelect>
                                             :
-                                            <IonSelect onIonChange={(evento) => { this.setState({ "estado": evento.detail.value as string }); }} id="status" name='status' value="" className="status_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
-                                                    <IonSelectOption value="prereservado" >Pre-Reservado</IonSelectOption>
-                                                    <IonSelectOption value="reservado" >Reservado</IonSelectOption>
-                                                    <IonSelectOption value="prepagado">Prepagado</IonSelectOption>
-                                                    <IonSelectOption value="100pagado">100% Pagado</IonSelectOption>
-                                                </IonSelect>
                                             
-                                        }
+                                        } */}
                                 </IonItem>
                                 {
                                     (this.props.textoFechaDevolucionVisible === false) ? null
@@ -348,7 +351,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 <IonButton onClick={() => { this.props.onCloseModal(); }}>Cerrar Modal</IonButton>
                             </IonCol>
                             <IonCol size="6">
-                                <IonButton onClick={() => { this.props.onSaveData(this.state); }}>Guardar Datos</IonButton>
+                                <IonButton onClick={() => { this.props.onSaveData(this.state, this.props.id); }}>Guardar Datos</IonButton>
                             </IonCol>
                         </IonRow>
 
