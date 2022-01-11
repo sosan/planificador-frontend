@@ -1,6 +1,27 @@
 import moment from "moment";
 import {LISTADO_IMAGENES_COCHES} from "./imagenescoches"
 
+export interface IListadoPrereserva {
+    id: number;
+    group: number;
+    fechaAlta: string;
+    start_time: Date,
+    end_time: Date, //moment.Moment,
+    canMove: boolean,
+    canResize: boolean,
+    canChangeGroup: boolean,
+    title: string;
+    notaReserva: string;
+    matricula: string;
+    modeloVehiculo: string;
+    claseVehiculo: string;
+    cantidadDias: number;
+    colaborador: string;
+    flota: string;
+    estado: string;
+    itemProps?: any;
+};
+
 export const items = [
     {
         id: 1,

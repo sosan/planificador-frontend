@@ -68,7 +68,7 @@ export default class TimelineWrapper extends Component {
             visibleTimeEnd: _visibleTimeEnd
         };
         
-        console.log('State: ', JSON.stringify(this.state));
+        console.log('estado primigenio: ', JSON.stringify(this.state));
 
     }
 
@@ -177,8 +177,8 @@ export default class TimelineWrapper extends Component {
         return (
             <div style={{ marginTop: `${this.props.marginTop}px` }}>
                 <Timeline
-                    groups={this.state.groups}
-                    items={this.state.items}
+                    groups={this.props.groups}
+                    items={this.props.items}
                     resizeDetector={containerResizeDetector}
                     defaultTimeStart={this.state.defaultTimeStart}
                     defaultTimeEnd={this.state.defaultTimeEnd}
