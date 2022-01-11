@@ -113,7 +113,7 @@ let listadoPrereservas: IListadoPrereserva[] = [
             onDoubleClick: () => { console.log('You clicked double!') },
             className: 'altura-items',
             style: {
-                background: 'fuchsia',
+                background: '#3796f3',
             }
         }
 
@@ -142,7 +142,7 @@ let listadoPrereservas: IListadoPrereserva[] = [
             onDoubleClick: () => { console.log('You clicked double!') },
             className: 'altura-items',
             style: {
-                background: 'blue',
+                background: '#3796f3',
             }
         }
         
@@ -205,7 +205,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 "vehiculo": "vehiculo",
                 "clasevehiculo": "state.claseVehiculo",
                 "modelo": "state.modeloVehiculo",
-                "bgColor": "#FF00FF",
+                "bgColor": "#3796f3",
                 "height": 50,
             },
             {
@@ -215,7 +215,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 "vehiculo": "vehiculo",
                 "clasevehiculo": "state.claseVehiculo",
                 "modelo": "state.modeloVehiculo",
-                "bgColor": "#FF00FF",
+                "bgColor": "#3796f3",
                 "height": 50,
             }
         ];
@@ -411,43 +411,57 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     }
 
-    onSaveData = (state: IContainerModalState) =>
+    onSaveData = async (state: IContainerModalState) =>
     {
 
         //TODO: realizar comprobaciones de si todos los campos estan rellenados
         /// ....
         if (state.modeloVehiculo === "" || state.claseVehiculo === "") return;
 
+        //TODO: comprobar si existe o no, si no existe crear
+        // si existe actualizar los datos
 
-        this.groupsPreReserva.push(
+        let [exist, positiongroupsPreReserva] = await this.searchGroupExist(this.groupsPreReserva, state.matricula as string);
+
+        if (exist === false)
         {
-            "id": this.groupsPreReserva.length + 1,
-            "matricula": state.matricula as string,
-            "title": "title",
-            "vehiculo": "vehiculo",
-            "clasevehiculo": state.claseVehiculo,
-            "modelo": state.modeloVehiculo,
-            "bgColor": "#FF00FF",
-            "height": 50,
+            this.groupsPreReserva.push(
+            {
+                "id": this.groupsPreReserva.length + 1,
+                "matricula": state.matricula as string,
+                "title": "title",
+                "vehiculo": "vehiculo",
+                "clasevehiculo": state.claseVehiculo as string,
+                "modelo": state.modeloVehiculo as string,
+                "bgColor": "#FF00FF",
+                "height": 50,
+    
+            });
 
-        });
+            positiongroupsPreReserva = this.groupsPreReserva.length;
+
+        }
 
         console.log("state=" + JSON.stringify(state));
 
-        const startTime = new Date(state.fechaRecogida);
-        const endTime = new Date(state.fechaDevolucion);
+        const startTime = new Date(state.fechaRecogida as Date);
+        const endTime = new Date(state.fechaDevolucion as Date);
 
         startTime.setHours(0, 0, 0);
         endTime.setHours(23, 59, 59);
 
-        if (state.matricula === "" || state.matricula === undefined || state.fechaRecogida === "" || state.fechaDevolucion === "")
+        if (state.matricula === "" || 
+            state.matricula === undefined || 
+            state.fechaRecogida?.toString() === "" ||
+            state.fechaDevolucion?.toString() === ""
+        )
         {
             state.matricula = "No asignada";
         }
 
         const elementoPrereservas: IListadoPrereserva = {
             id: listadoPrereservas.length + 1,
-            group: this.groupsPreReserva.length,
+            group: positiongroupsPreReserva as number,
             fechaAlta: new Date().toString(),
             start_time: startTime,
             end_time: endTime,
@@ -457,12 +471,12 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             title: state.matricula as string,
             notaReserva: state.notareserva,
             matricula: state.matricula as string,
-            modeloVehiculo: state.modeloVehiculo,
-            claseVehiculo: state.claseVehiculo,
+            modeloVehiculo: state.modeloVehiculo as string,
+            claseVehiculo: state.claseVehiculo as string,
             cantidadDias: state.cantidadDias,
-            colaborador: state.colaborador,
-            flota: state.flota,
-            estado: state.estado,
+            colaborador: state.colaborador as string,
+            flota: state.flota as string,
+            estado: state.estado as string,
             
         };
 
@@ -470,7 +484,17 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             onDoubleClick: () => { this.onDoubleClickedOverItem(elementoPrereservas) },
         }
 
-        listadoPrereservas.push(elementoPrereservas);
+        if (exist === false)
+        {
+
+            listadoPrereservas.push(elementoPrereservas);
+        }
+        else
+        {
+            listadoPrereservas[positiongroupsPreReserva as number] = elementoPrereservas;
+        }
+
+
 
         // console.log("listadoPrereservas=" + JSON.stringify(listadoPrereservas));
         this.setState({ "modalReservasVisible": false, "cantidadDias": 3 });
@@ -478,6 +502,25 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         // console.log("groupsPreserva=" + JSON.stringify(this.groupsPreReserva));
 
     };
+
+    async searchGroupExist(grupoPrereservas: typeGroup[], matricula: string)
+    {
+        let exist = false;
+        let position = -1;
+        for (let i = 0; i < grupoPrereservas.length; i++)
+        {
+
+            if (grupoPrereservas[i].matricula === matricula)
+            {
+                exist = true;
+                position = i;
+                return [exist, position];
+            }
+        }
+
+        return [exist, position];
+
+    }
 
     render() {
         console.log("render groupsPreserva=" + JSON.stringify(this.groupsPreReserva));

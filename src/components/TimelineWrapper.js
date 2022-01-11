@@ -118,6 +118,8 @@ export default class TimelineWrapper extends Component {
 
         const group = groups[newGroupOrder];
 
+        if (group === undefined || group.id === undefined) return;
+
         let devItems = [];
         for (let i = 0; i < items.length; i++) 
         {

@@ -56,14 +56,14 @@ export type ContainerState = {
     cantidadDias: number;
     textoFechaDevolucionVisible?: boolean;
     notareserva: string;
+    fechaRecogida?: Date;
+    fechaDevolucion?: Date;
     matricula?: string;
-    modeloVehiculo: string;
-    claseVehiculo: string;
-    fechaRecogida: string;
-    fechaDevolucion: string;
-    estado: string;
-    colaborador: string;
-    flota: string;
+    modeloVehiculo?: string;
+    claseVehiculo?: string;
+    estado?: string;
+    colaborador?: string;
+    flota?: string;
 }
 
 
@@ -80,15 +80,14 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             "isVisible": this.props.isVisible,
             "cantidadDias": this.props.cantidadDias || 3,
             "textoFechaDevolucionVisible": this.props.textoFechaDevolucionVisible,
-            "notareserva": "",
-            "modeloVehiculo": "",
-            "claseVehiculo": "",
-            "fechaDevolucion": "",
-            "fechaRecogida": "",
-            "estado": "",
-            "colaborador": "",
-            "flota": ""
-
+            "notareserva": this.props.notaReserva,
+            "modeloVehiculo": this.props.modeloVehiculo,
+            "claseVehiculo": this.props.claseVehiculo,
+            "fechaDevolucion": this.props.fechaDevolucion,
+            "fechaRecogida": this.props.fechaRecogida,
+            "estado": this.props.estado,
+            "colaborador": this.props.colaborador,
+            "flota": this.props.flota,
 
         };
 
@@ -156,15 +155,15 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         { 
             "cantidadDias": 3, 
             "textoFechaDevolucionVisible": true,
-            "fechaRecogida": fechaRecogida.toString(),
-            "fechaDevolucion": fechaDevolucion.toString()
+            "fechaRecogida": fechaRecogida,
+            "fechaDevolucion": fechaDevolucion
         });
     }
 
     onChangeInputNumeroDias(evento: CustomEvent<InputChangeEventDetail>)
     {
         const dias = parseInt( evento.detail.value as string) ;
-        const fechaRecogida = new Date(this.state.fechaRecogida);
+        const fechaRecogida = new Date(this.state.fechaRecogida as Date);
         const fechaRecogidaTemp = new Date(fechaRecogida);
         const fechaDevolucion = new Date(fechaRecogidaTemp.setDate(fechaRecogidaTemp.getDate() + (dias - 1)));
 
@@ -172,8 +171,8 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         { 
             "cantidadDias": dias,
             "textoFechaDevolucionVisible": true,
-            "fechaRecogida": fechaRecogida.toString(),
-            "fechaDevolucion": fechaDevolucion.toString(),
+            "fechaRecogida": fechaRecogida,
+            "fechaDevolucion": fechaDevolucion,
         });
     }
 
@@ -182,22 +181,23 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
     render() {
 
-        let fechaAlta, fechaRecogida ;
-
+        let fechaAhora, fechaRecogida, notaReserva ;
 
         if (this.props.showItem === true)
         {
-            fechaAlta = this.props.fechaAlta;
+            
+            fechaAhora = new Date(this.props.fechaAlta as string);
             fechaRecogida = new Date(this.props.fechaRecogida as Date);
         }
         else
         {
+            fechaAhora = new Date();
             fechaRecogida = new Date(this.props.tiempoClick);
             
-            const fechaAhora = new Date();
-            fechaAlta = `${fechaAhora.getDate().toString().padStart(2, "00")}-${(fechaAhora.getMonth() + 1).toString().padStart(2, "00")}-${fechaAhora.getFullYear()} ${fechaAhora.getHours().toString().padStart(2, "00")}:${fechaAhora.getMinutes().toString().padStart(2, "00")}`;
         }
-
+        
+        notaReserva = this.state.notareserva;
+        const fechaAlta = `${fechaAhora.getDate().toString().padStart(2, "00")}-${(fechaAhora.getMonth() + 1).toString().padStart(2, "00")}-${fechaAhora.getFullYear()} ${fechaAhora.getHours().toString().padStart(2, "00")}:${fechaAhora.getMinutes().toString().padStart(2, "00")}`;
         const textoFechaRecogida = `${fechaRecogida.getDate().toString().padStart(2, "00")}-${(fechaRecogida.getMonth() + 1).toString().padStart(2, "00")}-${fechaRecogida.getFullYear()}`;
 
         const fechaDevolucion = new Date( fechaRecogida.setDate(fechaRecogida.getDate() + (this.state.cantidadDias - 1) ));
@@ -224,21 +224,36 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                             <IonList className="ancho_100">
                                 <IonItem>
                                     <IonLabel position='floating' className="">Nota de reserva</IonLabel>
-                                    <IonInput name='notareserva' onIonChange={ (evento) => { this.setState({"notareserva": evento.detail.value as string }); } }></IonInput>
+                                    <IonInput name='notareserva' value={notaReserva} onIonChange={ (evento) => { this.setState({"notareserva": evento.detail.value as string }); } }></IonInput>
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel className="">Matricula</IonLabel>
-                                    <IonLabel className="">{this.props.matricula}</IonLabel>
+                                    {
+                                        (this.props.showItem === false) ? <IonLabel className="">{this.state.matricula}</IonLabel>
+                                        :
+                                            <IonSelect value={this.state.matricula} onIonChange={(evento) => { this.setState({ "matricula": evento.detail.value as string }); }} key="matricula" id="matricula" name='matricula' className="vehiculos_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                                {
+                                                    this.props.dataCars.map((elemento: IDataCoches) => {
+                                                        if (elemento.clasevehiculo.toLowerCase() === this.state.claseVehiculo?.toLowerCase() && 
+                                                            elemento.modelo.toLowerCase() === this.state.modeloVehiculo?.toLowerCase()
+                                                        )
+                                                        {
+                                                            return <IonSelectOption key={elemento.matricula} value={elemento.matricula}>{elemento.matricula}</IonSelectOption>;
+
+                                                        }
+                                                        return null;
+                                                    })
+                                                }
+                                            </IonSelect>
+                                    }
+                                    
                                 </IonItem>
                                 <IonItem>
+                                    <IonLabel className="">Modelo Vehiculo</IonLabel>
+                                    
                                     {
-                                        (this.props.dataCarsVisible === false) ?  <IonLabel className="">Vehiculo</IonLabel> :
-                                            <IonLabel className="">Modelo Vehiculo</IonLabel>
-                                    }
-
-                                    {
-                                        (this.props.dataCarsVisible === false) ? <IonLabel className="">{this.props.vehiculo}</IonLabel> :
-                                            <IonSelect onIonChange={(evento) => { this.setState({ "modeloVehiculo": evento.detail.value as string }); }} key="vehiculos" id="vehiculos" name='vehiculos' className="vehiculos_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                        (this.props.dataCarsVisible === false) ? <IonLabel className="">{this.state.modeloVehiculo}</IonLabel> :
+                                            <IonSelect value={this.state.modeloVehiculo} onIonChange={(evento) => { this.setState({ "modeloVehiculo": evento.detail.value as string }); }} key="vehiculos" id="vehiculos" name='vehiculos' className="vehiculos_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                                                 {
                                                     this.props.listadoModelosVehiculos.map((elemento: string) => {
                                                         return <IonSelectOption key={elemento.toLowerCase()} value={elemento.toLowerCase()}>{elemento}</IonSelectOption>;
@@ -250,7 +265,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel className="">Clase</IonLabel>
-                                    <IonSelect onIonChange={(evento) => { this.setState({ "claseVehiculo": evento.detail.value as string }); }} key="clase" id="clase" name='clase' className="clase_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                    <IonSelect value={this.state.claseVehiculo} onIonChange={(evento) => { this.setState({ "claseVehiculo": evento.detail.value as string }); }} key="clase" id="clase" name='clase' className="clase_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                                         {
                                             this.props.listadoClaseVehiculos.map((elemento: string) => {
                                                 return <IonSelectOption key={elemento.toLowerCase()} value={elemento.toLowerCase()}>{elemento}</IonSelectOption>;
@@ -259,11 +274,11 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                     </IonSelect>
                                 </IonItem>
                                 <IonItem>
-                                    <IonLabel className="">Fecha Recogida</IonLabel>
+                                    <IonLabel className="">Fecha Entrega</IonLabel>
                                     <IonLabel className="">
                                         {
                                             (this.props.dataCarsVisible === false) ? textoFechaRecogida :
-                                                <IonDatetime onIonChange={(evento) => { this.elegirFechaRecogida(evento) }} displayFormat='DD-MM-YYYY' hour-cycle="h23" first-day-of-week={1} yearValues="2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034" cancelText="Cancelar" doneText="Confirmar">
+                                                <IonDatetime  onIonChange={(evento) => { this.elegirFechaRecogida(evento) }} displayFormat='DD-MM-YYYY' hour-cycle="h23" first-day-of-week={1} yearValues="2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034" cancelText="Cancelar" doneText="Confirmar">
                                                 </IonDatetime>
 
                                             
