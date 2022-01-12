@@ -19,7 +19,9 @@ export interface IListadoPrereserva {
     colaborador: string;
     flota: string;
     estado: string;
+    
     itemProps?: any;
+
 };
 
 export const items = [

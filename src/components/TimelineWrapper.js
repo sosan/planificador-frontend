@@ -173,14 +173,26 @@ export default class TimelineWrapper extends Component {
 
     }
 
+    // static getDerivedStateFromProps(newProps, newState) {
+
+    //     // console.log("getderived newState.id=" + newProps.id + " newState.id" + newState.id);
+    //     // if (newProps.isVisible === false) {
+    //     //     return { "cantidadDias": 3 };
+
+    //     // }
+    //     // return { "cantidadDias": newState.cantidadDias, "id": newState.id };
+
+    // }
     
     render() {
+
+        const {groups, items} = this.props;
 
         return (
             <div style={{ marginTop: `${this.props.marginTop}px` }}>
                 <Timeline
-                    groups={this.props.groups}
-                    items={this.props.items}
+                    groups={groups}
+                    items={items}
                     resizeDetector={containerResizeDetector}
                     defaultTimeStart={this.state.defaultTimeStart}
                     defaultTimeEnd={this.state.defaultTimeEnd}

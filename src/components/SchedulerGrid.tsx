@@ -36,6 +36,7 @@ type ContainerState = {
     showItem: boolean;
     start_time?: Date,
     end_time?: Date,
+    isDoubleclickItem: boolean,
     
 
 }
@@ -193,6 +194,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             cantidadDias: 3,
             dataCarsVisible: false,
             textoFechaDevolucionVisible: false,
+            isDoubleclickItem: false,
 
         };
         
@@ -356,14 +358,24 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
     }
 
     anadirPreReserva = () => {
-        this.setState({ 
+        this.setState({
             "modalReservasVisible": true, 
+            "id": listadoPrereservas.length + 1,
+            "group": this.groupsPreReserva.length + 1,
+            "claseVehiculo": "",
+            "colaborador": "",
+            "estado": "",
+            "fechaAlta": "",
+            "flota": "",
+            "modeloVehiculo": "",
+            "notaReserva": "",
+            "vehiculo": "",
             "cantidadDias": 3,
             "tiempoClick": new Date().getTime(),
             "matricula": "No asignada",
             "dataCarsVisible": true,
             "textoFechaDevolucionVisible": false,
-            "id": listadoPrereservas.length + 1
+            "isDoubleclickItem": false,
             
         });
         // console.log("anadir textoFechaDevolucionVisible=" + this.state.textoFechaDevolucionVisible);
@@ -376,12 +388,15 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             "dataCarsVisible": true,
             "showItem": true,
             "modalReservasVisible": true,
+            "id": state.id,
+            "group": state.group,
             "fechaAlta": state.fechaAlta,
             "fechaRecogida": state.start_time,
             "fechaDevolucion": state.end_time,
             "matricula": state.matricula,
             "vehiculo": state.claseVehiculo,
             "cantidadDias": state.cantidadDias,
+            "isDoubleclickItem": true,
             "textoFechaDevolucionVisible": true,
             "notaReserva": state.notaReserva,
             "modeloVehiculo": state.modeloVehiculo,
@@ -395,30 +410,43 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     }
 
-    onSaveData = async (state: IContainerModalState, _idModal: number) =>
+    onSaveData = (state: IContainerModalState, _idModal: number, groupId: number) =>
     {
 
         //TODO: realizar comprobaciones de si todos los campos estan rellenados
         /// ....
-        if (state.modeloVehiculo === "" || state.claseVehiculo === "") return;
+        if (state.modeloVehiculo === "" || 
+            state.claseVehiculo === "" || 
+            state.fechaRecogida?.toString() === "Invalid Date" ||
+            state.fechaDevolucion?.toString() === "Invalid Date"
+        
+        ) 
+        {
+            return false;
+        }
 
         //TODO: comprobar si existe o no, si no existe crear
         // si existe actualizar los datos
-        if (state.id === undefined)
+        
+
+        if (state.matricula === "" ||
+            state.matricula === undefined ||
+            state.fechaRecogida?.toString() === "" ||
+            state.fechaDevolucion?.toString() === ""
+        ) 
         {
-            state.id = _idModal;
+            state.matricula = "No asignada";
         }
 
-        let [existGroupPrereserva, positiongroupsPreReserva] = await this.searchGroupExist(this.groupsPreReserva, state.id as number);
-        let [existListadoPrereserva, positionListadoPreReserva ] = await this.searchExistListadoPreservas(listadoPrereservas, state.id as number);
+        let [existGroupPrereserva, positiongroupsPreReserva ] = this.searchGroupExist(this.groupsPreReserva, state.id as number);
+        let [existListadoPrereserva, positionListadoPreReserva ] = this.searchExistListadoPreservas(listadoPrereservas, state.id as number);
         
-        let _id = 0;
         if (existGroupPrereserva === false)
         {
             this.groupsPreReserva.push(
             {
-                "id": this.groupsPreReserva.length + 1,
-                "matricula": state.matricula as string,
+                "id": groupId,
+                "matricula": state.matricula,
                 "title": "title",
                 "vehiculo": "vehiculo",
                 "clasevehiculo": state.claseVehiculo as string,
@@ -427,40 +455,31 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 "height": 50,
     
             });
-            _id = listadoPrereservas.length + 1;
-            positiongroupsPreReserva = this.groupsPreReserva.length;
+            // _id = state.id; //listadoPrereservas.length + 1;
+            positiongroupsPreReserva = this.groupsPreReserva.length - 1;
+            state.id = _idModal;
 
+            
         }
         else
         {
-            _id = listadoPrereservas[positionListadoPreReserva as number].id;
+            if (state.id === undefined) {
+                state.id = _idModal;
+            }
+
             this.groupsPreReserva[positiongroupsPreReserva as number].matricula = state.matricula as string;
-            positiongroupsPreReserva = (positiongroupsPreReserva as number) + 1;
             
         }
-        
-
-        // console.log("state=" + JSON.stringify(state));
 
         const startTime = new Date(state.fechaRecogida as Date);
         const endTime = new Date(state.fechaDevolucion as Date);
 
         startTime.setHours(0, 0, 0);
         endTime.setHours(23, 59, 59);
-
-        if (state.matricula === "" || 
-            state.matricula === undefined || 
-            state.fechaRecogida?.toString() === "" ||
-            state.fechaDevolucion?.toString() === ""
-        )
-        {
-            state.matricula = "No asignada";
-        }
-
         
-        const elementoPrereservas: IListadoPrereserva = {
-            id: _id,
-            group: positiongroupsPreReserva as number,
+        let elementoPrereservas: IListadoPrereserva = {
+            id: _idModal as number,
+            group: groupId,
             fechaAlta: new Date().toString(),
             start_time: startTime,
             end_time: endTime,
@@ -477,11 +496,15 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             flota: state.flota as string,
             estado: state.estado as string,
             
+            
         };
-
 
         elementoPrereservas["itemProps"] = {
             onDoubleClick: () => { this.onDoubleClickedOverItem(elementoPrereservas) },
+            className: 'altura-items',
+            style: {
+                background: 'blue',
+            }
         }
 
         if (existGroupPrereserva === false)
@@ -490,7 +513,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         }
         else
         {
-            listadoPrereservas[positiongroupsPreReserva as number] = elementoPrereservas;
+            listadoPrereservas[positionListadoPreReserva as number] = elementoPrereservas;
         }
 
 
@@ -510,22 +533,26 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             "colaborador": elementoPrereservas.colaborador as string,
             "flota": elementoPrereservas.flota as string,
             "estado": elementoPrereservas.estado as string,
+            "isDoubleclickItem": false,
             // "cantidadDias": 3,
             // "canMove": true,
                 // "canResize": true,
                 // "canChangeGroup": true,
                 // "title": state.matricula as string,
         });
+
+        return true;
         
         // console.log("listadoPrereservas=" + JSON.stringify(listadoPrereservas));
         // console.log("groupsPreserva=" + JSON.stringify(this.groupsPreReserva));
 
     };
 
-    async searchGroupExist(grupoPrereservas: typeGroup[], _id: number)
+    searchGroupExist(grupoPrereservas: typeGroup[], _id: number)
     {
         let exist = false;
         let position = -1;
+        
         for (let i = 0; i < grupoPrereservas.length; i++)
         {
 
@@ -533,6 +560,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             {
                 exist = true;
                 position = i;
+
                 return [exist, position];
             }
         }
@@ -541,32 +569,34 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     }
 
-    async searchExistListadoPreservas(listado: IListadoPrereserva[], _id: number) {
+    searchExistListadoPreservas(listado: IListadoPrereserva[], _id: number) {
         let exist = false;
         let position = -1;
+        let group = -1;
         for (let i = 0; i < listado.length; i++) {
 
             if (listado[i].id === _id) {
                 exist = true;
                 position = i;
-                return [exist, position];
+                group = listado[i].group;
+                return [exist, position, group];
             }
         }
 
-        return [exist, position];
+        return [exist, position, group];
 
     }
 
     render() {
         
         console.log("this.state.id=" + this.state.id);
-        const t = [...this.groupsPreReserva];
+        const grupoPrereserva = [...this.groupsPreReserva];
 
         return (
             <>
                 <TimelineWrapper 
                     anadirBotonPreservar={true}
-                    groups={t}
+                    groups={grupoPrereserva}
                     items={listadoPrereservas}
                     onClickAnadirPreReserva={this.anadirPreReserva}
                     
@@ -583,8 +613,10 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                     isVisible={this.state.modalReservasVisible}
                     showItem={this.state.showItem}
                     textoFechaDevolucionVisible={this.state.textoFechaDevolucionVisible}
+                    isDoubleclickItem={this.state.isDoubleclickItem}
                     tiempoClick={this.state.tiempoClick}
                     id={this.state.id}
+                    group={this.state.group}
                     fechaAlta={this.state.fechaAlta as string}
                     notaReserva={this.state.notaReserva as string}
                     fechaRecogida={this.state.fechaRecogida}
