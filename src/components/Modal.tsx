@@ -21,6 +21,28 @@ import { IlistFlotas } from "../datos/listadoFlotas";
 import "../css/Modal.css";
 import { InputChangeEventDetail } from '@ionic/core';
 
+interface IModalState
+{
+    matricula?: string;
+    vehiculo?: string;
+    cantidadDias?: number;
+    fechaAlta?: string;
+    fechaRecogida?: Date;
+    fechaDevolucion?: Date;
+    modeloVehiculo?: string;
+    claseVehiculo?: string;
+    showItem?: boolean;
+    colaborador?: string;
+    flota?: string;
+    estado?: string;
+    id?: number;
+    group?: number;
+    notareserva?: string;
+    textoFechaDevolucionVisible?: boolean;
+    
+
+}
+
 interface ContainerProps {
     onCloseModal: any;
     onModalDidDismiss: any;
@@ -30,53 +52,20 @@ interface ContainerProps {
     listColaborators: IlistColaborators[];
     listFlotas: IlistFlotas[];
     tiempoClick: any;
-    matricula?: string;
-    vehiculo?: string;
-    cantidadDias: number;
     dataCarsVisible: boolean;
-    textoFechaDevolucionVisible: boolean;
     listadoClaseVehiculos: string[];
     listadoModelosVehiculos: string[];
-    notaReserva: string;
-    showItem: boolean;
-    fechaAlta?: string;
-    fechaRecogida?: Date;
-    fechaDevolucion?: Date;
-    modeloVehiculo?: string;
-    claseVehiculo?: string;
-    colaborador?: string;
-    flota?: string;
-    estado?: string;
-    id?: number;
-    group?: number;
     isDoubleclickItem: boolean;
-
+    modalState: IModalState;
 
 }
 export type ContainerState = {
     isVisible?: boolean;
     tiempoClick?: any;
-    cantidadDias: number;
-    textoFechaDevolucionVisible?: boolean;
-    notareserva: string;
-    fechaRecogida?: Date;
-    fechaDevolucion?: Date;
-    matricula?: string;
-    modeloVehiculo?: string;
-    claseVehiculo?: string;
-    estado?: string;
-    colaborador?: string;
-    flota?: string;
-    id?: number;
-    group?: number;
+    
+    modalState: IModalState;
     isDoubleclickItem: boolean;
-    updateNotareserva: boolean;
-    updatedMatricula: boolean;
-    updatedModeloVehiculo: boolean;
-    updatedClaseVehiculo: boolean;
-    updatedColaborador: boolean;
-    updatedFlota: boolean;
-    updatedEstado: boolean;
+    
 }
 
 
@@ -87,27 +76,23 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
     customDatetime: any ;
     defaultState: ContainerState = {
         "isVisible": false,
-        "cantidadDias": 3,
-        "textoFechaDevolucionVisible": false,
-        "notareserva": "",
-        "modeloVehiculo": "",
-        "claseVehiculo": "",
-        "fechaDevolucion": undefined,
-        "fechaRecogida": undefined,
-        "estado": "",
-        "colaborador": "",
-        "flota": "",
-        "id": undefined,
-        "group": undefined,
+        "modalState": {
+            "textoFechaDevolucionVisible": false,
+            "cantidadDias": 3,
+            "showItem": false,
+            "notareserva": "",
+            "modeloVehiculo": "",
+            "claseVehiculo": "",
+            "fechaDevolucion": undefined,
+            "fechaRecogida": undefined,
+            "estado": "",
+            "colaborador": "",
+            "flota": "",
+            "id": undefined,
+            "group": undefined,
+
+        },
         "isDoubleclickItem": false,
-        "updateNotareserva": false,
-        "updatedMatricula": false,
-        "updatedModeloVehiculo": false,
-        "updatedClaseVehiculo": false,
-        "updatedColaborador": false,
-        "updatedEstado": false,
-        "updatedFlota": false,
-        
 
     };
 
@@ -115,25 +100,8 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
     {
         super(props);
         this.state = this.defaultState;
-                
-        // {
-        //     "isVisible": this.props.isVisible,
-        //     "cantidadDias": this.props.cantidadDias || 3,
-        //     "textoFechaDevolucionVisible": this.props.textoFechaDevolucionVisible,
-        //     "notareserva": this.props.notaReserva,
-        //     "modeloVehiculo": this.props.modeloVehiculo,
-        //     "claseVehiculo": this.props.claseVehiculo,
-        //     "fechaDevolucion": this.props.fechaDevolucion,
-        //     "fechaRecogida": this.props.fechaRecogida,
-        //     "estado": this.props.estado,
-        //     "colaborador": this.props.colaborador,
-        //     "flota": this.props.flota,
-        //     "id": this.props.id,
-        //     "group": this.props.group,
 
-        // };
-
-        console.log("this.props.id=" + this.props.id + " this.state.id=" + this.state.id);
+        console.log("this.props.id=" + this.props.modalState.id + " this.state.id=" + this.state.modalState.id);
         // console.log("this.state.textoFechaDevolucionVisible" + this.state.textoFechaDevolucionVisible);
 
     }
@@ -148,85 +116,40 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
     componentDidUpdate()
     {
-        console.log("modal updated props.id=" + this.props.id + " this.state.id" + this.state.id );
+        console.log("modal updated props.id=" + this.props.modalState.id + " this.state.id" + this.state.modalState.id );
         
     }
     // de props a state
     // static getDerivedStateFromProps(newProps: ContainerProps, newState: ContainerState) {
-        
-
     //     console.log("getderived newState.id=" + newProps.id + " newState.id" + newState.id);
-    //     let elemento: any = {};
-    //     if (newProps.showItem === true)
-    //     {
-    //         elemento = {...newProps};
-    //         if (newProps.isDoubleclickItem === true)
-    //         {
-
-                
-    //             if (newState.updatedClaseVehiculo as boolean === true)
-    //             {
-    //                 elemento["claseVehiculo"] = newState.claseVehiculo;
-    //             }
-                
-
-    //             if (newState.updatedMatricula as boolean === true)
-    //             {
-    //                 elemento["matricula"] = newState.matricula;
-    //             }
-
-    //             if (newState.updatedColaborador as boolean === true) {
-    //                 elemento["colaborador"] = newState.colaborador;
-    //             }
-
-    //             if (newState.updatedEstado as boolean === true) {
-    //                 elemento["estado"] = newState.estado;
-    //             }
-                
-    //             if (newState.updatedFlota === true) {
-    //                 elemento["flota"] = newState.flota;
-    //             }
-
-    //             if (newState.updateNotareserva as boolean === true) {
-    //                 elemento["flota"] = newState.flota;
-    //             }
-
-    //             if (newState.updatedModeloVehiculo as boolean  === true) {
-    //                 elemento["modeloVehiculo"] = newState.modeloVehiculo;
-    //             }
-
-                
-    //         }
-    //         else
+    //        else
     //         {
     //             elemento = {...newProps};
 
     //         }
     //     }
     //     return elemento;
-       
-
     // }
 
 
     restarDias()
     {
 
-        let cantidadDias = this.state.cantidadDias;
-        cantidadDias--;
-        if (cantidadDias < 1)
+        let _cantidadDias = this.state.modalState.cantidadDias as number;
+        _cantidadDias--;
+        if (_cantidadDias < 1)
         {
-            cantidadDias = 1;
+            _cantidadDias = 1;
         }
         
-        this.setState({"cantidadDias": cantidadDias });
+        this.setState({ "modalState": { "cantidadDias": _cantidadDias }} );
     }
 
     sumarDias()
     {
-        let cantidadDias = this.state.cantidadDias;
-        cantidadDias++;
-        this.setState({ "cantidadDias": cantidadDias });
+        let _cantidadDias = this.state.modalState.cantidadDias as number;
+        _cantidadDias++;
+        this.setState({"modalState": { "cantidadDias": _cantidadDias } });
         
     }
 
@@ -236,31 +159,31 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         // console.log("elegirfecharecogida textoFechaDevolucionVisible" + this.state.textoFechaDevolucionVisible);
         const fechaRecogida = new Date(evento.detail.value as string);
         const fechaRecogidaTemp = new Date(fechaRecogida);
-        const fechaDevolucion = new Date(fechaRecogidaTemp.setDate(fechaRecogidaTemp.getDate() + (this.state.cantidadDias - 1)));
+        const fechaDevolucion = new Date(fechaRecogidaTemp.setDate(fechaRecogidaTemp.getDate() + (this.state.modalState.cantidadDias as number - 1)));
 
-        this.setState(
+        this.setState({ "modalState":
         { 
             "cantidadDias": 3, 
             "textoFechaDevolucionVisible": true,
             "fechaRecogida": fechaRecogida,
             "fechaDevolucion": fechaDevolucion
-        });
+        }});
     }
 
     onChangeInputNumeroDias(evento: CustomEvent<InputChangeEventDetail>)
     {
         const dias = parseInt( evento.detail.value as string) ;
-        const fechaRecogida = new Date(this.state.fechaRecogida as Date);
+        const fechaRecogida = new Date(this.state.modalState.fechaRecogida as Date);
         const fechaRecogidaTemp = new Date(fechaRecogida);
         const fechaDevolucion = new Date(fechaRecogidaTemp.setDate(fechaRecogidaTemp.getDate() + (dias - 1)));
 
-        this.setState(
+        this.setState({ "modalState":
         { 
             "cantidadDias": dias,
             "textoFechaDevolucionVisible": true,
             "fechaRecogida": fechaRecogida,
             "fechaDevolucion": fechaDevolucion,
-        });
+        }});
     }
 
     resetState()
@@ -272,7 +195,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
     saveProps(state: ContainerState, _idModal: number, groupId: number)
     {
 
-        const isSaved = this.props.onSaveData(this.state, this.props.id, this.props.group);
+        const isSaved = this.props.onSaveData(this.state, this.props.modalState.id, this.props.modalState.group);
         if (isSaved === true)
         {
             this.resetState();
@@ -285,30 +208,32 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
         let fechaAhora, fechaRecogida, notaReserva ;
 
-        if (this.props.showItem === true)
+        if (this.props.modalState.showItem === true)
         {
             
-            fechaAhora = new Date(this.props.fechaAlta as string);
-            fechaRecogida = new Date(this.props.fechaRecogida as Date);
+            fechaAhora = new Date(this.props.modalState.fechaAlta as string);
+            fechaRecogida = new Date(this.props.modalState.fechaRecogida as Date);
 
             // nos han pasado los datos por props
-            if (this.state.fechaRecogida === undefined || this.state.fechaRecogida.toString() === "Invalid Date")
+            if (this.state.modalState.fechaRecogida === undefined || this.state.modalState.fechaRecogida.toString() === "Invalid Date")
             {
                 console.log("dkjsldf");
-                this.setState({
-                    "id": this.props.id,
-                    "group": this.props.group,
-                    "fechaRecogida": this.props.fechaRecogida as Date,
-                    "fechaDevolucion": this.props.fechaDevolucion as Date,
-                    "notareserva": this.props.notaReserva,
-                    "matricula": this.props.matricula,
-                    "modeloVehiculo": this.props.modeloVehiculo as string,
-                    "claseVehiculo": this.props.claseVehiculo as string,
-                    "cantidadDias": this.props.cantidadDias,
-                    "colaborador": this.props.colaborador as string,
-                    "flota": this.props.flota as string,
-                    "estado": this.props.estado as string,
-                });
+                this.setState({"modalState": this.props.modalState});
+
+                // this.setState({
+                //     "id": this.props.id,
+                //     "group": this.props.group,
+                //     "fechaRecogida": this.props.fechaRecogida as Date,
+                //     "fechaDevolucion": this.props.fechaDevolucion as Date,
+                //     "notareserva": this.props.notaReserva,
+                //     "matricula": this.props.matricula,
+                //     "modeloVehiculo": this.props.modeloVehiculo as string,
+                //     "claseVehiculo": this.props.claseVehiculo as string,
+                //     "cantidadDias": this.props.cantidadDias,
+                //     "colaborador": this.props.colaborador as string,
+                //     "flota": this.props.flota as string,
+                //     "estado": this.props.estado as string,
+                // });
             }
             else
             {
@@ -323,12 +248,12 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             
         }
         
-        notaReserva = this.state.notareserva;
+        notaReserva = this.state.modalState.notareserva;
         const fechaAlta = `${fechaAhora.getDate().toString().padStart(2, "00")}-${(fechaAhora.getMonth() + 1).toString().padStart(2, "00")}-${fechaAhora.getFullYear()} ${fechaAhora.getHours().toString().padStart(2, "00")}:${fechaAhora.getMinutes().toString().padStart(2, "00")}`;
         const textoFechaRecogida = `${fechaRecogida.getDate().toString().padStart(2, "00")}-${(fechaRecogida.getMonth() + 1).toString().padStart(2, "00")}-${fechaRecogida.getFullYear()}`;
 
         const fechaRecogidaTempo = new Date(fechaRecogida);
-        const fechaDevolucion = new Date(fechaRecogidaTempo.setDate(fechaRecogidaTempo.getDate() + (this.state.cantidadDias - 1) ));
+        const fechaDevolucion = new Date(fechaRecogidaTempo.setDate(fechaRecogidaTempo.getDate() + (this.state.modalState.cantidadDias as number - 1) ));
         const textoFechaDevolucion = `${fechaDevolucion.getDate().toString().padStart(2, "00")}-${(fechaDevolucion.getMonth() + 1).toString().padStart(2, "00")}-${fechaDevolucion.getFullYear()}`;
         // let textoFechaDevolucion = "";
         // if (this.props.textoFechaDevolucionVisible === true || 
@@ -355,18 +280,18 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                             <IonList className="ancho_100">
                                 <IonItem>
                                     <IonLabel position='floating' className="">Nota de reserva</IonLabel>
-                                    <IonInput name='notareserva' value={notaReserva} onIonChange={(evento) => { this.setState({ "notareserva": evento.detail.value as string, "updateNotareserva": true }); } }></IonInput>
+                                    <IonInput name='notareserva' value={notaReserva} onIonChange={(evento) => { this.setState({ "modalState": { "notareserva": evento.detail.value as string } }); } }></IonInput>
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel className="">Matricula</IonLabel>
                                     {
-                                        (this.props.showItem === false) ? <IonLabel className="">{this.state.matricula}</IonLabel>
+                                        (this.props.modalState.showItem === false) ? <IonLabel className="">{this.state.modalState.matricula}</IonLabel>
                                         :
-                                            <IonSelect value={this.state.matricula} onIonChange={(evento) => { this.setState({ "matricula": evento.detail.value as string, "updatedMatricula": true }); }} key="matricula" id="matricula" name='matricula' className="vehiculos_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                            <IonSelect value={this.state.modalState.matricula} onIonChange={(evento) => { this.setState({ "modalState": { "matricula": evento.detail.value as string }}); }} key="matricula" id="matricula" name='matricula' className="vehiculos_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                                                 {
                                                     this.props.dataCars.map((elemento: IDataCoches) => {
-                                                        if (elemento.clasevehiculo.toLowerCase() === this.state.claseVehiculo?.toLowerCase() && 
-                                                            elemento.modelo.toLowerCase() === this.state.modeloVehiculo?.toLowerCase()
+                                                        if (elemento.clasevehiculo.toLowerCase() === this.state.modalState.claseVehiculo?.toLowerCase() && 
+                                                            elemento.modelo.toLowerCase() === this.state.modalState.modeloVehiculo?.toLowerCase()
                                                         )
                                                         {
                                                             return <IonSelectOption key={elemento.matricula} value={elemento.matricula}>{elemento.matricula}</IonSelectOption>;
@@ -383,8 +308,8 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                     <IonLabel className="">Modelo Vehiculo</IonLabel>
                                     
                                     {
-                                        (this.props.dataCarsVisible === false) ? <IonLabel className="">{this.state.modeloVehiculo}</IonLabel> :
-                                            <IonSelect value={this.state.modeloVehiculo} onIonChange={(evento) => { this.setState({ "modeloVehiculo": evento.detail.value as string, "updatedModeloVehiculo": true }); }} key="vehiculos" id="vehiculos" name='vehiculos' className="vehiculos_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                        (this.props.dataCarsVisible === false) ? <IonLabel className="">{this.state.modalState.modeloVehiculo}</IonLabel> :
+                                            <IonSelect value={this.state.modalState.modeloVehiculo} onIonChange={(evento) => { this.setState({ "modalState": {"modeloVehiculo": evento.detail.value as string }} ); }} key="vehiculos" id="vehiculos" name='vehiculos' className="vehiculos_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                                                 {
                                                     this.props.listadoModelosVehiculos.map((elemento: string) => {
                                                         return <IonSelectOption key={elemento.toLowerCase()} value={elemento.toLowerCase()}>{elemento}</IonSelectOption>;
@@ -396,7 +321,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel className="">Clase</IonLabel>
-                                    <IonSelect value={this.state.claseVehiculo} onIonChange={(evento) => { this.setState({ "claseVehiculo": evento.detail.value as string, "updatedClaseVehiculo": true }); }} key="clase" id="clase" name='clase' className="clase_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                    <IonSelect value={this.state.modalState.claseVehiculo} onIonChange={(evento) => { this.setState({ "modalState": { "claseVehiculo": evento.detail.value as string, }}); }} key="clase" id="clase" name='clase' className="clase_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                                         {
                                             this.props.listadoClaseVehiculos.map((elemento: string) => {
                                                 return <IonSelectOption key={elemento.toLowerCase()} value={elemento.toLowerCase()}>{elemento}</IonSelectOption>;
@@ -409,7 +334,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                     <IonLabel className="">
                                         {
                                             (this.props.dataCarsVisible === false) ? textoFechaRecogida :
-                                                <IonDatetime value={this.state.fechaRecogida?.toString()} onIonChange={(evento) => { this.elegirFechaRecogida(evento); }} displayFormat='DD-MM-YYYY' hour-cycle="h23" first-day-of-week={1} yearValues="2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034" cancelText="Cancelar" doneText="Confirmar">
+                                                <IonDatetime value={this.state.modalState.fechaRecogida?.toString()} onIonChange={(evento) => { this.elegirFechaRecogida(evento); }} displayFormat='DD-MM-YYYY' hour-cycle="h23" first-day-of-week={1} yearValues="2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034" cancelText="Cancelar" doneText="Confirmar">
                                                 </IonDatetime>
                                         }
                                     </IonLabel>
@@ -417,20 +342,20 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 <IonItem>
                                     <IonLabel className="">Cantidad de dias</IonLabel>
                                     <IonButton onClick={() => { this.restarDias(); }} className="boton_ligthbox boton_menos_lightbox" fill='solid' size='large' shape="round"  color="#ffffff">-</IonButton>
-                                    <IonInput  onIonChange={(evento) => { this.onChangeInputNumeroDias(evento) }} className="input_numero_dias" name='numerodias' value={this.state.cantidadDias} type='number' min='1' max='99999' autocomplete="off" inputmode="numeric" />
+                                    <IonInput  onIonChange={(evento) => { this.onChangeInputNumeroDias(evento) }} className="input_numero_dias" name='numerodias' value={this.state.modalState.cantidadDias} type='number' min='1' max='99999' autocomplete="off" inputmode="numeric" />
                                     <IonButton onClick={() => { this.sumarDias(); }} className="boton_ligthbox boton_mas_lightbox" fill='solid' size='large' shape="round" color="#ffffff">+</IonButton>
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel className="">Fecha Devolucion</IonLabel>
                                     <IonLabel className="">
                                         {
-                                            (this.props.textoFechaDevolucionVisible === true) ? textoFechaDevolucion : ""
+                                            (this.props.modalState.textoFechaDevolucionVisible === true) ? textoFechaDevolucion : ""
                                         }
                                     </IonLabel>
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel className="">Colaboradores</IonLabel>
-                                    <IonSelect value={this.state.colaborador} onIonChange={(evento) => { this.setState({ "colaborador": evento.detail.value as string, "updatedColaborador": true }); }} key="colaboradores" id="colaboradores" name='colaboradores' className="colaboradores_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                    <IonSelect value={this.state.modalState.colaborador} onIonChange={(evento) => { this.setState({ "modalState": { "colaborador": evento.detail.value as string }}); }} key="colaboradores" id="colaboradores" name='colaboradores' className="colaboradores_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                                         {
                                             this.props.listColaborators.map((elemento: IlistColaborators) => {
                                                 return <IonSelectOption key={elemento.id} value={elemento.id}>{elemento.descripcion}</IonSelectOption>;
@@ -441,7 +366,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 
                                 <IonItem>
                                     <IonLabel className="">Estado</IonLabel>
-                                    <IonSelect value={this.state.estado} onIonChange={(evento) => { this.setState({ "estado": evento.detail.value as string, "updatedEstado": true }); }} id="status" name='status' className="status_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                    <IonSelect value={this.state.modalState.estado} onIonChange={(evento) => { this.setState({ "modalState": { "estado": evento.detail.value as string }}); }} id="status" name='status' className="status_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                                                     <IonSelectOption value="prereservado" >Pre-Reservado</IonSelectOption>
                                                     <IonSelectOption value="reservado" >Reservado</IonSelectOption>
                                                     <IonSelectOption value="prepagado">Prepagado</IonSelectOption>
@@ -460,11 +385,11 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                         } */}
                                 </IonItem>
                                 {
-                                    (this.props.textoFechaDevolucionVisible === false) ? null
+                                    (this.props.modalState.textoFechaDevolucionVisible === false) ? null
                                     :
                                         <IonItem>
                                             <IonLabel className="">Flotas externas</IonLabel>
-                                            <IonSelect onIonChange={(evento) => { this.setState({ "flota": evento.detail.value as string, "updatedFlota": true }); }}id="flotas" name='flotas' className="flotas_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                            <IonSelect onIonChange={(evento) => { this.setState({"modalState": { "flota": evento.detail.value as string }}); }}id="flotas" name='flotas' className="flotas_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                                                 {
                                                     this.props.listFlotas.map((elemento: IlistFlotas) => {
                                                         return <IonSelectOption key={elemento.id} value={elemento.id}>{elemento.descripcion}</IonSelectOption>;
@@ -481,7 +406,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 <IonButton onClick={() => { this.props.onCloseModal(); this.resetState(); }}>Cerrar Modal</IonButton>
                             </IonCol>
                             <IonCol size="6">
-                                <IonButton onClick={() => { this.saveProps(this.state, this.props.id as number, this.props.group as number); }}>Guardar Datos</IonButton>
+                                <IonButton onClick={() => { this.saveProps(this.state, this.props.modalState.id as number, this.props.modalState.group as number); }}>Guardar Datos</IonButton>
                             </IonCol>
                         </IonRow>
 
