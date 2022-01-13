@@ -16,7 +16,10 @@ interface ContainerProps {
 type ContainerState = {
     borrado: boolean;
     modalReservasVisible: boolean;
+    isDoubleclickItem: boolean;
+    modalState: IModalState;
     tiempoClick?: any;
+    dataCarsVisible: boolean;
     // id?: number;
     // fechaAlta?: string;
     // fechaRecogida?: Date,
@@ -24,7 +27,6 @@ type ContainerState = {
     // matricula?: string;
     // vehiculo?: string;
     // cantidadDias: number;
-    dataCarsVisible: boolean;
     // textoFechaDevolucionVisible: boolean;
     // notaReserva?: string;
     // modeloVehiculo?: string;
@@ -36,9 +38,6 @@ type ContainerState = {
     // showItem: boolean;
     // start_time?: Date,
     // end_time?: Date,
-    isDoubleclickItem: boolean;
-
-    modalState: IModalState;
 
     
 
@@ -101,6 +100,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
     groupsPreReserva: typeGroup[];
     listadoClaseVehiculos: string[];
     listadoModelosVehiculos: string[];
+    // TIPOS_ESTADO: ENUM_TIPOS_ESTADO;
+
 
     defaultState: ContainerState = {
         borrado: false,
@@ -111,6 +112,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             showItem: false,
             cantidadDias: 3,
             textoFechaDevolucionVisible: false,
+            estado: ENUM_TIPOS_ESTADO.prereservado as string,
             
         }
     }
@@ -125,6 +127,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         this.groupsReserva = groupsData.groupCreated;
         this.listadoClaseVehiculos = groupsData.arrayListadoClasesVehiculos; 
         this.listadoModelosVehiculos = groupsData.arrayListadoModelosVehiculos;
+        // this.TIPOS_ESTADO = ENUM_TIPOS_ESTADO.preservado;
+        
         
         this.groupsPreReserva = [
 
@@ -141,6 +145,22 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             
         ];
 
+    }
+
+    onCloseModal = () => {
+
+        this.setState({"modalReservasVisible": false, });
+        // this.setState({ "modalState": { "cantidadDias": 3 } }, () => {
+        // });
+
+    }
+
+    onModalDidDismiss = async () => {
+        
+        this.setState({ "modalReservasVisible": false, });
+        // this.setState({ "modalState": { "cantidadDias": 3 } }, () => {
+        // });
+        
     }
 
 
@@ -262,48 +282,46 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         return groupOrdered;
     }
 
-    onCloseModal = () => {
-        
-        this.setState({ "modalReservasVisible": false, "modalState": {"cantidadDias": 3}});
-
-    }
-
-    onModalDidDismiss = async () => {
-        this.setState({ "modalReservasVisible": false, "modalState": { "cantidadDias": 3 } });
-        // this.setState({ "modalReservasVisible": false, "cantidadDias": 3 });
-    }
+   
 
     anadirPreReserva = () => {
         this.setState({
-            "modalReservasVisible": true, 
+            
             "modalState": {
+                "showItem": false,
+                "textoFechaDevolucionVisible": false,
                 "id": listadoPrereservas.length + 1,
                 "group": this.groupsPreReserva.length + 1,
                 "claseVehiculo": "",
                 "colaborador": "",
-                "estado": ENUM_TIPOS_ESTADO.preservado as string,
                 "fechaAlta": "",
-                "flota": "",
                 "modeloVehiculo": "",
                 "notareserva": "",
                 "vehiculo": "",
                 "cantidadDias": 3,
                 "matricula": "No asignada",
-                "textoFechaDevolucionVisible": false,
-                "showItem": false,
+                "flota": "",
+                "estado": "prereservado", //ENUM_TIPOS_ESTADO.prereservado as string,
 
             },
             "tiempoClick": new Date().getTime(),
             "dataCarsVisible": true,
             "isDoubleclickItem": false,
             
+        }, () => {
+            this.setState({ "modalReservasVisible": true,  });
+            console.log(this.state)
         });
+        // console.log("this.state.modalState" + this.state.modalState);
         console.log("this.state.modalState" + this.state.modalState);
     };
 
     onDoubleClickedOverItem = async (state: IListadoPrereserva ) =>
     {
-        console.log("onclicked over item state=" + JSON.stringify(state));
+        // console.log("onclicked over item state=" + JSON.stringify(state));
+
+        //recoger los datos
+
         this.setState({
             "dataCarsVisible": true,
             "modalState": {
@@ -325,9 +343,12 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 "estado": state.estado,
 
             },
-            "modalReservasVisible": true,
+            // "modalReservasVisible": true,
             "isDoubleclickItem": true,
             
+        }, () => {
+            this.setState({ "modalReservasVisible": true, });
+            console.log(this.state)
         });
 
 
@@ -347,6 +368,11 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         ) 
         {
             state.modalState.matricula = "No asignada";
+        }
+
+        if (state.modalState.estado === "" || state.modalState.estado === undefined)
+        {
+            state.modalState.estado = "prereservado";
         }
 
         let [existGroupPrereserva, positiongroupsPreReserva] = this.searchGroupExist(this.groupsPreReserva, state.modalState.id as number);
@@ -427,37 +453,89 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         {
             listadoPrereservas[positionListadoPreReserva as number] = elementoPrereservas;
         }
-
-        //TEST: comprobar si --- funciona
-        this.setState(
-        { 
-            "modalReservasVisible": false,
-            "modalState": {
-                "id": elementoPrereservas.id,
-                "group": elementoPrereservas.group,
-                "fechaAlta": elementoPrereservas.fechaAlta,
-                "fechaRecogida": elementoPrereservas.start_time,
-                "fechaDevolucion": elementoPrereservas.end_time,
-                "notareserva": elementoPrereservas.notareserva,
-                "matricula": elementoPrereservas.matricula,
-                "modeloVehiculo": elementoPrereservas.modeloVehiculo as string,
-                "claseVehiculo": elementoPrereservas.claseVehiculo as string,
-                "cantidadDias": elementoPrereservas.cantidadDias,
-                "colaborador": elementoPrereservas.colaborador as string,
-                "flota": elementoPrereservas.flota as string,
-                "estado": elementoPrereservas.estado as string,
-
-            },
-            "isDoubleclickItem": false,
-            
-        });
-
+        
+        this.setState({"modalReservasVisible": false});
         return true;
+        //TEST: comprobar si --- funciona
+        // const estado = this.changeState(this.state, elementoPrereservas);
+        // this.setState({...estado});
+        // this.setState(
+        // { 
+        //     "modalReservasVisible": false,
+        //     "modalState": {
+        //         "id": elementoPrereservas.id,
+        //         "group": elementoPrereservas.group,
+        //         "fechaAlta": elementoPrereservas.fechaAlta,
+        //         "fechaRecogida": elementoPrereservas.start_time,
+        //         "fechaDevolucion": elementoPrereservas.end_time,
+        //         "notareserva": elementoPrereservas.notareserva,
+        //         "matricula": elementoPrereservas.matricula,
+        //         "modeloVehiculo": elementoPrereservas.modeloVehiculo as string,
+        //         "claseVehiculo": elementoPrereservas.claseVehiculo as string,
+        //         "cantidadDias": elementoPrereservas.cantidadDias,
+        //         "colaborador": elementoPrereservas.colaborador as string,
+        //         "flota": elementoPrereservas.flota as string,
+        //         "estado": elementoPrereservas.estado as string,
+
+        //     },
+        //     "isDoubleclickItem": false,
+            
+        // });
+
         
         // console.log("listadoPrereservas=" + JSON.stringify(listadoPrereservas));
         // console.log("groupsPreserva=" + JSON.stringify(this.groupsPreReserva));
 
     };
+
+    //Mejorarlo for
+    changeState(state: ContainerState, elementoPrereservas: IListadoPrereserva)
+    {
+
+        state["modalReservasVisible"] = false;
+        state["isDoubleclickItem"] = false;
+        state["modalState"]["id"] = elementoPrereservas.id;
+        state["modalState"]["group"] = elementoPrereservas.group;
+        state["modalState"]["fechaAlta"] = elementoPrereservas.fechaAlta;
+        state["modalState"]["fechaRecogida"] = elementoPrereservas.start_time;
+        state["modalState"]["fechaDevolucion"] = elementoPrereservas.end_time;
+        state["modalState"]["notareserva"] = elementoPrereservas.notareserva;
+        state["modalState"]["matricula"] = elementoPrereservas.matricula;
+        state["modalState"]["modeloVehiculo"] = elementoPrereservas.modeloVehiculo as string;
+        state["modalState"]["claseVehiculo"] = elementoPrereservas.claseVehiculo as string;
+        state["modalState"]["cantidadDias"] = elementoPrereservas.cantidadDias;
+        state["modalState"]["colaborador"] = elementoPrereservas.colaborador as string;
+        state["modalState"]["flota"] = elementoPrereservas.flota as string;
+        state["modalState"]["estado"] = elementoPrereservas.estado as string;
+
+        return state;
+        // this.setState(
+        //     {
+        //         "modalReservasVisible": false,
+        //         "modalState": {
+        //             "id": elementoPrereservas.id,
+        //             "group": elementoPrereservas.group,
+        //             "fechaAlta": elementoPrereservas.fechaAlta,
+        //             "fechaRecogida": elementoPrereservas.start_time,
+        //             "fechaDevolucion": elementoPrereservas.end_time,
+        //             "notareserva": elementoPrereservas.notareserva,
+        //             "matricula": elementoPrereservas.matricula,
+        //             "modeloVehiculo": elementoPrereservas.modeloVehiculo as string,
+        //             "claseVehiculo": elementoPrereservas.claseVehiculo as string,
+        //             "cantidadDias": elementoPrereservas.cantidadDias,
+        //             "colaborador": elementoPrereservas.colaborador as string,
+        //             "flota": elementoPrereservas.flota as string,
+        //             "estado": elementoPrereservas.estado as string,
+
+        //         },
+        //         "isDoubleclickItem": false,
+
+        //     });
+
+
+        // return state;
+    }
+
 
     searchGroupExist(grupoPrereservas: typeGroup[], _id: number)
     {

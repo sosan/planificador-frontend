@@ -1,4 +1,4 @@
-import { Component, useState } from 'react';
+import { Component } from 'react';
 import { IonButton,
     IonCol,
     IonDatetime,
@@ -63,15 +63,15 @@ interface ContainerProps {
 export type ContainerState = {
     isVisible?: boolean;
     tiempoClick?: any;
-    
     modalState: IModalState;
     isDoubleclickItem: boolean;
+    modalReservasVisible: boolean;
     
 }
 
 export enum ENUM_TIPOS_ESTADO {
     "none" = "none",
-    "preservado" = "prereservado",
+    "prereservado" = "prereservado",
     "reservado" = "reservado",
     "prepagado" = "prepagado",
     "100pagado" = "100pagado",
@@ -102,13 +102,35 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
         },
         "isDoubleclickItem": false,
+        "modalReservasVisible": false,
+        
 
     };
 
     constructor(props: any)
     {
         super(props);
-        this.state = this.defaultState;
+        this.state = {
+            "isVisible": false,
+            "modalState": {
+                "textoFechaDevolucionVisible": this.defaultState.modalState.textoFechaDevolucionVisible,
+                "cantidadDias": this.defaultState.modalState.cantidadDias,
+                "showItem": this.defaultState.modalState.showItem,
+                "notareserva": this.defaultState.modalState.notareserva,
+                "modeloVehiculo": this.defaultState.modalState.modeloVehiculo,
+                "claseVehiculo": this.defaultState.modalState.claseVehiculo,
+                "fechaDevolucion": this.defaultState.modalState.fechaDevolucion,
+                "fechaRecogida": this.defaultState.modalState.fechaRecogida,
+                "estado": this.defaultState.modalState.estado,
+                "colaborador": this.defaultState.modalState.colaborador,
+                "flota": this.defaultState.modalState.flota,
+                "id": this.defaultState.modalState.id,
+                "group": this.defaultState.modalState.group,
+
+            },
+            "isDoubleclickItem": false,
+            "modalReservasVisible": false,
+        };
 
         // console.log("this.props.id=" + this.props.modalState.id + " this.state.id=" + this.state.modalState.id);
         // console.log("this.state.textoFechaDevolucionVisible" + this.state.textoFechaDevolucionVisible);
@@ -220,7 +242,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
     onChangeInputs(state: ContainerState, key: string, value: string)
     {
-        const estado: ContainerState = this.state;
+        const estado: ContainerState = state;
         estado["modalState"][key] = value as string;
         this.setState({ ...estado });
 
@@ -228,7 +250,10 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
     resetState()
     {
-        this.setState({...this.defaultState});
+        this.setState({ ...this.defaultState }, () => {
+            // this.setState({ "modalReservasVisible": false, });
+            console.log(this.state)
+        });
         console.log("state despues del reset=" + this.state);
     }
 
@@ -254,6 +279,8 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         }
     }
 
+  
+
 
     render() {
 
@@ -269,7 +296,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             // nos han pasado los datos por props
             if (this.state.modalState.fechaRecogida === undefined || this.state.modalState.fechaRecogida.toString() === "Invalid Date")
             {
-                console.log("dkjsldf");
+                // console.log("dkjsldf");
                 this.setState({"modalState": this.props.modalState});
 
                 // this.setState({
@@ -323,7 +350,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         console.log("this.state.modalState.estado=" + this.state.modalState.estado)
         return(
             <>
-                <IonModal onWillDismiss={  async () => {this.props.onModalDidDismiss()} }  isOpen={this.props.isVisible} >
+                <IonModal onWillDismiss={async () => { this.resetState(); this.props.onModalDidDismiss(); } }  isOpen={this.props.isVisible} >
                     <IonGrid className="grid_cabecera">
                         <IonRow className="centradovertical">
                             <IonCol size="8">
@@ -332,7 +359,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 
                             </IonCol>
                             <IonCol >
-                                <IonButton onClick={() => { this.props.onCloseModal(); this.resetState();} }>Cerrar Modal</IonButton>
+                                <IonButton onClick={() => { this.resetState(); this.props.onCloseModal();  } }>Cerrar Modal</IonButton>
                             </IonCol>
                         </IonRow>
                         <IonRow>
@@ -445,7 +472,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                     :
                                         <IonItem>
                                             <IonLabel className="">Flotas externas</IonLabel>
-                                            <IonSelect onIonChange={(evento) => { this.onChangeInputs(this.state, "flota", evento.detail.value as string); }}id="flotas" name='flotas' className="flotas_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                            <IonSelect value={this.state.modalState.flota} onIonChange={(evento) => { this.onChangeInputs(this.state, "flota", evento.detail.value as string); }} id="flotas" name='flotas' className="flotas_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                                                 {
                                                     this.props.listFlotas.map((elemento: IlistFlotas) => {
                                                         return <IonSelectOption key={elemento.id} value={elemento.id}>{elemento.descripcion}</IonSelectOption>;
@@ -459,7 +486,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                         </IonRow>
                         <IonRow className="centradovertical">
                             <IonCol size="6">
-                                <IonButton onClick={() => { this.props.onCloseModal(); this.resetState(); }}>Cerrar Modal</IonButton>
+                                <IonButton onClick={() => { this.resetState(); this.props.onCloseModal(); }}>Cerrar Modal</IonButton>
                             </IonCol>
                             <IonCol size="6">
                                 <IonButton onClick={() => { this.saveProps(this.state, this.props.modalState.id as number, this.props.modalState.group as number); }}>Guardar Datos</IonButton>
