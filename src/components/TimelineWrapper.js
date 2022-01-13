@@ -66,7 +66,7 @@ export default class TimelineWrapper extends Component {
             visibleTimeEnd: _visibleTimeEnd
         };
         
-        console.log('estado primigenio: ', JSON.stringify(this.state));
+        // console.log('estado primigenio: ', JSON.stringify(this.state));
 
     }
 

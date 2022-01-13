@@ -69,6 +69,14 @@ export type ContainerState = {
     
 }
 
+export enum ENUM_TIPOS_ESTADO {
+    "none" = "none",
+    "preservado" = "prereservado",
+    "reservado" = "reservado",
+    "prepagado" = "prepagado",
+    "100pagado" = "100pagado",
+    "length" = 4,
+}
 
 
 export class ModalDialog extends Component<ContainerProps, ContainerState>
@@ -102,7 +110,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         super(props);
         this.state = this.defaultState;
 
-        console.log("this.props.id=" + this.props.modalState.id + " this.state.id=" + this.state.modalState.id);
+        // console.log("this.props.id=" + this.props.modalState.id + " this.state.id=" + this.state.modalState.id);
         // console.log("this.state.textoFechaDevolucionVisible" + this.state.textoFechaDevolucionVisible);
 
     }
@@ -250,14 +258,14 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
     render() {
 
 
-        let fechaAhora, fechaRecogida, notaReserva ;
+        let fechaAhora, fechaRecogida, notaReserva, estado ;
 
         if (this.props.modalState.showItem === true)
         {
             
             fechaAhora = new Date(this.props.modalState.fechaAlta as string);
             fechaRecogida = new Date(this.props.modalState.fechaRecogida as Date);
-
+            estado = this.state.modalState.estado;
             // nos han pasado los datos por props
             if (this.state.modalState.fechaRecogida === undefined || this.state.modalState.fechaRecogida.toString() === "Invalid Date")
             {
@@ -286,7 +294,12 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         {
             fechaAhora = new Date();
             fechaRecogida = new Date(this.props.tiempoClick); // diria que no esta bien
-            
+
+            estado = this.props.modalState.estado;
+            if (this.state.modalState.estado !== "")
+            {
+                estado = this.state.modalState.estado;
+            }
         }
         
         notaReserva = this.state.modalState.notareserva;
@@ -301,8 +314,13 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         )
         {
             textoFechaDevolucion = `${fechaDevolucion.getDate().toString().padStart(2, "00")}-${(fechaDevolucion.getMonth() + 1).toString().padStart(2, "00")}-${fechaDevolucion.getFullYear()}`;
+            
         }
+        else
+        {
 
+        }
+        console.log("this.state.modalState.estado=" + this.state.modalState.estado)
         return(
             <>
                 <IonModal onWillDismiss={  async () => {this.props.onModalDidDismiss()} }  isOpen={this.props.isVisible} >
@@ -403,12 +421,13 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 
                                 <IonItem>
                                     <IonLabel className="">Estado</IonLabel>
-                                    <IonSelect value={this.state.modalState.estado} onIonChange={(evento) => { this.onChangeInputs(this.state, "estado", evento.detail.value as string); }} id="status" name='status' className="status_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
-                                                    <IonSelectOption value="prereservado" >Pre-Reservado</IonSelectOption>
-                                                    <IonSelectOption value="reservado" >Reservado</IonSelectOption>
-                                                    <IonSelectOption value="prepagado">Prepagado</IonSelectOption>
-                                                    <IonSelectOption value="100pagado">100% Pagado</IonSelectOption>
-                                                </IonSelect>
+                                    <IonSelect value={estado} onIonChange={(evento) => { this.onChangeInputs(this.state, "estado", evento.detail.value as string); }} id="estado" name='estado' className="status_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                        { console.log("estado state=" + this.state.modalState.estado + " estado props" + this.props.modalState.estado) }
+                                        <IonSelectOption value="prereservado" >Pre-Reservado</IonSelectOption>
+                                        <IonSelectOption value="reservado" >Reservado</IonSelectOption>
+                                        <IonSelectOption value="prepagado">Prepagado</IonSelectOption>
+                                        <IonSelectOption value="100pagado">100% Pagado</IonSelectOption>
+                                    </IonSelect>
                                         {/* {
                                             (this.props.textoFechaDevolucionVisible === false) ? 
                                             <IonSelect onIonChange={(evento) => { this.setState({ "estado": evento.detail.value as string }); }} id="status" name='status' value="prereservado" className="status_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >

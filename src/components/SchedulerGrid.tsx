@@ -4,7 +4,7 @@ import TimelineWrapper from "./TimelineWrapper";
 import { IListadoPrereserva, IDataCoches, dataCars, items, ORDEN_LISTADO_CLASE_COCHES } from "../datos/coches";
 import { listColaborators } from "../datos/listadoColaboradores";
 import { listFlotas } from "../datos/listadoFlotas";
-import { ModalDialog, ContainerState as IContainerModalState, IModalState } from "./Modal";
+import { ModalDialog, ContainerState as IContainerModalState, IModalState, ENUM_TIPOS_ESTADO } from "./Modal";
 
 import "../css/Timeline.css";
 
@@ -46,14 +46,7 @@ type ContainerState = {
 
 
 
-enum ENUM_TIPOS_STATUS {
-    "none" = "none",
-    "preservado"= "prereservado",
-    "reservado" = "reservado",
-    "prepagado" = "prepagado",
-    "100pagado" = "100pagado",
-    "length" = 4,
-}
+
 
 
 let listadoPrereservas: IListadoPrereserva[] = [
@@ -288,7 +281,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 "group": this.groupsPreReserva.length + 1,
                 "claseVehiculo": "",
                 "colaborador": "",
-                "estado": "prereservado",
+                "estado": ENUM_TIPOS_ESTADO.preservado as string,
                 "fechaAlta": "",
                 "flota": "",
                 "modeloVehiculo": "",
@@ -507,7 +500,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     render() {
         
-        console.log("this.state.id=" + this.state.modalState.id);
+        // console.log("this.state.id=" + this.state.modalState.id);
         const grupoPrereserva = [...this.groupsPreReserva];
 
         return (
