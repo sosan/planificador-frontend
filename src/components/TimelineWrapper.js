@@ -1,7 +1,6 @@
 import React, { Component,  } from 'react';
 import {
     IonItem,
-    IonImg,
     IonFab,
     IonFabButton,
     IonLabel
@@ -11,7 +10,7 @@ import {
 
 import { LISTADO_IMAGENES_COCHES } from "../datos/imagenescoches";
 
-import { IDataEventos } from "./SchedulerGrid";
+// import { IDataEventos } from "./SchedulerGrid";
 
 import moment from 'moment';
 import 'moment/locale/es';
@@ -20,7 +19,6 @@ import Timeline, {
     TimelineHeaders,
     DateHeader,
     SidebarHeader,
-    CustomHeader,
     TodayMarker,
     TimelineMarkers,
     
@@ -36,13 +34,13 @@ const DRAG_SNAP = 60 * 60 * 24 * 1000;
 
 // https://www.robinwieruch.de/react-pass-props-to-component/
 
-export const ENUM_TIPOS_EVENTOS =
-{
-    "create": "create",
-    "update": "update",
-    "delete": "delete"
+// export const ENUM_TIPOS_EVENTOS =
+// {
+//     "create": "create",
+//     "update": "update",
+//     "delete": "delete"
 
-};
+// };
 
 
 

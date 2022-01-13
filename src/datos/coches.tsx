@@ -11,7 +11,7 @@ export interface IListadoPrereserva {
     canResize: boolean,
     canChangeGroup: boolean,
     title: string;
-    notaReserva: string;
+    notareserva: string;
     matricula: string;
     modeloVehiculo: string;
     claseVehiculo: string;

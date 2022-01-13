@@ -10,9 +10,17 @@
     gap: 10px;
 }
 
+.altura-items-inicio
+{
+    border-style: none;
+    background-color: transparent;
+    height: 50px;
+}
+
 .altura-items
 {
-    height: 45px !important;
+    height: 50px !important;
+
 }
 
 .custom-group
