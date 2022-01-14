@@ -294,6 +294,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 "group": this.groupsPreReserva.length + 1,
                 "claseVehiculo": "",
                 "colaborador": "",
+                "fechaDevolucion": new Date(),
+                "fechaRecogida": new Date(),
                 "fechaAlta": "",
                 "modeloVehiculo": "",
                 "notareserva": "",
@@ -309,7 +311,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             "isDoubleclickItem": false,
             
         }, () => {
-            this.setState({ "modalReservasVisible": true, "modalState": { "textoFechaDevolucionVisible": false}  });
+            this.setState({ "modalReservasVisible": true,  });
+            // "modalState": { "textoFechaDevolucionVisible": false} 
             console.log(this.state)
         });
         // console.log("this.state.modalState" + this.state.modalState);
