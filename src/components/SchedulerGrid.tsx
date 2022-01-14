@@ -309,7 +309,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             "isDoubleclickItem": false,
             
         }, () => {
-            this.setState({ "modalReservasVisible": true,  });
+            this.setState({ "modalReservasVisible": true, "modalState": { "textoFechaDevolucionVisible": false}  });
             console.log(this.state)
         });
         // console.log("this.state.modalState" + this.state.modalState);
