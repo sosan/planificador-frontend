@@ -280,21 +280,24 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
         
 
-        let fechaAhoraDate, fechaRecogida, notaReserva, estado, textoFechaDevolucion = "", textoFechaRecogida = "";
+        let fechaAhoraDate, fechaRecogida, notaReserva, estado = "prereservado", textoFechaDevolucion = "", textoFechaRecogida = "";
 
         if (this.props.modalState.showItem === true)
         {
             
             fechaAhoraDate = new Date(this.props.modalState.fechaAlta as string);
             fechaRecogida = new Date(this.props.modalState.fechaRecogida as Date);
-            estado = this.state.modalState.estado;
-            // nos han pasado los datos por props
-            if (this.state.modalState.fechaRecogida === undefined || this.state.modalState.fechaRecogida.toString() === "Invalid Date")
-            {
-                // console.log("dkjsldf");
-                this.setState({"modalState": this.props.modalState});
+            estado = this.props.modalState.estado as string;
+            
 
-            }
+
+            // nos han pasado los datos por props
+            // if (this.state.modalState.fechaRecogida === undefined || this.state.modalState.fechaRecogida.toString() === "Invalid Date")
+            // {
+            //     // console.log("dkjsldf");
+            //     this.setState({"modalState": this.props.modalState});
+
+            // }
             // this.setState({
             //     "id": this.props.id,
             //     "group": this.props.group,
@@ -315,7 +318,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         else
         {
             fechaAhoraDate = new Date();
-            fechaRecogida = new Date(this.props.tiempoClick); // diria que no esta bien
+            // fechaRecogida = new Date(this.props.tiempoClick); // diria que no esta bien
 
             notaReserva = this.state.modalState.notareserva;
             
@@ -330,31 +333,20 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                 textoFechaDevolucion = `${fechaDevolucion.getDate().toString().padStart(2, "00")}-${(fechaDevolucion.getMonth() + 1).toString().padStart(2, "00")}-${fechaDevolucion.getFullYear()}`;
                 
             }
-
-            estado = this.props.modalState.estado;
-            if (this.state.modalState.estado !== "")
-            {
-                estado = this.state.modalState.estado;
-                // textoFechaDevolucion = "";
-            }
             
-            // if (this.props.modalState.textoFechaDevolucionVisible === false )
-            // {
-            //     if (this.state.modalState.textoFechaDevolucionVisible === true)
-            //     {
-            //         if (this.state.modalState.fechaRecogida?.toString() !== "Invalid Date")
-            //         {
-                        
-            //         }
-    
-            //     }
+            if (this.props.modalState.estado !== undefined)
+            {
+                estado = this.props.modalState.estado;
+
+            }
+            if (this.state.modalState.estado !== "" && this.state.modalState.estado !== undefined ) {
+                estado = this.state.modalState.estado;
                 
-            // }
+            }
+
         }
     
-
         const fechaAltaTexto = `${fechaAhoraDate.getDate().toString().padStart(2, "00")}-${(fechaAhoraDate.getMonth() + 1).toString().padStart(2, "00")}-${fechaAhoraDate.getFullYear()} ${fechaAhoraDate.getHours().toString().padStart(2, "00")}:${fechaAhoraDate.getMinutes().toString().padStart(2, "00")}`;
-
         
         return(
             <>
