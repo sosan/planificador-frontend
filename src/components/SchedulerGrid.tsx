@@ -587,6 +587,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         return (
             <>
                 <TimelineWrapper 
+                    key={Math.random()}
                     anadirBotonPreservar={true}
                     groups={grupoPrereserva}
                     items={listadoPrereservas}
@@ -595,6 +596,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 />
                 
                 <TimelineWrapper
+                    key={Math.random()}
                     anadirBotonPreservar={false}
                     marginTop={50}
                     groups={this.groupsReserva}
