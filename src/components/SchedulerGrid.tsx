@@ -332,7 +332,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 "textoFechaDevolucionVisible": true,
                 "id": state.id,
                 "group": state.group,
-                "fechaAlta": state.fechaAlta,
+                "fechaAlta": state.fechaAlta, // algo raro con fechaAlta
                 "fechaRecogida": state.start_time,
                 "fechaDevolucion": state.end_time,
                 "matricula": state.matricula,

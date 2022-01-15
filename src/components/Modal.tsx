@@ -94,7 +94,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             "claseVehiculo": "",
             // "fechaDevolucion": new Date(),
             // "fechaRecogida": new Date(),
-            "estado": "",
+            "estado": "prereservado",
             "colaborador": "",
             "flota": "",
             "id": undefined,
@@ -227,10 +227,10 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
     resetState()
     {
-        this.setState({ ...this.defaultState }, () => {
-            this.setState({ "modalState": { "textoFechaDevolucionVisible": false} });
-            console.log(this.state)
-        });
+        // this.setState({ ...this.defaultState }, () => {
+            // this.setState({ "modalState": { "textoFechaDevolucionVisible": false} });
+        //     console.log(this.state)
+        // });
         console.log("state despues del reset=" + this.state);
     }
 
@@ -249,11 +249,11 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         }
 
         const isSaved = this.props.onSaveData(this.state, this.props.modalState.id, this.props.modalState.group);
-        if (isSaved === true)
-        {
-            this.resetState();
+        // if (isSaved === true)
+        // {
+        //     this.resetState();
 
-        }
+        // }
     }
 
     //de props a state
@@ -261,30 +261,41 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
         console.log("getderived newState.newprops=" + newProps + " newState.state" + newState);
 
-        if (newProps.isDoubleclickItem === true)
+        if (newState.modalState.id === undefined)
         {
-            let propsActual = newProps.modalState;
+            newState.modalState.id = newProps.modalState.id;
+            newState.modalState.group = newProps.modalState.group;
             
-            newState.modalState = {...propsActual};
-
-            return { ...newState};
-
         }
 
-        // if (newProps.isDoubleclickItem === true) {
-        //     return { ...newProps }
+        // if (newProps.isDoubleclickItem === true)
+        // {
+
+        // }
+        // if (newState.isDoubleclickItem === true)
+        // {
+        //     let propsActual = newProps.modalState;
+            
+        //     newState.modalState = {...propsActual};
+
+        //     return { ...newState};
+
         // }
 
-        if (newState.modalState.estado === "" || newState.modalState.estado === undefined) {
-            const elemento = newState.modalState;
-            elemento["estado"] = newProps.modalState.estado;
-            elemento["id"] = newProps.modalState.id;
-            elemento["group"] = newProps.modalState.group;
+        // // if (newProps.isDoubleclickItem === true) {
+        // //     return { ...newProps }
+        // // }
 
-            return { "modalState": {...elemento } };
+        // if (newState.modalState.estado === "" || newState.modalState.estado === undefined) {
+        //     const elemento = newState.modalState;
+        //     elemento["estado"] = newProps.modalState.estado;
+        //     elemento["id"] = newProps.modalState.id;
+        //     elemento["group"] = newProps.modalState.group;
 
-        }
-        return null;
+        //     return { "modalState": {...elemento } };
+
+        // }
+        // return null;
 
 
     }
@@ -292,115 +303,50 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
     render() {
 
-        
-        // let 
-        //     fechaAltaDate,
-        //     fechaRecogida,
-        //     notaReserva,
-        //     claseVehiculo = "",
-        //     colaborador,
-        //     modeloVehiculo = "",
-        //     cantidadDias,
-        //     matricula,
-        //     flota,
-        //     estado = "prereservado",
-        //     textoFechaDevolucion = ""
-        //     ;
-
         let {
-            fechaAltaDate,
+            id,
+            group,
+            fechaAlta,
             fechaRecogida,
-            notaReserva,
+            notaReserva = "",
             claseVehiculo = "",
             colaborador,
             modeloVehiculo = "",
-            cantidadDias,
-            matricula,
+            cantidadDias = 3,
+            matricula = "No asignada",
             flota,
             estado = "prereservado",
             textoFechaDevolucion = ""
 
         } = this.state.modalState;
         
-
-        
         let textoFechaRecogida = "";
-        // let showtextoFechas = false;
-        // if (fechaRecogida !== undefined)
-        // {
-        //     showtextoFechas = true;
-        // }
-
-        
-        // if (this.props.modalState.showItem === true)
-        if (this.props.isDoubleclickItem === true)
+        let fechaAltaDate = new Date();
+    
+        if (fechaAlta === undefined) // creado desde 0
         {
-            
-            // fechaAltaDate = new Date(this.props.modalState.fechaAlta as string);
-            // fechaRecogida = new Date(this.props.modalState.fechaRecogida as Date);
-            // estado = this.props.modalState.estado as string;
-
-            fechaAltaDate = new Date(this.state.modalState.fechaAlta as string);
-            fechaRecogida = new Date(this.state.modalState.fechaRecogida as Date);
-            estado = this.state.modalState.estado as string;
-
-        }
-        else
-        {
-            notaReserva = this.state.modalState.notareserva;
-            fechaAltaDate = new Date();
-            
-            if (this.state.modalState.fechaRecogida?.toString() === "Invalid Date" || this.state.modalState.fechaRecogida === undefined )
-            {
-                fechaRecogida = new Date();
-            }
-            else
-            {
-                fechaRecogida = this.state.modalState.fechaRecogida as Date; //new Date(); //new Date(this.props.tiempoClick); // diria que no esta bien
-
-            }
-
-
-
-
+            textoFechaRecogida = "";
             if (fechaRecogida !== undefined)
             {
-                // textoFechaRecogida = `${fechaRecogida.getDate().toString().padStart(2, "00")}-${(fechaRecogida.getMonth() + 1).toString().padStart(2, "00")}-${fechaRecogida.getFullYear()}`;
                 textoFechaRecogida = fechaRecogida.toISOString();
-            }
-            else
-            {
-                textoFechaRecogida = "";
-            }
-            
-            
-            if (this.state.modalState.fechaRecogida as Date !== undefined 
-                && this.state.modalState.fechaRecogida?.toString() !== "Invalid Date"
-            )
-            {
-                const fechaRecogidaTempo = new Date(this.state.modalState.fechaRecogida as Date);
-                const fechaDevolucion = new Date(fechaRecogidaTempo.setDate(fechaRecogidaTempo.getDate() + (this.state.modalState.cantidadDias as number - 1) ));
+
+                const fechaRecogidaTempo = new Date(fechaRecogida );
+                const fechaDevolucion = new Date(fechaRecogidaTempo.setDate(fechaRecogidaTempo.getDate() + (this.state.modalState.cantidadDias as number - 1)));
                 textoFechaDevolucion = `${fechaDevolucion.getDate().toString().padStart(2, "00")}-${(fechaDevolucion.getMonth() + 1).toString().padStart(2, "00")}-${fechaDevolucion.getFullYear()}`;
-                
-            }
-            
-            if (this.props.modalState.estado !== undefined)
-            {
-                estado = this.props.modalState.estado;
 
             }
-            if (this.state.modalState.estado !== "" && this.state.modalState.estado !== undefined ) {
-                estado = this.state.modalState.estado;
-                
-            }
-
+        }
+        else // leyendo desde datos
+        {
+            fechaAltaDate = new Date(fechaAlta as string);
         }
     
+
         const fechaAltaTexto = `${fechaAltaDate.getDate().toString().padStart(2, "00")}-${(fechaAltaDate.getMonth() + 1).toString().padStart(2, "00")}-${fechaAltaDate.getFullYear()} ${fechaAltaDate.getHours().toString().padStart(2, "00")}:${fechaAltaDate.getMinutes().toString().padStart(2, "00")}`;
         
         return(
             <>
-                <IonModal onWillDismiss={async () => { this.resetState(); this.props.onModalDidDismiss(); } }  isOpen={this.props.isVisible} >
+                <IonModal onWillDismiss={async () => { this.props.onModalDidDismiss(); } }  isOpen={this.props.isVisible} >
                     <IonGrid className="grid_cabecera">
                         <IonRow className="centradovertical">
                             <IonCol size="8">
@@ -409,7 +355,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 
                             </IonCol>
                             <IonCol >
-                                <IonButton onClick={() => { this.resetState(); this.props.onCloseModal();  } }>Cerrar Modal</IonButton>
+                                <IonButton onClick={() => { this.props.onCloseModal();  } }>Cerrar Modal</IonButton>
                             </IonCol>
                         </IonRow>
                         <IonRow>
@@ -524,7 +470,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                         </IonRow>
                         <IonRow className="centradovertical">
                             <IonCol size="6">
-                                <IonButton onClick={() => { this.resetState(); this.props.onCloseModal(); }}>Cerrar Modal</IonButton>
+                                <IonButton onClick={() => { this.props.onCloseModal(); }}>Cerrar Modal</IonButton>
                             </IonCol>
                             <IonCol size="6">
                                 <IonButton onClick={() => { this.saveProps(this.state, this.props.modalState.id as number, this.props.modalState.group as number); }}>Guardar Datos</IonButton>
