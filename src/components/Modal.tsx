@@ -256,34 +256,38 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         }
     }
 
-    // de props a state
-    // static getDerivedStateFromProps(newProps: ContainerProps, newState: ContainerState) {
+    //de props a state
+    static getDerivedStateFromProps(newProps: ContainerProps, newState: ContainerState) {
 
-    //     console.log("getderived newState.newprops=" + newProps + " newState.state" + newState);
+        console.log("getderived newState.newprops=" + newProps + " newState.state" + newState);
 
-    //     if (newProps.isDoubleclickItem === true) {
-    //         return { ...newProps }
-    //     }
+        if (newProps.isDoubleclickItem === true)
+        {
+            let propsActual = newProps.modalState;
+            
+            newState.modalState = {...propsActual};
 
-    //     if (newState.modalState.estado === "" || newState.modalState.estado === undefined) {
-    //         const elemento = newState.modalState;
-    //         elemento["estado"] = newProps.modalState.estado;
-    //         elemento["id"] = newProps.modalState.id;
-    //         elemento["group"] = newProps.modalState.group;
+            return { ...newState};
 
-    //         // const elemento: IModalState = {
-    //         //     "estado": newProps.modalState.estado,
-    //         //     "id": newProps.modalState.id,
-    //         //     "group": newProps.modalState.group
-    //         // }
+        }
 
-    //         return { "modalState": {...elemento } };
+        // if (newProps.isDoubleclickItem === true) {
+        //     return { ...newProps }
+        // }
 
-    //     }
-    //     return null;
+        if (newState.modalState.estado === "" || newState.modalState.estado === undefined) {
+            const elemento = newState.modalState;
+            elemento["estado"] = newProps.modalState.estado;
+            elemento["id"] = newProps.modalState.id;
+            elemento["group"] = newProps.modalState.group;
+
+            return { "modalState": {...elemento } };
+
+        }
+        return null;
 
 
-    // }
+    }
 
 
     render() {
