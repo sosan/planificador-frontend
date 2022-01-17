@@ -144,7 +144,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
     componentDidUpdate()
     {
-        console.log("modal updated" + this.props.modalState.fechaRecogida + " " + this.state.modalState.fechaRecogida );
+        console.log("modal updated" );
         
     }
 
@@ -225,14 +225,6 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
     }
 
-    resetState()
-    {
-        // this.setState({ ...this.defaultState }, () => {
-            // this.setState({ "modalState": { "textoFechaDevolucionVisible": false} });
-        //     console.log(this.state)
-        // });
-        console.log("state despues del reset=" + this.state);
-    }
 
     saveProps(state: ContainerState, _idModal: number, groupId: number)
     {
@@ -249,17 +241,13 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         }
 
         const isSaved = this.props.onSaveData(this.state, this.props.modalState.id, this.props.modalState.group);
-        // if (isSaved === true)
-        // {
-        //     this.resetState();
-
-        // }
+        
     }
 
     //de props a state
     static getDerivedStateFromProps(newProps: ContainerProps, newState: ContainerState) {
 
-        console.log("getderived newState.newprops=" + newProps + " newState.state" + newState);
+        // console.log("getderived newState.newprops=" + newProps + " newState.state" + newState);
 
         if (newState.modalState.id === undefined)
         {
@@ -267,6 +255,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             newState.modalState.group = newProps.modalState.group;
             
         }
+        return null;
 
         // if (newProps.isDoubleclickItem === true)
         // {

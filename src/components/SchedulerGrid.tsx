@@ -1,7 +1,7 @@
 import React, { Component  } from 'react';
 // import moment from "moment";
 import TimelineWrapper from "./TimelineWrapper";
-import { IListadoPrereserva, IDataCoches, dataCars, items, ORDEN_LISTADO_CLASE_COCHES } from "../datos/coches";
+import { IListadoPrereserva, IDataCoches, dataCars, ORDEN_LISTADO_CLASE_COCHES } from "../datos/coches";
 import { listColaborators } from "../datos/listadoColaboradores";
 import { listFlotas } from "../datos/listadoFlotas";
 import { ModalDialog, ContainerState as IContainerModalState, IModalState, ENUM_TIPOS_ESTADO } from "./Modal";
@@ -9,6 +9,8 @@ import { ModalDialog, ContainerState as IContainerModalState, IModalState, ENUM_
 import "../css/Timeline.css";
 
 const DRAG_SNAP = 60 * 60 * 24 * 1000;
+const DEFAULT_TEXT_MATRICULA = "No asignada";
+
 
 interface ContainerProps {
     name: string;
@@ -100,6 +102,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
     groupsPreReserva: typeGroup[];
     listadoClaseVehiculos: string[];
     listadoModelosVehiculos: string[];
+    items: IListadoPrereserva[];
     // TIPOS_ESTADO: ENUM_TIPOS_ESTADO;
 
 
@@ -127,11 +130,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         this.groupsReserva = groupsData.groupCreated;
         this.listadoClaseVehiculos = groupsData.arrayListadoClasesVehiculos; 
         this.listadoModelosVehiculos = groupsData.arrayListadoModelosVehiculos;
-        // this.TIPOS_ESTADO = ENUM_TIPOS_ESTADO.preservado;
-        
         
         this.groupsPreReserva = [
-
             {
                 "id": 0,
                 "matricula": " ",
@@ -145,21 +145,66 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             
         ];
 
+        this.items = [
+            {
+                id: 1,
+                group: 1,
+                title: 'item 1',
+                fechaAlta: new Date().toISOString(),
+                notareserva: "itemsdsdf",
+                matricula: "",
+                modeloVehiculo: "",
+                claseVehiculo: "",
+                cantidadDias: 3,
+                colaborador: "",
+                flota: "",
+                estado: "reservado",
+                start_time: new Date(),// moment().hour(0).minute(0),
+                end_time: new Date(), //moment().hour(23).minute(58),
+                canMove: true,
+                canResize: true,
+                canChangeGroup: true,
+                
+                itemProps: {
+                    'data-custom-attribute': 'Random content',
+                    'aria-hidden': true,
+                    onDoubleClick: () => { console.log('You clicked double!') },
+                    className: 'altura-items',
+                    style: {
+                        background: 'fuchsia',
+                    }
+                }
+
+            },
+            // {
+            //     id: 2,
+            //     group: 2,
+            //     title: 'item 2',
+            //     start_time: new Date(),//moment().hour(0).minute(0),
+            //     end_time: new Date(), //moment().hour(23).minute(59),
+            //     // canMove: true,
+            //     // canResize: true,
+            //     // canChangeGroup: true,
+            // },
+
+        ];
+
+        this.items[0].start_time.setHours(0, 0, 0);
+        this.items[0].end_time.setHours(23, 59, 59);
+
     }
 
     onCloseModal = () => {
 
         this.setState({"modalReservasVisible": false, });
-        // this.setState({ "modalState": { "cantidadDias": 3 } }, () => {
-        // });
+      
 
     }
 
     onModalDidDismiss = async () => {
         
         this.setState({ "modalReservasVisible": false, });
-        // this.setState({ "modalState": { "cantidadDias": 3 } }, () => {
-        // });
+        
         
     }
 
@@ -282,7 +327,6 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         return groupOrdered;
     }
 
-   
 
     anadirPreReserva = () => {
         this.setState({
@@ -301,7 +345,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 "notareserva": "",
                 "vehiculo": "",
                 "cantidadDias": 3,
-                "matricula": "No asignada",
+                "matricula": DEFAULT_TEXT_MATRICULA,
                 "flota": "",
                 "estado": "prereservado", //ENUM_TIPOS_ESTADO.prereservado as string,
 
@@ -319,7 +363,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         console.log("this.state.modalState" + this.state.modalState);
     };
 
-    onDoubleClickedOverItem = async (state: IListadoPrereserva ) =>
+    onPreReservasDoubleClickedOverItem = async (state: IListadoPrereserva ) =>
     {
         // console.log("onclicked over item state=" + JSON.stringify(state));
 
@@ -357,6 +401,43 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     }
 
+    onReservasDoubleClickedOverItem = async (state: IListadoPrereserva) => {
+        // console.log("onclicked over item state=" + JSON.stringify(state));
+
+        //recoger los datos
+
+        this.setState({
+            "dataCarsVisible": true,
+            "modalState": {
+                "showItem": true,
+                "textoFechaDevolucionVisible": true,
+                "id": state.id,
+                "group": state.group,
+                "fechaAlta": state.fechaAlta, // algo raro con fechaAlta
+                "fechaRecogida": state.start_time,
+                "fechaDevolucion": state.end_time,
+                "matricula": state.matricula,
+                "vehiculo": state.claseVehiculo,
+                "cantidadDias": state.cantidadDias,
+                "notareserva": state.notareserva,
+                "modeloVehiculo": state.modeloVehiculo,
+                "claseVehiculo": state.claseVehiculo,
+                "colaborador": state.colaborador,
+                "flota": state.flota,
+                "estado": state.estado,
+
+            },
+            // "modalReservasVisible": true,
+            "isDoubleclickItem": true,
+
+        }, () => {
+            this.setState({ "modalReservasVisible": true, });
+            console.log(this.state)
+        });
+
+
+    }
+
     onSaveData = (state: IContainerModalState, _idModal: number, groupId: number) =>
     {
 
@@ -370,12 +451,12 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             state.modalState.fechaDevolucion?.toString() === ""
         ) 
         {
-            state.modalState.matricula = "No asignada";
+            state.modalState.matricula = DEFAULT_TEXT_MATRICULA;
         }
 
         if (state.modalState.estado === "" || state.modalState.estado === undefined)
         {
-            state.modalState.estado = "prereservado";
+            state.modalState.estado = ENUM_TIPOS_ESTADO.prereservado; //"prereservado";
         }
 
         let [existGroupPrereserva, positiongroupsPreReserva] = this.searchGroupExist(this.groupsPreReserva, state.modalState.id as number);
@@ -386,13 +467,16 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             this.groupsPreReserva.push(
             {
                 "id": groupId,
-                "matricula": state.modalState.matricula,
                 "title": "title",
+                "matricula": state.modalState.matricula,
                 "vehiculo": "vehiculo",
                 "clasevehiculo": state.modalState.claseVehiculo as string,
                 "modelo": state.modalState.modeloVehiculo as string,
-                // "bgColor": "#FF00FF",
                 "height": 50,
+                "srcImage": "",
+                "rightTitle": "",
+                "stackItems": true,
+                // "bgColor": "#FF00FF",
     
             });
             // _id = state.id; //listadoPrereservas.length + 1;
@@ -403,12 +487,51 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         }
         else
         {
-            if (state.modalState.id === undefined) {
-                state.modalState.id = _idModal;
+
+            // el vehiculo tiene un grupo, toca actualizar datos 
+            // si la matricula no tiene el texto por defecto DEFAULT_TEXT_MATRICULA
+            // 
+            if (state.modalState.matricula !== DEFAULT_TEXT_MATRICULA 
+                && state.modalState.estado !== ENUM_TIPOS_ESTADO.prereservado
+            )
+            {
+
+                /// buscar si hay duplicados de matriculas en las reservas
+                const isDuplicated = this.searchDuplicatedMatricula(this.groupsPreReserva, state.modalState.matricula);
+                if (isDuplicated === true)
+                {
+                    return;
+                }
+
+                //colocarse el primero
+                const elementoGrupo = this.groupsPreReserva[positiongroupsPreReserva as number];
+                elementoGrupo["id"] = this.groupsReserva.length;
+                elementoGrupo["matricula"] = state.modalState.matricula;
+
+                this.groupsReserva.unshift(elementoGrupo); // delante
+
+                const elementoReserva = this.generateNewElementReservas(state.modalState, elementoGrupo["id"]);
+
+                this.items.push(elementoReserva);
+
+                this.groupsPreReserva.splice(positiongroupsPreReserva as number, 1);
+
+                this.setState({ "modalReservasVisible": false });
+
+                return true;
+
+            }
+            else
+            {
+                // creo que no es necesario
+                if (state.modalState.id === undefined) {
+                    state.modalState.id = _idModal;
+                }
+
+                this.groupsPreReserva[positiongroupsPreReserva as number].matricula = state.modalState.matricula as string;
+                
             }
 
-            this.groupsPreReserva[positiongroupsPreReserva as number].matricula = state.modalState.matricula as string;
-            
         }
 
         const startTime = new Date(state.modalState.fechaRecogida as Date);
@@ -441,7 +564,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         };
 
         elementoPrereservas["itemProps"] = {
-            onDoubleClick: () => { this.onDoubleClickedOverItem(elementoPrereservas) },
+            onDoubleClick: () => { this.onPreReservasDoubleClickedOverItem(elementoPrereservas) },
             className: 'altura-items',
             style: {
                 background: 'blue',
@@ -490,6 +613,49 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         // console.log("groupsPreserva=" + JSON.stringify(this.groupsPreReserva));
 
     };
+
+
+    generateNewElementReservas(currentState: IModalState, _idModal: number)
+    {
+
+        const startTime = new Date(currentState.fechaRecogida as Date);
+        const endTime = new Date(currentState.fechaDevolucion as Date);
+
+        startTime.setHours(0, 0, 0);
+        endTime.setHours(23, 59, 59);
+
+        let elementoReservas: IListadoPrereserva = {
+            canMove: true,
+            canResize: true,
+            canChangeGroup: true,
+            id: _idModal as number,
+            group: _idModal as number,
+            fechaAlta: currentState.fechaAlta as string,
+            start_time: startTime,
+            end_time: endTime,
+            title: currentState.matricula as string,
+            notareserva: currentState.notareserva as string,
+            matricula: currentState.matricula as string,
+            modeloVehiculo: currentState.modeloVehiculo as string,
+            claseVehiculo: currentState.claseVehiculo as string,
+            cantidadDias: currentState.cantidadDias as number,
+            colaborador: currentState.colaborador as string,
+            flota: currentState.flota as string,
+            estado: currentState.estado as string,
+
+        };
+
+        elementoReservas["itemProps"] = {
+            onDoubleClick: () => { this.onReservasDoubleClickedOverItem(elementoReservas) },
+            className: 'altura-items color-black',
+            style: {
+                background: 'yellow',
+            }
+        }
+
+        return elementoReservas;
+
+    }
 
     //Mejorarlo for
     changeState(state: ContainerState, elementoPrereservas: IListadoPrereserva)
@@ -579,15 +745,30 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     }
 
+
+    searchDuplicatedMatricula(listado: typeGroup[], _id: string)
+    {
+        for (let i = 0; i < listado.length; i++)
+        {
+            if (listado[i].matricula === _id)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     render() {
         
         // console.log("this.state.id=" + this.state.modalState.id);
         const grupoPrereserva = [...this.groupsPreReserva];
+        const keyPrereserva = `prereserva_${Math.random()}`;
+        const keyReserva = `reserva_${Math.random()}`;
 
         return (
             <>
                 <TimelineWrapper 
-                    key={Math.random()}
+                    key={keyPrereserva}
                     anadirBotonPreservar={true}
                     groups={grupoPrereserva}
                     items={listadoPrereservas}
@@ -596,11 +777,11 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 />
                 
                 <TimelineWrapper
-                    key={Math.random()}
+                    key={keyReserva}
                     anadirBotonPreservar={false}
                     marginTop={50}
                     groups={this.groupsReserva}
-                    items={items}
+                    items={this.items}
                     onDoubleClicked={this.onDoubleClickedTimeline}
                 />
                 <ModalDialog 

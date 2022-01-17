@@ -23,6 +23,12 @@
 
 }
 
+.color-black
+{
+    color: black !important;
+}
+
+
 .custom-group
 {
     display: flex !important;
