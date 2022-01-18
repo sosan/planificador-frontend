@@ -96,13 +96,13 @@ export default class TimelineWrapper extends Component {
 
         return (
             <>
-            <IonItem className="flex-izquierda">
-                <IonLabel className="custom-group">
-                    <span className="title anchura_minimo alineacion-matricula">{elementGroup.matricula}</span>
-                    <span className="title anchura_minimo alineacion-clasevehiculo">{elementGroup.clasevehiculo}</span>
-                    <span className="title anchura_minimo anchura_minimo_modelo alineacion-modelo">{elementGroup.modelo}</span>
-                </IonLabel>
-            </IonItem>
+                <IonItem key={elementGroup.matricula + Math.random()} className="flex-izquierda">
+                    <IonLabel className="custom-group">
+                        <span className="title anchura_minimo alineacion-matricula">{elementGroup.matricula}</span>
+                        <span className="title anchura_minimo alineacion-clasevehiculo">{elementGroup.clasevehiculo}</span>
+                        <span className="title anchura_minimo anchura_minimo_modelo alineacion-modelo">{elementGroup.modelo}</span>
+                    </IonLabel>
+                </IonItem>
             </>
         )
     }

@@ -13,10 +13,8 @@ import { IonButton,
     IonSelectOption 
 } from '@ionic/react';
 
-
-
 import { IlistColaborators }  from "../datos/listadoColaboradores";
-import { IDataCoches } from "../datos/coches";
+import { IDataCoches, DEFAULT_TEXT_MATRICULA } from "../datos/coches";
 import { IlistFlotas } from "../datos/listadoFlotas";
 import "../css/Modal.css";
 import { InputChangeEventDetail } from '@ionic/core';
@@ -40,6 +38,8 @@ export interface IModalState
     group?: number;
     notareserva?: string;
     textoFechaDevolucionVisible?: boolean;
+
+    isNewRegister: boolean;
     
 
 }
@@ -92,13 +92,12 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             "notareserva": "",
             "modeloVehiculo": "",
             "claseVehiculo": "",
-            // "fechaDevolucion": new Date(),
-            // "fechaRecogida": new Date(),
             "estado": "prereservado",
             "colaborador": "",
             "flota": "",
             "id": undefined,
             "group": undefined,
+            "isNewRegister": false,
 
         },
         "isDoubleclickItem": false,
@@ -126,6 +125,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                 "flota": this.defaultState.modalState.flota,
                 "id": this.defaultState.modalState.id,
                 "group": this.defaultState.modalState.group,
+                "isNewRegister": false,
 
             },
             "isDoubleclickItem": false,
@@ -226,8 +226,9 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
     }
 
 
-    saveProps(state: ContainerState, _idModal: number, groupId: number)
+    saveProps(state: ContainerState, _idModal: number, groupId: number, valoresFormulario: any)
     {
+        
         //TODO: realizar mas comprobaciones de si todos los campos estan rellenados
         /// ....
         if (state.modalState.modeloVehiculo === "" ||
@@ -240,7 +241,13 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             return;
         }
 
-        const isSaved = this.props.onSaveData(this.state, this.props.modalState.id, this.props.modalState.group);
+        if (state.modalState.matricula === DEFAULT_TEXT_MATRICULA && state.modalState.estado === ENUM_TIPOS_ESTADO.reservado)
+        {
+            return;
+
+        }
+        // quizas valoresFormulario podemos borrarlo
+        const isSaved = this.props.onSaveData(state, _idModal, groupId, valoresFormulario);
         
     }
 
@@ -248,54 +255,38 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
     static getDerivedStateFromProps(newProps: ContainerProps, newState: ContainerState) {
 
         // console.log("getderived newState.newprops=" + newProps + " newState.state" + newState);
-
-        if (newState.modalState.id === undefined)
+        if (newProps.modalState.isNewRegister === true)
         {
-            newState.modalState.id = newProps.modalState.id;
-            newState.modalState.group = newProps.modalState.group;
-            
+            newState["modalState"] = {...newProps["modalState"]};
+            newState["modalState"]["isReseting"] = false;
+            newState.modalState.isNewRegister = false;
         }
-        return null;
 
-        // if (newProps.isDoubleclickItem === true)
-        // {
-
-        // }
-        // if (newState.isDoubleclickItem === true)
-        // {
-        //     let propsActual = newProps.modalState;
+        if (newProps.isDoubleclickItem === true)
+        {
+            // if (newState.modalState.fechaAlta === undefined) /// primera ronda
+            if (newState.modalState.isNewRegister === true) /// primera ronda
+            {
+                newState["modalState"] = {...newProps["modalState"]};
+                newState["isDoubleclickItem"] = false;
+                newState.modalState.isNewRegister = false;
+    
+            }
+        }
             
-        //     newState.modalState = {...propsActual};
-
-        //     return { ...newState};
-
-        // }
-
-        // // if (newProps.isDoubleclickItem === true) {
-        // //     return { ...newProps }
-        // // }
-
-        // if (newState.modalState.estado === "" || newState.modalState.estado === undefined) {
-        //     const elemento = newState.modalState;
-        //     elemento["estado"] = newProps.modalState.estado;
-        //     elemento["id"] = newProps.modalState.id;
-        //     elemento["group"] = newProps.modalState.group;
-
-        //     return { "modalState": {...elemento } };
-
-        // }
-        // return null;
-
+        return newState;
 
     }
 
 
     render() {
 
+        // if (this.state.modalState.isReseting === true) return;
+
         let {
             id,
             group,
-            fechaAlta,
+            fechaAlta = undefined,
             fechaRecogida,
             notaReserva = "",
             claseVehiculo = "",
@@ -312,7 +303,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         let textoFechaRecogida = "";
         let fechaAltaDate = new Date();
     
-        if (fechaAlta === undefined) // creado desde 0
+        if (fechaAlta === undefined ) // creado desde 0
         {
             textoFechaRecogida = "";
             if (fechaRecogida !== undefined)
@@ -327,7 +318,11 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         }
         else // leyendo desde datos
         {
-            fechaAltaDate = new Date(fechaAlta as string);
+            // if (fechaAlta !== "")
+            // {
+                fechaAltaDate = new Date(fechaAlta as string);
+
+            // }
         }
     
 
@@ -462,7 +457,26 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 <IonButton onClick={() => { this.props.onCloseModal(); }}>Cerrar Modal</IonButton>
                             </IonCol>
                             <IonCol size="6">
-                                <IonButton onClick={() => { this.saveProps(this.state, this.props.modalState.id as number, this.props.modalState.group as number); }}>Guardar Datos</IonButton>
+                                <IonButton onClick={
+                                    () => {
+                                        const valoresFormulario = {
+                                            fechaRecogida,
+                                            notaReserva,
+                                            claseVehiculo,
+                                            colaborador,
+                                            modeloVehiculo,
+                                            cantidadDias,
+                                            matricula,
+                                            flota,
+                                            estado,
+                                        };
+                                        this.saveProps(this.state,
+                                            this.props.modalState.id as number,
+                                            this.props.modalState.group as number,
+                                            valoresFormulario
+                                        ); 
+                                    }
+                                }>Guardar Datos</IonButton>
                             </IonCol>
                         </IonRow>
 
