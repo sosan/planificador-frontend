@@ -51,10 +51,10 @@ jobs:
         run: ./gradlew assembleRelease
 
       - name: Sign APK
-        uses: r0adkll/sign-android-release@v1
+        # uses: r0adkll/sign-android-release@v1
+        uses: Tlaster/android-sign@v1
         id: sign
         with:
-          # releaseDirectory: ./android/app/build/outputs/apk/
           releaseDirectory: ./android/app/build/outputs/apk/release
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: ${{ secrets.ALIAS }}
