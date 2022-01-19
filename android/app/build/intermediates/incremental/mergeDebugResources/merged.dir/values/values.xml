@@ -291,9 +291,9 @@
     <string name="abc_toolbar_collapse_description">Collapse</string>
     <string name="app_name">planificador_frontend</string>
     <string name="camera_error">Unable to use camera</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="custom_url_scheme">planificador.frontend.com</string>
     <string name="ok">OK</string>
-    <string name="package_name">io.ionic.starter</string>
+    <string name="package_name">planificador.frontend.com</string>
     <string name="picture">Picture</string>
     <string name="request_permission">Allow this app to take pictures</string>
     <string name="search_menu_title">Search</string>

@@ -33,11 +33,11 @@ jobs:
       - name: Install app dependencies
         run: npm install
 
-      - name: Build Ionic App
-        run: npm run build
+      # - name: Build Ionic App
+      #   run: npm run build
 
-      - name: Sync Capacitor
-        run: npx cap sync
+      # - name: Sync Capacitor
+      #   run: npx cap sync
 
       - name: Build Android Release APK
         run: ionic capacitor build android --prod --no-open
@@ -46,28 +46,70 @@ jobs:
         working-directory: ./android/
         run: chmod +x ./gradlew
 
-      - name: Generate the Android App Bundle
+      - name: Build the app
         working-directory: ./android/
         run: ./gradlew assembleRelease
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v1
+      - name: Sign APK
+        uses: r0adkll/sign-android-release@v1
+        id: sign
         with:
-          name: dietario
-          path: ./android/app/build/outputs/apk/
-      
-      - name: List archives
-        id: read_release
-        shell: bash
-        run: |
-          ls ./android/app/build/outputs/apk/release
+          releaseDirectory: ./android/app/build/outputs/apk/
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          alias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
 
-      - name: Upload binaries to release
-        uses: svenstaro/upload-release-action@v2
+      - uses: actions/upload-artifact@v2
         with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ./android/app/build/outputs/apk/release/app-release-unsigned.apk
-          asset_name: dietario.apk
-          tag: ${{ github.ref }}
-          overwrite: true
-          body: "Nueva version"
+          name: release.apk
+          path: ${{steps.sign.outputs.signedReleaseFile}}
+
+
+      - name: Get App version code
+        id: version
+        run: |
+          echo "::set-output name=commits::$(git rev-list --count HEAD)"
+
+      - name: Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: ${{ steps.version.outputs.commits }}
+          release_name: Release v.1.${{ steps.version.outputs.commits }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Upload Release APK
+        id: upload_release_asset
+        uses: actions/upload-release-asset@v1.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{steps.sign.outputs.signedReleaseFile}}
+          asset_name: dietario-app.apk
+          asset_content_type: application/zip
+
+
+      # - name: Upload APK
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: dietario.apk
+      #     path: ${{steps.sign.outputs.signedReleaseFile}}
+      
+      # - name: List archives
+      #   id: read_release
+      #   shell: bash
+      #   run: |
+      #     ls ./android/app/build/outputs/apk/release
+
+      # - name: Upload binaries to release
+      #   uses: svenstaro/upload-release-action@v2
+      #   with:
+      #     repo_token: ${{ secrets.GITHUB_TOKEN }}
+      #     file: ./android/app/build/outputs/apk/release/app-release-unsigned.apk
+      #     asset_name: dietario.apk
+      #     tag: ${{ github.ref }}
+      #     overwrite: true
+      #     body: "Nueva version"
