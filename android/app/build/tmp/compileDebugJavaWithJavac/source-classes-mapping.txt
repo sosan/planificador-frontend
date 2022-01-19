@@ -1,4 +1,4 @@
-io/ionic/starter/BuildConfig.java
- io.ionic.starter.BuildConfig
-io/ionic/starter/MainActivity.java
- io.ionic.starter.MainActivity
+planificador/frontend/com/MainActivity.java
+ planificador.frontend.com.MainActivity
+planificador/frontend/com/BuildConfig.java
+ planificador.frontend.com.BuildConfig

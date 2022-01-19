@@ -500,11 +500,11 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             {
 
                 /// buscar si hay duplicados de matriculas en las reservas
-                const isDuplicated = this.searchDuplicatedMatricula(this.groupsPreReserva, state.modalState.matricula);
-                if (isDuplicated === true)
-                {
-                    return;
-                }
+                // const isDuplicated = this.searchDuplicatedMatricula(this.groupsPreReserva, state.modalState.matricula);
+                // if (isDuplicated === true)
+                // {
+                //     return;
+                // }
 
                 //colocarse el primero
                 const elementoGrupo = this.groupsPreReserva[positiongroupsPreReserva as number];
@@ -691,8 +691,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         
         // console.log("this.state.id=" + this.state.modalState.id);
         const grupoPrereserva = [...this.groupsPreReserva];
-        const keyPrereserva = `prereserva_${Math.random()}`;
-        const keyReserva = `reserva_${Math.random()}`;
+        let keyPrereserva = `prereserva_${Math.random()}`;
+        let keyReserva = `reserva_${Math.random()}`;
 
         return (
             <>
@@ -727,22 +727,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                     onCloseModal={ this.onCloseModal } 
                     onModalDidDismiss={this.onModalDidDismiss }
                     onSaveData={this.onSaveData}
-                    // showItem={this.state.showItem}
-                    // textoFechaDevolucionVisible={this.state.textoFechaDevolucionVisible}
-                    // id={this.state.id}
-                    // group={this.state.group}
-                    // fechaAlta={this.state.fechaAlta as string}
-                    // notaReserva={this.state.notaReserva as string}
-                    // fechaRecogida={this.state.fechaRecogida}
-                    // fechaDevolucion={this.state.fechaDevolucion}
-                    // modeloVehiculo={this.state.modeloVehiculo}
-                    // claseVehiculo={this.state.claseVehiculo}
-                    // colaborador={this.state.colaborador}
-                    // flota={this.state.flota}
-                    // estado={this.state.estado}
-                    // cantidadDias={this.state.cantidadDias}
-                    // matricula={this.state.matricula}
-                    // vehiculo={this.state.vehiculo}
+                    
                 />
                 
             </>

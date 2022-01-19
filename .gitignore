@@ -29,5 +29,4 @@ yarn-error.log*
 
 *.local
 redpanda.txt
-*.apk
 act

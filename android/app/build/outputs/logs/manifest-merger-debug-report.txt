@@ -50,7 +50,7 @@ INJECTED from /media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/
 INJECTED from /media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app/src/main/AndroidManifest.xml:2:1-41:12
 INJECTED from /media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app/src/main/AndroidManifest.xml:2:1-41:12
 	package
-		ADDED from /media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app/src/main/AndroidManifest.xml:3:5-31
+		ADDED from /media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app/src/main/AndroidManifest.xml:3:5-40
 		INJECTED from /media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app/src/main/AndroidManifest.xml
 		INJECTED from /media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app/src/main/AndroidManifest.xml
 	android:versionName
@@ -85,7 +85,7 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /home/jose/
 		ADDED from /media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app/src/main/AndroidManifest.xml:6:9-35
 	android:theme
 		ADDED from /media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app/src/main/AndroidManifest.xml:11:9-40
-activity#io.ionic.starter.MainActivity
+activity#planificador.frontend.com.MainActivity
 ADDED from /media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app/src/main/AndroidManifest.xml:13:9-25:20
 	android:label
 		ADDED from /media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app/src/main/AndroidManifest.xml:16:13-56
@@ -96,7 +96,7 @@ ADDED from /media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/pla
 	android:theme
 		ADDED from /media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app/src/main/AndroidManifest.xml:17:13-62
 	android:name
-		ADDED from /media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app/src/main/AndroidManifest.xml:15:13-57
+		ADDED from /media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app/src/main/AndroidManifest.xml:15:13-66
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
 ADDED from /media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/android/app/src/main/AndroidManifest.xml:20:13-23:29
 action#android.intent.action.MAIN
