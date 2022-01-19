@@ -334,8 +334,8 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                     <IonGrid className="grid_cabecera">
                         <IonRow className="centradovertical">
                             <IonCol size="8">
-                                <h1>Rellenar Reserva</h1>
-                                <span>Fecha alta: {fechaAltaTexto}</span>
+                                <h1>Rellenar xxxx</h1>
+                                <span>Fecha reserva: {fechaAltaTexto}</span>
                                 
                             </IonCol>
                             <IonCol >
