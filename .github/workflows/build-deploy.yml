@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    name: Build APK
+    name: Building APK
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source
@@ -54,7 +54,8 @@ jobs:
         uses: r0adkll/sign-android-release@v1
         id: sign
         with:
-          releaseDirectory: ./android/app/build/outputs/apk/
+          # releaseDirectory: ./android/app/build/outputs/apk/
+          releaseDirectory: ./android/app/build/outputs/apk/release
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
