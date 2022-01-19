@@ -52,7 +52,7 @@ jobs:
 
       - name: Sign APK
         # uses: r0adkll/sign-android-release@v1
-        uses: Tlaster/android-sign@v1
+        uses: Tlaster/android-sign@v1.2.2
         id: sign
         with:
           releaseDirectory: ./android/app/build/outputs/apk/release
