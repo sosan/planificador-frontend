@@ -1,12 +1,14 @@
 .grid_cabecera
 {
     width: 100%;
+    color: black !important;
 
 }
 
 .centradovertical
 {
     align-items: center !important;
+    color: black !important;
 }
 
 .ancho_100
@@ -21,7 +23,7 @@
     width: 100px !important;
     margin-top: 1px !important;
     background-color: transparent;
-    /* color: rgb(255, 255, 255) !important; */
+
     font-size: 20px !important;
     font-weight: bold !important;
     text-align: center !important;
@@ -33,9 +35,8 @@
     font-weight: 900 !important;
     border-radius: 10px !important;
     text-transform: uppercase !important;
-    /* border: 1px solid #fff !important; */
     color: #e6e6e6 !important;
-    /* padding: 15px 25px !important; */
+    
 
 }
 

@@ -26,24 +26,13 @@ import Timeline, {
 import containerResizeDetector from "react-calendar-timeline/lib/resize-detector/container";
 
 import "react-calendar-timeline/lib/Timeline.css";
-import "../css/Timeline.css";
+import "../css/TimelineCustom.css";
 
 moment().locale('es');
 
 const DRAG_SNAP = 60 * 60 * 24 * 1000;
 
 // https://www.robinwieruch.de/react-pass-props-to-component/
-
-// export const ENUM_TIPOS_EVENTOS =
-// {
-//     "create": "create",
-//     "update": "update",
-//     "delete": "delete"
-
-// };
-
-
-
 
 export default class TimelineWrapper extends Component {
     

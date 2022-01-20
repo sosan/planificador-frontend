@@ -244,3 +244,33 @@ input[type=number] {
     align-items: center;
 
 }
+
+.boton_prereserva
+{
+    background-color: #484848 !important;
+    color: white !important;
+    
+}
+
+.boton_reserva_vuelacar
+{
+    background-color: #484848 !important;
+    color: white !important;
+    
+
+}
+
+.fila_botones_scheduler
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 50px;
+}
+
+.fila_timelines
+{
+    display: flex;
+    flex-direction: column;
+}

@@ -37,6 +37,7 @@ export interface IModalState
     id?: number;
     group?: number;
     notareserva?: string;
+    isPrereserva: boolean;
     textoFechaDevolucionVisible?: boolean;
 
     isNewRegister: boolean;
@@ -98,6 +99,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             "id": undefined,
             "group": undefined,
             "isNewRegister": false,
+            "isPrereserva": false,
 
         },
         "isDoubleclickItem": false,
@@ -125,6 +127,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                 "flota": this.defaultState.modalState.flota,
                 "id": this.defaultState.modalState.id,
                 "group": this.defaultState.modalState.group,
+                "isPrereserva": this.defaultState.modalState.isPrereserva,
                 "isNewRegister": false,
 
             },
@@ -226,7 +229,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
     }
 
 
-    saveProps(state: ContainerState, _idModal: number, groupId: number, valoresFormulario: any)
+    saveProps(state: ContainerState, _idModal: number, groupId: number)
     {
         
         //TODO: realizar mas comprobaciones de si todos los campos estan rellenados
@@ -247,7 +250,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
         }
         // quizas valoresFormulario podemos borrarlo
-        const isSaved = this.props.onSaveData(state, _idModal, groupId, valoresFormulario);
+        this.props.onSaveData(state, _idModal, groupId);
         
     }
 
@@ -334,12 +337,18 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                     <IonGrid className="grid_cabecera">
                         <IonRow className="centradovertical">
                             <IonCol size="8">
-                                <h1>Rellenar xxxx</h1>
+
+                                <h1>Rellenar Prereserva</h1>
                                 <span>Fecha reserva: {fechaAltaTexto}</span>
                                 
                             </IonCol>
                             <IonCol >
-                                <IonButton onClick={() => { this.props.onCloseModal();  } }>Cerrar Modal</IonButton>
+                                <IonButton onClick={() => {
+                                    this.saveProps(this.state,
+                                        this.props.modalState.id as number,
+                                        this.props.modalState.group as number
+                                    ); 
+                                } }>Guardar Datos</IonButton>
                             </IonCol>
                         </IonRow>
                         <IonRow>
@@ -459,21 +468,10 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                             <IonCol size="6">
                                 <IonButton onClick={
                                     () => {
-                                        const valoresFormulario = {
-                                            fechaRecogida,
-                                            notaReserva,
-                                            claseVehiculo,
-                                            colaborador,
-                                            modeloVehiculo,
-                                            cantidadDias,
-                                            matricula,
-                                            flota,
-                                            estado,
-                                        };
+                                        
                                         this.saveProps(this.state,
                                             this.props.modalState.id as number,
-                                            this.props.modalState.group as number,
-                                            valoresFormulario
+                                            this.props.modalState.group as number
                                         ); 
                                     }
                                 }>Guardar Datos</IonButton>

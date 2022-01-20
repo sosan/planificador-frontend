@@ -103,3 +103,19 @@
     width: 141px;
 }
 
+.react-calendar-timeline .rct-header-root{
+    background-color: #21529a;
+}
+
+.rct-calendar-header
+{
+    position: fixed;
+    left: 268px;
+    z-index: 100;
+    
+}
+
+.rct-sidebar
+{
+    top: 50px;
+}

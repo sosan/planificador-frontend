@@ -5,6 +5,7 @@
   "dependencies": {
     "@capacitor/android": "3.3.4",
     "@capacitor/app": "^1.0.5",
+    "@capacitor/cli": "^3.4.0",
     "@capacitor/core": "^3.2.5",
     "@capacitor/haptics": "^1.1.2",
     "@capacitor/keyboard": "^1.1.2",
@@ -69,8 +70,6 @@
   },
   "description": "An Ionic project",
   "devDependencies": {
-    "@capacitor/cli": "^3.3.4",
-    "@types/react-calendar-timeline": "^0.26.5",
-    "@types/w2ui": "^1.4.33"
+    "@types/react-calendar-timeline": "^0.26.5"
   }
 }

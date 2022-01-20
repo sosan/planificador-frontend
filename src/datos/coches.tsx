@@ -1,4 +1,4 @@
-import moment from "moment";
+// import moment from "moment";
 import {LISTADO_IMAGENES_COCHES} from "./imagenescoches"
 
 export const DEFAULT_TEXT_MATRICULA = "No asignada";
@@ -20,46 +20,12 @@ export interface IListadoPrereserva {
     cantidadDias: number;
     colaborador: string;
     flota: string;
+    isPrereserva: boolean;
     estado: string;
     
     itemProps?: any;
 
 };
-
-// export const items = [
-//     {
-//         id: 1,
-//         group: 1,
-//         title: 'item 1',
-//         start_time: moment().hour(0).minute(0),
-//         end_time: moment().hour(23).minute(58),
-//         canMove: true,
-//         canResize: true,
-//         canChangeGroup: true,
-        
-//         itemProps: {
-//             'data-custom-attribute': 'Random content',
-//             'aria-hidden': true,
-//             onDoubleClick: () => { console.log('You clicked double!') },
-//             className: 'altura-items',
-//             style: {
-//                 background: 'fuchsia',
-//             }
-//         }   
-
-//     },
-//     {
-//         id: 2,
-//         group: 2,
-//         title: 'item 2',
-//         start_time: moment().hour(0).minute(0),
-//         end_time: moment().hour(23).minute(59),
-//         // canMove: true,
-//         // canResize: true,
-//         // canChangeGroup: true,
-//     },
-    
-// ];
 
 export const ORDEN_LISTADO_CLASE_COCHES = [
     "basico",

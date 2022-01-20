@@ -6,7 +6,12 @@ import { listColaborators } from "../datos/listadoColaboradores";
 import { listFlotas } from "../datos/listadoFlotas";
 import { ModalDialog, ContainerState as IContainerModalState, IModalState, ENUM_TIPOS_ESTADO } from "./Modal";
 
-import "../css/Timeline.css";
+// import "../css/TimelineCustom.css";
+import "../css/Scheduler.css";
+
+import "../css/variables.css";
+
+import { IonButton } from '@ionic/react';
 
 const DRAG_SNAP = 60 * 60 * 24 * 1000;
 
@@ -49,6 +54,7 @@ let listadoPrereservas: IListadoPrereserva[] = [
         cantidadDias: 0,
         colaborador: "asdasd",
         flota: "asda",
+        isPrereserva: false,
         estado: "asd",
         itemProps: {
             className: 'altura-items-inicio',
@@ -95,6 +101,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         isDoubleclickItem: false,
         modalState: {
             isNewRegister: false,
+            isPrereserva: false,
             showItem: false,
             cantidadDias: 3,
             textoFechaDevolucionVisible: false,
@@ -142,6 +149,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 colaborador: "",
                 flota: "",
                 estado: "reservado",
+                isPrereserva: false,
                 start_time: new Date(),// moment().hour(0).minute(0),
                 end_time: new Date(), //moment().hour(23).minute(58),
                 canMove: true,
@@ -159,16 +167,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 }
 
             },
-            // {
-            //     id: 2,
-            //     group: 2,
-            //     title: 'item 2',
-            //     start_time: new Date(),//moment().hour(0).minute(0),
-            //     end_time: new Date(), //moment().hour(23).minute(59),
-            //     // canMove: true,
-            //     // canResize: true,
-            //     // canChangeGroup: true,
-            // },
+           
 
         ];
 
@@ -207,6 +206,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 "vehiculo": vehiculo,
                 "cantidadDias": 3,
                 "textoFechaDevolucionVisible": true,
+                "isPrereserva": false,
                 "isNewRegister": false,
                 
             },
@@ -342,7 +342,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 "flota": "",
                 "estado": "prereservado", //ENUM_TIPOS_ESTADO.prereservado as string,
                 "isNewRegister": true,
-                // "isNewRegister": true,
+                "isPrereserva": true,
+                
             },
             "tiempoClick": new Date().getTime(),
             "dataCarsVisible": true,
@@ -354,7 +355,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 "modalReservasVisible": true, 
                 "modalState":
                 { 
-                    "isNewRegister": false, 
+                    "isNewRegister": false,
+                    "isPrereserva": false,
                 } 
             });
             
@@ -389,6 +391,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 "colaborador": state.colaborador,
                 "flota": state.flota,
                 "estado": state.estado,
+                "isPrereserva": state.isPrereserva,
                 "isNewRegister": false,
 
             },
@@ -415,7 +418,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 "textoFechaDevolucionVisible": true,
                 "id": state.id,
                 "group": state.group,
-                "fechaAlta": state.fechaAlta, // algo raro con fechaAlta
+                "fechaAlta": state.fechaAlta,
                 "fechaRecogida": state.start_time,
                 "fechaDevolucion": state.end_time,
                 "matricula": state.matricula,
@@ -427,9 +430,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 "colaborador": state.colaborador,
                 "flota": state.flota,
                 "estado": state.estado,
+                "isPrereserva": state.isPrereserva,
                 "isNewRegister": false,
-                
-
             },
             // "modalReservasVisible": true,
             "isDoubleclickItem": true,
@@ -442,7 +444,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     }
 
-    onSaveData = (state: IContainerModalState, _idModal: number, groupId: number, valoresFormulario: any) =>
+    onSaveData = (state: IContainerModalState, _idModal: number, groupId: number) =>
     {
 
         //TODO: comprobar si existe o no, si no existe crear
@@ -562,6 +564,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             cantidadDias: state.modalState.cantidadDias as number,
             colaborador: state.modalState.colaborador as string,
             flota: state.modalState.flota as string,
+            isPrereserva: state.modalState.isPrereserva,
             estado: state.modalState.estado as string,
                         
         };
@@ -617,6 +620,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             cantidadDias: currentState.cantidadDias as number,
             colaborador: currentState.colaborador as string,
             flota: currentState.flota as string,
+            isPrereserva: currentState.isPrereserva,
             estado: currentState.estado as string,
 
         };
@@ -696,40 +700,46 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
         return (
             <>
-                <TimelineWrapper 
-                    key={keyPrereserva}
-                    anadirBotonPreservar={true}
-                    groups={grupoPrereserva}
-                    items={listadoPrereservas}
-                    onClickAnadirPreReserva={this.anadirPreReserva}
+                <div className="fila_botones_scheduler">
+                    <IonButton onClick={() => {  this.anadirPreReserva(); }} className='boton_prereserva' fill='solid' color="#ffffff">Prereserva</IonButton>
+                    <IonButton onClick={() => { }} className="boton_reserva_vuelacar" fill='solid' color="#ffffff">Reserva Vuelacar</IonButton>
+                </div>
+                <div className='fila_timelines'>
+                    <TimelineWrapper
+                        marginTop={20}
+                        key={keyReserva}
+                        anadirBotonPreservar={false}
+                        groups={this.groupsReserva}
+                        items={this.items}
+                        onDoubleClicked={this.onDoubleClickedTimeline}
+                    />
+                    <TimelineWrapper 
+                        marginTop={50}
+                        key={keyPrereserva}
+                        anadirBotonPreservar={true}
+                        groups={grupoPrereserva}
+                        items={listadoPrereservas}
+                        onClickAnadirPreReserva={this.anadirPreReserva}
+                        
+                    />
                     
-                />
-                
-                <TimelineWrapper
-                    key={keyReserva}
-                    anadirBotonPreservar={false}
-                    marginTop={50}
-                    groups={this.groupsReserva}
-                    items={this.items}
-                    onDoubleClicked={this.onDoubleClickedTimeline}
-                />
-                <ModalDialog 
-                    isVisible={this.state.modalReservasVisible}
-                    modalState={this.state.modalState}
-                    isDoubleclickItem={this.state.isDoubleclickItem}
-                    tiempoClick={this.state.tiempoClick}
-                    listadoClaseVehiculos={this.listadoClaseVehiculos}
-                    listadoModelosVehiculos={this.listadoModelosVehiculos}
-                    dataCarsVisible={this.state.dataCarsVisible}
-                    dataCars={dataCars}
-                    listColaborators={listColaborators}
-                    listFlotas={listFlotas}
-                    onCloseModal={ this.onCloseModal } 
-                    onModalDidDismiss={this.onModalDidDismiss }
-                    onSaveData={this.onSaveData}
-                    
-                />
-                
+                    <ModalDialog 
+                        isVisible={this.state.modalReservasVisible}
+                        modalState={this.state.modalState}
+                        isDoubleclickItem={this.state.isDoubleclickItem}
+                        tiempoClick={this.state.tiempoClick}
+                        listadoClaseVehiculos={this.listadoClaseVehiculos}
+                        listadoModelosVehiculos={this.listadoModelosVehiculos}
+                        dataCarsVisible={this.state.dataCarsVisible}
+                        dataCars={dataCars}
+                        listColaborators={listColaborators}
+                        listFlotas={listFlotas}
+                        onCloseModal={ this.onCloseModal } 
+                        onModalDidDismiss={this.onModalDidDismiss }
+                        onSaveData={this.onSaveData}
+                        
+                    />
+                </div>
             </>
         );
     }
