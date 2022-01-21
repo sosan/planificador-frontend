@@ -54,6 +54,91 @@ export interface IItemCategoria {
     mdIcon?: string;
 }
 
+export const categoriasDashboard: IItemCategoria[] = [
+
+    {
+        title: 'Planning',
+        image: "https://via.placeholder.com/180x80",
+
+        colorBoton: "colorBotonCategorias",
+        colorBackground: "colorBackgroundCategorias",
+        cardTitle: "Planning",
+        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+        url: '/page/prereservar',
+        containerId: "Planning",
+        container: <PrereservarContainer />,
+        iosIcon: mailOutline,
+        mdIcon: mailSharp
+    },
+    {
+        title: 'Contratos',
+        image: "https://via.placeholder.com/180x80",
+
+        colorBoton: "colorBotonCategorias",
+        colorBackground: "colorBackgroundCategorias",
+        cardTitle: "Contratos",
+        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+        url: '/page/contratos',
+        containerId: "Contratos",
+        container: <PrereservarContainer />,
+        iosIcon: mailOutline,
+        mdIcon: mailSharp
+    },
+    {
+        title: 'Facturas',
+        image: "https://via.placeholder.com/180x80",
+        colorBoton: "colorBotonCategorias",
+        colorBackground: "colorBackgroundCategorias",
+        cardTitle: "Facturas",
+        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+        url: '/page/facturas',
+        containerId: "Facturas",
+        container: <PrereservarContainer />,
+        iosIcon: mailOutline,
+        mdIcon: mailSharp
+    },
+    {
+        title: 'Multas',
+        image: "https://via.placeholder.com/180x80",
+        colorBoton: "colorBotonCategorias",
+        colorBackground: "colorBackgroundCategorias",
+        cardTitle: "Multas",
+        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+        url: '/page/multas',
+        containerId: "Multas",
+        container: <PrereservarContainer />,
+        iosIcon: mailOutline,
+        mdIcon: mailSharp
+    },
+    {
+        title: 'Informes',
+        image: "https://via.placeholder.com/180x80",
+        colorBoton: "colorBotonCategorias",
+        colorBackground: "colorBackgroundCategorias",
+        cardTitle: "Informes",
+        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+        url: '/page/informes',
+        containerId: "Informes",
+        container: <PrereservarContainer />,
+        iosIcon: mailOutline,
+        mdIcon: mailSharp
+    },
+    {
+        title: 'Devolucion',
+        image: "https://via.placeholder.com/180x80",
+        colorBoton: "colorBotonCategorias",
+        colorBackground: "colorBackgroundCategorias",
+        cardTitle: "Devolucion",
+        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+        url: '/page/devolucion',
+        containerId: "Devolucion",
+        container: <PrereservarContainer />,
+        iosIcon: mailOutline,
+        mdIcon: mailSharp
+    },
+
+];
+
 export const categoriasPlaning: IItemCategoria[] = [
     {
         title: 'Pre-Reservar',

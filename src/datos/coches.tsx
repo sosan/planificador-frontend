@@ -1,7 +1,7 @@
 // import moment from "moment";
 import {LISTADO_IMAGENES_COCHES} from "./imagenescoches"
 
-export const DEFAULT_TEXT_MATRICULA = "No asignada";
+export const DEFAULT_TEXT_MATRICULA = "";
 
 export interface IListadoPrereserva {
     id: number;

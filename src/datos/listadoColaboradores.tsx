@@ -18,8 +18,8 @@ export let listColaborators: IlistColaborators[] = [
         "color": "#38ff3f"
     },
     {
-        "id": "llull",
-        "descripcion": "Llull",
+        "id": "llull1",
+        "descripcion": "Llull1",
         "color": "#ffc738"
     },
     {

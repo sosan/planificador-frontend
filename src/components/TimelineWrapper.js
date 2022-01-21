@@ -66,11 +66,11 @@ export default class TimelineWrapper extends Component {
         // const borderColor = itemContext.resizing ? "red" : item.color;
         return (
             <>
-                {itemContext.useResizeHandle ? <div {...leftResizeProps} /> : null}
+                {/* {itemContext.useResizeHandle ? <div {...leftResizeProps} /> : null} */}
                 <>
                     {itemContext.title}
                 </>
-                {itemContext.useResizeHandle ? <div {...rightResizeProps} /> : null}
+                {/* {itemContext.useResizeHandle ? <div {...rightResizeProps} /> : null} */}
             </>
         );
 
@@ -181,6 +181,7 @@ export default class TimelineWrapper extends Component {
                     groups={groups}
                     items={items}
                     resizeDetector={containerResizeDetector}
+                    
                     defaultTimeStart={this.state.defaultTimeStart}
                     defaultTimeEnd={this.state.defaultTimeEnd}
                     visibleTimeStart={this.state.visibleTimeStart}
@@ -199,6 +200,7 @@ export default class TimelineWrapper extends Component {
                     itemHeightRatio={1}
                     canMove={true}
                     canResize={"both"}
+
                     
                     onItemMove={this.handleItemMove}
                     onItemResize={this.handleItemResize}

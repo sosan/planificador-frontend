@@ -9,13 +9,8 @@ import {
 
 
 } from '@ionic/react';
-
-
-
 import * as categoriasManager from "../datos/listadoCategorias";
 
-
-// declare var scheduler: any;
 
 const DashboardContainer: any = () => {
 
@@ -23,8 +18,6 @@ const DashboardContainer: any = () => {
         console.log("clicked")
 
     };
-
-// https://dhtmlx.com/blog/use-dhtmlx-scheduler-component-react-js-library-demo/
 
     const GetListCategories = (categorias: categoriasManager.IItemCategoria[]) => {
 
@@ -56,9 +49,10 @@ const DashboardContainer: any = () => {
         return listadoCategorias;
     };
 
-    const listadoPlaning = GetListCategories(categoriasManager.categoriasPlaning);
-    const listadoContratos = GetListCategories(categoriasManager.categoriasContratos);
-    const listadoFacturacion = GetListCategories(categoriasManager.categoriasFacturacion);
+    const listadoDashboard = GetListCategories(categoriasManager.categoriasDashboard);
+    // const listadoPlaning = GetListCategories(categoriasManager.categoriasPlaning);
+    // const listadoContratos = GetListCategories(categoriasManager.categoriasContratos);
+    // const listadoFacturacion = GetListCategories(categoriasManager.categoriasFacturacion);
     // const listadoInformes = GetListCategories(categoriasManager.categoriasInformes);
     // const listadoMultas = GetListCategories(categoriasManager.categoriasMultas);
 
@@ -67,10 +61,10 @@ const DashboardContainer: any = () => {
     return (
         <>
             <IonContent>
-                
-                <div className="centrado">{listadoPlaning}</div>
+                <div className='centrado'>{listadoDashboard}</div>
+                {/* <div className="centrado">{listadoPlaning}</div>
                 <div className="centrado">{listadoContratos}</div>
-                <div className="centrado">{listadoFacturacion}</div>
+                <div className="centrado">{listadoFacturacion}</div> */}
                 
             </IonContent>
 

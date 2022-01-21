@@ -311,19 +311,17 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         return groupOrdered;
     }
 
-
-    anadirPreReserva = () => {
-
+    getNewElementPrereserva()
+    {
 
         const _startTime = new Date();
         const tempStarTime = new Date(_startTime);
-        const _endTime = new Date(tempStarTime.setDate(_startTime.getDate() + 2) );
+        const _endTime = new Date(tempStarTime.setDate(_startTime.getDate() + 2));
 
         _startTime.setHours(0, 0, 0);
         _endTime.setHours(23, 59, 59);
 
-        this.setState({
-            
+        let newState: ContainerState = {
             "modalState": {
                 "showItem": false,
                 "textoFechaDevolucionVisible": false,
@@ -340,31 +338,83 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 "cantidadDias": 3,
                 "matricula": DEFAULT_TEXT_MATRICULA,
                 "flota": "",
-                "estado": "prereservado", //ENUM_TIPOS_ESTADO.prereservado as string,
+                "estado": ENUM_TIPOS_ESTADO.prereservado as string,
                 "isNewRegister": true,
                 "isPrereserva": true,
-                
+
             },
+            "modalReservasVisible": false, 
             "tiempoClick": new Date().getTime(),
             "dataCarsVisible": true,
             "isDoubleclickItem": false,
-            
-        }, () => {
+            "borrado": false,
+        };
+
+        return newState;
+
+    }
+
+    getNewElementReservaVuelacar()
+    {
+
+        const _startTime = new Date();
+        const tempStarTime = new Date(_startTime);
+        const _endTime = new Date(tempStarTime.setDate(_startTime.getDate() + 2));
+
+        _startTime.setHours(0, 0, 0);
+        _endTime.setHours(23, 59, 59);
+
+        let newState: ContainerState = {
+            "modalState": {
+                "showItem": false,
+                "textoFechaDevolucionVisible": false,
+                "id": this.items.length + 1,
+                "group": this.groupsReserva.length + 1,
+                "claseVehiculo": "",
+                "colaborador": "",
+                "fechaRecogida": _startTime,
+                "fechaDevolucion": _endTime,
+                "fechaAlta": undefined,
+                "modeloVehiculo": "",
+                "notareserva": "",
+                "vehiculo": "",
+                "cantidadDias": 3,
+                "matricula": DEFAULT_TEXT_MATRICULA,
+                "flota": "v",
+                "estado": ENUM_TIPOS_ESTADO.reservado as string,
+                "isNewRegister": true,
+                "isPrereserva": false,
+
+            },
+            "modalReservasVisible": false,
+            "tiempoClick": new Date().getTime(),
+            "dataCarsVisible": true,
+            "isDoubleclickItem": false,
+            "borrado": false,
+        };
+
+        return newState;
+
+    
+    }
+
+    anadirPreReserva = (newState: ContainerState) => {
+
+        this.setState(newState, () => {
             this.setState(
-            { 
-                "modalReservasVisible": true, 
-                "modalState":
-                { 
-                    "isNewRegister": false,
-                    "isPrereserva": false,
-                } 
-            });
-            
-            console.log(this.state)
+                {
+                    "modalReservasVisible": true,
+                    "modalState":
+                    {
+                        "isNewRegister": false,
+                        "isPrereserva": false,
+                    }
+                });
         });
-        // console.log("this.state.modalState" + this.state.modalState);
-        console.log("this.state.modalState" + this.state.modalState);
+
     };
+
+   
 
     onPreReservasDoubleClickedOverItem = async (state: IListadoPrereserva ) =>
     {
@@ -468,6 +518,12 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         let [existGroupPrereserva, positiongroupsPreReserva] = this.searchGroupExist(this.groupsPreReserva, state.modalState.id as number);
         let [existListadoPrereserva, positionListadoPreReserva] = this.searchExistListadoPreservas(listadoPrereservas, state.modalState.id as number);
         
+        if (state.modalState.isPrereserva === true)
+        {
+
+        }
+
+
         if (existGroupPrereserva === false)
         {
             this.groupsPreReserva.push(
@@ -556,7 +612,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             canMove: true,
             canResize: true,
             canChangeGroup: true,
-            title: state.modalState.matricula as string,
+            title: state.modalState.colaborador as string,
             notareserva: state.modalState.notareserva as string,
             matricula: state.modalState.matricula as string,
             modeloVehiculo: state.modalState.modeloVehiculo as string,
@@ -701,8 +757,16 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         return (
             <>
                 <div className="fila_botones_scheduler">
-                    <IonButton onClick={() => {  this.anadirPreReserva(); }} className='boton_prereserva' fill='solid' color="#ffffff">Prereserva</IonButton>
-                    <IonButton onClick={() => { }} className="boton_reserva_vuelacar" fill='solid' color="#ffffff">Reserva Vuelacar</IonButton>
+                    <IonButton onClick={() => { 
+                            const _state = this.getNewElementPrereserva();
+                            this.anadirPreReserva(_state); 
+                        }
+                    } className='boton_prereserva' fill='solid' color="#ffffff">Prereserva</IonButton>
+                    <IonButton onClick={() => { 
+                            const _state = this.getNewElementReservaVuelacar();
+                            this.anadirPreReserva(_state);
+                        }
+                    } className="boton_reserva_vuelacar" fill='solid' color="#ffffff">Reserva Vuelacar</IonButton>
                 </div>
                 <div className='fila_timelines'>
                     <TimelineWrapper
