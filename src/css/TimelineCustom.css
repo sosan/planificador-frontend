@@ -19,7 +19,17 @@
 
 .altura-items
 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #3c4ef2;
     height: 50px !important;
+    font-size: 20px !important;;
+    color: white !important;;
+    /* text-align: center !important; */
+    text-transform: uppercase;
+    
 
 }
 
@@ -105,6 +115,13 @@
 
 .react-calendar-timeline .rct-header-root{
     background-color: #21529a;
+}
+
+.tamanoItem
+{
+    font-size: 15px;
+    text-transform: uppercase;
+
 }
 
 /* .rct-calendar-header

@@ -73,6 +73,7 @@ type typeGroup =
     vehiculo: string,
     modelo: string,
     matricula: string;
+    flota?: string;
     srcImage?: any,
     rightTitle?: string,
     height?: number,
@@ -167,7 +168,6 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 }
 
             },
-           
 
         ];
 
@@ -259,6 +259,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 "rightTitle": "",
                 "height": 50,
                 "stackItems": true,
+                "flota": "v",
                 "matricula": `${cars[i].matricula}`
             });
             
@@ -515,47 +516,141 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             state.modalState.estado = ENUM_TIPOS_ESTADO.prereservado; //"prereservado";
         }
 
-        let [existGroupPrereserva, positiongroupsPreReserva] = this.searchGroupExist(this.groupsPreReserva, state.modalState.id as number);
-        let [existListadoPrereserva, positionListadoPreReserva] = this.searchExistListadoPreservas(listadoPrereservas, state.modalState.id as number);
-        
         if (state.modalState.isPrereserva === true)
         {
-
-        }
-
-
-        if (existGroupPrereserva === false)
-        {
-            this.groupsPreReserva.push(
-            {
-                "id": state.modalState.group as number,
-                "title": "title",
-                "matricula": state.modalState.matricula,
-                "vehiculo": "vehiculo",
-                "clasevehiculo": state.modalState.claseVehiculo as string,
-                "modelo": state.modalState.modeloVehiculo as string,
-                "height": 50,
-                "srcImage": "",
-                "rightTitle": "",
-                "stackItems": true,
-    
-            });
-            
-            positiongroupsPreReserva = this.groupsPreReserva.length - 1;
-            // state.modalState.id = _idModal;
-
-            
+            this.saveDataPrereserva(state);
         }
         else
         {
+            this.saveDateReserva(state);
+        }
+        
+
+    };
+
+    saveDateReserva(state: IContainerModalState)
+    {
+
+        if (state.modalState.matricula === DEFAULT_TEXT_MATRICULA && state.modalState.estado === ENUM_TIPOS_ESTADO.prereservado)
+        {
+            return;
+        }
+
+        /// buscar si hay duplicados de matriculas en las reservas
+        // const isDuplicated = this.searchDuplicatedMatricula(this.groupsPreReserva, state.modalState.matricula);
+        // if (isDuplicated === true)
+        // {
+        //     return;
+        // }
+
+        // const startTime = new Date(state.modalState.fechaRecogida as Date);
+        // const endTime = new Date(state.modalState.fechaDevolucion as Date);
+
+        // startTime.setHours(0, 0, 0);
+        // endTime.setHours(23, 59, 59);
+
+        // // encapsular dentor de un objeto
+        // let elementoReservas: IListadoPrereserva = {
+        //     id: state.modalState.id as number, // _idModal as number,
+        //     group: state.modalState.id as number, // groupId,
+        //     fechaAlta: new Date().toString(),
+        //     start_time: startTime,
+        //     end_time: endTime,
+        //     canMove: true,
+        //     canResize: true,
+        //     canChangeGroup: true,
+        //     title: state.modalState.colaborador as string,
+        //     notareserva: state.modalState.notareserva as string,
+        //     matricula: state.modalState.matricula as string,
+        //     modeloVehiculo: state.modalState.modeloVehiculo as string,
+        //     claseVehiculo: state.modalState.claseVehiculo as string,
+        //     cantidadDias: state.modalState.cantidadDias as number,
+        //     colaborador: state.modalState.colaborador as string,
+        //     flota: state.modalState.flota as string,
+        //     isPrereserva: state.modalState.isPrereserva,
+        //     estado: state.modalState.estado as string,
+
+        // };
+
+        // elementoReservas["itemProps"] = {
+        //     onDoubleClick: () => { this.onReservasDoubleClickedOverItem(elementoReservas) },
+        //     className: 'altura-items',
+        //     style: {
+        //         background: 'blue',
+        //     }
+        // }
+
+        //colocarse el primero
+        // const elementoGrupo = this.groupsPreReserva[positiongroupsPreReserva as number];
+        // elementoGrupo["id"] = this.groupsReserva.length;
+        // elementoGrupo["matricula"] = state.modalState.matricula as string;
+
+
+        this.groupsReserva.unshift({
+            "id": state.modalState.group as number,
+            "title": "title",
+            "matricula": state.modalState.matricula as string,
+            "vehiculo": "vehiculo",
+            "clasevehiculo": state.modalState.claseVehiculo as string,
+            "modelo": state.modalState.modeloVehiculo as string,
+            "flota": state.modalState.flota as string,
+            "height": 50,
+            "srcImage": "",
+            "rightTitle": "",
+            "stackItems": true,
+
+        });
+
+        const elementoReserva = this.generateNewElementReservas(state.modalState, state.modalState.group as number);
+
+        this.items.push(elementoReserva);
+
+        // this.groupsPreReserva.splice(positiongroupsPreReserva as number, 1);
+        // listadoPrereservas.splice(positionListadoPreReserva as number, 1);
+
+        this.setState({ "modalReservasVisible": false });
+
+        return true;
+
+    }
+
+
+    saveDataPrereserva(state: IContainerModalState, )
+    {
+
+        let [existGroupPrereserva, positiongroupsPreReserva] = this.searchGroupExist(this.groupsPreReserva, state.modalState.id as number);
+        let [existListadoPrereserva, positionListadoPreReserva] = this.searchExistListadoPreservas(listadoPrereservas, state.modalState.id as number);
+
+        if (existGroupPrereserva === false) {
+            this.groupsPreReserva.push(
+                {
+                    "id": state.modalState.group as number,
+                    "title": "title",
+                    "matricula": state.modalState.matricula as string,
+                    "vehiculo": "vehiculo",
+                    "clasevehiculo": state.modalState.claseVehiculo as string,
+                    "modelo": state.modalState.modeloVehiculo as string,
+                    "flota": state.modalState.flota as string,
+                    "height": 50,
+                    "srcImage": "",
+                    "rightTitle": "",
+                    "stackItems": true,
+
+                });
+
+            positiongroupsPreReserva = this.groupsPreReserva.length - 1;
+            // state.modalState.id = _idModal;
+
+
+        }
+        else {
 
             // el vehiculo tiene un grupo, toca actualizar datos 
             // si la matricula no tiene el texto por defecto DEFAULT_TEXT_MATRICULA
             // 
-            if (state.modalState.matricula !== DEFAULT_TEXT_MATRICULA 
+            if (state.modalState.matricula !== DEFAULT_TEXT_MATRICULA
                 && state.modalState.estado !== ENUM_TIPOS_ESTADO.prereservado
-            )
-            {
+            ) {
 
                 /// buscar si hay duplicados de matriculas en las reservas
                 // const isDuplicated = this.searchDuplicatedMatricula(this.groupsPreReserva, state.modalState.matricula);
@@ -567,7 +662,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 //colocarse el primero
                 const elementoGrupo = this.groupsPreReserva[positiongroupsPreReserva as number];
                 elementoGrupo["id"] = this.groupsReserva.length;
-                elementoGrupo["matricula"] = state.modalState.matricula;
+                elementoGrupo["matricula"] = state.modalState.matricula as string;
 
                 this.groupsReserva.unshift(elementoGrupo); // delante
 
@@ -576,22 +671,21 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 this.items.push(elementoReserva);
 
                 this.groupsPreReserva.splice(positiongroupsPreReserva as number, 1);
-                listadoPrereservas.splice(positionListadoPreReserva as number , 1);
+                listadoPrereservas.splice(positionListadoPreReserva as number, 1);
 
                 this.setState({ "modalReservasVisible": false });
 
                 return true;
 
             }
-            else
-            {
+            else {
                 // creo que no es necesario
                 // if (state.modalState.id === undefined) {
                 //     state.modalState.id = _idModal;
                 // }
 
                 this.groupsPreReserva[positiongroupsPreReserva as number].matricula = state.modalState.matricula as string;
-                
+
             }
 
         }
@@ -601,7 +695,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
         startTime.setHours(0, 0, 0);
         endTime.setHours(23, 59, 59);
-        
+
         // encapsular dentor de un objeto
         let elementoPrereservas: IListadoPrereserva = {
             id: state.modalState.id as number, // _idModal as number,
@@ -622,32 +716,29 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             flota: state.modalState.flota as string,
             isPrereserva: state.modalState.isPrereserva,
             estado: state.modalState.estado as string,
-                        
+
         };
 
         elementoPrereservas["itemProps"] = {
             onDoubleClick: () => { this.onPreReservasDoubleClickedOverItem(elementoPrereservas) },
             className: 'altura-items',
-            style: {
-                background: 'blue',
-            }
+            // style: {
+            //     background: 'blue',
+            // }
         }
 
-        if (existGroupPrereserva === false)
-        {
+        if (existGroupPrereserva === false) {
             listadoPrereservas.push(elementoPrereservas);
         }
-        else
-        {
+        else {
             listadoPrereservas[positionListadoPreReserva as number] = elementoPrereservas;
         }
-        
-        this.setState({"modalReservasVisible": false});
+
+        this.setState({ "modalReservasVisible": false });
         return true;
         //TEST: comprobar si --- funciona
-        
 
-    };
+    }
 
 
     generateNewElementReservas(currentState: IModalState, _idModal: number)
@@ -668,7 +759,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             fechaAlta: currentState.fechaAlta as string,
             start_time: startTime,
             end_time: endTime,
-            title: currentState.matricula as string,
+            title: currentState.colaborador as string,
             notareserva: currentState.notareserva as string,
             matricula: currentState.matricula as string,
             modeloVehiculo: currentState.modeloVehiculo as string,
@@ -747,11 +838,65 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         return false;
     }
 
+    searchGroupsByFilter = (groups: typeGroup[], items: IListadoPrereserva[], subalquileres: boolean) => {
+        let groupsFiltered = [];
+        let itemsFiltered = [];
+
+        for (let i = 0; i < groups.length; i++) {
+
+            if (subalquileres === true) {
+                if (groups[i].flota !== "v") {
+                    groupsFiltered.push(groups[i]);
+                }
+
+            }
+            else {
+                if (groups[i].flota === "v") {
+                    groupsFiltered.push(groups[i]);
+                }
+            }
+
+        }
+
+        for (let i = 0; i < items.length; i++) {
+
+            if (subalquileres === true) {
+                if (items[i].flota !== "v") {
+                    itemsFiltered.push(items[i]);
+                }
+
+            }
+            else {
+                if (items[i].flota === "v") {
+                    itemsFiltered.push(items[i]);
+                }
+            }
+
+        }
+
+        return { groupsFiltered, itemsFiltered };
+
+    }   
+
     render() {
         
         // console.log("this.state.id=" + this.state.modalState.id);
         const grupoPrereserva = [...this.groupsPreReserva];
+        
+        let subalquileres = true;
+        let { 
+            groupsFiltered: groupsFilteredSubAlquileres, 
+            itemsFiltered: itemsFilteredSubAlquileres 
+        } = this.searchGroupsByFilter(this.groupsReserva, this.items, subalquileres);
+        
+        subalquileres = false;
+        let {
+            groupsFiltered: groupsFilteredAlquileres,
+            itemsFiltered: itemsFilteredAlquileres
+        } = this.searchGroupsByFilter(this.groupsReserva, this.items, subalquileres);
+
         let keyPrereserva = `prereserva_${Math.random()}`;
+        let keySubAlquileres = `subalquileres_${Math.random()}`;
         let keyReserva = `reserva_${Math.random()}`;
 
         return (
@@ -769,24 +914,38 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                     } className="boton_reserva_vuelacar" fill='solid' color="#ffffff">Reserva Vuelacar</IonButton>
                 </div>
                 <div className='fila_timelines'>
+                    <h3 className='titulo-reservas-timeline'>RESERVAS</h3>
                     <TimelineWrapper
-                        marginTop={20}
+                        marginTop={0}
                         key={keyReserva}
                         anadirBotonPreservar={false}
-                        groups={this.groupsReserva}
-                        items={this.items}
+                        groups={groupsFilteredAlquileres}
+                        items={itemsFilteredAlquileres}
+                        subalquileres={false}
                         onDoubleClicked={this.onDoubleClickedTimeline}
                     />
+                    <h3 className='titulo-subalquileres-timeline'>SUBALQUILERES</h3>
+                    <TimelineWrapper
+                        marginTop={0}
+                        key={keySubAlquileres}
+                        anadirBotonPreservar={false}
+                        groups={groupsFilteredSubAlquileres}
+                        items={itemsFilteredSubAlquileres}
+                        subalquileres={true}
+                        // onClickAnadirPreReserva={this.anadirPreReserva}
+                    />
+                    <h3 className='titulo-prereservas-timeline'>PRERESERVAS</h3>
                     <TimelineWrapper 
-                        marginTop={50}
+                        marginTop={0}
                         key={keyPrereserva}
-                        anadirBotonPreservar={true}
+                        anadirBotonPreservar={false}
                         groups={grupoPrereserva}
                         items={listadoPrereservas}
-                        onClickAnadirPreReserva={this.anadirPreReserva}
+                        subalquileres={false}
+                        // onClickAnadirPreReserva={this.anadirPreReserva}
                         
                     />
-                    
+
                     <ModalDialog 
                         isVisible={this.state.modalReservasVisible}
                         modalState={this.state.modalState}

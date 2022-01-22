@@ -19,7 +19,7 @@ export let listFlotas: IlistFlotas[] = [
     },
     {
         "id": "v",
-        "descripcion": "V",
+        "descripcion": "Vuelacar",
         "color": "#ffc738"
     },
     

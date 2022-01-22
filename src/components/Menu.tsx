@@ -29,8 +29,6 @@ import {
 } from "../datos/listadoCategorias";
 import '../css/Menu.css';
 
-// const labels = ['Etiqueta1', 'Etiqueta2', 'Etiqueta3', 'Etiqueta4', 'Etiqueta5', 'Etiqueta6'];
-
 const Menu: React.FC = () => {
   const location = useLocation();
   

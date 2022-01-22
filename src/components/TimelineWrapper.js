@@ -49,6 +49,7 @@ export default class TimelineWrapper extends Component {
             groups: this.props.groups,
             items: this.props.items,
             onDoubleClicked: this.props.onDoubleClicked,
+            subalquileres: this.props.subalquileres,
             defaultTimeStart: _defaultTimeStart,
             defaultTimeEnd: _defaultTimeEnd,
             visibleTimeStart: _visibleTimeStart,
@@ -61,16 +62,12 @@ export default class TimelineWrapper extends Component {
 
     
     itemRenderer = ({ item, timelineContext, itemContext, getItemProps, getResizeProps }) => {
-        const { left: leftResizeProps, right: rightResizeProps } = getResizeProps();
+        // const { left: leftResizeProps, right: rightResizeProps } = getResizeProps();
         // const backgroundColor = itemContext.selected ? (itemContext.dragging ? "red" : item.selectedBgColor) : item.bgColor;
         // const borderColor = itemContext.resizing ? "red" : item.color;
         return (
             <>
-                {/* {itemContext.useResizeHandle ? <div {...leftResizeProps} /> : null} */}
-                <>
-                    {itemContext.title}
-                </>
-                {/* {itemContext.useResizeHandle ? <div {...rightResizeProps} /> : null} */}
+                {itemContext.title}
             </>
         );
 
@@ -170,10 +167,11 @@ export default class TimelineWrapper extends Component {
     //     // return { "cantidadDias": newState.cantidadDias, "id": newState.id };
 
     // }
+
     
     render() {
 
-        const {groups, items} = this.props;
+        const { groups, items } = this.props;
 
         return (
             <div style={{ marginTop: `${this.props.marginTop}px` }}>
@@ -211,7 +209,7 @@ export default class TimelineWrapper extends Component {
                     <TimelineMarkers>
                         <TodayMarker>
                             {({ styles, date }) =>
-                                <div style={{ ...styles, backgroundColor: "red", width: "4px" }} />
+                                <div style={{ ...styles, backgroundColor: "red", width: "4px", zIndex: "100" }} />
                             }
                         </TodayMarker>
                     </TimelineMarkers>

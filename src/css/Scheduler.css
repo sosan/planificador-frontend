@@ -273,4 +273,33 @@ input[type=number] {
 {
     display: flex;
     flex-direction: column;
+
+}
+
+.titulo-reservas-timeline
+{
+    background-color: gray;
+    color: black;
+    border: 2px black solid;
+    text-align: center;
+    font-weight: bolder;
+}
+
+.titulo-subalquileres-timeline
+{
+    background-color: rgb(60, 60, 60);
+    color: rgb(255, 255, 255);
+    border: 2px black solid;
+    text-align: center;
+    font-weight: bolder;
+}
+
+
+.titulo-prereservas-timeline
+{
+    background-color: #3c4ef2;
+    color: rgb(255, 255, 255);
+    border: 2px black solid;
+    text-align: center;
+    font-weight: bolder;
 }
