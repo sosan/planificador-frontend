@@ -346,27 +346,40 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         }
         else // leyendo desde datos
         {
-            // if (fechaAlta !== "")
-            // {
-                fechaAltaDate = new Date(fechaAlta as string);
-
-            // }
+            fechaAltaDate = new Date(fechaAlta as string);
         }
     
 
         const fechaAltaTexto = `${fechaAltaDate.getDate().toString().padStart(2, "00")}-${(fechaAltaDate.getMonth() + 1).toString().padStart(2, "00")}-${fechaAltaDate.getFullYear()} ${fechaAltaDate.getHours().toString().padStart(2, "00")}:${fechaAltaDate.getMinutes().toString().padStart(2, "00")}`;
         let tituloReserva = "Rellenar Reserva";
-        let claseCabecera = "grid_cabecera grid_cabecera_reserva";
-        if (this.state.modalState.isPrereserva === true)
+        let colorCabecera = "grid_cabecera grid_cabecera_reserva";
+        // if (this.state.modalState.isPrereserva === true)
+        // {
+            
+        // }
+        
+        switch(this.state.modalState.estado)
         {
-            tituloReserva = "Rellenar Prereserva";
-            claseCabecera = "grid_cabecera grid_cabecera_prereserva";
+            case ENUM_TIPOS_ESTADO.prereservado:
+                tituloReserva = "Rellenar Prereserva";
+                colorCabecera = "grid_cabecera grid_cabecera_prereserva";
+            break;
+
+            case ENUM_TIPOS_ESTADO.reservado:
+            break;
+
+            case ENUM_TIPOS_ESTADO.prepagado:
+            break;
+            
+            case ENUM_TIPOS_ESTADO['100pagado']:
+            break;
         }
+        
 
         return(
             <>
                 <IonModal onWillDismiss={async () => { this.props.onModalDidDismiss(); } }  isOpen={this.props.isVisible} >
-                    <IonGrid className={claseCabecera}>
+                    <IonGrid className={colorCabecera}>
                         <IonRow className="centradovertical">
                             <IonCol size="8">
                                 <h1>{tituloReserva}</h1>
