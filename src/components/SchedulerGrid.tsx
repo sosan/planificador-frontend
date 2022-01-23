@@ -721,7 +721,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
         elementoPrereservas["itemProps"] = {
             onDoubleClick: () => { this.onPreReservasDoubleClickedOverItem(elementoPrereservas) },
-            className: 'altura-items',
+            className: 'altura-items color-prereserva ',
             // style: {
             //     background: 'blue',
             // }
@@ -774,10 +774,10 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
         elementoReservas["itemProps"] = {
             onDoubleClick: () => { this.onReservasDoubleClickedOverItem(elementoReservas) },
-            className: 'altura-items color-black',
-            style: {
-                background: 'yellow',
-            }
+            className: 'altura-items color-reserva color-black',
+            // style: {
+            //     background: 'yellow',
+            // }
         }
 
         return elementoReservas;
