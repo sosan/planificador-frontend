@@ -208,6 +208,15 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
     }
 
+    elegirHoraRecogida(evento: CustomEvent<InputChangeEventDetail>)
+    {
+
+        let estadoActual: IModalState = this.state.modalState;
+        estadoActual["horaentrega"] = evento.detail.value as string;
+        this.setState({ "modalState": { ...estadoActual } });
+
+    }
+
     onChangeInputNumeroDias(evento: CustomEvent<InputChangeEventDetail>)
     {
         const dias = parseInt( evento.detail.value as string) ;
@@ -406,10 +415,11 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel className="">Hora de entrega</IonLabel>
-                                    <IonInput name='horaentrega' value={horaentrega} onIonChange={(evento) => { this.onChangeInputs(this.state, "horaentrega", evento.detail.value as string); }}></IonInput>
+                                    {/* <IonInput name='horaentrega' value={horaentrega} onIonChange={(evento) => { this.onChangeInputs(this.state, "horaentrega", evento.detail.value as string); }}></IonInput> */}
+                                    <IonDatetime value={horaentrega} hourValues="8,9,10,11,12,13,14,15,16,17,18,19,20" minuteValues="0,30" onIonChange={(evento) => { this.elegirHoraRecogida(evento); }} displayFormat='HH:mm' hour-cycle="h23" first-day-of-week={1} cancelText="Cancelar" doneText="Confirmar"></IonDatetime>
                                 </IonItem>
                                 <IonItem>
-                                    <IonLabel className="">Lugar de entrega</IonLabel>
+                                    <IonLabel position='floating' className="">Lugar de entrega</IonLabel>
                                     <IonInput name='lugarentrega' value={lugarentrega} onIonChange={(evento) => { this.onChangeInputs(this.state, "lugarentrega", evento.detail.value as string); }}></IonInput>
                                 </IonItem>
                                 <IonItem>
@@ -448,9 +458,9 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                     }
                                 </IonItem>
                                 <IonItem>
-                                    <IonLabel className="">Matricula</IonLabel>
+                                    <IonLabel position='floating' className="">Matricula</IonLabel>
                                     {
-                                        (this.state.modalState.isPrereserva === true) ? <IonInput value={matricula} onIonChange={(evento) => { this.onChangeInputs(this.state, "matricula", evento.detail.value as string); }} key="matricula" id="matricula" name='matricula' className="matricula_select" placeholder="Introducir matricula vehiculo"></IonInput>
+                                        (this.state.modalState.isPrereserva === true) ? <IonInput value={matricula} onIonChange={(evento) => { this.onChangeInputs(this.state, "matricula", evento.detail.value as string); }} key="matricula" id="matricula" name='matricula' className="matricula_select" ></IonInput>
                                         :
                                             <IonSelect value={matricula} onIonChange={(evento) => { this.onChangeInputs(this.state, "matricula", evento.detail.value); }} key="matricula" id="matricula" name='matricula' className="matricula_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                                                 {
@@ -489,7 +499,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                     <IonLabel className="">XXXXXXXX</IonLabel>
                                 </IonItem>
                                 <IonItem>
-                                    <IonLabel className="">Precio Vuelacar</IonLabel>
+                                    <IonLabel position='floating' className="">Precio Vuelacar</IonLabel>
                                     <IonInput name='preciovuelacar' value={preciovuelacar} onIonChange={(evento) => { this.onChangeInputs(this.state, "preciovuelacar", evento.detail.value as string); }} type='number' min='1' max='100000000' autocomplete="off" inputmode="numeric"></IonInput>
                                 </IonItem>
                                 {
