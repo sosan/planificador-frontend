@@ -6,7 +6,22 @@ export interface IlistColaborators {
 
 };
 
-export let listColaborators: IlistColaborators[] = [
+export enum ENUM_LISTADO_COLABORADORES {
+    "none" = "none",
+    "gianni" = "gianni",
+    "sven" = "sven",
+    "llull1" = "llull1",
+    "thomas" = "thomas",
+    "belmi" = "belmi",
+    "lupe" = "lupe",
+    "dido" = "dido",
+    "campa" = "campa",
+    "fs" = "fs",
+    "v" = "v",
+    "length" = 10,
+}
+
+export let listadoColaboradores: IlistColaborators[] = [
     {
         "id": "gianni",
         "descripcion": "Gianni",
@@ -51,5 +66,10 @@ export let listColaborators: IlistColaborators[] = [
         "id": "fs",
         "descripcion": "Fuera de servicio",
         "color": "#effcf8"
+    },
+    {
+        "id": "v",
+        "descripcion": "VuelaCar",
+        "color": "#efccf8"
     },
 ];

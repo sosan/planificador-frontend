@@ -9,6 +9,8 @@ import imagenpeugeot208 from "../images/peugeot_208.webp";
 import imagenpeugeot807 from "../images/peugeot807Grey.webp";
 import imagentoyotaAygo from "../images/toyotaAygoRed.webp";
 import imagenpiaggioLiberty125 from "../images/PiaggioLiberty_125cc.webp";
+import yamahamajesty from "../images/PiaggioLiberty_125cc.webp";
+import piaggiomedley from "../images/PiaggioLiberty_125cc.webp";
 
 export let LISTADO_IMAGENES_COCHES = {
     "citroenC1open": imagencitroenC1open,
@@ -22,7 +24,9 @@ export let LISTADO_IMAGENES_COCHES = {
     "citroenC3": imagencitroenC3,
     "citroenC1Automatic": imagencitroenC1Automatic,
     "peugeot208": imagenpeugeot208,
-
+    "yamahamajesty": yamahamajesty,
+    "piaggiomedley": piaggiomedley,
+    
 };
 
 

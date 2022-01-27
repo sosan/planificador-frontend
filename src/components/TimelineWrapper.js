@@ -156,18 +156,6 @@ export default class TimelineWrapper extends Component {
     componentDidMount() {
 
     }
-
-    // static getDerivedStateFromProps(newProps, newState) {
-
-    //     // console.log("getderived newState.id=" + newProps.id + " newState.id" + newState.id);
-    //     // if (newProps.isVisible === false) {
-    //     //     return { "cantidadDias": 3 };
-
-    //     // }
-    //     // return { "cantidadDias": newState.cantidadDias, "id": newState.id };
-
-    // }
-
     
     render() {
 
@@ -201,7 +189,7 @@ export default class TimelineWrapper extends Component {
 
                     
                     onItemMove={this.handleItemMove}
-                    onItemResize={this.handleItemResize}
+                    // onItemResize={this.handleItemResize}
                     onTimeChange={this.handleTimeChange}
                     onCanvasDoubleClick={(groupId, time, evento) => { this.props.onDoubleClicked(groupId, time, evento); } }
                     // itemRenderer={this.itemRenderer}
