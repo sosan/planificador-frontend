@@ -14,7 +14,7 @@ export const DEFAULT_TEXT_MATRICULA = "";
 export interface IListadoPrereserva {
     id: number;
     group: number;
-    fechaAlta: string;
+    // fechaAlta: string;
     start_time: Date,
     end_time: Date, //moment.Moment,
     canMove: boolean,

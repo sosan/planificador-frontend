@@ -41,7 +41,6 @@ let listadoPrereservas: IListadoPrereserva[] = [
     {
         id: 0,
         group: 0,
-        fechaAlta: "asdasd",
         title: ' ',
         start_time: new Date(new Date().setHours(0, 0, 0)),
         end_time: new Date(new Date().setHours(23, 59, 59)),
@@ -49,6 +48,7 @@ let listadoPrereservas: IListadoPrereserva[] = [
         canResize: true,
         canChangeGroup: true,
         modalState: {
+            fechaAlta: "asdasd",
             notareserva: "asdasd",
             matricula: "asdasd",
             modeloVehiculo: "asdasd",
@@ -59,8 +59,6 @@ let listadoPrereservas: IListadoPrereserva[] = [
             isPrereserva: false,
             estado: "asd",
             isNewRegister: false,
-
-
         },
         itemProps: {
             className: 'altura-items-inicio',
@@ -161,8 +159,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 id: 1,
                 group: 1,
                 title: 'item 1',
-                fechaAlta: new Date().toISOString(),
                 modalState: {
+                    fechaAlta: new Date().toISOString(),
                     notareserva: "itemsdsdf",
                     matricula: "",
                     modeloVehiculo: "",
@@ -787,7 +785,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         let elementoPrereservas: IListadoPrereserva = {
             id: state.modalState.id as number,
             group: state.modalState.group as number, 
-            fechaAlta: new Date().toISOString(),
+            // fechaAlta: new Date().toISOString(),
             start_time: startTime,
             end_time: endTime,
             canMove: true,
@@ -810,6 +808,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             listadoPrereservas.push(elementoPrereservas);
         }
         else {
+            // elementoPrereservas["fechaAlta"] = state.modalState.fechaAlta;
+
             listadoPrereservas[positionListadoPreReserva as number] = elementoPrereservas;
         }
 
@@ -839,7 +839,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             end_time: endTime,
             group: idGrupo as number,
             id: idReserva as number,
-            fechaAlta: new Date().toISOString(),
+            // fechaAlta: new Date().toISOString(),
             title: colaboradorDescripcion, //currentState.colaborador as string,
             modalState: currentState,
 

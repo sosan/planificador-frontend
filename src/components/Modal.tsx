@@ -255,7 +255,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
     }
 
 
-    saveProps(state: ContainerState, _idModal: number, groupId: number)
+    saveProps(state: ContainerState, _idModal: number, groupId: number, fechaAlta: string)
     {
         
         //TODO: realizar mas comprobaciones de si todos los campos estan rellenados
@@ -276,6 +276,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
         }
         // quizas valoresFormulario podemos borrarlo
+        state.modalState.fechaAlta = fechaAlta;
         this.props.onSaveData(state, _idModal, groupId);
         
     }
@@ -346,30 +347,28 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         if (fechaAlta === undefined ) // creado desde 0
         {
             textoFechaRecogida = "";
-            if (fechaRecogida !== undefined)
-            {
-                textoFechaRecogida = fechaRecogida.toISOString();
-
-                const fechaRecogidaTempo = new Date(fechaRecogida );
-                const fechaDevolucion = new Date(fechaRecogidaTempo.setDate(fechaRecogidaTempo.getDate() + (this.state.modalState.cantidadDias as number - 1)));
-                textoFechaDevolucion = `${fechaDevolucion.getDate().toString().padStart(2, "00")}-${(fechaDevolucion.getMonth() + 1).toString().padStart(2, "00")}-${fechaDevolucion.getFullYear()}`;
-
-            }
+            fechaAlta = new Date().toISOString();
         }
         else // leyendo desde datos
         {
             fechaAltaDate = new Date(fechaAlta as string);
         }
-    
+        
+        if (fechaRecogida !== undefined)
+        {
+            textoFechaRecogida = fechaRecogida.toISOString();
 
-        //${fechaAltaDate.getHours().toString().padStart(2, "00")}:${fechaAltaDate.getMinutes().toString().padStart(2, "00")}
-        const fechaAltaTexto = `${fechaAltaDate.getDate().toString().padStart(2, "00")}-${(fechaAltaDate.getMonth() + 1).toString().padStart(2, "00")}-${fechaAltaDate.getFullYear()}`;
+            const fechaRecogidaTempo = new Date(fechaRecogida );
+            const fechaDevolucion = new Date(fechaRecogidaTempo.setDate(fechaRecogidaTempo.getDate() + (this.state.modalState.cantidadDias as number - 1)));
+            textoFechaDevolucion = `${fechaDevolucion.getDate().toString().padStart(2, "00")}-${(fechaDevolucion.getMonth() + 1).toString().padStart(2, "00")}-${fechaDevolucion.getFullYear()}`;
+
+        }
+
+        //
+        const fechaAltaTexto = `${fechaAltaDate.getDate().toString().padStart(2, "00")}-${(fechaAltaDate.getMonth() + 1).toString().padStart(2, "00")}-${fechaAltaDate.getFullYear()} ${fechaAltaDate.getHours().toString().padStart(2, "00")}:${fechaAltaDate.getMinutes().toString().padStart(2, "00")}`;
         let tituloReserva = "Rellenar Reserva";
         let colorCabecera = "grid_cabecera grid_cabecera_reserva";
-        // if (this.state.modalState.isPrereserva === true)
-        // {
-            
-        // }
+        
         
         switch(this.state.modalState.estado)
         {
@@ -397,13 +396,14 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                             <IonCol size="8">
                                 <h1>{tituloReserva}</h1>
                                 <span>Fecha alta: {fechaAltaTexto}</span>
-                                
+                                <IonInput name='fechaalta' value={fechaAlta} hidden={true} ></IonInput>
                             </IonCol>
                             <IonCol >
                                 <IonButton onClick={() => {
                                     this.saveProps(this.state,
                                         this.props.modalState.id as number,
-                                        this.props.modalState.group as number
+                                        this.props.modalState.group as number,
+                                        fechaAlta as string
                                     ); 
                                 } }>Guardar Datos</IonButton>
                             </IonCol>
@@ -572,7 +572,8 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                         
                                         this.saveProps(this.state,
                                             this.props.modalState.id as number,
-                                            this.props.modalState.group as number
+                                            this.props.modalState.group as number,
+                                            fechaAlta as string
                                         ); 
                                     }
                                 }>Guardar Datos</IonButton>
