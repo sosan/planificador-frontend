@@ -98,6 +98,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 {
 
     customDatetime: any ;
+    textoErrores: string;
     defaultState: ContainerState = {
         "isVisible": false,
         "modalState": {
@@ -149,6 +150,8 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             "modalReservasVisible": false,
             "isFirstTime": false,
         };
+
+        this.textoErrores = "";
 
     }
 
@@ -235,13 +238,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         estado["modalState"]["fechaDevolucion"] = fechaDevolucion;
 
         this.setState({ ...estado });
-        // this.setState({ "modalState":
-        // { 
-        //     "cantidadDias": dias,
-        //     "textoFechaDevolucionVisible": true,
-        //     "fechaRecogida": fechaRecogida,
-        //     "fechaDevolucion": fechaDevolucion,
-        // }});
+        
     }
 
     onChangeInputs(currentState: ContainerState, key: string, value: string)
@@ -267,16 +264,35 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             state.modalState.fechaDevolucion?.toString()=== "Invalid Date"
 
         ) {
+            this.textoErrores = "Modelo vehiculo erroneo";
             return;
+        }
+        
+        if (state.modalState.matricula === "" ||
+            state.modalState.matricula === undefined ||
+            state.modalState.fechaRecogida?.toString() === "" ||
+            state.modalState.fechaDevolucion?.toString() === ""
+        ) {
+            state.modalState.matricula = DEFAULT_TEXT_MATRICULA;
+        }
+        
+        if (state.modalState.estado === "" || state.modalState.estado === undefined) {
+            state.modalState.estado = ENUM_TIPOS_ESTADO.prereservado;
         }
 
         if (state.modalState.matricula === DEFAULT_TEXT_MATRICULA && state.modalState.estado === ENUM_TIPOS_ESTADO.reservado)
         {
+            this.textoErrores = "Cambia matricula";
             return;
 
         }
-        // quizas valoresFormulario podemos borrarlo
-        state.modalState.fechaAlta = fechaAlta;
+        
+        if (state.modalState.fechaAlta === undefined || state.modalState.fechaAlta === "")
+        {
+            
+            state.modalState.fechaAlta = fechaAlta;
+        }
+
         this.props.onSaveData(state, _idModal, groupId);
         
     }
@@ -407,6 +423,9 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                     ); 
                                 } }>Guardar Datos</IonButton>
                             </IonCol>
+                        </IonRow>
+                        <IonRow className="centradovertical">
+                            <IonCol>{this.textoErrores}</IonCol>
                         </IonRow>
                         <IonRow>
                     {/* <Virtuoso
