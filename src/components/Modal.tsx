@@ -3,6 +3,7 @@ import { IonButton,
     IonCol,
     IonDatetime,
     IonGrid,
+    IonImg,
     IonInput,
     IonItem,
     IonLabel,
@@ -18,6 +19,8 @@ import { IDataCoches, DEFAULT_TEXT_MATRICULA } from "../datos/coches";
 import { IlistFlotas } from "../datos/listadoFlotas";
 import "../css/Modal.css";
 import { InputChangeEventDetail } from '@ionic/core';
+
+import imagenFallo from "../images/error_checkbox.svg";
 
 export interface IModalState
 {
@@ -41,8 +44,8 @@ export interface IModalState
     textoFechaDevolucionVisible?: boolean;
     horaentrega?: string;
     lugarentrega?: string;
-    preciovuelacar?: string,
-    precioexterno?: string;
+    preciovuelacar?: number;
+    precioexterno?: number;
     extras?: string;
 
     isNewRegister: boolean;
@@ -75,6 +78,12 @@ export type ContainerState = {
     isDoubleclickItem: boolean;
     isFirstTime: boolean;
     modalReservasVisible: boolean;
+    colaboradorFallo: boolean;
+    claseVehiculoFallo: boolean;
+    modeloVehiculoFallo: boolean;
+    matriculoFallo: boolean;
+    flotaFallo: boolean;
+    precioExternoFallo: boolean;
     
 }
 
@@ -98,7 +107,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 {
 
     customDatetime: any ;
-    textoErrores: string;
+    
     defaultState: ContainerState = {
         "isVisible": false,
         "modalState": {
@@ -115,8 +124,13 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             "group": undefined,
             "isNewRegister": false,
             "isPrereserva": false,
-
         },
+        "colaboradorFallo": false,
+        "claseVehiculoFallo": false,
+        "flotaFallo": false,
+        "matriculoFallo": false,
+        "modeloVehiculoFallo": false,
+        "precioExternoFallo": false,
         "isDoubleclickItem": false,
         "modalReservasVisible": false,
         "isFirstTime": false,
@@ -146,12 +160,18 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                 "isNewRegister": false,
 
             },
+            "colaboradorFallo": false,
+            "claseVehiculoFallo": false,
+            "flotaFallo": false,
+            "precioExternoFallo": false,
+            "matriculoFallo": false,
+            "modeloVehiculoFallo": false,
             "isDoubleclickItem": false,
             "modalReservasVisible": false,
             "isFirstTime": false,
         };
 
-        this.textoErrores = "";
+        
 
     }
 
@@ -257,39 +277,148 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         
         //TODO: realizar mas comprobaciones de si todos los campos estan rellenados
         /// ....
-        if (state.modalState.modeloVehiculo === "" ||
-            state.modalState.claseVehiculo === "" ||
-            state.modalState.fechaRecogida === undefined ||
-            state.modalState.fechaRecogida.toString() === "Invalid Date" ||
-            state.modalState.fechaDevolucion?.toString()=== "Invalid Date"
+        // if (state.modalState.modeloVehiculo === "" ||
+        //     state.modalState.claseVehiculo === "" ||
+        //     state.modalState.fechaRecogida === undefined ||
+        //     state.modalState.fechaRecogida.toString() === "Invalid Date" ||
+        //     state.modalState.fechaDevolucion?.toString()=== "Invalid Date"
 
-        ) {
-            this.textoErrores = "Modelo vehiculo erroneo";
+        // ) {
+        //     this.textoErrores = "Modelo vehiculo erroneo";
+        //     return;
+        // }
+        
+        // if (state.modalState.matricula === "" ||
+        //     state.modalState.matricula === undefined ||
+        //     state.modalState.fechaRecogida?.toString() === "" ||
+        //     state.modalState.fechaDevolucion?.toString() === ""
+        // ) {
+        //     state.modalState.matricula = DEFAULT_TEXT_MATRICULA;
+        // }
+        
+        // if (state.modalState.estado === "" || state.modalState.estado === undefined) {
+        //     state.modalState.estado = ENUM_TIPOS_ESTADO.prereservado;
+        // }
+
+        // if (state.modalState.matricula === DEFAULT_TEXT_MATRICULA && state.modalState.estado === ENUM_TIPOS_ESTADO.reservado)
+        // {
+        //     this.textoErrores = "Cambia matricula";
+        //     return;
+
+        // }
+        
+       
+
+        let conFallos = false;
+        let textoErrores = "";
+        let colaboradorFallo = false, 
+            claseVehiculoFallo = false, 
+            modeloVehiculoFallo = false,
+            matriculoFallo = false,
+            precioExternoFallo = false,
+            flotaFallo  = false;
+
+        switch (this.state.modalState.estado) {
+            case ENUM_TIPOS_ESTADO.prereservado:
+                if (
+                    state.modalState.matricula === "" ||
+                    state.modalState.matricula === undefined
+                ) {
+                    matriculoFallo = true;
+                    textoErrores += "Matricula Vehiculo Obligatorio. ";
+                    conFallos = true;
+                }
+
+                if (
+                    state.modalState.flota === "" ||
+                    state.modalState.flota === undefined
+                ) {
+                    flotaFallo = true;
+                    textoErrores += "Flota Obligatorio. ";
+                    conFallos = true;
+                }
+
+                if (state.modalState.precioexterno?.toString() === "")
+                {
+                    precioExternoFallo = true;
+                    textoErrores += "Precio externo Obligatorio. ";
+                    conFallos = true;
+                }
+                break;
+
+            case ENUM_TIPOS_ESTADO.reservado:
+                if (
+                    state.modalState.colaborador === "" || 
+                    state.modalState.colaborador === undefined
+                )
+                {
+                    colaboradorFallo = true;
+                    textoErrores += "Colaborador Obligatorio ";
+                    conFallos = true;
+                }
+                
+                if (
+                    state.modalState.claseVehiculo === "" ||
+                    state.modalState.claseVehiculo === undefined
+                ) {
+                    claseVehiculoFallo = true;
+                    textoErrores += "Clase Vehiculo Obligatorio ";
+                    conFallos = true;
+                }
+                
+                if (
+                    state.modalState.modeloVehiculo === "" ||
+                    state.modalState.modeloVehiculo === undefined
+                ) {
+                    modeloVehiculoFallo = true;
+                    textoErrores += "Modelo Vehiculo Obligatorio ";
+                    conFallos = true;
+                }
+
+                if (
+                    state.modalState.matricula === "" ||
+                    state.modalState.matricula === undefined
+                ) {
+                    matriculoFallo = true;
+                    textoErrores += "Matricula Vehiculo Obligatorio ";
+                    conFallos = true;
+                }
+
+                if (
+                    state.modalState.flota === "" ||
+                    state.modalState.flota === undefined
+                ) {
+                    flotaFallo = true;
+                    textoErrores += "Flota Obligatoria ";
+                    conFallos = true;
+                }
+
+                break;
+
+            case ENUM_TIPOS_ESTADO.prepagado:
+                break;
+
+            case ENUM_TIPOS_ESTADO['100pagado']:
+                break;
+        }
+
+        if (conFallos === true)
+        {
+            this.setState(
+            {
+                "colaboradorFallo": colaboradorFallo,
+                "claseVehiculoFallo": claseVehiculoFallo,
+                "flotaFallo": flotaFallo,
+                "matriculoFallo": matriculoFallo,
+                "precioExternoFallo": precioExternoFallo,
+                "modeloVehiculoFallo": modeloVehiculoFallo,
+            }
+            );
             return;
         }
-        
-        if (state.modalState.matricula === "" ||
-            state.modalState.matricula === undefined ||
-            state.modalState.fechaRecogida?.toString() === "" ||
-            state.modalState.fechaDevolucion?.toString() === ""
-        ) {
-            state.modalState.matricula = DEFAULT_TEXT_MATRICULA;
-        }
-        
-        if (state.modalState.estado === "" || state.modalState.estado === undefined) {
-            state.modalState.estado = ENUM_TIPOS_ESTADO.prereservado;
-        }
 
-        if (state.modalState.matricula === DEFAULT_TEXT_MATRICULA && state.modalState.estado === ENUM_TIPOS_ESTADO.reservado)
-        {
-            this.textoErrores = "Cambia matricula";
-            return;
+        if (state.modalState.fechaAlta === undefined || state.modalState.fechaAlta === "") {
 
-        }
-        
-        if (state.modalState.fechaAlta === undefined || state.modalState.fechaAlta === "")
-        {
-            
             state.modalState.fechaAlta = fechaAlta;
         }
 
@@ -424,9 +553,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 } }>Guardar Datos</IonButton>
                             </IonCol>
                         </IonRow>
-                        <IonRow className="centradovertical">
-                            <IonCol>{this.textoErrores}</IonCol>
-                        </IonRow>
+                        
                         <IonRow>
                     {/* <Virtuoso
                     style={{ height: '100%' }}
@@ -479,7 +606,13 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                     
                                 </IonItem>
                                 <IonItem>
-                                    <IonLabel className="">Clase</IonLabel>
+                                    {
+                                        (this.state.claseVehiculoFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Clase</IonLabel></>
+                                        :
+                                        <IonLabel className="">Clase</IonLabel>
+
+
+                                    }
                                     <IonSelect value={claseVehiculo} onIonChange={(evento) => { this.onChangeInputs(this.state, "claseVehiculo", evento.detail.value as string); }} key="clase" id="clase" name='clase' className="clase_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                                         {
                                             this.props.listadoClaseVehiculos.map((elemento: string) => {
@@ -490,7 +623,11 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 </IonItem>
 
                                 <IonItem>
-                                    <IonLabel className="">Modelo Vehiculo</IonLabel>
+                                    {
+                                        (this.state.modeloVehiculoFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Modelo Vehiculo</IonLabel></>
+                                        :
+                                        <IonLabel className="">Modelo Vehiculo</IonLabel>
+                                    }
                                     <IonSelect value={modeloVehiculo} onIonChange={(evento) => { this.onChangeInputs(this.state, "modeloVehiculo", evento.detail.value); }} key="vehiculos" id="vehiculos" name='vehiculos' className="vehiculos_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                                         {
                                             this.props.listadoModelosVehiculos.map((elemento: string) => {
@@ -504,7 +641,11 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                     } */}
                                 </IonItem>
                                 <IonItem>
-                                    <IonLabel position='floating' className="">Matricula</IonLabel>
+                                    {
+                                        (this.state.matriculoFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel position='floating' className="textofallo">Matricula</IonLabel></>
+                                        :
+                                        <IonLabel position='floating' className="">Matricula</IonLabel>
+                                    }
                                     {
                                         (this.state.modalState.isPrereserva === true) ? <IonInput value={matricula} onIonChange={(evento) => { this.onChangeInputs(this.state, "matricula", evento.detail.value as string); }} key="matricula" id="matricula" name='matricula' className="matricula_select" ></IonInput>
                                         :
@@ -526,7 +667,12 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                     
                                 </IonItem>
                                 <IonItem>
-                                    <IonLabel className="">Flotas externas</IonLabel>
+                                    {
+                                        (this.state.flotaFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Flotas externas</IonLabel></>
+                                        :
+                                        <IonLabel className="">Flotas externas</IonLabel>
+
+                                    }
                                     <IonSelect value={flota} onIonChange={(evento) => { this.onChangeInputs(this.state, "flota", evento.detail.value as string); }} id="flotas" name='flotas' className="flotas_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                                         {
                                             this.props.listFlotas.map((elemento: IlistFlotas) => {
@@ -535,11 +681,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                         }
                                     </IonSelect>
                                 </IonItem>
-                                {/* {
-                                    (this.state.modalState.isPrereserva === false) ? null
-                                        :
-
-                                } */}
+                                
                                 <IonItem>
                                     <IonLabel className="">Numero Reserva</IonLabel>
                                     <IonLabel className="">XXXXXXXX</IonLabel>
@@ -558,7 +700,12 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 {
                                     (this.state.modalState.isPrereserva === false) ? null :
                                         <IonItem>
-                                            <IonLabel position='floating' className="">Precio externo</IonLabel>
+                                            {
+                                                (this.state.precioExternoFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel position='floating' className="textoFallo">Precio externo</IonLabel></>
+                                                :
+                                                <IonLabel position='floating' className="">Precio externo</IonLabel>
+
+                                            }
                                             <IonInput name='precioexterno' value={precioexterno} onIonChange={(evento) => { this.onChangeInputs(this.state, "precioexterno", evento.detail.value as string); }} type='number' min='1' max='100000000' autocomplete="off" inputmode="numeric"></IonInput>
                                         </IonItem>
                                 }
