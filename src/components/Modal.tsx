@@ -54,6 +54,15 @@ export interface IModalState
 
 }
 
+export interface IModalErrores {
+    colaboradorFallo: boolean;
+    claseVehiculoFallo: boolean;
+    modeloVehiculoFallo: boolean;
+    matriculoFallo: boolean;
+    flotaFallo: boolean;
+    precioExternoFallo: boolean;
+}
+
 interface ContainerProps {
     onCloseModal: any;
     onModalDidDismiss: any;
@@ -63,12 +72,13 @@ interface ContainerProps {
     listColaborators: IlistColaborators[];
     listFlotas: IlistFlotas[];
     tiempoClick: any;
-    // dataCarsVisible: boolean;
+    
     listadoClaseVehiculos: string[];
     listadoModelosVehiculos: string[];
     isDoubleclickItem: boolean;
     modalState: IModalState;
     isFirstTime: boolean;
+    errores: IModalErrores;
 
 }
 export type ContainerState = {
@@ -78,13 +88,7 @@ export type ContainerState = {
     isDoubleclickItem: boolean;
     isFirstTime: boolean;
     modalReservasVisible: boolean;
-    colaboradorFallo: boolean;
-    claseVehiculoFallo: boolean;
-    modeloVehiculoFallo: boolean;
-    matriculoFallo: boolean;
-    flotaFallo: boolean;
-    precioExternoFallo: boolean;
-    
+    errores: IModalErrores;
 }
 
 export enum ENUM_TIPOS_ESTADO {
@@ -125,12 +129,15 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             "isNewRegister": false,
             "isPrereserva": false,
         },
-        "colaboradorFallo": false,
-        "claseVehiculoFallo": false,
-        "flotaFallo": false,
-        "matriculoFallo": false,
-        "modeloVehiculoFallo": false,
-        "precioExternoFallo": false,
+        "errores": {
+            "colaboradorFallo": false,
+            "claseVehiculoFallo": false,
+            "flotaFallo": false,
+            "matriculoFallo": false,
+            "modeloVehiculoFallo": false,
+            "precioExternoFallo": false,
+
+        },
         "isDoubleclickItem": false,
         "modalReservasVisible": false,
         "isFirstTime": false,
@@ -160,12 +167,16 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                 "isNewRegister": false,
 
             },
-            "colaboradorFallo": false,
-            "claseVehiculoFallo": false,
-            "flotaFallo": false,
-            "precioExternoFallo": false,
-            "matriculoFallo": false,
-            "modeloVehiculoFallo": false,
+            "errores":
+            {
+                "colaboradorFallo": false,
+                "claseVehiculoFallo": false,
+                "flotaFallo": false,
+                "precioExternoFallo": false,
+                "matriculoFallo": false,
+                "modeloVehiculoFallo": false,
+
+            },
             "isDoubleclickItem": false,
             "modalReservasVisible": false,
             "isFirstTime": false,
@@ -406,12 +417,16 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         {
             this.setState(
             {
-                "colaboradorFallo": colaboradorFallo,
-                "claseVehiculoFallo": claseVehiculoFallo,
-                "flotaFallo": flotaFallo,
-                "matriculoFallo": matriculoFallo,
-                "precioExternoFallo": precioExternoFallo,
-                "modeloVehiculoFallo": modeloVehiculoFallo,
+                "errores":
+                {
+                    "colaboradorFallo": colaboradorFallo,
+                    "claseVehiculoFallo": claseVehiculoFallo,
+                    "flotaFallo": flotaFallo,
+                    "matriculoFallo": matriculoFallo,
+                    "precioExternoFallo": precioExternoFallo,
+                    "modeloVehiculoFallo": modeloVehiculoFallo,
+
+                }
             }
             );
             return;
@@ -430,16 +445,17 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
     static getDerivedStateFromProps(newProps: ContainerProps, newState: ContainerState) {
 
         // console.log("getderived newState.newprops=" + newProps + " newState.state" + newState);
-        if (newProps.modalState.isNewRegister === true) //&& newState.modalState.showItem === false
+        if (newProps.modalState.isNewRegister === true)
         {
             if (newProps.isVisible === false)
             {
                 newState["modalState"] = {...newProps["modalState"]};
+                newState["errores"] = {...newProps["errores"]};
                 newState["modalState"]["isReseting"] = false;
                 newState.modalState.showItem = true;
 
             }
-            // newState.modalState.isNewRegister = false;
+            
         }
 
         if (newProps.isDoubleclickItem === true)
@@ -449,10 +465,10 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             {
 
                 newState["modalState"] = {...newProps["modalState"]};
+                newState["errores"] = { ...newProps["errores"] };
                 newState.modalState.showItem = true;
             }
 
-            
         }
             
         return newState;
@@ -607,7 +623,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 </IonItem>
                                 <IonItem>
                                     {
-                                        (this.state.claseVehiculoFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Clase</IonLabel></>
+                                        (this.state.errores.claseVehiculoFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Clase</IonLabel></>
                                         :
                                         <IonLabel className="">Clase</IonLabel>
 
@@ -624,7 +640,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
                                 <IonItem>
                                     {
-                                        (this.state.modeloVehiculoFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Modelo Vehiculo</IonLabel></>
+                                        (this.state.errores.modeloVehiculoFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Modelo Vehiculo</IonLabel></>
                                         :
                                         <IonLabel className="">Modelo Vehiculo</IonLabel>
                                     }
@@ -642,7 +658,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 </IonItem>
                                 <IonItem>
                                     {
-                                        (this.state.matriculoFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel position='floating' className="textofallo">Matricula</IonLabel></>
+                                        (this.state.errores.matriculoFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel position='floating' className="textofallo">Matricula</IonLabel></>
                                         :
                                         <IonLabel position='floating' className="">Matricula</IonLabel>
                                     }
@@ -668,7 +684,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 </IonItem>
                                 <IonItem>
                                     {
-                                        (this.state.flotaFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Flotas externas</IonLabel></>
+                                        (this.state.errores.flotaFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Flotas externas</IonLabel></>
                                         :
                                         <IonLabel className="">Flotas externas</IonLabel>
 
@@ -701,7 +717,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                     (this.state.modalState.isPrereserva === false) ? null :
                                         <IonItem>
                                             {
-                                                (this.state.precioExternoFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel position='floating' className="textoFallo">Precio externo</IonLabel></>
+                                                (this.state.errores.precioExternoFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel position='floating' className="textoFallo">Precio externo</IonLabel></>
                                                 :
                                                 <IonLabel position='floating' className="">Precio externo</IonLabel>
 

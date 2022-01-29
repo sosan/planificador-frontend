@@ -4,7 +4,7 @@ import TimelineWrapper from "./TimelineWrapper";
 import { IListadoPrereserva, IDataCoches, dataCars, ORDEN_LISTADO_CLASE_COCHES, DEFAULT_TEXT_MATRICULA } from "../datos/coches";
 import { listadoColaboradores, ENUM_LISTADO_COLABORADORES } from "../datos/listadoColaboradores";
 import { listFlotas } from "../datos/listadoFlotas";
-import { ModalDialog, ContainerState as IContainerModalState, IModalState, ENUM_TIPOS_ESTADO } from "./Modal";
+import { ModalDialog, ContainerState as IContainerModalState, IModalState, IModalErrores, ENUM_TIPOS_ESTADO } from "./Modal";
 
 // import "../css/TimelineCustom.css";
 import "../css/Scheduler.css";
@@ -27,7 +27,7 @@ type ContainerState = {
     modalState?: IModalState;
     tiempoClick?: any;
     isFirstTime: boolean;
-    // dataCarsVisible: boolean;
+    errores: IModalErrores;
     
     
 }
@@ -105,6 +105,14 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         modalReservasVisible: false,
         isDoubleclickItem: false,
         isFirstTime: false,
+        errores: {
+            "claseVehiculoFallo": false,
+            "colaboradorFallo": false,
+            "flotaFallo": false,
+            "matriculoFallo": false,
+            "modeloVehiculoFallo": false,
+            "precioExternoFallo": false,
+        },
         modalState: {
             isNewRegister: false,
             isPrereserva: false,
@@ -399,6 +407,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             "tiempoClick": new Date().getTime(),
             "isDoubleclickItem": false,
             "isFirstTime": false,
+            "errores": {...this.defaultState.errores}
             
         };
 
@@ -442,6 +451,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             "tiempoClick": new Date().getTime(),
             "isFirstTime": false,
             "isDoubleclickItem": false,
+            "errores": { ...this.defaultState.errores }
             
         };
 
@@ -456,6 +466,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             this.setState(
                 {
                     "modalReservasVisible": true,
+                    "errores": { ...this.defaultState.errores },
                     // "modalState":
                     // {
                     //     "isNewRegister": false,
@@ -477,6 +488,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             "isDoubleclickItem": true,
             "modalReservasVisible": false,
             "isFirstTime": true,
+            "errores": { ...this.defaultState.errores }
         };
 
         stateToSend.modalState = {...state.modalState};
@@ -500,6 +512,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             "isDoubleclickItem": true,
             "modalReservasVisible": false,
             "isFirstTime": true,
+            "errores": { ...this.defaultState.errores }
         };
 
         stateToSend.modalState = { ...state.modalState };
@@ -1065,6 +1078,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                     <ModalDialog 
                         isVisible={this.state.modalReservasVisible}
                         modalState={this.state.modalState as IModalState}
+                        errores={this.state.errores}
                         isDoubleclickItem={this.state.isDoubleclickItem}
                         isFirstTime={this.state.modalState?.isFirstTime as boolean}
                         tiempoClick={this.state.tiempoClick}
