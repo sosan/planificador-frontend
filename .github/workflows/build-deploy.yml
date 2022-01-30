@@ -43,28 +43,26 @@ jobs:
         run: ionic capacitor build android --prod --no-open
 
       - name: Make gradlew executable
-        working-directory: ./android/
+        working-directory: ./android
         run: chmod +x ./gradlew
 
       - name: Build the app
-        working-directory: ./android/
-        run: ./gradlew assembleRelease
+        working-directory: ./android
+        run: ./gradlew build --no-daemon
 
-      - name: Sign APK
-        # uses: r0adkll/sign-android-release@v1
-        uses: Tlaster/android-sign@v1.2.2
-        id: sign
-        with:
-          releaseDirectory: ./android/app/build/outputs/apk/release
-          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
-          alias: ${{ secrets.ALIAS }}
-          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
+      - name: Sign Android build
+        working-directory: ./android
+        run: jarsigner -sigalg SHA1withRSA -digestalg SHA1 -keystore debug.keystore app/build/outputs/apk/release/app-release-unsigned.apk androiddebugkey --storepass android
 
-      - uses: actions/upload-artifact@v2
+      - name: Prepare to sign build
+        working-directory: ./android
+        run: mv app/build/outputs/apk/release/app-release-unsigned.apk release.apk
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
         with:
           name: release.apk
-          path: ${{steps.sign.outputs.signedReleaseFile}}
+          path: android/release.apk
 
 
       - name: Get App version code
