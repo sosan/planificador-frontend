@@ -15,12 +15,13 @@ import { IonButton,
 } from '@ionic/react';
 // import { Virtuoso } from 'react-virtuoso';
 import { IlistColaborators }  from "../datos/listadoColaboradores";
-import { IDataCoches, DEFAULT_TEXT_MATRICULA } from "../datos/coches";
+import { IDataCoches, DEFAULT_TEXT_MATRICULA, IListadoPrereserva } from "../datos/coches";
 import { IlistFlotas } from "../datos/listadoFlotas";
 import "../css/Modal.css";
 import { InputChangeEventDetail } from '@ionic/core';
 
 import imagenFallo from "../images/error_checkbox.svg";
+import { SchedulerContainer } from './SchedulerGrid';
 
 export interface IModalState
 {
@@ -61,12 +62,14 @@ export interface IModalErrores {
     matriculoFallo: boolean;
     flotaFallo: boolean;
     precioExternoFallo: boolean;
+    textoErrores: string;
 }
 
 interface ContainerProps {
     onCloseModal: any;
     onModalDidDismiss: any;
     onSaveData: any;
+    onSearchMatriculaAnotherTimeline: any;
     isVisible: boolean;
     dataCars: IDataCoches[];
     listColaborators: IlistColaborators[];
@@ -79,6 +82,9 @@ interface ContainerProps {
     modalState: IModalState;
     isFirstTime: boolean;
     errores: IModalErrores;
+    externalPropItemsReservasVuelaCar: IListadoPrereserva[];
+    externalPropsItemsReservasExternal: IListadoPrereserva[];
+    externalPropsItemsPrereservas: IListadoPrereserva[];
 
 }
 export type ContainerState = {
@@ -136,6 +142,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             "matriculoFallo": false,
             "modeloVehiculoFallo": false,
             "precioExternoFallo": false,
+            "textoErrores": "",
 
         },
         "isDoubleclickItem": false,
@@ -175,6 +182,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                 "precioExternoFallo": false,
                 "matriculoFallo": false,
                 "modeloVehiculoFallo": false,
+                "textoErrores": "",
 
             },
             "isDoubleclickItem": false,
@@ -282,6 +290,8 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
     }
 
+    
+
 
     saveProps(state: ContainerState, _idModal: number, groupId: number, fechaAlta: string)
     {
@@ -318,16 +328,31 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
         // }
         
-       
 
-        let conFallos = false;
+        // buscar si ya existe la misma matricula en el mismo tiempo
+        
         let textoErrores = "";
+        let conFallos = false;
         let colaboradorFallo = false, 
             claseVehiculoFallo = false, 
             modeloVehiculoFallo = false,
             matriculoFallo = false,
             precioExternoFallo = false,
             flotaFallo  = false;
+
+        const existMatricula = this.props.onSearchMatriculaAnotherTimeline(
+            state,
+            this.props.externalPropItemsReservasVuelaCar,
+            this.props.externalPropsItemsReservasExternal,
+            this.props.externalPropsItemsPrereservas
+
+        );
+        if (existMatricula === true)
+        {
+            conFallos = true;
+            textoErrores += "Existe ya la matricula";
+            
+        }
 
         switch (this.state.modalState.estado) {
             case ENUM_TIPOS_ESTADO.prereservado:
@@ -336,7 +361,6 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                     state.modalState.matricula === undefined
                 ) {
                     matriculoFallo = true;
-                    textoErrores += "Matricula Vehiculo Obligatorio. ";
                     conFallos = true;
                 }
 
@@ -345,14 +369,12 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                     state.modalState.flota === undefined
                 ) {
                     flotaFallo = true;
-                    textoErrores += "Flota Obligatorio. ";
                     conFallos = true;
                 }
 
                 if (state.modalState.precioexterno?.toString() === "")
                 {
                     precioExternoFallo = true;
-                    textoErrores += "Precio externo Obligatorio. ";
                     conFallos = true;
                 }
                 break;
@@ -364,7 +386,6 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                 )
                 {
                     colaboradorFallo = true;
-                    textoErrores += "Colaborador Obligatorio ";
                     conFallos = true;
                 }
                 
@@ -373,7 +394,6 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                     state.modalState.claseVehiculo === undefined
                 ) {
                     claseVehiculoFallo = true;
-                    textoErrores += "Clase Vehiculo Obligatorio ";
                     conFallos = true;
                 }
                 
@@ -382,7 +402,6 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                     state.modalState.modeloVehiculo === undefined
                 ) {
                     modeloVehiculoFallo = true;
-                    textoErrores += "Modelo Vehiculo Obligatorio ";
                     conFallos = true;
                 }
 
@@ -391,7 +410,6 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                     state.modalState.matricula === undefined
                 ) {
                     matriculoFallo = true;
-                    textoErrores += "Matricula Vehiculo Obligatorio ";
                     conFallos = true;
                 }
 
@@ -400,7 +418,6 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                     state.modalState.flota === undefined
                 ) {
                     flotaFallo = true;
-                    textoErrores += "Flota Obligatoria ";
                     conFallos = true;
                 }
 
@@ -425,6 +442,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                     "matriculoFallo": matriculoFallo,
                     "precioExternoFallo": precioExternoFallo,
                     "modeloVehiculoFallo": modeloVehiculoFallo,
+                    "textoErrores": textoErrores
 
                 }
             }
@@ -567,6 +585,11 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                         fechaAlta as string
                                     ); 
                                 } }>Guardar Datos</IonButton>
+                            </IonCol>
+                        </IonRow>
+                        <IonRow>
+                            <IonCol size='12'>
+                                <IonLabel className="textoFallo">{this.state.errores.textoErrores}</IonLabel>
                             </IonCol>
                         </IonRow>
                         
