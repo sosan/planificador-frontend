@@ -51,12 +51,12 @@ jobs:
         run: ./gradlew build --no-daemon
 
       - name: Sign Android build
-        working-directory: ./android
-        run: jarsigner -sigalg SHA1withRSA -digestalg SHA1 -keystore ~/.android/debug.keystore app/build/outputs/apk/release/app-release-unsigned.apk androiddebugkey --storepass android
+        # working-directory: ./android
+        run: jarsigner -sigalg SHA1withRSA -digestalg SHA1 -keystore ~/.android/debug.keystore ./android/app/build/outputs/apk/release/app-release-unsigned.apk androiddebugkey --storepass android
 
       - name: Prepare to sign build
-        working-directory: ./android
-        run: mv app/build/outputs/apk/release/app-release-unsigned.apk release.apk
+        # working-directory: ./android
+        run: mv ./android/app/build/outputs/apk/release/app-release-unsigned.apk release.apk
 
       # - name: Upload Artifacts
       #   uses: actions/upload-artifact@v2
@@ -105,9 +105,10 @@ jobs:
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
+          # working-directory: ./android
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ./android/app/build/outputs/apk/release/release.apk
-          asset_name: dietario.apk
+          asset_name: release.apk
           tag: ${{ github.ref }}
           overwrite: true
           body: "Nueva version"
