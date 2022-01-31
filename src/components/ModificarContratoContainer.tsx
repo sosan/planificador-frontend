@@ -4,8 +4,7 @@ import { Component } from "react";
 interface ContainerProps {
 
 }
-type ContainerState = {
-
+interface ContainerState {
 
 }
 

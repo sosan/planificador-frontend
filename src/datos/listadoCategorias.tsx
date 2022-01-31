@@ -24,8 +24,8 @@ import PrereservarContainer from "../components/PrereservarContainer";
 import { SchedulerContainer } from '../components/SchedulerGrid';
 
 import { MenuContratos } from '../pages/MenuContratosContainer';
-import { IngresarContrato } from '../pages/IngresarContratoContainer';
-import { ModificarContrato } from '../pages/ModificarContratoContainer';
+import { IngresarContrato } from '../components/IngresarContratoContainer';
+import { ModificarContrato } from '../components/ModificarContratoContainer';
 
 
 // 1.Planinging
