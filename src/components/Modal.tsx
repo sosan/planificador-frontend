@@ -102,7 +102,7 @@ export enum ENUM_TIPOS_ESTADO {
     "prereservado" = "prereservado",
     "reservado" = "reservado",
     "prepagado" = "prepagado",
-    "100pagado" = "100pagado",
+    "alquilado" = "alquilado",
     "length" = 4,
 }
 
@@ -426,7 +426,8 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             case ENUM_TIPOS_ESTADO.prepagado:
                 break;
 
-            case ENUM_TIPOS_ESTADO['100pagado']:
+
+            case ENUM_TIPOS_ESTADO.alquilado:
                 break;
         }
 
@@ -562,7 +563,9 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             case ENUM_TIPOS_ESTADO.prepagado:
             break;
             
-            case ENUM_TIPOS_ESTADO['100pagado']:
+            case ENUM_TIPOS_ESTADO.alquilado:
+                tituloReserva = "Consulta";
+                colorCabecera = "grid_cabecera grid_cabecera_alquilado";
             break;
         }
         

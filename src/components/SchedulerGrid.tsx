@@ -553,13 +553,14 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
             case ENUM_TIPOS_ESTADO.reservado:
                 this.saveDateReserva(state);
-                break;
+            break;
 
             case ENUM_TIPOS_ESTADO.prepagado:
-                break;
+            break;
 
-            case ENUM_TIPOS_ESTADO['100pagado']:
-                break;
+            case ENUM_TIPOS_ESTADO.alquilado:
+                this.saveDateReserva(state);
+            break;
         }
 
     };
@@ -750,8 +751,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                     case ENUM_TIPOS_ESTADO.prepagado:
                         break;
 
-                    case ENUM_TIPOS_ESTADO['100pagado']:
-                        break;
+                    case ENUM_TIPOS_ESTADO.alquilado:
+                    break;
                 }
 
                 this.setState({ "modalReservasVisible": false });

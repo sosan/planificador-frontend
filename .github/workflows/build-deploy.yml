@@ -48,64 +48,18 @@ jobs:
 
       - name: Build the app
         working-directory: ./android
-        run: ./gradlew build --no-daemon
+        run: ./gradlew assembleRelease
+        # run: ./gradlew build --no-daemon
 
       - name: Sign Android build
-        # working-directory: ./android
         run: jarsigner -sigalg SHA1withRSA -digestalg SHA1 -keystore ~/.android/debug.keystore ./android/app/build/outputs/apk/release/app-release-unsigned.apk androiddebugkey --storepass android
 
       - name: Prepare to sign build
-        # working-directory: ./android
         run: mv ./android/app/build/outputs/apk/release/app-release-unsigned.apk ./android/app/build/outputs/apk/release/release.apk
-
-      # - name: Upload Artifacts
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: release.apk
-      #     path: android/release.apk
-
-      # - name: Get App version code
-      #   id: version
-      #   run: |
-      #     echo "::set-output name=commits::$(git rev-list --count HEAD)"
-
-      # - name: Release
-      #   id: create_release
-      #   uses: actions/create-release@v1
-      #   with:
-      #     tag_name: ${{ steps.version.outputs.commits }}
-      #     release_name: Release v.1.${{ steps.version.outputs.commits }}
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
-      # - name: Upload Release APK
-      #   id: upload_release_asset
-      #   uses: actions/upload-release-asset@v1.0.1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
-      #     asset_path: android/
-      #     asset_name: release.apk
-      #     asset_content_type: application/zip
-
-
-      # - name: Upload APK
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: dietario.apk
-      #     path: ${{steps.sign.outputs.signedReleaseFile}}
-      
-      - name: List archives
-        id: read_release
-        shell: bash
-        run: |
-          ls ./android/app/build/outputs/apk/release
 
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v2
         with:
-          # working-directory: ./android
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: ./android/app/build/outputs/apk/release/release.apk
           asset_name: release.apk
