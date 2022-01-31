@@ -48,8 +48,8 @@ jobs:
 
       - name: Build the app
         working-directory: ./android
-        run: ./gradlew assembleRelease
-        # run: ./gradlew build --no-daemon
+        # run: ./gradlew assembleRelease
+        run: ./gradlew build --no-daemon
 
       - name: Sign Android build
         run: jarsigner -sigalg SHA1withRSA -digestalg SHA1 -keystore ~/.android/debug.keystore ./android/app/build/outputs/apk/release/app-release-unsigned.apk androiddebugkey --storepass android
