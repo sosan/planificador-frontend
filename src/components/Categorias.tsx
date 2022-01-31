@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import DashboardContainer from "../components/DashboardContainer";
+import DashboardContainer from "../pages/DashboardContainer";
 import * as listadoCategorias from "../datos/listadoCategorias";
 
 
@@ -32,9 +32,23 @@ const FillSelectedCategory = (categoria: listadoCategorias.IItemCategoria[]) =>
 export const FillAllRoutes = () =>
 {
 
-    let routesContainer: Record<string, ReactElement> = {};
+    const categoriasPlaning = FillSelectedCategory(listadoCategorias.categoriasPlaning);
+    const categoriasContratos = FillSelectedCategory(listadoCategorias.categoriasContratos);
+    const categoriasFacturacion = FillSelectedCategory(listadoCategorias.categoriasFacturacion);
+    const categoriasInformes = FillSelectedCategory(listadoCategorias.categoriasInformes);
+    const categoriasMultas = FillSelectedCategory(listadoCategorias.categoriasMultas);
+    
+    let routesContainer: Record<string, ReactElement> = {
+        ...categoriasPlaning,
+        ...categoriasContratos,
+        ...categoriasFacturacion,
+        ...categoriasInformes,
+        ...categoriasMultas,
+        
+    };
+    
 
-    routesContainer = FillSelectedCategory(listadoCategorias.categoriasPlaning);
+
 
     routesContainer["dashboard"] = <DashboardContainer />;
 

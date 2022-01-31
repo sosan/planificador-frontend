@@ -1,4 +1,3 @@
-// import { SchedulerContainer } from './Scheduler';
 import { SchedulerContainer } from "./SchedulerGrid";
 
 

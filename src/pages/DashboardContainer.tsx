@@ -62,8 +62,8 @@ const DashboardContainer: any = () => {
         <>
             <IonContent>
                 <div className='centrado'>{listadoDashboard}</div>
+                {/* <div className="centrado">{listadoContratos}</div> */}
                 {/* <div className="centrado">{listadoPlaning}</div>
-                <div className="centrado">{listadoContratos}</div>
                 <div className="centrado">{listadoFacturacion}</div> */}
                 
             </IonContent>

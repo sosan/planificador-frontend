@@ -1,21 +1,15 @@
 import React, { Component } from 'react';
+import { IonButton } from '@ionic/react';
 import TimelineWrapper from "./TimelineWrapper";
 import { IListadoPrereserva, IDataCoches, dataCars, ORDEN_LISTADO_CLASE_COCHES, DEFAULT_TEXT_MATRICULA } from "../datos/coches";
 import { listadoColaboradores, ENUM_LISTADO_COLABORADORES } from "../datos/listadoColaboradores";
 import { listFlotas } from "../datos/listadoFlotas";
 import { ModalDialog, ContainerState as IContainerModalState, IModalState, IModalErrores, ENUM_TIPOS_ESTADO } from "./Modal";
 
-// import "../css/TimelineCustom.css";
 import "../css/Scheduler.css";
-
 import "../css/variables.css";
 
-import { IonButton } from '@ionic/react';
-import { ContainerSelector } from './ContainerSelector';
-
 const DRAG_SNAP = 60 * 60 * 24 * 1000;
-
-
 
 interface ContainerProps {
     name: string;
@@ -28,7 +22,6 @@ type ContainerState = {
     tiempoClick?: any;
     isFirstTime: boolean;
     errores: IModalErrores;
-
 
 }
 
@@ -81,17 +74,6 @@ type typeGroup =
         stackItems?: boolean,
 
     }
-
-// exports.searchDuplicatedListadoMatricula = (listado: IListadoPrereserva[], matricula: string) => {
-//     let position = -1;
-//     for (let i = 0; i < listado.length; i++) {
-//         if (listado[i].modalState.matricula?.toLowerCase() === matricula.toLowerCase()) {
-//             position = i;
-//             return [true, position];
-//         }
-//     }
-//     return [false, position];
-// }
 
 
 export class SchedulerContainer extends Component<ContainerProps, ContainerState>

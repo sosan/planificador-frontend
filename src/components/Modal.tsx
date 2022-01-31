@@ -19,9 +19,7 @@ import { IDataCoches, DEFAULT_TEXT_MATRICULA, IListadoPrereserva } from "../dato
 import { IlistFlotas } from "../datos/listadoFlotas";
 import "../css/Modal.css";
 import { InputChangeEventDetail } from '@ionic/core';
-
 import imagenFallo from "../images/error_checkbox.svg";
-import { SchedulerContainer } from './SchedulerGrid';
 
 export interface IModalState
 {

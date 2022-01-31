@@ -1,7 +1,7 @@
 import '../css/ContainerSelector.css';
 import * as categorias from "./Categorias";
 import React, { ReactElement } from 'react';
-import { IonTitle, IonButton, IonSegment, IonSegmentButton, IonToolbar, IonIcon, IonMenuButton, IonText } from '@ionic/react';
+import { IonText } from '@ionic/react';
 
 
 const routesContainer = categorias.FillAllRoutes();
@@ -20,7 +20,6 @@ type ContainerState = {
 let currentContent: ReactElement;
 let currentTitle: ReactElement;
 
-// export const ContainerSelector: React.FC<ContainerProps> = ({ name }) => 
 export class ContainerSelector extends React.Component<ContainerProps, ContainerState>
 {
 
@@ -38,8 +37,8 @@ export class ContainerSelector extends React.Component<ContainerProps, Container
 
 export const TitleSelector: React.FC<ContainerProps> = ({ name }) => {
 
-  const key = `${name.toLowerCase()}Title`;
-  currentTitle = routesContainer[key];
+  // const key = `${name.toLowerCase()}Title`;
+  // currentTitle = routesContainer[key];
 
   return (
     <div className="izquierda padding-titulo">

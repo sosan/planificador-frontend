@@ -11,7 +11,6 @@ import {
 
   IonItemGroup,
   IonItemDivider,
-  IonRouterOutlet,
   IonImg
 
 } from '@ionic/react';
@@ -40,7 +39,8 @@ const Menu: React.FC = () => {
     {
       const elemento = categorias[index];
       // console.log("index=" + index + "listado=" + elemento);
-  
+      if (elemento.visibleInMenu === false) continue;
+      
       listadoCategorias.push(
           <IonMenuToggle key={index} autoHide={false}>
             <IonItem className={location.pathname === elemento.url ? 'selected' : ''} routerLink={elemento.url} routerDirection="none" lines="none" detail={false}>

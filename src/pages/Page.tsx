@@ -1,4 +1,4 @@
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonToolbar } from '@ionic/react';
 import { useParams } from 'react-router';
 import {ContainerSelector, TitleSelector} from '../components/ContainerSelector';
 import { titulosCategorias } from "../datos/listadoCategorias";
