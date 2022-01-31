@@ -56,7 +56,7 @@ jobs:
 
       - name: Prepare to sign build
         # working-directory: ./android
-        run: mv ./android/app/build/outputs/apk/release/app-release-unsigned.apk release.apk
+        run: mv ./android/app/build/outputs/apk/release/app-release-unsigned.apk ./android/app/build/outputs/apk/release/release.apk
 
       # - name: Upload Artifacts
       #   uses: actions/upload-artifact@v2
