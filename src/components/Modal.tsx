@@ -55,12 +55,13 @@ export interface IModalState
 }
 
 export interface IModalErrores {
-    colaboradorFallo: boolean;
-    claseVehiculoFallo: boolean;
-    modeloVehiculoFallo: boolean;
-    matriculoFallo: boolean;
-    flotaFallo: boolean;
-    precioExternoFallo: boolean;
+    [index: string]: any;
+    colaborador: boolean;
+    claseVehiculo: boolean;
+    modeloVehiculo: boolean;
+    matricula: boolean;
+    flota: boolean;
+    precioExterno: boolean;
     textoErrores: string;
 }
 
@@ -135,12 +136,12 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             "isPrereserva": false,
         },
         "errores": {
-            "colaboradorFallo": false,
-            "claseVehiculoFallo": false,
-            "flotaFallo": false,
-            "matriculoFallo": false,
-            "modeloVehiculoFallo": false,
-            "precioExternoFallo": false,
+            "colaborador": false,
+            "claseVehiculo": false,
+            "flota": false,
+            "matricula": false,
+            "modeloVehiculo": false,
+            "precioExterno": false,
             "textoErrores": "",
 
         },
@@ -175,12 +176,12 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             },
             "errores":
             {
-                "colaboradorFallo": false,
-                "claseVehiculoFallo": false,
-                "flotaFallo": false,
-                "precioExternoFallo": false,
-                "matriculoFallo": false,
-                "modeloVehiculoFallo": false,
+                "colaborador": false,
+                "claseVehiculo": false,
+                "flota": false,
+                "precioExterno": false,
+                "matricula": false,
+                "modeloVehiculo": false,
                 "textoErrores": "",
 
             },
@@ -288,7 +289,8 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         {
             estado["modalState"]["modeloVehiculo"] = "";
         }
-
+        
+        estado["errores"][key] = false;
         estado["modalState"][key] = value as string;
         this.setState({ ...estado });
 
@@ -467,12 +469,12 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             {
                 "errores":
                 {
-                    "colaboradorFallo": colaboradorFallo,
-                    "claseVehiculoFallo": claseVehiculoFallo,
-                    "flotaFallo": flotaFallo,
-                    "matriculoFallo": matriculoFallo,
-                    "precioExternoFallo": precioExternoFallo,
-                    "modeloVehiculoFallo": modeloVehiculoFallo,
+                    "colaborador": colaboradorFallo,
+                    "claseVehiculo": claseVehiculoFallo,
+                    "flota": flotaFallo,
+                    "matricula": matriculoFallo,
+                    "precioExterno": precioExternoFallo,
+                    "modeloVehiculo": modeloVehiculoFallo,
                     "textoErrores": textoErrores
 
                 }
@@ -583,7 +585,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 {itemsGenerados.lugarEntregaItem}
                                 <IonItem>
                                     {
-                                        (this.state.errores.colaboradorFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Colaborador</IonLabel></>
+                                        (this.state.errores.colaborador === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Colaborador</IonLabel></>
                                         :
                                         <IonLabel className="">Colaborador</IonLabel>
                                         
@@ -599,7 +601,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 </IonItem>
                                 <IonItem>
                                     {
-                                        (this.state.errores.claseVehiculoFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Clase</IonLabel></>
+                                        (this.state.errores.claseVehiculo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Clase</IonLabel></>
                                             :
                                             <IonLabel className="">Clase</IonLabel>
                                     }
@@ -616,7 +618,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 
                                 <IonItem>
                                     {
-                                        (this.state.errores.modeloVehiculoFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Modelo Vehiculo</IonLabel></>
+                                        (this.state.errores.modeloVehiculo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Modelo Vehiculo</IonLabel></>
                                         :
                                         <IonLabel className="">Modelo Vehiculo</IonLabel>
                                     }
@@ -794,7 +796,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             matriculaItem = 
                 <IonItem>
                     {
-                        (this.state.errores.matriculoFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel position='floating' className="textofallo">Matricula</IonLabel></>
+                        (this.state.errores.matricula === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel position='floating' className="textofallo">Matricula</IonLabel></>
                             :
                             <IonLabel position='floating' className="">Matricula</IonLabel>
                     }
@@ -823,7 +825,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             flotaItem = 
                 <IonItem>
                     {
-                        (this.state.errores.flotaFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Flotas externas</IonLabel></>
+                        (this.state.errores.flota === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Flotas externas</IonLabel></>
                             :
                             <IonLabel className="">Flotas externas</IonLabel>
 
@@ -864,7 +866,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             precioExternoItem = 
                 <IonItem>
                     {
-                        (this.state.errores.precioExternoFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel position='floating' className="textoFallo">Precio externo</IonLabel></>
+                        (this.state.errores.precioExterno === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel position='floating' className="textoFallo">Precio externo</IonLabel></>
                             :
                             <IonLabel position='floating' className="">Precio externo</IonLabel>
 

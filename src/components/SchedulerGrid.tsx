@@ -95,12 +95,12 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         isDoubleclickItem: false,
         isFirstTime: false,
         errores: {
-            "claseVehiculoFallo": false,
-            "colaboradorFallo": false,
-            "flotaFallo": false,
-            "matriculoFallo": false,
-            "modeloVehiculoFallo": false,
-            "precioExternoFallo": false,
+            "claseVehiculo": false,
+            "colaborador": false,
+            "flota": false,
+            "matricula": false,
+            "modeloVehiculo": false,
+            "precioExterno": false,
             "textoErrores": "",
         },
         modalState: {
