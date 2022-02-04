@@ -5,38 +5,32 @@ export interface IClaseVehiculos {
 
 };
 
-// ["motos2","openAutomatic","basico","7pax","motos1","5pax"]
-export let listFlotas: IClaseVehiculos[] = [
+export let claseVehiculos: IClaseVehiculos[] = [
 
 
     {
-        "id": "motos2",
-        "descripcion": "motos2",
+        "id": "m",
+        "descripcion": "M",
 
     },
     {
-        "id": "motos1",
-        "descripcion": "motos1",
+        "id": "d",
+        "descripcion": "D",
 
     },
     {
-        "id": "openAutomatic",
-        "descripcion": "openAutomatic",
+        "id": "c",
+        "descripcion": "C",
 
     },
     {
-        "id": "basico",
-        "descripcion": "basico",
-
-    },
-    {
-        "id": "5pax",
-        "descripcion": "5pax",
+        "id": "d",
+        "descripcion": "B",
         
     },
     {
-        "id": "7pax",
-        "descripcion": "7pax",
+        "id": "a",
+        "descripcion": "A",
 
     },
     

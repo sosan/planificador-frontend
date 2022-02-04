@@ -1,13 +1,13 @@
 import { LISTADO_IMAGENES_COCHES } from "./imagenescoches";
-import { IDataCoches } from "./coches";
-export const yamaha: IDataCoches[] = [
+import { IDataVehiculos } from "./vehiculosGeneral";
+export const yamaha: IDataVehiculos[] = [
 
 {
 "_id": "606651cbf59ae674f6c4727911",
 "vehiculo": "yamahamajesty",
 "descripcion": "Yamaha Majesty",
-"clasevehiculo": "motos2",
-"modelo": "125",
+"clasevehiculo": "m",
+"modelo": "Yamaha Majesty",
 "pax": 2,
 "puertas": 0,
 "conbustible": "95 oct",
@@ -27,8 +27,8 @@ export const yamaha: IDataCoches[] = [
         "_id": "606651cbf59ae674f6c4727912",
         "vehiculo": "yamahatricity",
         "descripcion": "Yamaha Tricity",
-        "clasevehiculo": "motos2",
-        "modelo": "125",
+        "clasevehiculo": "m",
+        "modelo": "Yamaha Majesty",
         "pax": 2,
         "puertas": 0,
         "conbustible": "95 oct",
@@ -47,8 +47,8 @@ export const yamaha: IDataCoches[] = [
         "_id": "606651cbf59ae674f6c4727913",
         "vehiculo": "yamahatricity",
         "descripcion": "Yamaha Tricity",
-        "clasevehiculo": "motos2",
-        "modelo": "125",
+        "clasevehiculo": "m",
+        "modelo": "Yamaha Majesty",
         "pax": 2,
         "puertas": 0,
         "conbustible": "95 oct",

@@ -26,18 +26,27 @@ export interface IListadoPrereserva {
 
 };
 
-export const ORDEN_LISTADO_CLASE_COCHES = [
-    "basico",
-    "openAutomatic",
-    "5pax",
-    "7pax",
-    "motos1",
-    "motos2",
+export const ORDEN_LISTADO_MODELO_VEHICULOS = [
+    "Citroen C1",
+    "Peugeot 107",
+    "Peugeot 108",
+    "Toyota Aygo",
+    "Citroen C1 Automatic",
+    "Citroen C1 Open",
+    "Toyota Aygo Open",
+    "Citroen C3",
+    "Peugeout 208",
+    "Peugeout 807",
+    "Piaggio Liberty",
+    "Piaggio Medley",
+    "Suzuky Burgman",
+    "Yamaha Majesty",
+    "Yamaha Tricity"
 
 ];
 
 
-export interface IDataCoches {
+export interface IDataVehiculos {
     "_id": string;
     "matricula": string;
     "precio": number;
@@ -60,12 +69,12 @@ export interface IDataCoches {
 };
 
 
-export const dataCars: IDataCoches[] = [
-    ...suzukis,
-    ...piaggios,
-    ...yamaha,
-    ...peugeot,
+export const dataCars: IDataVehiculos[] = [
     ...citroen,
+    ...peugeot,
     ...toyota,
+    ...piaggios,
+    ...suzukis,
+    ...yamaha,
 
 ]

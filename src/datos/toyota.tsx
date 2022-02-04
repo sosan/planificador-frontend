@@ -1,13 +1,13 @@
 import { LISTADO_IMAGENES_COCHES } from "./imagenescoches";
-import { IDataCoches } from "./coches";
-export const toyota: IDataCoches[] = [
+import { IDataVehiculos } from "./vehiculosGeneral";
+export const toyota: IDataVehiculos[] = [
 
     {
         "_id": "606651cbfs9ae674f6c4727d1",
-        "vehiculo": "toyotaAygo",
-        "descripcion": "Toyota Aygo",
-        "clasevehiculo": "basico",
-        "modelo": "CAM",
+        "vehiculo": "toyotaAygoOpen",
+        "descripcion": "Toyota Aygo Open",
+        "clasevehiculo": "b",
+        "modelo": "Toyota Aygo Open",
         "pax": 4,
         "puertas": 4,
         "conbustible": "95 oct",
@@ -25,10 +25,10 @@ export const toyota: IDataCoches[] = [
     },
     {
         "_id": "606T651cbf59ae674f6c4727d2",
-        "vehiculo": "toyotaAygo",
-        "descripcion": "Toyota Aygo",
-        "clasevehiculo": "basico",
-        "modelo": "CAM",
+        "vehiculo": "toyotaAygoOpen",
+        "descripcion": "Toyota Aygo Open",
+        "clasevehiculo": "b",
+        "modelo": "Toyota Aygo Open",
         "pax": 4,
         "puertas": 4,
         "conbustible": "95 oct",
@@ -46,10 +46,10 @@ export const toyota: IDataCoches[] = [
     },
     {
         "_id": "606651cbf5mae674f6c4727d3",
-        "vehiculo": "toyotaAygo",
-        "descripcion": "Toyota Aygo",
-        "clasevehiculo": "basico",
-        "modelo": "CAM",
+        "vehiculo": "toyotaAygoOpen",
+        "descripcion": "Toyota Aygo Open",
+        "clasevehiculo": "v",
+        "modelo": "Toyota Aygo Open",
         "pax": 4,
         "puertas": 4,
         "conbustible": "95 oct",
@@ -69,8 +69,8 @@ export const toyota: IDataCoches[] = [
         "_id": "606651cbf5mae674f6c4727d4",
         "vehiculo": "toyotaAygo",
         "descripcion": "Toyota Aygo",
-        "clasevehiculo": "basico",
-        "modelo": "CAM",
+        "clasevehiculo": "a",
+        "modelo": "Toyota Aygo",
         "pax": 4,
         "puertas": 4,
         "conbustible": "95 oct",

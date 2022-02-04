@@ -1,3 +1,4 @@
+import { claseVehiculos } from "./claseVehiculos";
 
 export interface IModelosVehiculos {
     "id": string;
@@ -5,32 +6,32 @@ export interface IModelosVehiculos {
 
 };
 
-export let listFlotas: IModelosVehiculos[] = [
+export let modelosVehiculos: IModelosVehiculos[] = [
     
     
     {
-        "id": "125",
-        "descripcion": "125",
+        "id": "citroenc1",
+        "descripcion": "Citroen C1",
         
     },
     {
-        "id": "107",
-        "descripcion": "107",
+        "id": "peugeout107",
+        "descripcion": "Peugeot 107",
 
     },
     {
-        "id": "c1",
-        "descripcion": "C1",
+        "id": "peugeot108",
+        "descripcion": "Peugeot 107",
         
     },
     {
-        "id": "cam",
-        "descripcion": "CAM",
+        "id": "toyotaaygo",
+        "descripcion": "Toyota Aygo",
         
     },
     {
-        "id": "108",
-        "descripcion": "108",
+        "id": "citroenc1automatic",
+        "descripcion": "Citroen C1 Automatic",
 
     },
     {
