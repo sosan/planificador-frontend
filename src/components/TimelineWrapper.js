@@ -77,15 +77,15 @@ export default class TimelineWrapper extends Component {
 
     groupRenderer = ( {group: elementGroup} ) => {
 
-        const key = elementGroup.vehiculo;
-        elementGroup["srcImage"] = LISTADO_IMAGENES_COCHES[key];
+        // const key = elementGroup.vehiculo;
+        // elementGroup["srcImage"] = LISTADO_IMAGENES_COCHES[key];
 
         return (
             <>
-                <IonItem key={elementGroup.matricula + Math.random()} className="flex-izquierda">
+                <IonItem key={elementGroup.matricula} className="flex-izquierda">
                     <IonLabel className="custom-group">
                         <span className="title anchura_minimo alineacion-matricula">{elementGroup.matricula}</span>
-                        <span className="title anchura_minimo alineacion-clasevehiculo">{elementGroup.clasevehiculo}</span>
+                        <span className="title anchura_minimo alineacion-clasevehiculo">{elementGroup.clasevehiculo.toUpperCase()}</span>
                         <span className="title anchura_minimo anchura_minimo_modelo alineacion-modelo">{elementGroup.modelo}</span>
                     </IonLabel>
                 </IonItem>
@@ -207,6 +207,13 @@ export default class TimelineWrapper extends Component {
                             {({ getRootProps }) => {
                                 
                                 return <div {...getRootProps()}>
+                                    <IonItem key="matriculas" className="flex-izquierda">
+                                        <IonLabel className="custom-group">
+                                            <span className="title anchura_minimo alineacion-matricula">MATRICULA</span>
+                                            <span className="title anchura_minimo alineacion-clasevehiculo">CLASE</span>
+                                            <span className="title anchura_minimo anchura_minimo_modelo alineacion-modelo">MODELO</span>
+                                        </IonLabel>
+                                    </IonItem>
                                     {
                                         (this.props.anadirBotonPreservar === false) ? null:
                                             <IonFab className="poscion-fija-anadir-reserva" slot="fixed" vertical="top" horizontal="start" >
