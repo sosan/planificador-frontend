@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { IonButton,
     IonCol,
+    IonContent,
     IonDatetime,
     IonGrid,
     IonImg,
@@ -15,7 +16,7 @@ import { IonButton,
 } from '@ionic/react';
 // import { Virtuoso } from 'react-virtuoso';
 import { IlistColaborators }  from "../datos/listadoColaboradores";
-import { IDataCoches, DEFAULT_TEXT_MATRICULA, IListadoPrereserva } from "../datos/coches";
+import { IDataVehiculos, DEFAULT_TEXT_MATRICULA, IListadoPrereserva } from "../datos/vehiculosGeneral";
 import { IlistFlotas } from "../datos/listadoFlotas";
 import "../css/Modal.css";
 import { InputChangeEventDetail } from '@ionic/core';
@@ -69,7 +70,7 @@ interface ContainerProps {
     onSaveData: any;
     onSearchMatriculaAnotherTimeline: any;
     isVisible: boolean;
-    dataCars: IDataCoches[];
+    dataCars: IDataVehiculos[];
     listColaborators: IlistColaborators[];
     listFlotas: IlistFlotas[];
     tiempoClick: any;
@@ -495,8 +496,140 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
     render() {
 
-        // if (this.state.modalState.isReseting === true) return;
+        const itemsGenerados = this.generarItemsRender(this.state, this.props);
 
+        return(
+        <>
+            
+                <IonModal onWillDismiss={async () => { this.props.onModalDidDismiss(); }} isOpen={this.props.isVisible} animated={true}>
+                    <IonGrid className={itemsGenerados.colorCabecera}>
+                        <IonRow className="centradovertical">
+                            <IonCol size="8">
+                                <h1>{itemsGenerados.tituloReserva}</h1>
+                                <span>Fecha alta: {itemsGenerados.fechaAltaTexto}</span>
+                                <IonInput name='fechaalta' value={itemsGenerados.fechaAlta} hidden={true} ></IonInput>
+                            </IonCol>
+                            <IonCol >
+                                <IonButton onClick={() => {
+                                    this.saveProps(this.state,
+                                        this.props.modalState.id as number,
+                                        this.props.modalState.group as number,
+                                        itemsGenerados.fechaAlta as string
+                                    ); 
+                                } }>Guardar Datos</IonButton>
+                            </IonCol>
+                        </IonRow>
+                        <IonRow>
+                            <IonCol size='12'>
+                                <IonLabel className="textoFallo">{this.state.errores.textoErrores}</IonLabel>
+                            </IonCol>
+                        </IonRow>
+                        
+                        <IonRow>
+                            <IonList className="ancho_100">
+                                <IonItem>
+                                    <IonLabel className="">Fecha Entrega</IonLabel>
+                                    <IonLabel className="">
+                                        <IonDatetime value={itemsGenerados.textoFechaRecogida} onIonChange={(evento) => { this.elegirFechaRecogida(evento); }} displayFormat='DD-MM-YYYY' hour-cycle="h23" first-day-of-week={1} yearValues="2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034" cancelText="Cancelar" doneText="Confirmar">
+                                        </IonDatetime>
+                                    </IonLabel>
+                                </IonItem>
+                                <IonItem>
+                                    <IonLabel className="">Cantidad de dias</IonLabel>
+                                    <IonSelect value={itemsGenerados.cantidadDias} onIonChange={(evento) => { this.onChangeInputNumeroDias(evento); }} key="cantidaddias" id="cantidaddias" name='cantidaddias' className="cantidaddias_select" okText="Confirmado" cancelText="Cancelar"  >
+                                        {
+                                            listadoDias.map((elemento: number) => {
+                                                return <IonSelectOption key={elemento} value={elemento}>{elemento}</IonSelectOption>;
+                                            })
+                                        }
+                                    </IonSelect>
+                                </IonItem>
+                                <IonItem>
+                                    <IonLabel className="">Fecha Devolucion</IonLabel>
+                                    <IonLabel className="">{itemsGenerados.textoFechaDevolucion}</IonLabel>
+                                </IonItem>
+                                {itemsGenerados.horaEntregaItem}
+                                {itemsGenerados.lugarEntregaItem}
+                                
+                                <IonItem>
+                                    <IonLabel className="">Colaborador</IonLabel>
+                                    <IonSelect value={itemsGenerados.colaborador} onIonChange={(evento) => { this.onChangeInputs(this.state, "colaborador", evento.detail.value as string); }} key="colaboradores" id="colaboradores" name='colaboradores' className="colaboradores_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                        {
+                                            this.props.listColaborators.map((elemento: IlistColaborators) => {
+                                                return <IonSelectOption key={elemento.id} value={elemento.id}>{elemento.descripcion}</IonSelectOption>;
+                                            })
+                                        }
+                                    </IonSelect>
+                                    
+                                </IonItem>
+                                <IonItem>
+                                    {
+                                        (this.state.errores.claseVehiculoFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Clase</IonLabel></>
+                                        :
+                                        <IonLabel className="">Clase</IonLabel>
+                                    }
+                                    <IonSelect value={itemsGenerados.claseVehiculo} onIonChange={(evento) => { this.onChangeInputs(this.state, "claseVehiculo", evento.detail.value as string); }} key="clase" id="clase" name='clase' className="clase_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                        {
+                                            this.props.listadoClaseVehiculos.map((elemento: string) => {
+                                                return <IonSelectOption key={elemento.toLowerCase()} value={elemento.toLowerCase()}>{elemento}</IonSelectOption>;
+                                            })
+                                        }
+                                    </IonSelect>
+                                </IonItem>
+
+                                <IonItem>
+                                    {
+                                        (this.state.errores.modeloVehiculoFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Modelo Vehiculo</IonLabel></>
+                                        :
+                                        <IonLabel className="">Modelo Vehiculo</IonLabel>
+                                    }
+                                    <IonSelect value={itemsGenerados.modeloVehiculo} onIonChange={(evento) => { this.onChangeInputs(this.state, "modeloVehiculo", evento.detail.value); }} key="vehiculos" id="vehiculos" name='vehiculos' className="vehiculos_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                        {
+                                            this.props.listadoModelosVehiculos.map((elemento: string) => {
+                                                return <IonSelectOption key={elemento.toLowerCase()} value={elemento.toLowerCase()}>{elemento}</IonSelectOption>;
+                                            })
+                                        }
+                                    </IonSelect>
+                                </IonItem>
+                                {itemsGenerados.matriculaItem}
+                                {itemsGenerados.flotaItem}
+                                {itemsGenerados.numeroReservaItem}
+                                {itemsGenerados.precioVuelacarItem}
+                                {itemsGenerados.notaReservaItem}
+                                {itemsGenerados.precioExternoItem}
+                                {itemsGenerados.extrasItem}
+                                {itemsGenerados.estadoItem}
+                            </IonList>
+                        
+                        </IonRow>
+                        <IonRow className="centradovertical">
+                            <IonCol size="6">
+                                <IonButton onClick={() => { this.props.onCloseModal(); }}>Volver</IonButton>
+                            </IonCol>
+                            <IonCol size="6">
+                                <IonButton onClick={
+                                    () => {
+                                        
+                                        this.saveProps(this.state,
+                                            this.props.modalState.id as number,
+                                            this.props.modalState.group as number,
+                                            itemsGenerados.fechaAlta as string
+                                        ); 
+                                    }
+                                }>Guardar Datos</IonButton>
+                            </IonCol>
+                        </IonRow>
+
+                    </IonGrid>
+                </IonModal>
+            
+        </> 
+            
+        );
+
+    }
+    generarItemsRender(state: ContainerState, props: ContainerProps ) {
+        
         let {
             id,
             group,
@@ -517,12 +650,12 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             precioexterno,
             extras
 
-        } = this.state.modalState;
-        
+        } = state.modalState;
+
         let textoFechaRecogida = "";
         let fechaAltaDate = new Date();
-    
-        if (fechaAlta === undefined ) // creado desde 0
+
+        if (fechaAlta === undefined) // creado desde 0
         {
             textoFechaRecogida = "";
             fechaAlta = new Date().toISOString();
@@ -531,12 +664,11 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         {
             fechaAltaDate = new Date(fechaAlta as string);
         }
-        
-        if (fechaRecogida !== undefined)
-        {
+
+        if (fechaRecogida !== undefined) {
             textoFechaRecogida = fechaRecogida.toISOString();
 
-            const fechaRecogidaTempo = new Date(fechaRecogida );
+            const fechaRecogidaTempo = new Date(fechaRecogida);
             const fechaDevolucion = new Date(fechaRecogidaTempo.setDate(fechaRecogidaTempo.getDate() + (this.state.modalState.cantidadDias as number - 1)));
             textoFechaDevolucion = `${fechaDevolucion.getDate().toString().padStart(2, "00")}-${(fechaDevolucion.getMonth() + 1).toString().padStart(2, "00")}-${fechaDevolucion.getFullYear()}`;
 
@@ -544,253 +676,201 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
         //
         const fechaAltaTexto = `${fechaAltaDate.getDate().toString().padStart(2, "00")}-${(fechaAltaDate.getMonth() + 1).toString().padStart(2, "00")}-${fechaAltaDate.getFullYear()} ${fechaAltaDate.getHours().toString().padStart(2, "00")}:${fechaAltaDate.getMinutes().toString().padStart(2, "00")}`;
-        let tituloReserva = "Rellenar Reserva";
+        let tituloReserva = "Rellenar Reserva VuelaCar";
         let colorCabecera = "grid_cabecera grid_cabecera_reserva";
-        
-        
-        switch(this.state.modalState.estado)
-        {
+
+
+        switch (estado) {
             case ENUM_TIPOS_ESTADO.prereservado:
                 tituloReserva = "Rellenar Prereserva";
                 colorCabecera = "grid_cabecera grid_cabecera_prereserva";
-            break;
+                break;
 
             case ENUM_TIPOS_ESTADO.reservado:
-            break;
+                break;
 
             case ENUM_TIPOS_ESTADO.prepagado:
-            break;
-            
+                break;
+
             case ENUM_TIPOS_ESTADO.alquilado:
                 tituloReserva = "Consulta";
                 colorCabecera = "grid_cabecera grid_cabecera_alquilado";
-            break;
+                break;
         }
-        
 
-        return(
-            <>
-                <IonModal onWillDismiss={async () => { this.props.onModalDidDismiss(); } }  isOpen={this.props.isVisible} >
-                    <IonGrid className={colorCabecera}>
-                        <IonRow className="centradovertical">
-                            <IonCol size="8">
-                                <h1>{tituloReserva}</h1>
-                                <span>Fecha alta: {fechaAltaTexto}</span>
-                                <IonInput name='fechaalta' value={fechaAlta} hidden={true} ></IonInput>
-                            </IonCol>
-                            <IonCol >
-                                <IonButton onClick={() => {
-                                    this.saveProps(this.state,
-                                        this.props.modalState.id as number,
-                                        this.props.modalState.group as number,
-                                        fechaAlta as string
-                                    ); 
-                                } }>Guardar Datos</IonButton>
-                            </IonCol>
-                        </IonRow>
-                        <IonRow>
-                            <IonCol size='12'>
-                                <IonLabel className="textoFallo">{this.state.errores.textoErrores}</IonLabel>
-                            </IonCol>
-                        </IonRow>
-                        
-                        <IonRow>
-                    {/* <Virtuoso
-                    style={{ height: '100%' }}
-                    totalCount={1}
-                    itemContent={() => {
-                        return ( */}
-                            <IonList className="ancho_100">
-                                <IonItem>
-                                    <IonLabel className="">Fecha Entrega</IonLabel>
-                                    <IonLabel className="">
-                                        <IonDatetime value={textoFechaRecogida} onIonChange={(evento) => { this.elegirFechaRecogida(evento); }} displayFormat='DD-MM-YYYY' hour-cycle="h23" first-day-of-week={1} yearValues="2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034" cancelText="Cancelar" doneText="Confirmar">
-                                        </IonDatetime>
-                                    </IonLabel>
-                                </IonItem>
-                                <IonItem>
-                                    <IonLabel className="">Cantidad de dias</IonLabel>
-                                    <IonSelect value={cantidadDias} onIonChange={(evento) => { this.onChangeInputNumeroDias(evento); }} key="cantidaddias" id="cantidaddias" name='cantidaddias' className="cantidaddias_select" okText="Confirmado" cancelText="Cancelar"  >
-                                        {
-                                            listadoDias.map((elemento: number) => {
-                                                return <IonSelectOption key={elemento} value={elemento}>{elemento}</IonSelectOption>;
-                                            })
-                                        }
-                                    </IonSelect>
-                                    {/* <IonButton onClick={() => { this.restarDias(); }} className="boton_ligthbox boton_menos_lightbox" fill='solid' size='large' shape="round"  color="#ffffff">-</IonButton> */}
-                                    {/* <IonInput  onIonChange={(evento) => { this.onChangeInputNumeroDias(evento) }} className="input_numero_dias" name='numerodias' value={cantidadDias} type='number' min='1' max='99999' autocomplete="off" inputmode="numeric" /> */}
-                                    {/* <IonButton onClick={() => { this.sumarDias(); }} className="boton_ligthbox boton_mas_lightbox" fill='solid' size='large' shape="round" color="#ffffff">+</IonButton> */}
-                                </IonItem>
-                                <IonItem>
-                                    <IonLabel className="">Fecha Devolucion</IonLabel>
-                                    <IonLabel className="">{textoFechaDevolucion}</IonLabel>
-                                </IonItem>
-                                <IonItem>
-                                    <IonLabel className="">Hora de entrega</IonLabel>
-                                    {/* <IonInput name='horaentrega' value={horaentrega} onIonChange={(evento) => { this.onChangeInputs(this.state, "horaentrega", evento.detail.value as string); }}></IonInput> */}
-                                    <IonDatetime value={horaentrega} hourValues="8,9,10,11,12,13,14,15,16,17,18,19,20" minuteValues="0,30" onIonChange={(evento) => { this.elegirHoraRecogida(evento); }} displayFormat='HH:mm' hour-cycle="h23" first-day-of-week={1} cancelText="Cancelar" doneText="Confirmar"></IonDatetime>
-                                </IonItem>
-                                <IonItem>
-                                    <IonLabel position='floating' className="">Lugar de entrega</IonLabel>
-                                    <IonInput name='lugarentrega' value={lugarentrega} onIonChange={(evento) => { this.onChangeInputs(this.state, "lugarentrega", evento.detail.value as string); }}></IonInput>
-                                </IonItem>
-                                <IonItem>
-                                    <IonLabel className="">Colaborador</IonLabel>
-                                    <IonSelect value={colaborador} onIonChange={(evento) => { this.onChangeInputs(this.state, "colaborador", evento.detail.value as string); }} key="colaboradores" id="colaboradores" name='colaboradores' className="colaboradores_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
-                                        {
-                                            this.props.listColaborators.map((elemento: IlistColaborators) => {
-                                                return <IonSelectOption key={elemento.id} value={elemento.id}>{elemento.descripcion}</IonSelectOption>;
-                                            })
-                                        }
-                                    </IonSelect>
-                                    
-                                </IonItem>
-                                <IonItem>
-                                    {
-                                        (this.state.errores.claseVehiculoFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Clase</IonLabel></>
-                                        :
-                                        <IonLabel className="">Clase</IonLabel>
+        let horaEntregaItem = null;
+        let lugarEntregaItem = null;
+        let matriculaItem = null;
+        let flotaItem = null;
+        let numeroReservaItem = null;
+        let precioVuelacarItem = null;
+        let notaReservaItem = null;
+        let precioExternoItem = null;
+        let extrasItem = null;
+        let estadoItem = null;
+        // state.modalState.isPrereserva
 
+        if (estado !== ENUM_TIPOS_ESTADO.prereservado) 
+        {
+            horaEntregaItem = 
+                <IonItem>
+                    <IonLabel className="">Hora de entrega</IonLabel>
+                    <IonDatetime value={horaentrega} hourValues="8,9,10,11,12,13,14,15,16,17,18,19,20" minuteValues="0,30" onIonChange={(evento) => { this.elegirHoraRecogida(evento); }} displayFormat='HH:mm' hour-cycle="h23" first-day-of-week={1} cancelText="Cancelar" doneText="Confirmar"></IonDatetime>
+                </IonItem>
+            ;
 
-                                    }
-                                    <IonSelect value={claseVehiculo} onIonChange={(evento) => { this.onChangeInputs(this.state, "claseVehiculo", evento.detail.value as string); }} key="clase" id="clase" name='clase' className="clase_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
-                                        {
-                                            this.props.listadoClaseVehiculos.map((elemento: string) => {
-                                                return <IonSelectOption key={elemento.toLowerCase()} value={elemento.toLowerCase()}>{elemento}</IonSelectOption>;
-                                            })
-                                        }
-                                    </IonSelect>
-                                </IonItem>
-
-                                <IonItem>
-                                    {
-                                        (this.state.errores.modeloVehiculoFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Modelo Vehiculo</IonLabel></>
-                                        :
-                                        <IonLabel className="">Modelo Vehiculo</IonLabel>
-                                    }
-                                    <IonSelect value={modeloVehiculo} onIonChange={(evento) => { this.onChangeInputs(this.state, "modeloVehiculo", evento.detail.value); }} key="vehiculos" id="vehiculos" name='vehiculos' className="vehiculos_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
-                                        {
-                                            this.props.listadoModelosVehiculos.map((elemento: string) => {
-                                                return <IonSelectOption key={elemento.toLowerCase()} value={elemento.toLowerCase()}>{elemento}</IonSelectOption>;
-                                            })
-                                        }
-                                    </IonSelect>
-                                    {/* {
-                                        (this.props.dataCarsVisible === false) ? <IonLabel className="">{modeloVehiculo}</IonLabel> :
-
-                                    } */}
-                                </IonItem>
-                                <IonItem>
-                                    {
-                                        (this.state.errores.matriculoFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel position='floating' className="textofallo">Matricula</IonLabel></>
-                                        :
-                                        <IonLabel position='floating' className="">Matricula</IonLabel>
-                                    }
-                                    {
-                                        (this.state.modalState.isPrereserva === true) ? <IonInput value={matricula} onIonChange={(evento) => { this.onChangeInputs(this.state, "matricula", evento.detail.value as string); }} key="matricula" id="matricula" name='matricula' className="matricula_select" ></IonInput>
-                                        :
-                                            <IonSelect value={matricula} onIonChange={(evento) => { this.onChangeInputs(this.state, "matricula", evento.detail.value); }} key="matricula" id="matricula" name='matricula' className="matricula_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
-                                                {
-                                                    this.props.dataCars.map((elemento: IDataCoches) => {
-                                                        if (elemento.clasevehiculo.toLowerCase() === claseVehiculo.toLowerCase() as string && 
-                                                            elemento.modelo.toLowerCase() === modeloVehiculo.toLowerCase() as string
-                                                        )
-                                                        {
-                                                            return <IonSelectOption key={elemento.matricula} value={elemento.matricula}>{elemento.matricula}</IonSelectOption>;
-
-                                                        }
-                                                        return null;
-                                                    })
-                                                }
-                                            </IonSelect>
-                                    }
-                                    
-                                </IonItem>
-                                <IonItem>
-                                    {
-                                        (this.state.errores.flotaFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Flotas externas</IonLabel></>
-                                        :
-                                        <IonLabel className="">Flotas externas</IonLabel>
-
-                                    }
-                                    <IonSelect value={flota} onIonChange={(evento) => { this.onChangeInputs(this.state, "flota", evento.detail.value as string); }} id="flotas" name='flotas' className="flotas_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
-                                        {
-                                            this.props.listFlotas.map((elemento: IlistFlotas) => {
-                                                return <IonSelectOption key={elemento.id} value={elemento.id}>{elemento.descripcion}</IonSelectOption>;
-                                            })
-                                        }
-                                    </IonSelect>
-                                </IonItem>
-                                
-                                <IonItem>
-                                    <IonLabel className="">Numero Reserva</IonLabel>
-                                    <IonLabel className="">XXXXXXXX</IonLabel>
-                                </IonItem>
-                                <IonItem>
-                                    <IonLabel position='floating' className="">Precio Vuelacar</IonLabel>
-                                    <IonInput name='preciovuelacar' value={preciovuelacar} onIonChange={(evento) => { this.onChangeInputs(this.state, "preciovuelacar", evento.detail.value as string); }} type='number' min='1' max='100000000' autocomplete="off" inputmode="numeric"></IonInput>
-                                </IonItem>
-                                {
-                                    (this.state.modalState.isPrereserva === false) ? null :
-                                        <IonItem>
-                                            <IonLabel position='floating' className="">Nº Reserva externo</IonLabel>
-                                            <IonInput name='notareserva' value={notareserva} onIonChange={(evento) => { this.onChangeInputs(this.state, "notareserva", evento.detail.value as string); }}></IonInput>
-                                        </IonItem>
-                                }
-                                {
-                                    (this.state.modalState.isPrereserva === false) ? null :
-                                        <IonItem>
-                                            {
-                                                (this.state.errores.precioExternoFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel position='floating' className="textoFallo">Precio externo</IonLabel></>
-                                                :
-                                                <IonLabel position='floating' className="">Precio externo</IonLabel>
-
-                                            }
-                                            <IonInput name='precioexterno' value={precioexterno} onIonChange={(evento) => { this.onChangeInputs(this.state, "precioexterno", evento.detail.value as string); }} type='number' min='1' max='100000000' autocomplete="off" inputmode="numeric"></IonInput>
-                                        </IonItem>
-                                }
-                                <IonItem>
-                                    <IonLabel position='floating' className="">Extras</IonLabel>
-                                    <IonInput name='extras' value={extras} onIonChange={(evento) => { this.onChangeInputs(this.state, "extras", evento.detail.value as string); }}></IonInput>
-                                </IonItem>
-                                <IonItem>
-                                    <IonLabel className="">Estado</IonLabel>
-                                    <IonSelect value={estado} onIonChange={(evento) => { this.onChangeInputs(this.state, "estado", evento.detail.value as string); }} id="estado" name='estado' className="status_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
-                                        <IonSelectOption value="prereservado" >Pre-Reservado</IonSelectOption>
-                                        <IonSelectOption value="reservado" >Reservado</IonSelectOption>
-                                        <IonSelectOption value="prepagado">Prepagado</IonSelectOption>
-                                        <IonSelectOption value="100pagado">100% Pagado</IonSelectOption>
-                                    </IonSelect>
-                                </IonItem>
-                            
-                            </IonList>
-                        {/* );
-                    }}
-                    /> */}
-                        </IonRow>
-                        <IonRow className="centradovertical">
-                            <IonCol size="6">
-                                <IonButton onClick={() => { this.props.onCloseModal(); }}>Volver</IonButton>
-                            </IonCol>
-                            <IonCol size="6">
-                                <IonButton onClick={
-                                    () => {
-                                        
-                                        this.saveProps(this.state,
-                                            this.props.modalState.id as number,
-                                            this.props.modalState.group as number,
-                                            fechaAlta as string
-                                        ); 
-                                    }
-                                }>Guardar Datos</IonButton>
-                            </IonCol>
-                        </IonRow>
-
-                    </IonGrid>
-                </IonModal>
-            </>
+            lugarEntregaItem = 
+                <IonItem>
+                    <IonLabel position='floating' className="">Lugar de entrega</IonLabel>
+                    <IonInput name='lugarentrega' value={lugarentrega} onIonChange={(evento) => { this.onChangeInputs(this.state, "lugarentrega", evento.detail.value as string); }}></IonInput>
+                </IonItem>
+            ;
             
-        );
+
+            matriculaItem = 
+                <IonItem>
+                    {
+                        (this.state.errores.matriculoFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel position='floating' className="textofallo">Matricula</IonLabel></>
+                            :
+                            <IonLabel position='floating' className="">Matricula</IonLabel>
+                    }
+                    {
+                        (this.state.modalState.isPrereserva === true) ? <IonInput value={matricula} onIonChange={(evento) => { this.onChangeInputs(this.state, "matricula", evento.detail.value as string); }} key="matricula" id="matricula" name='matricula' className="matricula_select" ></IonInput>
+                            :
+                            <IonSelect value={matricula} onIonChange={(evento) => { this.onChangeInputs(this.state, "matricula", evento.detail.value); }} key="matricula" id="matricula" name='matricula' className="matricula_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                {
+                                    this.props.dataCars.map((elemento: IDataVehiculos) => {
+                                        if (elemento.clasevehiculo.toLowerCase() === claseVehiculo.toLowerCase() as string &&
+                                            elemento.modelo.toLowerCase() === modeloVehiculo.toLowerCase() as string
+                                        ) {
+                                            return <IonSelectOption key={elemento.matricula} value={elemento.matricula}>{elemento.matricula}</IonSelectOption>;
+
+                                        }
+                                        return null;
+                                    })
+                                }
+                            </IonSelect>
+                    }
+
+                </IonItem>
+            ;
+            
+
+            flotaItem = 
+                <IonItem>
+                    {
+                        (this.state.errores.flotaFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Flotas externas</IonLabel></>
+                            :
+                            <IonLabel className="">Flotas externas</IonLabel>
+
+                    }
+                    <IonSelect value={flota} onIonChange={(evento) => { this.onChangeInputs(this.state, "flota", evento.detail.value as string); }} id="flotas" name='flotas' className="flotas_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                        {
+                            this.props.listFlotas.map((elemento: IlistFlotas) => {
+                                return <IonSelectOption key={elemento.id} value={elemento.id}>{elemento.descripcion}</IonSelectOption>;
+                            })
+                        }
+                    </IonSelect>
+                </IonItem>
+            ;
+
+            
+
+            numeroReservaItem =
+                <IonItem>
+                    <IonLabel className="">Numero Reserva</IonLabel>
+                    <IonLabel className="">XXXXXXXX</IonLabel>
+                </IonItem>
+            ;
+
+            precioVuelacarItem =
+                <IonItem>
+                    <IonLabel position='floating' className="">Precio Vuelacar</IonLabel>
+                    <IonInput name='preciovuelacar' value={preciovuelacar} onIonChange={(evento) => { this.onChangeInputs(this.state, "preciovuelacar", evento.detail.value as string); }} type='number' min='1' max='100000000' autocomplete="off" inputmode="numeric"></IonInput>
+                </IonItem>
+            ;
+
+            notaReservaItem = 
+                <IonItem>
+                    <IonLabel position='floating' className="">Nº Reserva externo</IonLabel>
+                    <IonInput name='notareserva' value={notareserva} onIonChange={(evento) => { this.onChangeInputs(this.state, "notareserva", evento.detail.value as string); }}></IonInput>
+                </IonItem>
+            ;
+
+            precioExternoItem = 
+                <IonItem>
+                    {
+                        (this.state.errores.precioExternoFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel position='floating' className="textoFallo">Precio externo</IonLabel></>
+                            :
+                            <IonLabel position='floating' className="">Precio externo</IonLabel>
+
+                    }
+                    <IonInput name='precioexterno' value={precioexterno} onIonChange={(evento) => { this.onChangeInputs(this.state, "precioexterno", evento.detail.value as string); }} type='number' min='1' max='100000000' autocomplete="off" inputmode="numeric"></IonInput>
+                </IonItem>
+            ;
+
+            extrasItem = 
+                <IonItem>
+                    <IonLabel position='floating' className="">Extras</IonLabel>
+                    <IonInput name='extras' value={extras} onIonChange={(evento) => { this.onChangeInputs(this.state, "extras", evento.detail.value as string); }}></IonInput>
+                </IonItem>
+            ;
+            
+            estadoItem =
+                <IonItem>
+                    <IonLabel className="">Estado</IonLabel>
+                    <IonSelect value={estado} onIonChange={(evento) => { this.onChangeInputs(this.state, "estado", evento.detail.value as string); }} id="estado" name='estado' className="status_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                        <IonSelectOption value="prereservado" >Pre-Reservado</IonSelectOption>
+                        <IonSelectOption value="reservado" >Reservado</IonSelectOption>
+                        <IonSelectOption value="prepagado">Prepagado</IonSelectOption>
+                        <IonSelectOption value="100pagado">100% Pagado</IonSelectOption>
+                    </IonSelect>
+                </IonItem>
+            ;
+
+        }
+
+
+        return { 
+            tituloReserva,
+            colorCabecera,
+            fechaAltaTexto,
+            fechaAlta,
+            textoFechaRecogida,
+            fechaRecogida,
+            notareserva,
+            claseVehiculo,
+            colaborador,
+            modeloVehiculo,
+            cantidadDias,
+            horaentrega,
+            lugarentrega,
+            matricula,
+            flota,
+            estado,
+            textoFechaDevolucion,
+            preciovuelacar,
+            precioexterno,
+            extras,
+
+            horaEntregaItem,
+            lugarEntregaItem,
+            matriculaItem,
+            flotaItem,
+            numeroReservaItem,
+            precioVuelacarItem,
+            notaReservaItem,
+            precioExternoItem,
+            extrasItem,
+            estadoItem,
+
+
+
+
+        }
+
+
+
 
     }
 

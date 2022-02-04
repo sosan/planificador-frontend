@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { IonButton } from '@ionic/react';
 import TimelineWrapper from "./TimelineWrapper";
-import { IListadoPrereserva, IDataCoches, dataCars, ORDEN_LISTADO_CLASE_COCHES, DEFAULT_TEXT_MATRICULA } from "../datos/coches";
+import { IListadoPrereserva, IDataVehiculos, dataCars, ORDEN_LISTADO_MODELO_VEHICULOS, DEFAULT_TEXT_MATRICULA } from "../datos/vehiculosGeneral";
 import { listadoColaboradores, ENUM_LISTADO_COLABORADORES } from "../datos/listadoColaboradores";
 import { listFlotas } from "../datos/listadoFlotas";
 import { ModalDialog, ContainerState as IContainerModalState, IModalState, IModalErrores, ENUM_TIPOS_ESTADO } from "./Modal";
@@ -78,6 +78,9 @@ type typeGroup =
 
 export class SchedulerContainer extends Component<ContainerProps, ContainerState>
 {
+
+
+
     groupsReservaVuelaCar: typeGroup[];
     groupsReservaExterior: typeGroup[];
     groupsPreReserva: typeGroup[];
@@ -281,7 +284,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
     }
 
 
-    createGroupForCars(cars: IDataCoches[]) {
+    createGroupForCars(cars: IDataVehiculos[]) {
         let groupCreated: typeGroup[] = [];
         let listadoModelosVehiculos: Set<string> = new Set<string>();
         let listadoClasesVehiculos: Set<string> = new Set<string>();
@@ -307,7 +310,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         }
 
 
-        groupCreated = this.orderGroupCars(groupCreated, ORDEN_LISTADO_CLASE_COCHES);
+        groupCreated = this.orderGroupCars(groupCreated, ORDEN_LISTADO_MODELO_VEHICULOS);
         const arrayListadoClasesVehiculos = Array.from(listadoClasesVehiculos);
         const arrayListadoModelosVehiculos = Array.from(listadoModelosVehiculos);
 
@@ -332,11 +335,12 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     orderGroupCars(cars: typeGroup[], ordenListadoCoches: string[]) {
         let groupOrdered: typeGroup[] = [];
-        for (let i = 0; i < ordenListadoCoches.length; i++) {
+        for (let i = 0; i < ordenListadoCoches.length; i++)
+        {
 
             for (let j = 0; j < cars.length; j++) {
 
-                if (cars[j].clasevehiculo === ordenListadoCoches[i]) {
+                if (cars[j].modelo === ordenListadoCoches[i]) {
                     groupOrdered.push(cars[j]);
 
                 }
@@ -346,6 +350,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
         return groupOrdered;
     }
+
 
     getNewElementPrereserva() {
 
@@ -1119,6 +1124,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                         this.anadirPreReserva(_state);
                     }
                     } className="boton_reserva_vuelacar" fill='solid' color="#ffffff">Reserva Vuelacar</IonButton>
+                    <IonButton href='/page/Dashboard' className="boton-volver" fill='solid' color="#ffffff">Volver</IonButton>
                 </div>
                 <div className='fila_timelines'>
                     <h3 className='titulo-reservas-timeline'>RESERVAS</h3>
@@ -1178,6 +1184,9 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 </div>
             </>
         );
+    }
+    volverDashboard() {
+        
     }
 
 
