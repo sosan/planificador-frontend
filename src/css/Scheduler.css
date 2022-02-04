@@ -267,6 +267,15 @@ input[type=number] {
     justify-content: flex-start;
     align-items: center;
     gap: 50px;
+    width: 100%;
+}
+
+.boton-volver
+{
+    margin-left: auto;
+    background-color: #484848 !important;
+    color: white !important;
+    margin-right: 10px;
 }
 
 .fila_timelines

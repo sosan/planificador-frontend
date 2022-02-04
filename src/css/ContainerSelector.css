@@ -49,6 +49,21 @@
   align-items: center;
 }
 
+.centrado-flex
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.titulo-central
+{
+  font-size: 30px;
+  
+}
+
+
 .padding-titulo
 {
   gap: 5vw;
