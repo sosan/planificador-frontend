@@ -247,7 +247,7 @@ export const categoriasContratos: IItemCategoria[] = [
         cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
         url: '/page/ingresarcontrato',
         containerId: "IngresarContrato",
-        container: <IngresarContrato />,
+        container: <MenuContratos />,
         iosIcon: mailOutline,
         mdIcon: mailSharp
     },
@@ -261,7 +261,7 @@ export const categoriasContratos: IItemCategoria[] = [
         cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
         url: '/page/modificarcontrato',
         containerId: "ModificarContrato",
-        container: <ModificarContrato />,
+        container: <MenuContratos />,
         iosIcon: paperPlaneOutline,
         mdIcon: paperPlaneSharp
     },
