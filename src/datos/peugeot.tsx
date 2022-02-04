@@ -423,6 +423,26 @@ export const peugeot: IDataVehiculos[] = [
         "altImage": ""
     },
     {
+        "_id": "60da01aeac951t0bf3e7327962111a11",
+        "vehiculo": "peugeot108",
+        "descripcion": "Peugeot 108",
+        "clasevehiculo": "a",
+        "modelo": "Peugeot 108",
+        "pax": 5,
+        "puertas": 2,
+        "conbustible": "95 oct",
+        "transmision": "M",
+        "topCase": 0,
+        "aireacondicionado": true,
+        "franquicia": 0,
+        "entregado": false,
+        "devuelto": false,
+        "matricula": "9494JKK",
+        "precio": 100,
+        "srcImage": "", //LISTADO_IMAGENES_COCHES.peugeot108,
+        "altImage": ""
+    },
+    {
         "_id": "60da00ceaa9590bf3e75279422",
         "vehiculo": "peugeot208",
         "descripcion": "Peugeot 208",

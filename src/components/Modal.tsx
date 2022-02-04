@@ -284,6 +284,11 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         if (value === undefined) return;
 
         const estado: ContainerState = currentState;
+        if (key === "claseVehiculo")
+        {
+            estado["modalState"]["modeloVehiculo"] = "";
+        }
+
         estado["modalState"][key] = value as string;
         this.setState({ ...estado });
 
@@ -550,7 +555,6 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 </IonItem>
                                 {itemsGenerados.horaEntregaItem}
                                 {itemsGenerados.lugarEntregaItem}
-                                
                                 <IonItem>
                                     <IonLabel className="">Colaborador</IonLabel>
                                     <IonSelect value={itemsGenerados.colaborador} onIonChange={(evento) => { this.onChangeInputs(this.state, "colaborador", evento.detail.value as string); }} key="colaboradores" id="colaboradores" name='colaboradores' className="colaboradores_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
@@ -565,18 +569,20 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 <IonItem>
                                     {
                                         (this.state.errores.claseVehiculoFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Clase</IonLabel></>
-                                        :
-                                        <IonLabel className="">Clase</IonLabel>
+                                            :
+                                            <IonLabel className="">Clase</IonLabel>
                                     }
                                     <IonSelect value={itemsGenerados.claseVehiculo} onIonChange={(evento) => { this.onChangeInputs(this.state, "claseVehiculo", evento.detail.value as string); }} key="clase" id="clase" name='clase' className="clase_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                                         {
                                             this.props.listadoClaseVehiculos.map((elemento: string) => {
-                                                return <IonSelectOption key={elemento.toLowerCase()} value={elemento.toLowerCase()}>{elemento}</IonSelectOption>;
+                                                return <IonSelectOption key={elemento.toLowerCase()} value={elemento.toLowerCase()}>{elemento.toUpperCase()}</IonSelectOption>;
                                             })
                                         }
                                     </IonSelect>
                                 </IonItem>
-
+                                
+                                
+                                
                                 <IonItem>
                                     {
                                         (this.state.errores.modeloVehiculoFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Modelo Vehiculo</IonLabel></>
@@ -584,11 +590,18 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                         <IonLabel className="">Modelo Vehiculo</IonLabel>
                                     }
                                     <IonSelect value={itemsGenerados.modeloVehiculo} onIonChange={(evento) => { this.onChangeInputs(this.state, "modeloVehiculo", evento.detail.value); }} key="vehiculos" id="vehiculos" name='vehiculos' className="vehiculos_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
-                                        {
-                                            this.props.listadoModelosVehiculos.map((elemento: string) => {
-                                                return <IonSelectOption key={elemento.toLowerCase()} value={elemento.toLowerCase()}>{elemento}</IonSelectOption>;
+                                        {itemsGenerados.modeloVehiculoItem}
+                                        {/* {
+                                           
+                                            this.props.dataCars.map((elemento: IDataVehiculos) => {
+
+                                                if (elemento.clasevehiculo === itemsGenerados.claseVehiculo)
+                                                {
+                                                    return <IonSelectOption key={elemento.matricula.toLowerCase()} value={elemento.modelo}>{elemento.modelo.toUpperCase()}</IonSelectOption>;
+                                                }
+                                                return null;
                                             })
-                                        }
+                                        } */}
                                     </IonSelect>
                                 </IonItem>
                                 {itemsGenerados.matriculaItem}
@@ -709,7 +722,27 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         let extrasItem = null;
         let estadoItem = null;
         // state.modalState.isPrereserva
+        
+        
+        let modeloVehiculoItem = null;
+        
+        if (claseVehiculo !== "")
+        {
+            modeloVehiculoItem = new Set();
+            let modelosUnicos = new Set();
+            for (let i = 0; i < this.props.dataCars.length; i++)
+            {
+                const elemento = this.props.dataCars[i];
+                if (elemento.clasevehiculo.toLowerCase() === claseVehiculo.toLowerCase() && modelosUnicos.has(elemento.modelo) === false)
+                {
+                    modelosUnicos.add(elemento.modelo);
+                    modeloVehiculoItem.add(<IonSelectOption key={elemento.modelo.toLowerCase()} value={elemento.modelo}>{elemento.modelo.toUpperCase()}</IonSelectOption>);
 
+                }
+            }
+            
+        }
+        
         if (estado !== ENUM_TIPOS_ESTADO.prereservado) 
         {
             horaEntregaItem = 
@@ -863,6 +896,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             precioExternoItem,
             extrasItem,
             estadoItem,
+            modeloVehiculoItem
 
 
 

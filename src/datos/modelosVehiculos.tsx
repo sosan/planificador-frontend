@@ -21,7 +21,7 @@ export let modelosVehiculos: IModelosVehiculos[] = [
     },
     {
         "id": "peugeot108",
-        "descripcion": "Peugeot 107",
+        "descripcion": "Peugeot 108",
         
     },
     {

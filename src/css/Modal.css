@@ -88,6 +88,12 @@ input[type=number] {
     --width: 300px !important;
 }
 
+.alert-wrapper.sc-ion-alert-md
+{
+    --min-width: 400px;
+    /* min-width: 400px; */
+}
+
 .modal-wrapper
 {
     height: 1000px !important;;
