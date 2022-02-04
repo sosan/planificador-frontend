@@ -959,6 +959,12 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         externalPropsItemsPrereservas: IListadoPrereserva[]    
     )
     {
+
+        if (state.modalState?.isNewRegister === true)
+        {
+            return false;
+        }
+
         let foundMatricula = false;
 
         if (state.modalState?.matricula === "")

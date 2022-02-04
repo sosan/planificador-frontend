@@ -344,13 +344,14 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             precioExternoFallo = false,
             flotaFallo  = false;
 
-        const existMatricula = this.props.onSearchMatriculaAnotherTimeline(
-            state,
-            this.props.externalPropItemsReservasVuelaCar,
-            this.props.externalPropsItemsReservasExternal,
-            this.props.externalPropsItemsPrereservas
-
+        let existMatricula = this.props.onSearchMatriculaAnotherTimeline(
+                state,
+                this.props.externalPropItemsReservasVuelaCar,
+                this.props.externalPropsItemsReservasExternal,
+                this.props.externalPropsItemsPrereservas
+    
         );
+        
         if (existMatricula === true)
         {
             conFallos = true;
@@ -358,29 +359,54 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             
         }
 
-        switch (this.state.modalState.estado) {
+
+        switch (state.modalState.estado) {
             case ENUM_TIPOS_ESTADO.prereservado:
-                if (
-                    state.modalState.matricula === "" ||
-                    state.modalState.matricula === undefined
-                ) {
-                    matriculoFallo = true;
-                    conFallos = true;
-                }
-
-                if (
-                    state.modalState.flota === "" ||
-                    state.modalState.flota === undefined
-                ) {
-                    flotaFallo = true;
-                    conFallos = true;
-                }
-
-                if (state.modalState.precioexterno?.toString() === "")
+                if (state.modalState.isNewRegister === true)
                 {
-                    precioExternoFallo = true;
-                    conFallos = true;
+                    if (state.modalState.colaborador === "")
+                    {
+                        colaboradorFallo = true;
+                        conFallos = true;
+                    }
+
+                    if (state.modalState.claseVehiculo === "") {
+                        claseVehiculoFallo = true;
+                        conFallos = true;
+                    }
+
+                    if (state.modalState.modeloVehiculo === "") {
+                        modeloVehiculoFallo = true;
+                        conFallos = true;
+                    }
+
                 }
+                else
+                {
+
+                    if (
+                        state.modalState.matricula === "" ||
+                        state.modalState.matricula === undefined
+                    ) {
+                        matriculoFallo = true;
+                        conFallos = true;
+                    }
+    
+                    if (
+                        state.modalState.flota === "" ||
+                        state.modalState.flota === undefined
+                    ) {
+                        flotaFallo = true;
+                        conFallos = true;
+                    }
+    
+                    if (state.modalState.precioexterno?.toString() === "")
+                    {
+                        precioExternoFallo = true;
+                        conFallos = true;
+                    }
+                }
+
                 break;
 
             case ENUM_TIPOS_ESTADO.reservado:
@@ -556,7 +582,12 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                 {itemsGenerados.horaEntregaItem}
                                 {itemsGenerados.lugarEntregaItem}
                                 <IonItem>
-                                    <IonLabel className="">Colaborador</IonLabel>
+                                    {
+                                        (this.state.errores.colaboradorFallo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Colaborador</IonLabel></>
+                                        :
+                                        <IonLabel className="">Colaborador</IonLabel>
+                                        
+                                    }
                                     <IonSelect value={itemsGenerados.colaborador} onIonChange={(evento) => { this.onChangeInputs(this.state, "colaborador", evento.detail.value as string); }} key="colaboradores" id="colaboradores" name='colaboradores' className="colaboradores_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                                         {
                                             this.props.listColaborators.map((elemento: IlistColaborators) => {
