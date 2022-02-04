@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { IonApp, IonRouterOutlet, IonSplitPane, IonLoading } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
-import Menu from './components/Menu';
+// import {  } from './datos/Data';
+// import Menu from './components/Menu';
 import Page from './pages/Page';
 
 /* Core CSS required for Ionic components to work properly */
@@ -24,6 +25,7 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './css/variables.css';
 
+
 const App: React.FC = () => {
 
   const [showLoading, setShowLoading] = useState(true);
@@ -39,7 +41,7 @@ const App: React.FC = () => {
       />
       <IonReactRouter>
         <IonSplitPane contentId="main" disabled={true}>
-          <Menu />
+          {/* <Menu />  Menu comentado */}
           <IonRouterOutlet id="main">
             <Route path="/" exact={true}>
               <Redirect to="/page/Dashboard" />
