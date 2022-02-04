@@ -3,6 +3,7 @@ import { Component } from "react";
 import * as categoriasManager from "../datos/listadoCategorias";
 import { IngresarContrato } from "../components/IngresarContratoContainer";
 import { ModificarContrato } from "../components/ModificarContratoContainer";
+import { ContainerState as IContainerIngresarContrato  } from "../components/IngresarContratoContainer";
 
 interface ContainerProps {
     
@@ -90,13 +91,19 @@ export class MenuContratos extends Component<ContainerProps, ContainerState>
     listadoCategoria = this.GetListCategories(categoriasManager.categoriasContratos);
 
 
+    onClickedGenerateContract(state: IContainerIngresarContrato)
+    {
+        console.log("adsfasdf");
+        
+    }
+
     render()
     {
 
         let elementoHtml = <></>;
         if (this.state.ingresarVisible === true)
         {
-            elementoHtml = <IngresarContrato />
+            elementoHtml = <IngresarContrato onClickedGenerateContract={this.onClickedGenerateContract }/>
         }
 
         if (this.state.modificarVisible === true)
