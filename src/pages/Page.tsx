@@ -12,18 +12,16 @@ const Page: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        
+      {/* <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
-          {/* <IonTitle>{name}</IonTitle> */}
-          <TitleSelector name={titulo} />
         </IonToolbar>
-      </IonHeader>
+      </IonHeader> */}
 
       <IonContent fullscreen>
+        <TitleSelector name={titulo} />
         <ContainerSelector name={name} />
       </IonContent>
     </IonPage>
