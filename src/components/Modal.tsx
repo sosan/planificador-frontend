@@ -190,8 +190,6 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             "isFirstTime": false,
         };
 
-        
-
     }
 
     componentDidMount()
