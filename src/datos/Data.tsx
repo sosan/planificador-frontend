@@ -8,13 +8,6 @@ class DataStuff
     {
         return this.testing;
     }
-
-    // static getTesting()
-    // {
-    //     return this.testing;
-    // }
-
-
 }
 
 export const newX = new DataStuff();
