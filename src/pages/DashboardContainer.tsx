@@ -50,27 +50,13 @@ const DashboardContainer: any = () => {
     };
 
     const listadoDashboard = GetListCategories(categoriasManager.categoriasDashboard);
-    // const listadoPlaning = GetListCategories(categoriasManager.categoriasPlaning);
-    // const listadoContratos = GetListCategories(categoriasManager.categoriasContratos);
-    // const listadoFacturacion = GetListCategories(categoriasManager.categoriasFacturacion);
-    // const listadoInformes = GetListCategories(categoriasManager.categoriasInformes);
-    // const listadoMultas = GetListCategories(categoriasManager.categoriasMultas);
-
-    
 
     return (
         <>
             <IonContent>
                 <div className='centrado'>{listadoDashboard}</div>
-                {/* <div className="centrado">{listadoContratos}</div> */}
-                {/* <div className="centrado">{listadoPlaning}</div>
-                <div className="centrado">{listadoFacturacion}</div> */}
-                
             </IonContent>
-
-
         </>    
-
         
     );
 
