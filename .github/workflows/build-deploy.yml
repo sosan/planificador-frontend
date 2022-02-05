@@ -58,7 +58,8 @@ jobs:
         run: cat ~/.android/debug.keystore
 
       - name: Sign Android build
-        run: jarsigner -sigalg SHA1withRSA -digestalg SHA1 -keystore ~/.android/debug.keystore ./android/app/build/outputs/apk/release/app-release-unsigned.apk androiddebugkey --storepass android
+        run: jarsigner -keystore src/keystorefile.jks -storepass kleptor123 -keypass kleptor123 android/app/build/outputs/apk/release/app-release-unsigned.apk key0
+        # run: jarsigner -sigalg SHA1withRSA -digestalg SHA1 -keystore ~/.android/debug.keystore ./android/app/build/outputs/apk/release/app-release-unsigned.apk androiddebugkey --storepass android
 
       - name: Prepare to sign build
         run: mv ./android/app/build/outputs/apk/release/app-release-unsigned.apk ./android/app/build/outputs/apk/release/release.apk

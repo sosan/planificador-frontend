@@ -1,4 +1,4 @@
-planificador/frontend/com/BuildConfig.java
- planificador.frontend.com.BuildConfig
 planificador/frontend/com/MainActivity.java
  planificador.frontend.com.MainActivity
+planificador/frontend/com/BuildConfig.java
+ planificador.frontend.com.BuildConfig
