@@ -1166,9 +1166,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             </>
         );
     }
-    volverDashboard() {
 
-    }
 
 
 }
