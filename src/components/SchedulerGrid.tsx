@@ -246,6 +246,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         {
             case ENUM_TIPOS_ESTADO.prereservado:
                 dataSchedulerGrid.deletePrereservadoById(id);
+
+                
             
             break;
             case ENUM_TIPOS_ESTADO.reservado:

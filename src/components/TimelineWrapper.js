@@ -175,6 +175,9 @@ export default class TimelineWrapper extends Component {
                     
                     useResizeHandle={true}
                     fullUpdate
+                    // fixedHeader='sticky'
+                    // stickyOffset={100}
+
                     dragSnap={DRAG_SNAP}
                     itemTouchSendsClick={false}
                     groupRenderer={this.groupRenderer}
@@ -223,7 +226,32 @@ export default class TimelineWrapper extends Component {
                                 </div>
                             }}
                         </SidebarHeader>
-                        <DateHeader unit="month" />
+                        <DateHeader 
+                            {...{
+                                intervalRenderer: ({ getIntervalProps, intervalContext }) => {
+                                    const { style, onClick, key } = getIntervalProps();
+
+                                    const itemHeader = <>
+                                        <div key={key} style={style} className="rct-dateHeader" onClick={() => null } >
+                                            <span className='espaciado-header'>
+                                                <b className='margen-izquierda-timeline-header texto-primer-header-timeline'>{intervalContext.intervalText}</b>
+                                                <b className='texto-primer-header-timeline'>{intervalContext.intervalText}</b>
+                                                <b className='texto-primer-header-timeline'>{intervalContext.intervalText}</b>
+                                                <b className='texto-primer-header-timeline'>{intervalContext.intervalText}</b>
+                                                <b className='texto-primer-header-timeline'>{intervalContext.intervalText}</b>
+                                                <b className='texto-primer-header-timeline'>{intervalContext.intervalText}</b>
+                                                <b className='margen-derecha-timeline-header texto-primer-header-timeline'>{intervalContext.intervalText}</b>
+
+                                            </span>
+
+                                        </div>
+                                    </>
+                                    return itemHeader;
+
+                                    
+                                },
+                            }}
+                        unit="month" />
                         <DateHeader unit="day" style={{ height: 50 }} />
                     </TimelineHeaders>
                 </Timeline>

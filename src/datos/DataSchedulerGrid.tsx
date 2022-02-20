@@ -1,3 +1,4 @@
+import { group } from "console";
 import { recordingSharp } from "ionicons/icons";
 import { ContainerState, IModalErrores } from "../components/Modal";
 import { typeGroup } from "../components/SchedulerGrid";
@@ -399,18 +400,48 @@ class DataSchedulerGrid
     deletePrereservadoById(_id: number)
     {
 
+        let grupo: number = -1;
         for (let i = 0; i < this.itemsPreReservas.length; i++)
         {
             if (this.itemsPreReservas[i].id === _id )
             {
                 console.log("borrado _id=" + _id) ;
+                grupo = this.itemsPreReservas[i].group;
                 this.itemsPreReservas.splice(i, 1);
+                
             }
+            
+        }
+        
+        // si no hay mas items dentro del grupo borrar el grupo
+        let existenMasItems = false;
+        for (let i = 0; i < this.itemsPreReservas.length; i++)
+        {
+            if (this.itemsPreReservas[i].group as number === grupo )
+            {
+                existenMasItems = true;
+            }
+            
+        }
 
+        if (existenMasItems === false)
+        {
+            this.deleteGroupPrereservaById(grupo);
         }
 
     }
 
+    deleteGroupPrereservaById(grupo: number)
+    {
+        for (let i = 0; i < this.groupsPreReserva.length; i++)
+        {
+            if (this.groupsPreReserva[i].id === grupo)
+            {
+                this.groupsPreReserva.splice(i, 1);
+            }
+        }
+
+    }
 
     deleteReservadoVuelacarById(_id: number) {
 
