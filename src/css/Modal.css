@@ -1,8 +1,16 @@
 
+.altura_15
+{
+    height: 15px;
+}
+
 .grid_cabecera
 {
     width: 100%;
     color: black !important;
+
+    display: grid;
+    grid-template-columns: 1fr 200px;
 
 }
 
@@ -17,6 +25,8 @@
 
 }
 
+
+
 .grid_cabecera_alquilado
 {
     background-color: rgb(255, 125, 125);
@@ -25,8 +35,17 @@
 
 .centradovertical
 {
+    display: flex;
+    flex-direction: column;
     align-items: center !important;
     color: black !important;
+    justify-content: space-between;
+}
+
+.centrado-horizontal
+{
+    display: flex;
+    justify-content: center;
 }
 
 .ancho_100
@@ -97,7 +116,8 @@ input[type=number] {
 .modal-wrapper
 {
     height: 1000px !important;;
-    /* height: 92vmin !important; */
+    width: 50% !important;
+
 }
 
 .textofallo

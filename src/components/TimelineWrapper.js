@@ -184,11 +184,11 @@ export default class TimelineWrapper extends Component {
                     // sidebarContent={this.renderSidebarHeader()}
 
                     itemHeightRatio={1}
-                    canMove={true}
-                    canResize={"both"}
+                    canMove={false}
+                    canResize={false}
 
                     
-                    onItemMove={this.handleItemMove}
+                    // onItemMove={this.handleItemMove}
                     // onItemResize={this.handleItemResize}
                     onTimeChange={this.handleTimeChange}
                     onCanvasDoubleClick={(groupId, time, evento) => { this.props.onDoubleClicked(groupId, time, evento); } }

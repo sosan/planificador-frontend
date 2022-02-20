@@ -67,6 +67,7 @@ export interface IModalErrores {
 
 interface ContainerProps {
     onCloseModal: any;
+    onDelete: any;
     onModalDidDismiss: any;
     onSaveData: any;
     onSearchMatriculaAnotherTimeline: any;
@@ -400,11 +401,11 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                         conFallos = true;
                     }
     
-                    if (state.modalState.precioexterno?.toString() === "")
-                    {
-                        precioExternoFallo = true;
-                        conFallos = true;
-                    }
+                    // if (state.modalState.precioexterno?.toString() === "")
+                    // {
+                    //     precioExternoFallo = true;
+                    //     conFallos = true;
+                    // }
                 }
 
                 break;
@@ -486,7 +487,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             state.modalState.fechaAlta = fechaAlta;
         }
 
-        this.props.onSaveData(state, _idModal, groupId);
+        this.props.onSaveData(state, _idModal, groupId, this.props.isDoubleclickItem);
         
     }
 
@@ -532,140 +533,147 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         return(
         <>
             
-                <IonModal onWillDismiss={async () => { this.props.onModalDidDismiss(); }} isOpen={this.props.isVisible} animated={true}>
-                    <IonGrid className={itemsGenerados.colorCabecera}>
-                        <IonRow className="centradovertical">
-                            <IonCol size="8">
-                                <h1>{itemsGenerados.tituloReserva}</h1>
-                                <span>Fecha alta: {itemsGenerados.fechaAltaTexto}</span>
-                                <IonInput name='fechaalta' value={itemsGenerados.fechaAlta} hidden={true} ></IonInput>
-                            </IonCol>
-                            <IonCol >
-                                <IonButton onClick={() => {
+            <IonModal onWillDismiss={async () => { this.props.onModalDidDismiss(); }} isOpen={this.props.isVisible} animated={true}>
+                <IonGrid className={itemsGenerados.colorCabecera}>
+                    <IonRow className="altura_15">
+                        <IonCol size="8">
+                            <h1>{itemsGenerados.tituloReserva}</h1>
+                            <span>Fecha alta: {itemsGenerados.fechaAltaTexto}</span>
+                            <IonInput name='fechaalta' value={itemsGenerados.fechaAlta} hidden={true} ></IonInput>
+                        </IonCol>
+                        {/* <IonCol >
+                            <IonButton onClick={() => {
+                                this.saveProps(this.state,
+                                    this.props.modalState.id as number,
+                                    this.props.modalState.group as number,
+                                    itemsGenerados.fechaAlta as string
+                                ); 
+                            } }>Guardar Datos</IonButton>
+                        </IonCol> */}
+                    </IonRow>
+                    <IonRow>
+                        <IonCol size='12'>
+                            <IonLabel className="textoFallo">{this.state.errores.textoErrores}</IonLabel>
+                        </IonCol>
+                    </IonRow>
+                    
+                    <IonRow>
+                        <IonList className="ancho_100">
+                            <IonItem>
+                                <IonLabel className="">Fecha Entrega</IonLabel>
+                                <IonLabel className="">
+                                    <IonDatetime value={itemsGenerados.textoFechaRecogida} onIonChange={(evento) => { this.elegirFechaRecogida(evento); }} displayFormat='DD-MM-YYYY' hour-cycle="h23" first-day-of-week={1} yearValues="2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034" cancelText="Cancelar" doneText="Confirmar">
+                                    </IonDatetime>
+                                </IonLabel>
+                            </IonItem>
+                            <IonItem>
+                                <IonLabel className="">Cantidad de dias</IonLabel>
+                                <IonSelect value={itemsGenerados.cantidadDias} onIonChange={(evento) => { this.onChangeInputNumeroDias(evento); }} key="cantidaddias" id="cantidaddias" name='cantidaddias' className="cantidaddias_select" okText="Confirmado" cancelText="Cancelar"  >
+                                    {
+                                        listadoDias.map((elemento: number) => {
+                                            return <IonSelectOption key={elemento} value={elemento}>{elemento}</IonSelectOption>;
+                                        })
+                                    }
+                                </IonSelect>
+                            </IonItem>
+                            <IonItem>
+                                <IonLabel className="">Fecha Devolucion</IonLabel>
+                                <IonLabel className="">{itemsGenerados.textoFechaDevolucion}</IonLabel>
+                            </IonItem>
+                            {itemsGenerados.horaEntregaItem}
+                            {itemsGenerados.lugarEntregaItem}
+                            <IonItem>
+                                {
+                                    (this.state.errores.colaborador === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Colaborador</IonLabel></>
+                                    :
+                                    <IonLabel className="">Colaborador</IonLabel>
+                                    
+                                }
+                                <IonSelect value={itemsGenerados.colaborador} onIonChange={(evento) => { this.onChangeInputs(this.state, "colaborador", evento.detail.value as string); }} key="colaboradores" id="colaboradores" name='colaboradores' className="colaboradores_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                    {
+                                        this.props.listColaborators.map((elemento: IlistColaborators) => {
+                                            return <IonSelectOption key={elemento.id} value={elemento.id}>{elemento.descripcion}</IonSelectOption>;
+                                        })
+                                    }
+                                </IonSelect>
+                                
+                            </IonItem>
+                            <IonItem>
+                                {
+                                    (this.state.errores.claseVehiculo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Clase</IonLabel></>
+                                        :
+                                        <IonLabel className="">Clase</IonLabel>
+                                }
+                                <IonSelect value={itemsGenerados.claseVehiculo} onIonChange={(evento) => { this.onChangeInputs(this.state, "claseVehiculo", evento.detail.value as string); }} key="clase" id="clase" name='clase' className="clase_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                    {
+                                        this.props.listadoClaseVehiculos.map((elemento: string) => {
+                                            return <IonSelectOption key={elemento.toLowerCase()} value={elemento.toLowerCase()}>{elemento.toUpperCase()}</IonSelectOption>;
+                                        })
+                                    }
+                                </IonSelect>
+                            </IonItem>
+                            
+                            
+                            
+                            <IonItem>
+                                {
+                                    (this.state.errores.modeloVehiculo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Modelo Vehiculo</IonLabel></>
+                                    :
+                                    <IonLabel className="">Modelo Vehiculo</IonLabel>
+                                }
+                                <IonSelect value={itemsGenerados.modeloVehiculo} onIonChange={(evento) => { this.onChangeInputs(this.state, "modeloVehiculo", evento.detail.value); }} key="vehiculos" id="vehiculos" name='vehiculos' className="vehiculos_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                                    {itemsGenerados.modeloVehiculoItem}
+                                    {/* {
+                                        
+                                        this.props.dataCars.map((elemento: IDataVehiculos) => {
+
+                                            if (elemento.clasevehiculo === itemsGenerados.claseVehiculo)
+                                            {
+                                                return <IonSelectOption key={elemento.matricula.toLowerCase()} value={elemento.modelo}>{elemento.modelo.toUpperCase()}</IonSelectOption>;
+                                            }
+                                            return null;
+                                        })
+                                    } */}
+                                </IonSelect>
+                            </IonItem>
+                            {itemsGenerados.matriculaItem}
+                            {itemsGenerados.flotaItem}
+                            {itemsGenerados.numeroReservaItem}
+                            {itemsGenerados.precioVuelacarItem}
+                            {itemsGenerados.notaReservaItem}
+                            {itemsGenerados.precioExternoItem}
+                            {itemsGenerados.extrasItem}
+                            {itemsGenerados.estadoItem}
+                        </IonList>
+                    
+                    </IonRow>
+                    <IonRow className="centradovertical">
+                        <IonCol size="0" className='centrado-horizontal'>
+                            <IonButton onClick={() => { this.props.onCloseModal(); }}>Volver</IonButton>
+                        </IonCol>
+                        <IonCol size="6" className='centrado-horizontal'>
+                            <IonButton  onClick={
+                                () => {
+                                    
                                     this.saveProps(this.state,
                                         this.props.modalState.id as number,
                                         this.props.modalState.group as number,
                                         itemsGenerados.fechaAlta as string
                                     ); 
-                                } }>Guardar Datos</IonButton>
-                            </IonCol>
-                        </IonRow>
-                        <IonRow>
-                            <IonCol size='12'>
-                                <IonLabel className="textoFallo">{this.state.errores.textoErrores}</IonLabel>
-                            </IonCol>
-                        </IonRow>
-                        
-                        <IonRow>
-                            <IonList className="ancho_100">
-                                <IonItem>
-                                    <IonLabel className="">Fecha Entrega</IonLabel>
-                                    <IonLabel className="">
-                                        <IonDatetime value={itemsGenerados.textoFechaRecogida} onIonChange={(evento) => { this.elegirFechaRecogida(evento); }} displayFormat='DD-MM-YYYY' hour-cycle="h23" first-day-of-week={1} yearValues="2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034" cancelText="Cancelar" doneText="Confirmar">
-                                        </IonDatetime>
-                                    </IonLabel>
-                                </IonItem>
-                                <IonItem>
-                                    <IonLabel className="">Cantidad de dias</IonLabel>
-                                    <IonSelect value={itemsGenerados.cantidadDias} onIonChange={(evento) => { this.onChangeInputNumeroDias(evento); }} key="cantidaddias" id="cantidaddias" name='cantidaddias' className="cantidaddias_select" okText="Confirmado" cancelText="Cancelar"  >
-                                        {
-                                            listadoDias.map((elemento: number) => {
-                                                return <IonSelectOption key={elemento} value={elemento}>{elemento}</IonSelectOption>;
-                                            })
-                                        }
-                                    </IonSelect>
-                                </IonItem>
-                                <IonItem>
-                                    <IonLabel className="">Fecha Devolucion</IonLabel>
-                                    <IonLabel className="">{itemsGenerados.textoFechaDevolucion}</IonLabel>
-                                </IonItem>
-                                {itemsGenerados.horaEntregaItem}
-                                {itemsGenerados.lugarEntregaItem}
-                                <IonItem>
-                                    {
-                                        (this.state.errores.colaborador === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Colaborador</IonLabel></>
-                                        :
-                                        <IonLabel className="">Colaborador</IonLabel>
-                                        
-                                    }
-                                    <IonSelect value={itemsGenerados.colaborador} onIonChange={(evento) => { this.onChangeInputs(this.state, "colaborador", evento.detail.value as string); }} key="colaboradores" id="colaboradores" name='colaboradores' className="colaboradores_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
-                                        {
-                                            this.props.listColaborators.map((elemento: IlistColaborators) => {
-                                                return <IonSelectOption key={elemento.id} value={elemento.id}>{elemento.descripcion}</IonSelectOption>;
-                                            })
-                                        }
-                                    </IonSelect>
-                                    
-                                </IonItem>
-                                <IonItem>
-                                    {
-                                        (this.state.errores.claseVehiculo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Clase</IonLabel></>
-                                            :
-                                            <IonLabel className="">Clase</IonLabel>
-                                    }
-                                    <IonSelect value={itemsGenerados.claseVehiculo} onIonChange={(evento) => { this.onChangeInputs(this.state, "claseVehiculo", evento.detail.value as string); }} key="clase" id="clase" name='clase' className="clase_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
-                                        {
-                                            this.props.listadoClaseVehiculos.map((elemento: string) => {
-                                                return <IonSelectOption key={elemento.toLowerCase()} value={elemento.toLowerCase()}>{elemento.toUpperCase()}</IonSelectOption>;
-                                            })
-                                        }
-                                    </IonSelect>
-                                </IonItem>
-                                
-                                
-                                
-                                <IonItem>
-                                    {
-                                        (this.state.errores.modeloVehiculo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Modelo Vehiculo</IonLabel></>
-                                        :
-                                        <IonLabel className="">Modelo Vehiculo</IonLabel>
-                                    }
-                                    <IonSelect value={itemsGenerados.modeloVehiculo} onIonChange={(evento) => { this.onChangeInputs(this.state, "modeloVehiculo", evento.detail.value); }} key="vehiculos" id="vehiculos" name='vehiculos' className="vehiculos_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
-                                        {itemsGenerados.modeloVehiculoItem}
-                                        {/* {
-                                           
-                                            this.props.dataCars.map((elemento: IDataVehiculos) => {
+                                }
+                            }>Guardar Datos</IonButton>
+                        </IonCol>
+                        <IonCol size="2" className='centrado-horizontal'>
+                        {
+                            (this.props.isDoubleclickItem === false) ? null
+                            :
+                            <IonButton  onClick={() => { this.props.onDelete(itemsGenerados.estado, itemsGenerados.flota, itemsGenerados.id ); }}>Eliminar</IonButton>
+                        }
+                        </IonCol>
+                    </IonRow>
 
-                                                if (elemento.clasevehiculo === itemsGenerados.claseVehiculo)
-                                                {
-                                                    return <IonSelectOption key={elemento.matricula.toLowerCase()} value={elemento.modelo}>{elemento.modelo.toUpperCase()}</IonSelectOption>;
-                                                }
-                                                return null;
-                                            })
-                                        } */}
-                                    </IonSelect>
-                                </IonItem>
-                                {itemsGenerados.matriculaItem}
-                                {itemsGenerados.flotaItem}
-                                {itemsGenerados.numeroReservaItem}
-                                {itemsGenerados.precioVuelacarItem}
-                                {itemsGenerados.notaReservaItem}
-                                {itemsGenerados.precioExternoItem}
-                                {itemsGenerados.extrasItem}
-                                {itemsGenerados.estadoItem}
-                            </IonList>
-                        
-                        </IonRow>
-                        <IonRow className="centradovertical">
-                            <IonCol size="6">
-                                <IonButton onClick={() => { this.props.onCloseModal(); }}>Volver</IonButton>
-                            </IonCol>
-                            <IonCol size="6">
-                                <IonButton onClick={
-                                    () => {
-                                        
-                                        this.saveProps(this.state,
-                                            this.props.modalState.id as number,
-                                            this.props.modalState.group as number,
-                                            itemsGenerados.fechaAlta as string
-                                        ); 
-                                    }
-                                }>Guardar Datos</IonButton>
-                            </IonCol>
-                        </IonRow>
-
-                    </IonGrid>
-                </IonModal>
+                </IonGrid>
+            </IonModal>
             
         </> 
             
@@ -720,9 +728,17 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
         //
         const fechaAltaTexto = `${fechaAltaDate.getDate().toString().padStart(2, "00")}-${(fechaAltaDate.getMonth() + 1).toString().padStart(2, "00")}-${fechaAltaDate.getFullYear()} ${fechaAltaDate.getHours().toString().padStart(2, "00")}:${fechaAltaDate.getMinutes().toString().padStart(2, "00")}`;
-        let tituloReserva = "Rellenar Reserva VuelaCar";
+        let tituloReserva = "Rellenar Reserva";
         let colorCabecera = "grid_cabecera grid_cabecera_reserva";
 
+        if (flota === "v")
+        {
+            tituloReserva += " VuelaCar";
+        }
+        else
+        {
+            tituloReserva += " Exterior";
+        }
 
         switch (estado) {
             case ENUM_TIPOS_ESTADO.prereservado:
@@ -741,6 +757,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                 colorCabecera = "grid_cabecera grid_cabecera_alquilado";
                 break;
         }
+
 
         let horaEntregaItem = null;
         let lugarEntregaItem = null;
@@ -774,8 +791,13 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             
         }
         
-        if (estado !== ENUM_TIPOS_ESTADO.prereservado) 
+        if (
+            (props.isDoubleclickItem === true && estado === ENUM_TIPOS_ESTADO.prereservado) ||
+            (estado !== ENUM_TIPOS_ESTADO.prereservado)
+
+        )
         {
+
             horaEntregaItem = 
                 <IonItem>
                     <IonLabel className="">Hora de entrega</IonLabel>
@@ -838,8 +860,6 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                 </IonItem>
             ;
 
-            
-
             numeroReservaItem =
                 <IonItem>
                     <IonLabel className="">Numero Reserva</IonLabel>
@@ -894,8 +914,15 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
         }
 
+        if (estado === ENUM_TIPOS_ESTADO.reservado)
+        {
+            flotaItem = null;
+        }
 
-        return { 
+
+        return {
+            id,
+            group,
             tituloReserva,
             colorCabecera,
             fechaAltaTexto,
@@ -929,13 +956,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             estadoItem,
             modeloVehiculoItem
 
-
-
-
         }
-
-
-
 
     }
 

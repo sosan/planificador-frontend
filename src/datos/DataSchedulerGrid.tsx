@@ -65,9 +65,9 @@ class DataSchedulerGrid
             title: ' ',
             start_time: new Date(new Date().setHours(0, 0, 0)),
             end_time: new Date(new Date().setHours(23, 59, 59)),
-            canMove: true,
-            canResize: true,
-            canChangeGroup: true,
+            canMove: false,
+            canResize: false,
+            canChangeGroup: false,
             modalState: {
                 fechaAlta: "asdasd",
                 notareserva: "asdasd",
@@ -111,9 +111,9 @@ class DataSchedulerGrid
 
                 start_time: new Date(),
                 end_time: new Date(),
-                canMove: true,
-                canResize: true,
-                canChangeGroup: true,
+                canMove: false,
+                canResize: false,
+                canChangeGroup: false,
 
                 itemProps: {
                     'data-custom-attribute': 'Random content',
@@ -280,7 +280,7 @@ class DataSchedulerGrid
     }
     updateGroupReservaExterior(state: ContainerState, position: number) {
         this.groupsReservaExterior[position as number].matricula = state.modalState.matricula as string;
-        this.groupsReservaExterior[position as number].modelo = state.modalState.modelo as string;
+        this.groupsReservaExterior[position as number].modelo = state.modalState.modeloVehiculo as string;
         this.groupsReservaExterior[position as number].clasevehiculo = state.modalState.claseVehiculo as string;
         this.groupsReservaExterior[position as number].flota = state.modalState.flota as string;
     }
@@ -290,11 +290,15 @@ class DataSchedulerGrid
 
     updateGroupReservaVuelaCar(state: ContainerState, position: number) {
         this.groupsReservaVuelaCar[position as number].matricula = state.modalState.matricula as string;
-        this.groupsReservaVuelaCar[position as number].modelo = state.modalState.modelo as string;
+        this.groupsReservaVuelaCar[position as number].modelo = state.modalState.modeloVehiculo as string;
         this.groupsReservaVuelaCar[position as number].clasevehiculo = state.modalState.claseVehiculo as string;
         this.groupsReservaVuelaCar[position as number].flota = state.modalState.flota as string;
     }
     
+    reemplacePrereservas(listadoE: IListadoPrereserva[]) {
+        this.itemsPreReservas = [...listadoE];
+    }
+
     reemaplceReservasExterior(listadoE: IListadoPrereserva[]) {
         this.itemsReservasExterior = [...listadoE];
     }
@@ -307,9 +311,11 @@ class DataSchedulerGrid
     reemplaceAllGroupReservaVuelaCar(grupoV: typeGroup[]) {
         this.groupsReservaVuelaCar = [...grupoV];
     }
+
+
     updateGroupPrereserva(state: ContainerState, position: number) {
         this.groupsPreReserva[position].matricula = state.modalState.matricula as string;
-        this.groupsPreReserva[position].modelo = state.modalState.modelo as string;
+        this.groupsPreReserva[position].modelo = state.modalState.modeloVehiculo as string;
         this.groupsPreReserva[position].clasevehiculo = state.modalState.claseVehiculo as string;
         this.groupsPreReserva[position].flota = state.modalState.flota as string;
     }
@@ -339,7 +345,23 @@ class DataSchedulerGrid
             });
     }
 
+    searchGroupByMatricula(grupo: typeGroup[], matricula: string): [boolean, number] {
+        let exist = false;
+        let grupoId = -1;
 
+        for (let i = 0; i < grupo.length; i++) {
+            if (grupo[i].matricula.toLowerCase() === matricula.toLowerCase()) {
+
+                exist = true;
+                grupoId = grupo[i].id;
+                break;
+
+            }
+        }
+
+        return [exist, grupoId];
+
+    }
 
 
 
@@ -374,7 +396,47 @@ class DataSchedulerGrid
     }
 
 
+    deletePrereservadoById(_id: number)
+    {
 
+        for (let i = 0; i < this.itemsPreReservas.length; i++)
+        {
+            if (this.itemsPreReservas[i].id === _id )
+            {
+                console.log("borrado _id=" + _id) ;
+                this.itemsPreReservas.splice(i, 1);
+            }
+
+        }
+
+    }
+
+
+    deleteReservadoVuelacarById(_id: number) {
+
+        for (let i = 0; i < this.itemsReservasVuelaCar.length; i++) {
+            if (this.itemsReservasVuelaCar[i].id === _id) {
+                console.log("borrado _id=" + _id);
+                this.itemsReservasVuelaCar.splice(i, 1);
+                break;
+            }
+
+        }
+
+    }
+
+    deleteReservadoExteriorById(_id: number) {
+
+        for (let i = 0; i < this.itemsReservasExterior.length; i++) {
+            if (this.itemsReservasExterior[i].id === _id) {
+                console.log("borrado _id=" + _id);
+                this.itemsReservasExterior.splice(i, 1);
+                break;
+            }
+
+        }
+
+    }
 
 
 }
