@@ -15,8 +15,8 @@ export interface IListadoPrereserva {
     id: number;
     group: number;
     // fechaAlta: string;
-    start_time: Date,
-    end_time: Date, //moment.Moment,
+    start_time: number, //Date,
+    end_time: number, //Date,
     canMove: boolean,
     canResize: boolean,
     canChangeGroup: boolean,

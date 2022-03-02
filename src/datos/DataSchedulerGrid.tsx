@@ -1,32 +1,60 @@
-import { group } from "console";
-import { recordingSharp } from "ionicons/icons";
 import { ContainerState, IModalErrores } from "../components/Modal";
 import { typeGroup } from "../components/SchedulerGrid";
-import { IListadoPrereserva, IDataVehiculos, dataCars, ORDEN_LISTADO_MODELO_VEHICULOS, DEFAULT_TEXT_MATRICULA } from "./vehiculosGeneral";
-
-class DataSchedulerGrid
+import { IListadoPrereserva, IDataVehiculos, ORDEN_LISTADO_MODELO_VEHICULOS } from "./vehiculosGeneral";
+import { repoStorage } from "../interfaces/logicStorage";
+export class DataSchedulerGrid
 {
-    
-    
 
-    groupsReservaVuelaCar: typeGroup[];
-    groupsReservaExterior: typeGroup[];
-    groupsPreReserva: typeGroup[];
-    listadoClaseVehiculos: string[];
-    listadoModelosVehiculos: string[];
+    groupsReservaVuelaCar: typeGroup[] = [];
+    groupsReservaExterior: typeGroup[] = [];
+    groupsPreReserva: typeGroup[] = [];
+    listadoClaseVehiculos: string[] = [];
+    listadoModelosVehiculos: string[] = [];
     itemsReservasVuelaCar: IListadoPrereserva[] = [];
     itemsReservasExterior: IListadoPrereserva[] = [];
     itemsPreReservas: IListadoPrereserva[] = [];
+    DEBUG = true;
 
     testing: string = "";
+    isReady: boolean = false;
+
+    // constructor(dataCarsProps: any)
+    // {
+    //     this.setupDb(dataCarsProps);
+    // }
+
+    getIsReady(): boolean
+    {
+        return this.isReady;
+    }
+
+    setIsReady(value: boolean)
+    {
+        this.isReady = value;
+    }
 
     
-
-    constructor(dataCarsProps: any)
+    async setupDb(dataCarsProps: any)
     {
+        this.setIsReady(false);
         
-        let groupsData = this.createGroupForCars(dataCarsProps);
-
+        const cantidadKeys = await repoStorage.getLengthGroupReservasVuelaCar();
+        console.log("cantidadKeys=" + cantidadKeys);
+        if (cantidadKeys === 0)
+        {
+            await this.generateDB(dataCarsProps);
+        }
+        else
+        {
+            await this.readFromDB();
+        }
+        this.setIsReady(true);
+        
+    }
+    
+    async generateDB(dataCarsProps: any)
+    {
+        let groupsData = await this.createGroupForCars(dataCarsProps);
         this.groupsReservaVuelaCar = groupsData.groupCreated;
         this.listadoClaseVehiculos = groupsData.arrayListadoClasesVehiculos;
         this.listadoModelosVehiculos = groupsData.arrayListadoModelosVehiculos;
@@ -42,9 +70,9 @@ class DataSchedulerGrid
                 "bgColor": "#3796f3",
                 "height": 2,
             },
-
+    
         ];
-
+    
         this.groupsReservaExterior = [
             {
                 "id": 0,
@@ -56,16 +84,15 @@ class DataSchedulerGrid
                 "bgColor": "#3796f3",
                 "height": 2,
             },
-
+    
         ];
-
-
+    
         this.itemsPreReservas = [{
             id: 0,
             group: 0,
             title: ' ',
-            start_time: new Date(new Date().setHours(0, 0, 0)),
-            end_time: new Date(new Date().setHours(23, 59, 59)),
+            start_time: new Date(new Date().setHours(0, 0, 0)).getTime(),
+            end_time: new Date(new Date().setHours(23, 59, 59)).getTime(),
             canMove: false,
             canResize: false,
             canChangeGroup: false,
@@ -85,11 +112,9 @@ class DataSchedulerGrid
             itemProps: {
                 className: 'altura-items-inicio',
             }
-
+    
         },];
-
-        
-        
+    
         this.itemsReservasVuelaCar = [
             {
                 id: 1,
@@ -107,71 +132,105 @@ class DataSchedulerGrid
                     estado: "reservado",
                     isPrereserva: false,
                     isNewRegister: false,
-
+    
                 },
-
-                start_time: new Date(),
-                end_time: new Date(),
+    
+                start_time: new Date().getTime(),
+                end_time: new Date().getTime(),
                 canMove: false,
                 canResize: false,
                 canChangeGroup: false,
-
+    
                 itemProps: {
                     'data-custom-attribute': 'Random content',
                     'aria-hidden': true,
-                    onDoubleClick: () => { console.log('You clicked double!') },
+                    onDoubleClick: () => { console.log('You clicked double!');  },
                     className: 'altura-items',
                     style: {
                         background: 'fuchsia',
                     }
                 }
-
+    
             },
-
+    
         ];
+    
+        const startTime = new Date(this.itemsReservasVuelaCar[0].start_time).setHours(0, 0, 0);
+        const endTime = new Date(this.itemsReservasVuelaCar[0].end_time).setHours(23, 59, 59);
 
-        this.itemsReservasVuelaCar[0].start_time.setHours(0, 0, 0);
-        this.itemsReservasVuelaCar[0].end_time.setHours(23, 59, 59);
+        this.itemsReservasVuelaCar[0].start_time = new Date(startTime).getTime();
+        this.itemsReservasVuelaCar[0].end_time = new Date(endTime).getTime();
         this.itemsReservasExterior.push(this.itemsReservasVuelaCar[0]);
 
+        await repoStorage.insertGroupsPreReserva(this.groupsPreReserva);
+        await repoStorage.insertGroupsReservaExterior(this.groupsReservaExterior);
 
-        
+        await repoStorage.insertItemsPreReservas(this.itemsPreReservas);
+        await repoStorage.insertItemsReservaVuelaCar(this.itemsReservasVuelaCar);
+        await repoStorage.insertItemsReservasExterior(this.itemsReservasExterior);
+
     }
 
-    createGroupForCars(cars: IDataVehiculos[]) {
+    async readFromDB()
+    {
+
+        this.groupsReservaVuelaCar = await repoStorage.getGroupsReservaVuelaCar();
+        this.groupsReservaExterior = await repoStorage.getGroupsReservaExterior();
+        this.groupsPreReserva = await repoStorage.getGroupsPreReserva();
+
+        this.listadoClaseVehiculos = await repoStorage.getlistadoClasesVehiculos();
+        this.listadoModelosVehiculos = await repoStorage.getlistadoModelosVehiculos();
+
+        this.itemsPreReservas = await repoStorage.getItemsPreReservas();
+        this.itemsReservasVuelaCar = await repoStorage.getItemsReservasVuelaCar();
+        this.itemsReservasExterior = await repoStorage.getItemsReservasExterior();
+
+        console.log("conversion")
+
+
+    }
+
+    async createGroupForCars(cars: IDataVehiculos[]) {
         let groupCreated: typeGroup[] = [];
         let listadoModelosVehiculos: Set<string> = new Set<string>();
         let listadoClasesVehiculos: Set<string> = new Set<string>();
 
-        for (let i = 0; i < cars.length; i++) {
+        for (let i = 0; i < cars.length; i++) 
+        {
             listadoClasesVehiculos.add(cars[i].clasevehiculo);
             listadoModelosVehiculos.add(cars[i].modelo);
-            groupCreated.push(
-                {
-                    "id": i,
-                    "title": `${cars[i].descripcion}`,
-                    "clasevehiculo": `${cars[i].clasevehiculo}`,
-                    "vehiculo": `${cars[i].vehiculo}`,
-                    "modelo": `${cars[i].modelo}`,
-                    "srcImage": "",
-                    "rightTitle": "",
-                    "height": 50,
-                    "stackItems": true,
-                    "flota": "v",
-                    "matricula": `${cars[i].matricula}`
-                });
+            const elementTemp = {
+                "id": i,
+                "title": `${cars[i].descripcion}`,
+                "clasevehiculo": `${cars[i].clasevehiculo}`,
+                "vehiculo": `${cars[i].vehiculo}`,
+                "modelo": `${cars[i].modelo}`,
+                "srcImage": "",
+                "rightTitle": "",
+                "height": 50,
+                "stackItems": true,
+                "flota": "v",
+                "matricula": `${cars[i].matricula}`
+            };
+            groupCreated.push(elementTemp);
 
         }
 
 
         groupCreated = this.orderGroupCars(groupCreated, ORDEN_LISTADO_MODELO_VEHICULOS);
+        
         const arrayListadoClasesVehiculos = Array.from(listadoClasesVehiculos);
         const arrayListadoModelosVehiculos = Array.from(listadoModelosVehiculos);
+        
+        await repoStorage.insertGroupsReservaVuelaCar(groupCreated);
+        await repoStorage.insertlistadoClasesVehiculos(arrayListadoClasesVehiculos);
+        await repoStorage.insertlistadoModelosVehiculos(arrayListadoModelosVehiculos);
 
-        console.log("Modelos vehiculos" + JSON.stringify(arrayListadoModelosVehiculos));
-        console.log("Clases vehiculos" + JSON.stringify(arrayListadoClasesVehiculos));
+        // console.log("Modelos vehiculos" + JSON.stringify(arrayListadoModelosVehiculos));
+        // console.log("Clases vehiculos" + JSON.stringify(arrayListadoClasesVehiculos));
         return { groupCreated, arrayListadoClasesVehiculos, arrayListadoModelosVehiculos };
     }
+    
 
     orderGroupCars(cars: typeGroup[], ordenListadoCoches: string[]) {
         let groupOrdered: typeGroup[] = [];
@@ -257,6 +316,41 @@ class DataSchedulerGrid
         }
 
         return [matricula, vehiculo];
+
+    }
+
+
+    async searchReservaVuelaCarByID(_id: number)
+    {
+        for (let i = 0; i < this.itemsReservasVuelaCar.length; i++) {
+            if (this.itemsReservasVuelaCar[i].id === _id) {
+                return this.itemsReservasVuelaCar[i];
+            }
+
+        }
+
+
+    }
+
+    async searchPreReservaByID(_id: number) {
+        for (let i = 0; i < this.itemsPreReservas.length; i++) {
+            if (this.itemsPreReservas[i].id === _id) {
+                return this.itemsPreReservas[i];
+            }
+
+        }
+
+
+    }
+
+    async searchReservaExteriorByID(_id: number) {
+        for (let i = 0; i < this.itemsReservasExterior.length; i++) {
+            if (this.itemsReservasExterior[i].id === _id) {
+                return this.itemsReservasExterior[i];
+            }
+
+        }
+
 
     }
 
@@ -470,8 +564,20 @@ class DataSchedulerGrid
     }
 
 
+
+
 }
 
 
-export let dataSchedulerGrid = new DataSchedulerGrid(dataCars);
+// export let dataSchedulerGrid = new DataSchedulerGrid();
+
+// dataSchedulerGrid.setupDb(dataCars);
+// console.log("asignado")
+
+// this.#instancePromise = (async () => {
+//     const response = await fetch('./base64.wasm');
+//     if (!response.ok) throw Error('...');
+//     const arrayBuffer = await response.arrayBuffer();
+//     return WebAssembly.instantiate(arrayBuffer);
+// })();
 

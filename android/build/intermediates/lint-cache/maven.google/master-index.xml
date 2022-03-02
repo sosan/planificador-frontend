@@ -66,6 +66,7 @@
   <androidx.media2/>
   <androidx.media3/>
   <androidx.mediarouter/>
+  <androidx.metrics/>
   <androidx.multidex/>
   <androidx.navigation/>
   <androidx.navigation.safeargs/>

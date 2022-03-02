@@ -14,10 +14,10 @@ import * as categoriasManager from "../datos/listadoCategorias";
 
 const DashboardContainer: any = () => {
 
-    const clicked = async () => {
-        console.log("clicked")
+    // const clicked = async () => {
+    //     console.log("clicked")
 
-    };
+    // };
 
     const GetListCategories = (categorias: categoriasManager.IItemCategoria[]) => {
 

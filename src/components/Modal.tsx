@@ -29,8 +29,8 @@ export interface IModalState
     vehiculo?: string;
     cantidadDias?: number;
     fechaAlta?: string;
-    fechaRecogida?: Date;
-    fechaDevolucion?: Date;
+    fechaRecogida?: number;
+    fechaDevolucion?: number;
     modeloVehiculo?: string;
     claseVehiculo?: string;
     showItem?: boolean;
@@ -191,6 +191,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             "isFirstTime": false,
         };
 
+        
     }
 
     componentDidMount()
@@ -246,8 +247,8 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         let estadoActual: IModalState = this.state.modalState;
         estadoActual["cantidadDias"] = 3;
         estadoActual["textoFechaDevolucionVisible"] = true;
-        estadoActual["fechaRecogida"] = fechaRecogida;
-        estadoActual["fechaDevolucion"] = fechaDevolucion;
+        estadoActual["fechaRecogida"] = fechaRecogida.getTime();
+        estadoActual["fechaDevolucion"] = fechaDevolucion.getTime();
 
         this.setState({ "modalState": { ...estadoActual }});
 
@@ -265,15 +266,15 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
     onChangeInputNumeroDias(evento: CustomEvent<InputChangeEventDetail>)
     {
         const dias = parseInt( evento.detail.value as string) ;
-        const fechaRecogida = new Date(this.state.modalState.fechaRecogida as Date);
+        const fechaRecogida = new Date(this.state.modalState.fechaRecogida as number);
         const fechaRecogidaTemp = new Date(fechaRecogida);
         const fechaDevolucion = new Date(fechaRecogidaTemp.setDate(fechaRecogidaTemp.getDate() + (dias - 1)));
 
         let estado: ContainerState = this.state;
         estado["modalState"]["cantidadDias"] = dias;
         estado["modalState"]["textoFechaDevolucionVisible"] = true;
-        estado["modalState"]["fechaRecogida"] = fechaRecogida;
-        estado["modalState"]["fechaDevolucion"] = fechaDevolucion;
+        estado["modalState"]["fechaRecogida"] = fechaRecogida.getTime();
+        estado["modalState"]["fechaDevolucion"] = fechaDevolucion.getTime();
 
         this.setState({ ...estado });
         
@@ -301,39 +302,6 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
     saveProps(state: ContainerState, _idModal: number, groupId: number, fechaAlta: string)
     {
         
-        //TODO: realizar mas comprobaciones de si todos los campos estan rellenados
-        /// ....
-        // if (state.modalState.modeloVehiculo === "" ||
-        //     state.modalState.claseVehiculo === "" ||
-        //     state.modalState.fechaRecogida === undefined ||
-        //     state.modalState.fechaRecogida.toString() === "Invalid Date" ||
-        //     state.modalState.fechaDevolucion?.toString()=== "Invalid Date"
-
-        // ) {
-        //     this.textoErrores = "Modelo vehiculo erroneo";
-        //     return;
-        // }
-        
-        // if (state.modalState.matricula === "" ||
-        //     state.modalState.matricula === undefined ||
-        //     state.modalState.fechaRecogida?.toString() === "" ||
-        //     state.modalState.fechaDevolucion?.toString() === ""
-        // ) {
-        //     state.modalState.matricula = DEFAULT_TEXT_MATRICULA;
-        // }
-        
-        // if (state.modalState.estado === "" || state.modalState.estado === undefined) {
-        //     state.modalState.estado = ENUM_TIPOS_ESTADO.prereservado;
-        // }
-
-        // if (state.modalState.matricula === DEFAULT_TEXT_MATRICULA && state.modalState.estado === ENUM_TIPOS_ESTADO.reservado)
-        // {
-        //     this.textoErrores = "Cambia matricula";
-        //     return;
-
-        // }
-        
-
         // buscar si ya existe la misma matricula en el mismo tiempo
         
         let textoErrores = "";
@@ -718,7 +686,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         }
 
         if (fechaRecogida !== undefined) {
-            textoFechaRecogida = fechaRecogida.toISOString();
+            textoFechaRecogida = new Date(fechaRecogida).toISOString();
 
             const fechaRecogidaTempo = new Date(fechaRecogida);
             const fechaDevolucion = new Date(fechaRecogidaTempo.setDate(fechaRecogidaTempo.getDate() + (this.state.modalState.cantidadDias as number - 1)));

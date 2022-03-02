@@ -13,7 +13,7 @@ import {
 
 } from 'ionicons/icons';
 
-import Completar_reservaContainer from "../components/Completar_reservaContainer";
+import CompletarReservaContainer from "../components/Completar_reservaContainer";
 
 // import DashboardContainer from "../pages/DashboardContainer";
 import SubalquileresContainer from "../components/SubalquileresContainer";
@@ -21,12 +21,12 @@ import FlotaContainer from "../components/FlotaContainer";
 import MotosContainer from "../components/MotosContainer";
 
 import PrereservarContainer from "../components/PrereservarContainer";
-import { SchedulerContainer } from '../components/SchedulerGrid';
 
 import { MenuContratos } from '../pages/MenuContratosContainer';
 import { IngresarContrato } from '../components/IngresarContratoContainer';
 import { ModificarContrato } from '../components/ModificarContratoContainer';
 
+import { SchedulerContainer } from '../components/SchedulerGrid';
 
 // 1.Planinging
 //  Preservas
@@ -71,7 +71,7 @@ export const categoriasDashboard: IItemCategoria[] = [
         cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
         url: '/page/planning',
         containerId: "planning",
-        container: <></>, ///<SchedulerContainer name="schedulercontainer" />
+        container: <></>,
         iosIcon: mailOutline,
         mdIcon: mailSharp
     },
@@ -169,7 +169,7 @@ export const categoriasPlaning: IItemCategoria[] = [
         cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
         url: '/page/completar_reserva',
         containerId: "Completar_reserva",
-        container: <Completar_reservaContainer />,
+        container: <></>, //<CompletarReservaContainer />,
         iosIcon: paperPlaneOutline,
         mdIcon: paperPlaneSharp
     },
@@ -182,7 +182,7 @@ export const categoriasPlaning: IItemCategoria[] = [
         colorBackground: "colorBackgroundCategorias",
         cardTitle: "Flota",
         containerId: "Flota",
-        container: <FlotaContainer />,
+        container: <></>, //<FlotaContainer />,
         cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
         iosIcon: heartOutline,
         mdIcon: heartSharp
@@ -197,7 +197,7 @@ export const categoriasPlaning: IItemCategoria[] = [
         cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
         url: '/page/motos',
         containerId: "Motos",
-        container: <MotosContainer />,
+        container: <></>, //<MotosContainer />,
         iosIcon: archiveOutline,
         mdIcon: archiveSharp
     },
@@ -211,7 +211,7 @@ export const categoriasPlaning: IItemCategoria[] = [
         colorBackground: "colorBackgroundCategorias",
         url: '/page/subalquileres',
         containerId: "Subalquileres",
-        container: <SubalquileresContainer />,
+        container: <></>, //<SubalquileresContainer />,
         iosIcon: trashOutline,
         mdIcon: trashSharp
     }
@@ -296,7 +296,7 @@ export const categoriasFacturacion: IItemCategoria[] = [
         cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
         url: '/page/completar_reserva',
         containerId: "Completar_reserva",
-        container: <Completar_reservaContainer />,
+        container: <CompletarReservaContainer />,
         iosIcon: paperPlaneOutline,
         mdIcon: paperPlaneSharp
     },
@@ -372,7 +372,7 @@ export const categoriasMultas: IItemCategoria[] = [
         cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
         url: '/page/completar_reserva',
         containerId: "Completar_reserva",
-        container: <Completar_reservaContainer />,
+        container: <CompletarReservaContainer />,
         iosIcon: paperPlaneOutline,
         mdIcon: paperPlaneSharp
     },
@@ -449,7 +449,7 @@ export const categoriasInformes: IItemCategoria[] = [
         cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
         url: '/page/completar_reserva',
         containerId: "Completar_reserva",
-        container: <Completar_reservaContainer />,
+        container: <CompletarReservaContainer />,
         iosIcon: paperPlaneOutline,
         mdIcon: paperPlaneSharp
     },

@@ -161,9 +161,19 @@
     text-transform: uppercase;
 }
 
+.sticky
+{
+    position: sticky;
+    top: 54;
+    z-index: 2000;
+}
 
-
-
+.sticky-header
+{
+    position: sticky;
+    top: 0;
+    z-index: 2000;
+}
 
 /* .rct-calendar-header
 {

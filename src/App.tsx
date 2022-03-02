@@ -1,9 +1,7 @@
-import { useState } from 'react';
+import {  Component } from 'react';
 import { IonApp, IonRouterOutlet, IonSplitPane, IonLoading } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
-// import {  } from './datos/Data';
-// import Menu from './components/Menu';
 import Page from './pages/Page';
 
 /* Core CSS required for Ionic components to work properly */
@@ -26,34 +24,74 @@ import '@ionic/react/css/display.css';
 import './css/variables.css';
 
 
-const App: React.FC = () => {
 
-  const [showLoading, setShowLoading] = useState(true);
+type ContainerState = {
+  showLoading: boolean;
+  setShowLoading: boolean;
+}
 
-  return (
-    <IonApp>
-      <IonLoading
-        cssClass='my-custom-class'
-        isOpen={showLoading}
-        onDidDismiss={() => setShowLoading(false)}
-        message={'Cargando...'}
-        duration={1000}
-      />
-      <IonReactRouter>
-        <IonSplitPane contentId="main" disabled={true}>
-          {/* <Menu />  Menu comentado */}
-          <IonRouterOutlet id="main">
-            <Route path="/" exact={true}>
-              <Redirect to="/page/Dashboard" />
-            </Route>
-            <Route path="/page/:name" exact={true}>
-              <Page />
-            </Route>
-          </IonRouterOutlet>
-        </IonSplitPane>
-      </IonReactRouter>
-    </IonApp>
-  );
-};
+type ContainerProps = {
+  showLoading: boolean;
+  setShowLoading: boolean;
+}
+
+
+export class App extends Component<ContainerProps, ContainerState> {
+
+  constructor(props: any)
+  {
+    super(props);
+
+    this.state = {
+      showLoading: true,
+      setShowLoading: true,
+    };
+
+  }
+
+  render()
+  {
+    
+    // let intervalo = setInterval( () => {
+  
+    //     if (DataSchedulerGrid.getIsReady() === true)
+    //     {
+    //       this.setState({ setShowLoading: false });
+    //       clearInterval(intervalo);
+    //     }
+  
+    // }, 1000);
+
+    const { showLoading } = this.state;
+    
+    
+    return (
+      <IonApp>
+        <IonLoading
+          cssClass='my-custom-class'
+          isOpen={showLoading}
+          onDidDismiss={ () => {this.setState({ setShowLoading: false}); } }
+          message={'Cargando...'}
+          duration={1000}
+        />
+        <IonReactRouter>
+          <IonSplitPane contentId="main" disabled={true}>
+            {/* <Menu />  Menu comentado */}
+            <IonRouterOutlet id="main">
+              <Route path="/" exact={true}>
+                <Redirect to="/page/Dashboard" />
+              </Route>
+              <Route path="/page/:name" exact={true}>
+                <Page />
+              </Route>
+            </IonRouterOutlet>
+          </IonSplitPane>
+        </IonReactRouter>
+      </IonApp>
+    );
+  }
+
+
+}
 
 export default App;

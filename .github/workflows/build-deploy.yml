@@ -51,12 +51,6 @@ jobs:
         # run: ./gradlew assembleRelease
         run: ./gradlew build --no-daemon
 
-      - name: LS
-        run:  ls ~/.android
-
-      - name: CAT 
-        run: cat ~/.android/debug.keystore
-
       - name: Sign Android build
         run: jarsigner -keystore src/keystorefile.jks -storepass kleptor123 -keypass kleptor123 android/app/build/outputs/apk/release/app-release-unsigned.apk key0
         # run: jarsigner -sigalg SHA1withRSA -digestalg SHA1 -keystore ~/.android/debug.keystore ./android/app/build/outputs/apk/release/app-release-unsigned.apk androiddebugkey --storepass android

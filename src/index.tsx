@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+// -----------
 
+
+// -------------
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App showLoading={true} setShowLoading={true}/>
   </React.StrictMode>,
   document.getElementById('root')
 );

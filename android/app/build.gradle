@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('/media/jose/1E341780341759DB/javascript_proyectos/rentcarmallorca/planificador/planificador_frontend/src/keystorefile.jks')
+            storePassword 'kleptor123'
+            keyAlias 'key0'
+            keyPassword 'kleptor123'
+        }
+    }
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "planificador.frontend.com"
@@ -14,6 +22,7 @@ android {
              // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
             ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
+        signingConfig signingConfigs.debug
     }
     buildTypes {
         release {

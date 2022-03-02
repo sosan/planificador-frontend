@@ -8,6 +8,8 @@ import {
 
 } from '@ionic/react';
 
+import { StickyContainer, Sticky } from "react-sticky";
+
 import { LISTADO_IMAGENES_COCHES } from "../datos/imagenescoches";
 
 // import { IDataEventos } from "./SchedulerGrid";
@@ -195,6 +197,7 @@ export default class TimelineWrapper extends Component {
                     // onItemResize={this.handleItemResize}
                     onTimeChange={this.handleTimeChange}
                     onCanvasDoubleClick={(groupId, time, evento) => { this.props.onDoubleClicked(groupId, time, evento); } }
+                    onItemDoubleClick={(itemId, e, time) => { this.props.onItemDoubleClick(itemId, e, time ); }  }
                     // itemRenderer={this.itemRenderer}
                 >
                     <TimelineMarkers>
@@ -205,8 +208,18 @@ export default class TimelineWrapper extends Component {
                         </TodayMarker>
                     </TimelineMarkers>
 
-                    <TimelineHeaders>
-                        <SidebarHeader>
+                    <TimelineHeaders className=''>
+                        <StickyContainer>
+                            <Sticky>
+                                {({
+                                    style,
+
+                                    isSticky,
+                                    wasSticky,
+                                    distanceFromTop,
+                                    distanceFromBottom,
+                                    calculatedHeight
+                                }) => ( <SidebarHeader>
                             {({ getRootProps }) => {
                                 
                                 return <div {...getRootProps()}>
@@ -225,7 +238,8 @@ export default class TimelineWrapper extends Component {
                                     }
                                 </div>
                             }}
-                        </SidebarHeader>
+                                </SidebarHeader>)}
+                            </Sticky>
                         <DateHeader 
                             {...{
                                 intervalRenderer: ({ getIntervalProps, intervalContext }) => {
@@ -253,6 +267,7 @@ export default class TimelineWrapper extends Component {
                             }}
                         unit="month" />
                         <DateHeader unit="day" style={{ height: 50 }} />
+                        </StickyContainer>
                     </TimelineHeaders>
                 </Timeline>
             </div>

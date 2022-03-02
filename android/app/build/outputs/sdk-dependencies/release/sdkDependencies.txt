@@ -291,6 +291,16 @@ library {
     sha256: "IaE\237\234J[\305\2773\303\2158m\023\033\257\365 \304\221\267\031\205\032\021\177\vd\266\177N"
   }
 }
+library {
+  digests {
+    sha256: "\367J\202Q\337{\a\227~\220\363=\246\236\305\345\325;\003aE`e+v>\237r\2022\336\022"
+  }
+}
+library {
+  digests {
+    sha256: "Ope\201\332>X\201\240\"\307\246\352x\213e,\325ef\351{\354\214\363\355LLXh\360\351"
+  }
+}
 library_dependencies {
   library_dep_index: 1
   library_dep_index: 2
@@ -453,7 +463,15 @@ library_dependencies {
   library_dep_index: 21
   library_dep_index: 7
 }
+library_dependencies {
+  library_index: 29
+}
+library_dependencies {
+  library_index: 30
+}
 module_dependencies {
   module_name: "base"
   dependency_index: 0
+  dependency_index: 29
+  dependency_index: 30
 }
