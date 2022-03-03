@@ -36,7 +36,7 @@ type ContainerState = {
     errores: IModalErrores;
     showLoading?: boolean;
     setShowLoading?: boolean;
-
+    dummy?: boolean;
 }
 
 export type typeGroup =
@@ -90,11 +90,26 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     _dataSchedulerGrid: any;
 
+    _visibleTimeStart: number = 0; // = moment().add(-5, 'day').valueOf();
+    _visibleTimeEnd: number = 0; //= moment().add(15, 'day').valueOf();
+
     constructor(props: any) {
         super(props);
 
+        this.setDefaultDate();
         this.state = this.defaultState;
+    }
+    
+    setDefaultDate()
+    {
+        const today = new Date();
+        const fivedaysago = new Date(new Date().setDate( today.getDate() - 5));
+        const quincedias = new Date(new Date().setDate( today.getDate() + 15 ));
+    
+        this._visibleTimeStart = fivedaysago.getTime();
+        this._visibleTimeEnd = quincedias.getTime();
 
+        this.setState({ "dummy": false });
     }
 
 
@@ -1048,6 +1063,12 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                         this.anadirPreReserva(_state);
                     }
                     } className="boton_reserva_vuelacar" fill='solid' color="#ffffff">Reserva Vuelacar</IonButton>
+                    
+                    <IonButton onClick={() => {
+                        this.setDefaultDate();
+                    }
+                    } className="boton_reserva_vuelacar" fill='solid' color="#ffffff">HOY</IonButton>
+
                     <IonButton href='/page/Dashboard' className="boton-volver" fill='solid' color="#ffffff">Volver</IonButton>
                 </div>
                 <div className='fila_timelines'>
@@ -1061,6 +1082,9 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                         subalquileres={false}
                         onDoubleClicked={this.onDoubleClickedTimelineReservas}
                         onItemDoubleClick={this.onItemDoubleClickReservas}
+                        stickyHeader={true}
+                        visibleTimeStartProp={this._visibleTimeStart}
+                        visibleTimeEndProp={this._visibleTimeEnd}
 
                     />
                     <h3 className='titulo-subalquileres-timeline'>SUBALQUILERES</h3>

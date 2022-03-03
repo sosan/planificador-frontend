@@ -8,7 +8,7 @@ import {
 
 } from '@ionic/react';
 
-import { StickyContainer, Sticky } from "react-sticky";
+import Sticky from 'react-stickynode';
 
 import { LISTADO_IMAGENES_COCHES } from "../datos/imagenescoches";
 
@@ -38,14 +38,16 @@ const DRAG_SNAP = 60 * 60 * 24 * 1000;
 
 export default class TimelineWrapper extends Component {
     
+    // _visibleTimeStart = 0;
+    // _visibleTimeEnd = 0;
 
     constructor(props) {
         super(props);
         
         const _defaultTimeStart = moment().add(-2, 'day');
         const _defaultTimeEnd = moment().add(2, 'day');
-        const _visibleTimeStart = moment().add(-5, 'day').valueOf();
-        const _visibleTimeEnd = moment().add(15, 'day').valueOf();
+        // this._visibleTimeStart = moment().add(-5, 'day').valueOf();
+        // this._visibleTimeEnd = moment().add(15, 'day').valueOf();
 
         this.state = { 
             groups: this.props.groups,
@@ -54,8 +56,8 @@ export default class TimelineWrapper extends Component {
             subalquileres: this.props.subalquileres,
             defaultTimeStart: _defaultTimeStart,
             defaultTimeEnd: _defaultTimeEnd,
-            visibleTimeStart: _visibleTimeStart,
-            visibleTimeEnd: _visibleTimeEnd
+            visibleTimeStart: this.props.visibleTimeStartProp,
+            visibleTimeEnd: this.props.visibleTimeEndProp
         };
         
         // console.log('estado primigenio: ', JSON.stringify(this.state));
@@ -147,7 +149,12 @@ export default class TimelineWrapper extends Component {
     };
 
     handleTimeChange = (visibleTimeStart, visibleTimeEnd) => {
-        
+        console.log("cambio tiempo")
+
+        // this._visibleTimeStart = visibleTimeStart;
+        // this._visibleTimeEnd = visibleTimeEnd;
+        // this.forceUpdate();
+
         this.setState({
             visibleTimeStart,
             visibleTimeEnd,
@@ -165,7 +172,9 @@ export default class TimelineWrapper extends Component {
 
         return (
             <div style={{ marginTop: `${this.props.marginTop}px` }}>
+                
                 <Timeline
+                    scrollableContainer={this.state.scrollableContainer}
                     groups={groups}
                     items={items}
                     resizeDetector={containerResizeDetector}
@@ -177,8 +186,6 @@ export default class TimelineWrapper extends Component {
                     
                     useResizeHandle={true}
                     fullUpdate
-                    // fixedHeader='sticky'
-                    // stickyOffset={100}
 
                     dragSnap={DRAG_SNAP}
                     itemTouchSendsClick={false}
@@ -207,19 +214,9 @@ export default class TimelineWrapper extends Component {
                             }
                         </TodayMarker>
                     </TimelineMarkers>
-
-                    <TimelineHeaders className=''>
-                        <StickyContainer>
-                            <Sticky>
-                                {({
-                                    style,
-
-                                    isSticky,
-                                    wasSticky,
-                                    distanceFromTop,
-                                    distanceFromBottom,
-                                    calculatedHeight
-                                }) => ( <SidebarHeader>
+                    
+                    <TimelineHeaders className={ (this.props.stickyHeader === true) ? "sticky-header"  : "" } >
+                        <SidebarHeader>
                             {({ getRootProps }) => {
                                 
                                 return <div {...getRootProps()}>
@@ -238,8 +235,7 @@ export default class TimelineWrapper extends Component {
                                     }
                                 </div>
                             }}
-                                </SidebarHeader>)}
-                            </Sticky>
+                        </SidebarHeader>
                         <DateHeader 
                             {...{
                                 intervalRenderer: ({ getIntervalProps, intervalContext }) => {
@@ -267,8 +263,9 @@ export default class TimelineWrapper extends Component {
                             }}
                         unit="month" />
                         <DateHeader unit="day" style={{ height: 50 }} />
-                        </StickyContainer>
+                       
                     </TimelineHeaders>
+
                 </Timeline>
             </div>
         );
