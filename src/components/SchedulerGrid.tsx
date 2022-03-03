@@ -534,7 +534,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                     // positiongroups = 0;
                     const elementoReserva = this.generateNewElementReservas(state.modalState, groupId, state.modalState.id as number ); //state.modalState.id as number); //state.modalState.group as number);
                     this._dataSchedulerGrid.insertNewElementReservasVuelaCar(elementoReserva);
-                    await repoStorage.insertNewElementReservasVuelaCar(elementoReserva);
+                    await repoStorage.insertReservaVuelaCar(elementoReserva);
                 }
 
                 
@@ -545,7 +545,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 positiongroups = 0;
                 const elementoReserva = this.generateNewElementReservas(state.modalState, state.modalState.group as number, state.modalState.id as number); //state.modalState.group as number);
                 this._dataSchedulerGrid.insertNewElementReservasExterior(elementoReserva);
-                await repoStorage.insertNewElementReservasExterior(elementoReserva);
+                await repoStorage.insertReservaExterior(elementoReserva);
             }
 
         }
@@ -571,9 +571,10 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
 
         // llevarnoslo al class
-        // let { grupo: grupoV, listado: listadoV } = this.deleteDuplicatedReservas(this._dataSchedulerGrid.groupsPreReserva, this._dataSchedulerGrid.itemsPreReservas, state);  //listadoPrereservas, state);
-        // this._dataSchedulerGrid.reemplaceGroupReservaExterior(grupoV);
-        // this._dataSchedulerGrid.reemplacePrereservas(listadoV);
+        // realizar limpieza en el db
+        let { grupo: grupoV, listado: listadoV } = this.deleteDuplicatedReservas(this._dataSchedulerGrid.groupsPreReserva, this._dataSchedulerGrid.itemsPreReservas, state);  //listadoPrereservas, state);
+        this._dataSchedulerGrid.reemplaceGroupReservaExterior(grupoV);
+        this._dataSchedulerGrid.reemplacePrereservas(listadoV);
 
         this.setState({ "modalReservasVisible": false });
 
@@ -582,7 +583,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
     }
 
 
-    saveDataPrereserva(state: IContainerModalState, isDoubleClicked: boolean) {
+    async saveDataPrereserva(state: IContainerModalState, isDoubleClicked: boolean) {
 
         let [existGroupPrereserva, positiongroupsPreReserva] = this.searchExistGroupById(this._dataSchedulerGrid.groupsPreReserva, state.modalState.group as number);
         let [existListadoPrereserva, positionListadoPreReserva] = this.searchExistListById(this._dataSchedulerGrid.itemsPreReservas, state.modalState.id as number);
@@ -591,6 +592,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             this._dataSchedulerGrid.insertNewElementGrupoPreReserva(state);
             positiongroupsPreReserva = this._dataSchedulerGrid.getLengthGroupsPreReserva() - 1; // this.groupsPreReserva.length - 1;
             // state.modalState.id = _idModal;
+
+            await repoStorage.insertNewElementGrupoPreReserva(state);
 
         }
         else {
@@ -714,12 +717,16 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
         if (existGroupPrereserva === false) {
             this._dataSchedulerGrid.itemsPreReservas.push(elementoPrereservas);
+            await repoStorage.insertPreReserva(elementoPrereservas);
         }
         else {
 
             this._dataSchedulerGrid.itemsPreReservas[positionListadoPreReserva as number] = elementoPrereservas;
+            await repoStorage.updatePreReserva(positionListadoPreReserva as number, elementoPrereservas);
         }
 
+
+        // realizar limpieza en la db?
         let { grupo: grupoV, listado: listadoV } = this.deleteDuplicatedReservas(this._dataSchedulerGrid.groupsReservaVuelaCar, this._dataSchedulerGrid.itemsReservasVuelaCar, state);
         this._dataSchedulerGrid.reemplaceAllGroupReservaVuelaCar(grupoV);
         this._dataSchedulerGrid.reemplaceReservasVuelaCar(listadoV);
@@ -902,15 +909,15 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     onSearchMatriculaAnotherTimeline(
         state: ContainerState,
-        externalPropItemsReservasVuelaCar: IListadoPrereserva[],
-        externalPropsItemsReservasExternal: IListadoPrereserva[],
+        itemsReservasVuelaCar: IListadoPrereserva[],
+        itemsReservasExternal: IListadoPrereserva[],
         externalPropsItemsPrereservas: IListadoPrereserva[]
     ) 
     {
 
-        if (state.modalState?.isNewRegister === true) {
-            return false;
-        }
+        // if (state.modalState?.isNewRegister === true) {
+        //     return false;
+        // }
 
         let foundMatricula = false;
 
@@ -922,9 +929,9 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         if (state.modalState?.estado === ENUM_TIPOS_ESTADO.prereservado) 
         {
 
-            let listado = externalPropItemsReservasVuelaCar;
+            let listado = itemsReservasVuelaCar;
             if (state.modalState.flota !== "v") {
-                listado = externalPropsItemsReservasExternal;
+                listado = itemsReservasExternal;
             }
 
             const matricula = state.modalState?.matricula as string;
@@ -959,9 +966,9 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         }
         else if (state.modalState?.estado === ENUM_TIPOS_ESTADO.reservado) {
 
-            let listado = externalPropItemsReservasVuelaCar;
+            let listado = itemsReservasVuelaCar;
             if (state.modalState.flota !== "v") {
-                listado = externalPropsItemsReservasExternal;
+                listado = itemsReservasExternal;
             }
 
             let matricula = state.modalState?.matricula as string;
@@ -1052,7 +1059,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                     message={'Cargando...'}
                     duration={5000}
                 />
-                <div className="fila_botones_scheduler">
+                <div className="fila_botones_scheduler boton-primero">
                     <IonButton onClick={() => {
                         const _state = this.getNewElementPrereserva();
                         this.anadirPreReserva(_state);
@@ -1069,7 +1076,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                     }
                     } className="boton_reserva_vuelacar" fill='solid' color="#ffffff">HOY</IonButton>
 
-                    <IonButton href='/page/Dashboard' className="boton-volver" fill='solid' color="#ffffff">Volver</IonButton>
+                    <IonButton href='/page/Dashboard' className="boton-ultimo" fill='solid' color="#ffffff">Volver</IonButton>
                 </div>
                 <div className='fila_timelines'>
                     <h3 className='titulo-reservas-timeline'>RESERVAS</h3>

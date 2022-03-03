@@ -209,34 +209,34 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
     }
 
 
-    restarDias()
-    {
+    // restarDias()
+    // {
 
-        let _cantidadDias = this.state.modalState.cantidadDias as number;
-        _cantidadDias--;
-        if (_cantidadDias < 1)
-        {
-            _cantidadDias = 1;
-        }
+    //     let _cantidadDias = this.state.modalState.cantidadDias as number;
+    //     _cantidadDias--;
+    //     if (_cantidadDias < 1)
+    //     {
+    //         _cantidadDias = 1;
+    //     }
 
-        let estado: ContainerState = this.state;
-        estado["modalState"]["cantidadDias"] = _cantidadDias;
-        this.setState({ ...estado });
+    //     let estado: ContainerState = this.state;
+    //     estado["modalState"]["cantidadDias"] = _cantidadDias;
+    //     this.setState({ ...estado });
         
-        // this.setState({ "modalState": { "cantidadDias": _cantidadDias }} );
-    }
+    //     // this.setState({ "modalState": { "cantidadDias": _cantidadDias }} );
+    // }
 
-    sumarDias()
-    {
-        let _cantidadDias = this.state.modalState.cantidadDias as number;
-        _cantidadDias++;
+    // sumarDias()
+    // {
+    //     let _cantidadDias = this.state.modalState.cantidadDias as number;
+    //     _cantidadDias++;
         
-        let estado: ContainerState = this.state;
-        estado["modalState"]["cantidadDias"] = _cantidadDias;
-        this.setState({ ...estado });
-        // this.setState({"modalState": { "cantidadDias": _cantidadDias } });
+    //     let estado: ContainerState = this.state;
+    //     estado["modalState"]["cantidadDias"] = _cantidadDias;
+    //     this.setState({ ...estado });
+    //     // this.setState({"modalState": { "cantidadDias": _cantidadDias } });
         
-    }
+    // }
 
     elegirFechaRecogida(evento: CustomEvent<InputChangeEventDetail>)
     {
@@ -324,7 +324,8 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         if (existMatricula === true)
         {
             conFallos = true;
-            textoErrores += "Existe ya la matricula";
+            textoErrores += "Vehiculo ocupado";
+            matriculoFallo = true;
             
         }
 
@@ -353,18 +354,12 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                 else
                 {
 
-                    if (
-                        state.modalState.matricula === "" ||
-                        state.modalState.matricula === undefined
-                    ) {
+                    if (state.modalState.matricula === "" ) {
                         matriculoFallo = true;
                         conFallos = true;
                     }
     
-                    if (
-                        state.modalState.flota === "" ||
-                        state.modalState.flota === undefined
-                    ) {
+                    if (state.modalState.flota === "") {
                         flotaFallo = true;
                         conFallos = true;
                     }
@@ -379,43 +374,30 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                 break;
 
             case ENUM_TIPOS_ESTADO.reservado:
-                if (
-                    state.modalState.colaborador === "" || 
-                    state.modalState.colaborador === undefined
-                )
+                if (state.modalState.colaborador === "")
                 {
                     colaboradorFallo = true;
                     conFallos = true;
                 }
                 
-                if (
-                    state.modalState.claseVehiculo === "" ||
-                    state.modalState.claseVehiculo === undefined
-                ) {
+                if (state.modalState.claseVehiculo === "") {
                     claseVehiculoFallo = true;
                     conFallos = true;
                 }
                 
-                if (
-                    state.modalState.modeloVehiculo === "" ||
-                    state.modalState.modeloVehiculo === undefined
-                ) {
+                if (state.modalState.modeloVehiculo === "") {
                     modeloVehiculoFallo = true;
                     conFallos = true;
                 }
 
                 if (
-                    state.modalState.matricula === "" ||
-                    state.modalState.matricula === undefined
+                    state.modalState.matricula === ""
                 ) {
                     matriculoFallo = true;
                     conFallos = true;
                 }
 
-                if (
-                    state.modalState.flota === "" ||
-                    state.modalState.flota === undefined
-                ) {
+                if (state.modalState.flota === "" ) {
                     flotaFallo = true;
                     conFallos = true;
                 }
@@ -503,25 +485,14 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             
             <IonModal onWillDismiss={async () => { this.props.onModalDidDismiss(); }} isOpen={this.props.isVisible} animated={true}>
                 <IonGrid className={itemsGenerados.colorCabecera}>
-                    <IonRow className="altura_15">
-                        <IonCol size="8">
-                            <h1>{itemsGenerados.tituloReserva}</h1>
-                            <span>Fecha alta: {itemsGenerados.fechaAltaTexto}</span>
-                            <IonInput name='fechaalta' value={itemsGenerados.fechaAlta} hidden={true} ></IonInput>
-                        </IonCol>
-                        {/* <IonCol >
-                            <IonButton onClick={() => {
-                                this.saveProps(this.state,
-                                    this.props.modalState.id as number,
-                                    this.props.modalState.group as number,
-                                    itemsGenerados.fechaAlta as string
-                                ); 
-                            } }>Guardar Datos</IonButton>
-                        </IonCol> */}
+                    <IonRow className=" altura_15 cabecera-arriba">
+                        <h2 className='margen-cabecera-arriba'>{itemsGenerados.tituloReserva}</h2>
+                        <span>Fecha alta: {itemsGenerados.fechaAltaTexto}</span>
+                        <IonInput name='fechaalta' value={itemsGenerados.fechaAlta} hidden={true} ></IonInput>
+                        <IonLabel className="textoFallo">{this.state.errores.textoErrores}</IonLabel>
                     </IonRow>
                     <IonRow>
                         <IonCol size='12'>
-                            <IonLabel className="textoFallo">{this.state.errores.textoErrores}</IonLabel>
                         </IonCol>
                     </IonRow>
                     
@@ -769,14 +740,14 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             horaEntregaItem = 
                 <IonItem>
                     <IonLabel className="">Hora de entrega</IonLabel>
-                    <IonDatetime value={horaentrega} hourValues="8,9,10,11,12,13,14,15,16,17,18,19,20" minuteValues="0,30" onIonChange={(evento) => { this.elegirHoraRecogida(evento); }} displayFormat='HH:mm' hour-cycle="h23" first-day-of-week={1} cancelText="Cancelar" doneText="Confirmar"></IonDatetime>
+                    <IonDatetime value={horaentrega} hourValues="8,9,10,11,12,13,14,15,16,17,18,19,20" minuteValues="0,30" onIonChange={(evento) => { this.elegirHoraRecogida(evento); }} displayFormat='HH:mm' hour-cycle="h23" first-day-of-week={1} cancelText="Cancelar" doneText="Confirmar" placeholder='Hora de entrega' ></IonDatetime>
                 </IonItem>
             ;
 
             lugarEntregaItem = 
-                <IonItem>
-                    <IonLabel position='floating' className="">Lugar de entrega</IonLabel>
-                    <IonInput name='lugarentrega' value={lugarentrega} onIonChange={(evento) => { this.onChangeInputs(this.state, "lugarentrega", evento.detail.value as string); }}></IonInput>
+                <IonItem className=''>
+                    <IonLabel  className="">Lugar de entrega</IonLabel>
+                    <IonInput className="texto-alineado-derecha" name='lugarentrega' value={lugarentrega} onIonChange={(evento) => { this.onChangeInputs(this.state, "lugarentrega", evento.detail.value as string); }} placeholder="Lugar de entrega"></IonInput>
                 </IonItem>
             ;
             
@@ -784,9 +755,9 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             matriculaItem = 
                 <IonItem>
                     {
-                        (this.state.errores.matricula === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel position='floating' className="textofallo">Matricula</IonLabel></>
+                        (this.state.errores.matricula === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel  className="textofallo">Matricula</IonLabel></>
                             :
-                            <IonLabel position='floating' className="">Matricula</IonLabel>
+                            <IonLabel  className="">Matricula</IonLabel>
                     }
                     {
                         (this.state.modalState.isPrereserva === true) ? <IonInput value={matricula} onIonChange={(evento) => { this.onChangeInputs(this.state, "matricula", evento.detail.value as string); }} key="matricula" id="matricula" name='matricula' className="matricula_select" ></IonInput>
@@ -831,40 +802,40 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             numeroReservaItem =
                 <IonItem>
                     <IonLabel className="">Numero Reserva</IonLabel>
-                    <IonLabel className="">XXXXXXXX</IonLabel>
+                    <IonLabel className="">XXXXXXX</IonLabel>
                 </IonItem>
             ;
 
             precioVuelacarItem =
                 <IonItem>
-                    <IonLabel position='floating' className="">Precio Vuelacar</IonLabel>
-                    <IonInput name='preciovuelacar' value={preciovuelacar} onIonChange={(evento) => { this.onChangeInputs(this.state, "preciovuelacar", evento.detail.value as string); }} type='number' min='1' max='100000000' autocomplete="off" inputmode="numeric"></IonInput>
+                    <IonLabel  className="">Precio Vuelacar</IonLabel>
+                    <IonInput className="texto-alineado-derecha" name='preciovuelacar' value={preciovuelacar} onIonChange={(evento) => { this.onChangeInputs(this.state, "preciovuelacar", evento.detail.value as string); }} type='number' min='1' max='100000000' autocomplete="off" inputmode="numeric" placeholder='Precio Vuelacar' ></IonInput>
                 </IonItem>
             ;
 
             notaReservaItem = 
                 <IonItem>
-                    <IonLabel position='floating' className="">Nº Reserva externo</IonLabel>
-                    <IonInput name='notareserva' value={notareserva} onIonChange={(evento) => { this.onChangeInputs(this.state, "notareserva", evento.detail.value as string); }}></IonInput>
+                    <IonLabel  className="">Nº Reserva externo</IonLabel>
+                    <IonInput className="texto-alineado-derecha" name='notareserva' value={notareserva} onIonChange={(evento) => { this.onChangeInputs(this.state, "notareserva", evento.detail.value as string); }} placeholder="Nº Reserva externo"></IonInput>
                 </IonItem>
             ;
 
             precioExternoItem = 
                 <IonItem>
                     {
-                        (this.state.errores.precioExterno === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel position='floating' className="textoFallo">Precio externo</IonLabel></>
+                        (this.state.errores.precioExterno === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel  className="textoFallo">Precio externo</IonLabel></>
                             :
-                            <IonLabel position='floating' className="">Precio externo</IonLabel>
+                            <IonLabel  className="">Precio externo</IonLabel>
 
                     }
-                    <IonInput name='precioexterno' value={precioexterno} onIonChange={(evento) => { this.onChangeInputs(this.state, "precioexterno", evento.detail.value as string); }} type='number' min='1' max='100000000' autocomplete="off" inputmode="numeric"></IonInput>
+                    <IonInput className="texto-alineado-derecha" name='precioexterno' value={precioexterno} onIonChange={(evento) => { this.onChangeInputs(this.state, "precioexterno", evento.detail.value as string); }} type='number' min='1' max='100000000' autocomplete="off" inputmode="numeric" placeholder='Precio externo'></IonInput>
                 </IonItem>
             ;
 
             extrasItem = 
                 <IonItem>
-                    <IonLabel position='floating' className="">Extras</IonLabel>
-                    <IonInput name='extras' value={extras} onIonChange={(evento) => { this.onChangeInputs(this.state, "extras", evento.detail.value as string); }}></IonInput>
+                    <IonLabel  className="">Extras</IonLabel>
+                    <IonInput className="texto-alineado-derecha" name='extras' value={extras} onIonChange={(evento) => { this.onChangeInputs(this.state, "extras", evento.detail.value as string); }} placeholder="Extras" ></IonInput>
                 </IonItem>
             ;
             

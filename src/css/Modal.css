@@ -1,7 +1,7 @@
 
 .altura_15
 {
-    height: 15px;
+    height: 30px;
 }
 
 .grid_cabecera
@@ -11,6 +11,7 @@
 
     display: grid;
     grid-template-columns: 1fr 200px;
+    grid-template-rows: 120px 1fr;
 
 }
 
@@ -41,6 +42,21 @@
     color: black !important;
     justify-content: space-between;
 }
+
+
+.margen-cabecera-arriba
+{
+    margin-top: 30px;
+}
+
+.cabecera-arriba
+{
+    display: flex;
+    flex-direction: column !important;
+    flex-flow: row-reverse;
+    gap: 5px;
+}
+
 
 .centrado-horizontal
 {
@@ -116,12 +132,17 @@ input[type=number] {
 .modal-wrapper
 {
     height: 1000px !important;;
-    width: 50% !important;
+    width: 40% !important;
 
 }
 
 .textofallo
 {
     color: rgb(186, 0, 0) !important;
+}
+
+.texto-alineado-derecha
+{
+    text-align: right;
 }
 
