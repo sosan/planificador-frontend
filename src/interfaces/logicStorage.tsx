@@ -8,8 +8,6 @@ const serialize = require('serialize-javascript');
 
 class InterfaceStorage
 {
-   
-
 
     KEY_LISTADO_CLASES_VEHICULOS = "listadoClasesVehiculos";
     KEY_LISTADO_MODELOS_VEHICULOS = "listadoModelosVehiculos";
@@ -335,6 +333,17 @@ class InterfaceStorage
             return;
         }
 
+
+    }
+
+
+    async initGroupsItems()
+    {
+    
+        await ionicDb.setData(`length_${this.KEY_PREFIX_GROUPS_PRE_RESERVA }`, "0");
+        await ionicDb.setData(`length_${this.KEY_PREFIX_GROUPS_RESERVA_EXTERIOR}`, "0");
+        await ionicDb.setData(`length_${this.KEY_PREFIX_ITEMSPRERESERVAS}`, "0");
+        await ionicDb.setData(`length_${this.KEY_PREFIX_ITEMS_RESERVA_EXTERIOR}`, "0");
 
     }
 
