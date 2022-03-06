@@ -69,12 +69,26 @@ export class Database
 
     }
 
+    async removeKey(key: string)
+    {
+        try
+        {
+            await this.storage?.remove(key);
+
+        }
+        catch(error)
+        {
+            console.log("error" + error);
+        }
+
+    }
+
 
     async getKey(key: string)
     {
         try {
             const keyVal = await this.storage?.get(key);
-            console.log('Key is', keyVal);
+            // console.log('Key is', keyVal);
             return keyVal;
         
         } catch (err) {

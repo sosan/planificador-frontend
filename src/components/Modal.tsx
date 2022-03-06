@@ -760,7 +760,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                             <IonLabel  className="">Matricula</IonLabel>
                     }
                     {
-                        (this.state.modalState.isPrereserva === true) ? <IonInput value={matricula} onIonChange={(evento) => { this.onChangeInputs(this.state, "matricula", evento.detail.value as string); }} key="matricula" id="matricula" name='matricula' className="matricula_select" ></IonInput>
+                        (this.state.modalState.isPrereserva === true) ? <IonInput value={matricula} onIonChange={(evento) => { this.onChangeInputs(this.state, "matricula", evento.detail.value as string); }} key="matricula" id="matricula" name='matricula' placeholder='Matricula' className="matricula_select texto-alineado-derecha" ></IonInput>
                             :
                             <IonSelect value={matricula} onIonChange={(evento) => { this.onChangeInputs(this.state, "matricula", evento.detail.value); }} key="matricula" id="matricula" name='matricula' className="matricula_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                                 {

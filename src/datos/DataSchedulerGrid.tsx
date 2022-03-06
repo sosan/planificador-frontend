@@ -117,8 +117,8 @@ export class DataSchedulerGrid
     
         this.itemsReservasVuelaCar = [
             {
-                id: 1,
-                group: 1,
+                id: 0,
+                group: 0,
                 title: 'item 1',
                 modalState: {
                     fechaAlta: new Date().toISOString(),
@@ -422,22 +422,23 @@ export class DataSchedulerGrid
     }
 
 
-    insertNewElementGrupoPreReserva(state: ContainerState) {
-        this.groupsPreReserva.push(
-            {
-                "id": state.modalState.group as number,
-                "title": "title",
-                "matricula": state.modalState.matricula as string,
-                "vehiculo": "vehiculo",
-                "clasevehiculo": state.modalState.claseVehiculo as string,
-                "modelo": state.modalState.modeloVehiculo as string,
-                "flota": state.modalState.flota as string,
-                "height": 50,
-                "srcImage": "",
-                "rightTitle": "",
-                "stackItems": true,
+    insertNewElementGrupoPreReserva(state: ContainerState): typeGroup {
+        const grupo: typeGroup = {
+            "id": state.modalState.group as number,
+            "title": "title",
+            "matricula": state.modalState.matricula as string,
+            "vehiculo": "vehiculo",
+            "clasevehiculo": state.modalState.claseVehiculo as string,
+            "modelo": state.modalState.modeloVehiculo as string,
+            "flota": state.modalState.flota as string,
+            "height": 50,
+            "srcImage": "",
+            "rightTitle": "",
+            "stackItems": true,
 
-            });
+        };
+        this.groupsPreReserva.push(grupo);
+        return grupo;
     }
 
     searchGroupByMatricula(grupo: typeGroup[], matricula: string): [boolean, number] {
@@ -563,7 +564,43 @@ export class DataSchedulerGrid
 
     }
 
+    getNewIdFromLastIDGroupPreserva()
+    {
+        const ultimaPosicion = this.groupsPreReserva.length - 1;
+        let itemId = this.groupsPreReserva[ultimaPosicion].id;
+        itemId += 1;
+        return itemId;
 
+    }
+
+    getNewIdFromLastIDPreserva()
+    {
+        const ultimaPosicion = this.itemsPreReservas.length - 1;
+        let itemId = this.itemsPreReservas[ultimaPosicion].id;
+        itemId += 1;
+        return itemId; 
+
+    }
+
+
+    getNewIdFromLastIDReservaVuelaCar()
+    {
+
+        const ultimaPosicion = this.itemsReservasVuelaCar.length - 1;
+        let itemId = this.itemsReservasVuelaCar[ultimaPosicion].id;
+        itemId += 1;
+        return itemId;
+
+    }
+
+    getNewIdFromLastIDGroupReservaVuelaCar()
+    {
+        const ultimaPosicion = this.groupsReservaVuelaCar.length - 1;
+        let itemId = this.groupsReservaVuelaCar[ultimaPosicion].id;
+        itemId += 1;
+        return itemId;
+
+    }
 
 
 }

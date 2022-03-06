@@ -65,19 +65,23 @@ export default class TimelineWrapper extends Component {
     }
 
     
-    itemRenderer = ({ item, timelineContext, itemContext, getItemProps, getResizeProps }) => {
-        // const { left: leftResizeProps, right: rightResizeProps } = getResizeProps();
-        // const backgroundColor = itemContext.selected ? (itemContext.dragging ? "red" : item.selectedBgColor) : item.bgColor;
-        // const borderColor = itemContext.resizing ? "red" : item.color;
-        return (
-            <>
-                {itemContext.title}
-            </>
-        );
+    // itemRenderer = ({ item, timelineContext, itemContext, getItemProps, getResizeProps }) => {
+    //     // const { left: leftResizeProps, right: rightResizeProps } = getResizeProps();
+    //     // const backgroundColor = itemContext.selected ? (itemContext.dragging ? "red" : item.selectedBgColor) : item.bgColor;
+    //     // const borderColor = itemContext.resizing ? "red" : item.color;
+    //     const titulo = `${itemContext.title} ID: ${ item.id } GROUP: ${item.group}`;
+    
+    //     return (
+    //         <>
+    //             {itemContext.title}
+    //             {/* <div>{titulo}</div> */}
+                
+    //         </>
+    //     );
 
 
 
-    };
+    // };
 
     groupRenderer = ( {group: elementGroup} ) => {
 
@@ -149,7 +153,6 @@ export default class TimelineWrapper extends Component {
     };
 
     handleTimeChange = (visibleTimeStart, visibleTimeEnd) => {
-        console.log("cambio tiempo")
 
         // this._visibleTimeStart = visibleTimeStart;
         // this._visibleTimeEnd = visibleTimeEnd;
@@ -193,19 +196,18 @@ export default class TimelineWrapper extends Component {
                     
                     stackItems={true}
                     sidebarWidth={270}
-                    // sidebarContent={this.renderSidebarHeader()}
-
+                    
                     itemHeightRatio={1}
                     canMove={false}
                     canResize={false}
-
                     
-                    // onItemMove={this.handleItemMove}
-                    // onItemResize={this.handleItemResize}
                     onTimeChange={this.handleTimeChange}
                     onCanvasDoubleClick={(groupId, time, evento) => { this.props.onDoubleClicked(groupId, time, evento); } }
                     onItemDoubleClick={(itemId, e, time) => { this.props.onItemDoubleClick(itemId, e, time ); }  }
-                    // itemRenderer={this.itemRenderer}
+                    
+                    // onItemMove={this.handleItemMove}
+                    // onItemResize={this.handleItemResize}
+                    // sidebarContent={this.renderSidebarHeader()}
                 >
                     <TimelineMarkers>
                         <TodayMarker>
@@ -263,7 +265,6 @@ export default class TimelineWrapper extends Component {
                             }}
                         unit="month" />
                         <DateHeader unit="day" style={{ height: 50 }} />
-                       
                     </TimelineHeaders>
 
                 </Timeline>

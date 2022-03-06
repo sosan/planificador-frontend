@@ -31,6 +31,11 @@ class InterfaceStorage
         return listado;
 
     }
+    
+    async getItemsPreReservas() {
+        const listado = await this.generalGetItemsGroups(this.KEY_PREFIX_ITEMSPRERESERVAS);
+        return listado;
+    }
 
     async generalGetItemsGroups(keyTexto: string)
     {
@@ -38,15 +43,24 @@ class InterfaceStorage
         let listado = [];
         try {
 
+            // const currentYear = new Date().getFullYear();
             let lenTexto = await ionicDb.getKey(`length_${keyTexto}`);
             const len = await this.convertNumber(lenTexto);
             let counter = 0;
             while (listado.length < len)
             {
+                
                 const key = `${keyTexto}${counter.toString()}`;
                 const value = await ionicDb.getKey(key);
                 counter++;
-                if (value === null) continue;
+                if (value === null) 
+                {
+                    if (counter > 100)
+                    {
+                        break;
+                    }
+                    continue;
+                }
                 const content = JSON.parse(value);
                 const deserializeContent = this.deserialize(content);
                 listado.push(deserializeContent);
@@ -63,10 +77,6 @@ class InterfaceStorage
 
     }
 
-    async getItemsPreReservas() {
-        const listado = await this.generalGetItemsGroups(this.KEY_PREFIX_ITEMSPRERESERVAS);
-        return listado;
-    }
 
 
     async convertNumber(texto: string) {
@@ -380,54 +390,6 @@ class InterfaceStorage
     }
 
 
-    // async insertNewElementReservasVuelaCar(elemento: IListadoPrereserva)
-    // {
-    //     console.log("insertNewElementReservasVuelaCar");
-
-    //     try
-    //     {
-    //         const lenTexto = await ionicDb.getKey(`length_${this.KEY_PREFIX_ITEMS_RESERVA_VUELACAR}`);
-    //         let len = await this.convertNumber(lenTexto);
-    //         len += 1;
-    
-    //         await ionicDb.setData(`length_${this.KEY_PREFIX_ITEMS_RESERVA_VUELACAR}`, len.toString());
-    //         const serializedContent = serialize(elemento, { isJSON: false });
-    //         const key = `${this.KEY_PREFIX_ITEMS_RESERVA_VUELACAR}${elemento.id}`;
-    //         await ionicDb.setData(key, serializedContent);
-
-    //     }
-    //     catch(error)
-    //     {
-    //         console.log("error" + error);
-    //         return;
-    //     }
-
-
-    // }
-
-    // async insertNewElementReservasExterior(elemento: IListadoPrereserva) {
-    //     console.log("insertNewElementReservasVuelaCar");
-
-    //     try
-    //     {
-    //         const lenTexto = await ionicDb.getKey(`length_${this.KEY_PREFIX_ITEMS_RESERVA_EXTERIOR}`);
-    //         let len = await this.convertNumber(lenTexto);
-    //         len += 1;
-    
-    //         await ionicDb.setData(`length_${this.KEY_PREFIX_ITEMS_RESERVA_EXTERIOR}`, len.toString());
-    //         const serializedContent = serialize(elemento, { isJSON: false });
-    //         const key = `${this.KEY_PREFIX_ITEMS_RESERVA_EXTERIOR}${elemento.id}`;
-    //         await ionicDb.setData(key, serializedContent);
-
-    //     }
-    //     catch(error)
-    //     {
-    //         console.log("error" + error);
-    //         return;
-    //     }
-
-
-    // }
 
 
     async updateReservaExterior(position: number, elemento: IListadoPrereserva) {
@@ -448,7 +410,7 @@ class InterfaceStorage
 
     }
 
-    async updatePreReserva(position: number, elemento: IListadoPrereserva) {
+    async updatePreReserva(elemento: IListadoPrereserva) {
 
         try {
             const serializedContent = serialize(elemento, { isJSON: false });
@@ -480,28 +442,154 @@ class InterfaceStorage
     }
 
 
-    async insertNewElementGrupoPreReserva(state: IContainerModalState)
+    async insertGroupPreReserva(grupo: typeGroup)
     {
 
         try
         {
-            const lenTexto = await ionicDb.getKey("length_groupsPreReserva");
-            let len = await this.convertNumber(lenTexto);
-            len += 1;
-    
-            await ionicDb.setData(`length_groupsPreReserva`, len.toString());
-            const serializedContent = serialize(state, { isJSON: true });
-            const key = `${this.KEY_PREFIX_GROUPS_PRE_RESERVA}${state.modalState.group}`;
-            await ionicDb.setData(key, serializedContent);
+
+            const key = `${this.KEY_PREFIX_GROUPS_PRE_RESERVA}`;
+            await this.insertGeneralGroups(grupo, key);
 
         }
         catch(error)
         {
-            console.log("error=" + error);
+            console.log("error"+ error);
+            return;
+        }
+    }
+
+    async insertGroupReservaVuelaCar(grupo: typeGroup)
+    {
+
+        try {
+
+            const key = `${this.KEY_PREFIX_GROUPS_RESERVA_VUELACAR}`;
+            await this.insertGeneralGroups(grupo, key);
+
+        }
+        catch (error) {
+            console.log("error" + error);
             return;
         }
 
     }
+
+    async insertGroupExterior(grupo: typeGroup)
+    {
+
+        try
+        {
+
+            const key = `${this.KEY_PREFIX_GROUPS_RESERVA_EXTERIOR}`;
+            await this.insertGeneralGroups(grupo, key);
+
+        }
+        catch(error)
+        {
+            console.log("error" + error);
+            return;
+        }
+
+    }
+
+    async insertGeneralGroups(grupo: typeGroup, keyPreffix: string)
+    {
+
+        try {
+            const lenTexto = await ionicDb.getKey(`length_${keyPreffix}`);
+            let len = await this.convertNumber(lenTexto);
+            len += 1;
+
+            await ionicDb.setData(`length_${keyPreffix}`, len.toString());
+            const serializedContent = serialize(grupo, { isJSON: true });
+            const key = `${keyPreffix}${grupo.id}`;
+            await ionicDb.setData(key, serializedContent);
+
+        }
+        catch (error) {
+            console.log("error=" + error);
+            return;
+        }
+
+
+    }
+
+    async removeAtGroupPreReserva(_id: number)
+    {
+        const lenTexto = await ionicDb.getKey(`length_${this.KEY_PREFIX_GROUPS_PRE_RESERVA}`);
+        let len = await this.convertNumber(lenTexto);
+        len -= 1;
+
+        await ionicDb.setData(`length_${this.KEY_PREFIX_GROUPS_PRE_RESERVA}`, len.toString());
+
+        const key = `${this.KEY_PREFIX_GROUPS_PRE_RESERVA}${_id}`;
+        await ionicDb.removeKey(key);
+        
+
+    }
+
+
+    async removeItemPrereserva(_id: number)
+    {
+        const key = this.KEY_PREFIX_ITEMSPRERESERVAS;
+        await this.removeItemReservasGeneral(_id, key);
+
+
+    }
+
+
+    async removeItemReservaVuelaCar(_id:number)
+    {
+        try{
+
+            const key = this.KEY_PREFIX_ITEMS_RESERVA_VUELACAR;
+            await this.removeItemReservasGeneral(_id, key);
+        }
+        catch(error)
+        {
+            console.log("error " + error);
+        }
+
+
+    }
+    async removeItemReservaExterior(_id: number)
+    {
+        try
+        {
+
+            const key = this.KEY_PREFIX_ITEMS_RESERVA_EXTERIOR;
+            await this.removeItemReservasGeneral(_id, key);
+        }
+        catch(error)
+        {
+            console.log("error" + error);
+        }
+
+    }
+
+    async removeItemReservasGeneral(_id: number, keyPreffix: string)
+    {
+        try
+        {
+
+            const lenTexto = await ionicDb.getKey(`length_${keyPreffix}`);
+            let len = await this.convertNumber(lenTexto);
+            len -= 1;
+    
+            await ionicDb.setData(`length_${keyPreffix}`, len.toString());
+    
+            const key = `${keyPreffix}${_id}`;
+            await ionicDb.removeKey(key);
+        }
+        catch(error)
+        {
+            console.log("error" + error);
+        }
+        
+
+    }
+
 
 
 
