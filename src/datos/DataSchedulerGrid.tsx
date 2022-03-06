@@ -59,61 +59,61 @@ export class DataSchedulerGrid
         this.listadoClaseVehiculos = groupsData.arrayListadoClasesVehiculos;
         this.listadoModelosVehiculos = groupsData.arrayListadoModelosVehiculos;
 
-        this.groupsPreReserva = [
-            {
-                "id": 0,
-                "matricula": " ",
-                "title": " ",
-                "vehiculo": " ",
-                "clasevehiculo": " ",
-                "modelo": " ",
-                "bgColor": "#3796f3",
-                "height": 2,
-            },
+        // this.groupsPreReserva = [
+        //     {
+        //         "id": 0,
+        //         "matricula": " ",
+        //         "title": " ",
+        //         "vehiculo": " ",
+        //         "clasevehiculo": " ",
+        //         "modelo": " ",
+        //         "bgColor": "#3796f3",
+        //         "height": 2,
+        //     },
     
-        ];
+        // ];
     
-        this.groupsReservaExterior = [
-            {
-                "id": 0,
-                "matricula": " ",
-                "title": " ",
-                "vehiculo": " ",
-                "clasevehiculo": " ",
-                "modelo": " ",
-                "bgColor": "#3796f3",
-                "height": 2,
-            },
+        // this.groupsReservaExterior = [
+        //     {
+        //         "id": 0,
+        //         "matricula": " ",
+        //         "title": " ",
+        //         "vehiculo": " ",
+        //         "clasevehiculo": " ",
+        //         "modelo": " ",
+        //         "bgColor": "#3796f3",
+        //         "height": 2,
+        //     },
     
-        ];
+        // ];
     
-        this.itemsPreReservas = [{
-            id: 0,
-            group: 0,
-            title: ' ',
-            start_time: new Date(new Date().setHours(0, 0, 0)).getTime(),
-            end_time: new Date(new Date().setHours(23, 59, 59)).getTime(),
-            canMove: false,
-            canResize: false,
-            canChangeGroup: false,
-            modalState: {
-                fechaAlta: "asdasd",
-                notareserva: "asdasd",
-                matricula: "asdasd",
-                modeloVehiculo: "asdasd",
-                claseVehiculo: "asdasd",
-                cantidadDias: 0,
-                colaborador: "asdasd",
-                flota: "asda",
-                isPrereserva: false,
-                estado: "asd",
-                isNewRegister: false,
-            },
-            itemProps: {
-                className: 'altura-items-inicio',
-            }
+        // this.itemsPreReservas = [{
+        //     id: 0,
+        //     group: 0,
+        //     title: ' ',
+        //     start_time: new Date(new Date().setHours(0, 0, 0)).getTime(),
+        //     end_time: new Date(new Date().setHours(23, 59, 59)).getTime(),
+        //     canMove: false,
+        //     canResize: false,
+        //     canChangeGroup: false,
+        //     modalState: {
+        //         fechaAlta: "asdasd",
+        //         notareserva: "asdasd",
+        //         matricula: "asdasd",
+        //         modeloVehiculo: "asdasd",
+        //         claseVehiculo: "asdasd",
+        //         cantidadDias: 0,
+        //         colaborador: "asdasd",
+        //         flota: "asda",
+        //         isPrereserva: false,
+        //         estado: "asd",
+        //         isNewRegister: false,
+        //     },
+        //     itemProps: {
+        //         className: 'altura-items-inicio',
+        //     }
     
-        },];
+        // },];
     
         this.itemsReservasVuelaCar = [
             {
@@ -160,14 +160,15 @@ export class DataSchedulerGrid
 
         this.itemsReservasVuelaCar[0].start_time = new Date(startTime).getTime();
         this.itemsReservasVuelaCar[0].end_time = new Date(endTime).getTime();
-        this.itemsReservasExterior.push(this.itemsReservasVuelaCar[0]);
-
-        await repoStorage.insertGroupsPreReserva(this.groupsPreReserva);
-        await repoStorage.insertGroupsReservaExterior(this.groupsReservaExterior);
-
-        await repoStorage.insertItemsPreReservas(this.itemsPreReservas);
+        
+        await repoStorage.initGroupsItems();
         await repoStorage.insertItemsReservaVuelaCar(this.itemsReservasVuelaCar);
-        await repoStorage.insertItemsReservasExterior(this.itemsReservasExterior);
+        
+        // this.itemsReservasExterior.push(this.itemsReservasVuelaCar[0]);
+        // await repoStorage.insertGroupsPreReserva(this.groupsPreReserva);
+        // await repoStorage.insertGroupsReservaExterior(this.groupsReservaExterior);
+        // await repoStorage.insertItemsPreReservas(this.itemsPreReservas);
+        // await repoStorage.insertItemsReservasExterior(this.itemsReservasExterior);
 
     }
 
@@ -564,18 +565,25 @@ export class DataSchedulerGrid
 
     }
 
-    getNewIdFromLastIDGroupPreserva()
+    getNewIdFromLastIDGroupPreReserva()
     {
-        const ultimaPosicion = this.groupsPreReserva.length - 1;
+        let ultimaPosicion = this.groupsPreReserva.length - 1;
+        if (ultimaPosicion < 0)
+        {
+            return 0;
+        }
         let itemId = this.groupsPreReserva[ultimaPosicion].id;
         itemId += 1;
         return itemId;
 
     }
 
-    getNewIdFromLastIDPreserva()
+    getNewIdFromLastIDPreReserva()
     {
-        const ultimaPosicion = this.itemsPreReservas.length - 1;
+        let ultimaPosicion = this.itemsPreReservas.length - 1;
+        if (ultimaPosicion < 0) {
+            return 0;
+        }
         let itemId = this.itemsPreReservas[ultimaPosicion].id;
         itemId += 1;
         return itemId; 
@@ -586,8 +594,23 @@ export class DataSchedulerGrid
     getNewIdFromLastIDReservaVuelaCar()
     {
 
-        const ultimaPosicion = this.itemsReservasVuelaCar.length - 1;
+        let ultimaPosicion = this.itemsReservasVuelaCar.length - 1;
+        if (ultimaPosicion < 0) {
+            return 0;
+        }
         let itemId = this.itemsReservasVuelaCar[ultimaPosicion].id;
+        itemId += 1;
+        return itemId;
+
+    }
+
+    getNewIdFromLastIDReservaExterior() {
+
+        let ultimaPosicion = this.itemsReservasExterior.length - 1;
+        if (ultimaPosicion < 0) {
+            return 0;
+        }
+        let itemId = this.itemsReservasExterior[ultimaPosicion].id;
         itemId += 1;
         return itemId;
 
@@ -595,8 +618,22 @@ export class DataSchedulerGrid
 
     getNewIdFromLastIDGroupReservaVuelaCar()
     {
-        const ultimaPosicion = this.groupsReservaVuelaCar.length - 1;
+        let ultimaPosicion = this.groupsReservaVuelaCar.length - 1;
+        if (ultimaPosicion < 0) {
+            return 0;
+        }
         let itemId = this.groupsReservaVuelaCar[ultimaPosicion].id;
+        itemId += 1;
+        return itemId;
+
+    }
+
+    getNewIdFromLastIDGroupReservaExterior() {
+        let ultimaPosicion = this.groupsReservaExterior.length - 1;
+        if (ultimaPosicion < 0) {
+            return 0;
+        }
+        let itemId = this.groupsReservaExterior[ultimaPosicion].id;
         itemId += 1;
         return itemId;
 
