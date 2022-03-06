@@ -23,7 +23,7 @@ export class Database
         {
             name: "dietario.db",
             driverOrder: [CordovaSQLiteDriver._driver, Drivers.IndexedDB, Drivers.LocalStorage],
-            location: 0,
+            // location: 0,
             version: 2,
             storeName: "basedatos",
             dbKey: "keyyyyyyy",
