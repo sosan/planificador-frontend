@@ -214,7 +214,6 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         const idReserva = this._dataSchedulerGrid.getNewIdFromLastIDPreReserva();
         const idGroup = this._dataSchedulerGrid.getNewIdFromLastIDGroupPreReserva();
 
-        
         let newState: ContainerState = {
             "modalState": {
                 "showItem": false,
