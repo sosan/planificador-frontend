@@ -165,6 +165,12 @@ export default class TimelineWrapper extends Component {
         });
     };
 
+    onZoom = (timelineContext, unit) =>
+    {
+
+
+    };
+
     componentDidMount() {
 
     }
@@ -174,7 +180,7 @@ export default class TimelineWrapper extends Component {
         const { groups, items } = this.props;
 
         return (
-            <div style={{ marginTop: `${this.props.marginTop}px` }}>
+            <div style={{ marginTop: `${this.props.marginTop}px`, marginBottom: `${this.props.marginBottom}px` }}>
                 
                 <Timeline
                     scrollableContainer={this.state.scrollableContainer}
@@ -204,10 +210,10 @@ export default class TimelineWrapper extends Component {
                     onTimeChange={this.handleTimeChange}
                     onCanvasDoubleClick={(groupId, time, evento) => { this.props.onDoubleClicked(groupId, time, evento); } }
                     onItemDoubleClick={(itemId, e, time) => { this.props.onItemDoubleClick(itemId, e, time ); }  }
-                    
-                    // onItemMove={this.handleItemMove}
-                    // onItemResize={this.handleItemResize}
-                    // sidebarContent={this.renderSidebarHeader()}
+                    minZoom={60 * 60 * 1000 * 24 * 20}
+                    maxZoom={60 * 60 * 1000 * 24 * 20}
+                    onZoom={this.onZoom}
+
                 >
                     <TimelineMarkers>
                         <TodayMarker>
@@ -259,12 +265,31 @@ export default class TimelineWrapper extends Component {
                                         </div>
                                     </>
                                     return itemHeader;
-
-                                    
                                 },
                             }}
                         unit="month" />
-                        <DateHeader unit="day" style={{ height: 50 }} />
+                        <DateHeader unit="day" style={{ height: 50 }}
+                            {...{
+                                intervalRenderer: ({ getIntervalProps, intervalContext }) => {
+                                    const { style, onClick, key } = getIntervalProps();
+
+                                    const itemHeader = <>
+                                        <div key={key} style={style} className="rct-dateHeader" onClick={() => null} >
+                                            <span className='sub-header'>
+                                                <b className='noselect'>{intervalContext.intervalText}</b>
+                                            </span>
+
+                                        </div>
+                                    </>
+                                    return itemHeader;
+                                },
+                            }}
+                        
+                        
+                        
+                        
+                        
+                        />
                     </TimelineHeaders>
 
                 </Timeline>
