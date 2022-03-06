@@ -44,9 +44,9 @@ jobs:
         working-directory: ./android
         run: ./gradlew build --no-daemon
 
-      # - name: Sign Android build
-      #   run: jarsigner -keystore src/keystorefile.jks -storepass kleptor123 -keypass kleptor123 android/app/build/outputs/apk/release/app-release-unsigned.apk key0
-
+      - name: Sign Android build
+        run: jarsigner -keystore src/keystorefile.jks -storepass kleptor123 -keypass kleptor123 android/app/build/outputs/apk/release/app-release-unsigned.apk key0
+      #   run: keytool -genkey -v -keystore debug.keystore -storepass kleptor123 -alias key0 -keypass kleptor123 -keyalg RSA -keysize 2048 -validity 10000
       - name: Prepare to sign build
         run: mv ./android/app/build/outputs/apk/release/app-release-unsigned.apk ./android/app/build/outputs/apk/release/release.apk
 
