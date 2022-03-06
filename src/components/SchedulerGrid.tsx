@@ -115,7 +115,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     async componentDidMount()
     {
-        console.log("modal montado=");
+        console.log("schedulergrid montado");
         await this.init();
 
         this.setState({ setShowLoading: false });
@@ -211,15 +211,16 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         const startTime = new Date(_startTime.setHours(0, 0, 0)).getTime();
         const endTime = new Date(_endTime.setHours(23, 59, 59)).getTime();
 
-        const idReserva = this._dataSchedulerGrid.getNewIdFromLastIDPreserva();
-        const idGroup = this._dataSchedulerGrid.getNewIdFromLastIDGroupPreserva();
+        const idReserva = this._dataSchedulerGrid.getNewIdFromLastIDPreReserva();
+        const idGroup = this._dataSchedulerGrid.getNewIdFromLastIDGroupPreReserva();
 
+        
         let newState: ContainerState = {
             "modalState": {
                 "showItem": false,
                 "textoFechaDevolucionVisible": false,
-                "id": idReserva, //this._dataSchedulerGrid.getLengthItemsPreReservas() + 1,
-                "group": idGroup, //this._dataSchedulerGrid.getLengthGroupsPreReserva(),
+                "id": idReserva,
+                "group": idGroup,
                 "claseVehiculo": "",
                 "colaborador": "",
                 "fechaRecogida": startTime,
@@ -264,8 +265,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             "modalState": {
                 "showItem": true,
                 "textoFechaDevolucionVisible": false,
-                "id": idReserva, //this._dataSchedulerGrid.getLengthItemsReservasVuelaCar() + 1, // this.itemsReservasVuelaCar.length + 1,
-                "group": idGroup, //this._dataSchedulerGrid.getLengthGroupsReservaVuelaCar(), //this.groupsReservaVuelaCar.length,
+                "id": idReserva,
+                "group": idGroup,
                 "claseVehiculo": "",
                 "colaborador": ENUM_LISTADO_COLABORADORES.v as string,
                 "fechaRecogida": startTime,
@@ -473,29 +474,30 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         return { grupoSeleccionado, listadoSeleccionado, nuevoGrupoReserva }
     }
 
-    async saveDateReserva(state: IContainerModalState, isDoubleClicked: boolean) {
+    async saveDateReserva(state: IContainerModalState, isDoubleClicked: boolean)
+    {
 
         const { grupoSeleccionado, listadoSeleccionado, nuevoGrupoReserva } = this.getSelectedGroup(state);
         let [existGroup, positiongroups] = this.searchExistGroupById(grupoSeleccionado, state.modalState.group as number);
         let [existListado, positionListado] = this.searchExistListById(listadoSeleccionado, state.modalState.id as number);
 
 
-        if (existGroup === false) {
+        if (existGroup === false)
+        {
 
-            if (state.modalState.flota === "v") {
-
-                // quedado aqui
-                // actualizar el registro
-                console.log("queaddo aqui linea 603 SchedulerGrid.tsx");
+            if (state.modalState.flota === "v")
+            {
                 
                 const [exist, groupId ] = this._dataSchedulerGrid.searchGroupByMatricula(grupoSeleccionado, state.modalState.matricula as string);
 
                 if (exist === true)
                 {
 
-                    // this._dataSchedulerGrid.insertNewElementGrupoReserva(nuevoGrupoReserva);
-                    // positiongroups = 0;
-                    const elementoReserva = this.generateNewElementReservas(state.modalState, groupId, state.modalState.id as number ); //state.modalState.id as number); //state.modalState.group as number);
+                    const elementoReserva = this.generateNewElementReservas(
+                        state.modalState, 
+                        groupId, 
+                        state.modalState.id as number 
+                    );
                     this._dataSchedulerGrid.insertNewElementReservasVuelaCar(elementoReserva);
                     await repoStorage.insertReservaVuelaCar(elementoReserva);
                 }
@@ -514,7 +516,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         }
         else
         {
-            if (state.modalState.flota === "v") {
+            if (state.modalState.flota === "v") 
+            {
                 this._dataSchedulerGrid.updateGroupReservaVuelaCar(state, positiongroups);
                 let elementoReserva = this.generateNewElementReservas(state.modalState, state.modalState.group as number, state.modalState.id as number);
                 this._dataSchedulerGrid.updateReservaVuelaCar(positionListado as number, elementoReserva);
@@ -552,10 +555,10 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         let [existListadoPrereserva, positionListadoPreReserva] = this.searchExistListById(this._dataSchedulerGrid.itemsPreReservas, state.modalState.id as number);
 
         if (existGroupPrereserva === false) {
-            const grupoTransformado: typeGroup = this._dataSchedulerGrid.insertNewElementGrupoPreReserva(state);
-            positiongroupsPreReserva = this._dataSchedulerGrid.getLengthGroupsPreReserva() - 1; // this.groupsPreReserva.length - 1;
+            // positiongroupsPreReserva = this._dataSchedulerGrid.getLengthGroupsPreReserva() - 1; // this.groupsPreReserva.length - 1;
             // state.modalState.id = _idModal;
-
+            
+            const grupoTransformado: typeGroup = this._dataSchedulerGrid.insertNewElementGrupoPreReserva(state);
             await repoStorage.insertGroupPreReserva(grupoTransformado);
 
         }
@@ -597,13 +600,13 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
                         if (state.modalState.flota === "v")
                         {
-                            const cantidadGruposReservasVuelaCar = this._dataSchedulerGrid.getLengthGroupsReservaVuelaCar(); //.groupsReservaVuelaCar.length;
+                            const cantidadGruposReservasVuelaCar = this._dataSchedulerGrid.getNewIdFromLastIDGroupReservaVuelaCar(); //.groupsReservaVuelaCar.length;
                             elementoGrupo["id"] = cantidadGruposReservasVuelaCar;
                             elementoGrupo["matricula"] = state.modalState.matricula as string;
 
                             this._dataSchedulerGrid.insertNewElementGrupoReserva(elementoGrupo);
                             
-                            const cantidadReservasVuelaCar: number = this._dataSchedulerGrid.getLengthItemsReservasVuelaCar();
+                            const cantidadReservasVuelaCar: number = this._dataSchedulerGrid.getNewIdFromLastIDReservaVuelaCar();
 
 
                             const elementoReserva = this.generateNewElementReservas(
@@ -620,14 +623,14 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                         else
                         {
                             //modificamos el gurpo
-                            const cantidadGruposReservasExterior = this._dataSchedulerGrid.getLengthGroupsReservaExterior(); //.groupsReservaVuelaCar.length;
+                            const cantidadGruposReservasExterior = this._dataSchedulerGrid.getNewIdFromLastIDGroupReservaExterior(); //.groupsReservaVuelaCar.length;
                             elementoGrupo["id"] = cantidadGruposReservasExterior;
                             elementoGrupo["matricula"] = state.modalState.matricula as string;
                             // insertamos el nuevo grupo
                             this._dataSchedulerGrid.insertNewElementGrupoExterior(elementoGrupo);
 
                             //obtener cantidad de reservas exteriores
-                            const cantidadReservasExterior: number = this._dataSchedulerGrid.getLengthItemsReservasExterior();
+                            const cantidadReservasExterior: number = this._dataSchedulerGrid.getNewIdFromLastIDReservaExterior();
 
                             // generamos la reserva con los datos nuevos
                             const elementoReserva = this.generateNewElementReservas(
@@ -1022,7 +1025,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         {
             return <></>;
         }
-        if (this._dataSchedulerGrid.groupsPreReserva.length === 0)
+        if (this._dataSchedulerGrid.groupsReservaVuelaCar.length === 0)
         {
             return <></>;
         }
@@ -1073,6 +1076,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                     <h3 className='titulo-reservas-timeline'>RESERVAS</h3>
                     <TimelineWrapper
                         marginTop={0}
+                        marginBottom={30}
                         key={keyReserva}
                         anadirBotonPreservar={false}
                         groups={groupsReservaVuelaCar}
@@ -1088,6 +1092,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                     <h3 className='titulo-subalquileres-timeline'>SUBALQUILERES</h3>
                     <TimelineWrapper
                         marginTop={0}
+                        marginBottom={30}
                         key={keySubAlquileres}
                         anadirBotonPreservar={false}
                         groups={groupsReservaExterior}
@@ -1096,11 +1101,12 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                         onItemDoubleClick={this.onItemDoubleClickReservasExterior}
                         visibleTimeStartProp={this._visibleTimeStart}
                         visibleTimeEndProp={this._visibleTimeEnd}
-                    // onClickAnadirPreReserva={this.anadirPreReserva}
+                    
                     />
                     <h3 className='titulo-prereservas-timeline'>PRERESERVAS</h3>
                     <TimelineWrapper
                         marginTop={0}
+                        marginBottom={50}
                         key={keyPrereserva}
                         anadirBotonPreservar={false}
                         groups={groupsPreReserva}
@@ -1110,7 +1116,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                         onItemDoubleClick={this.onItemDoubleClickPreReservas}
                         visibleTimeStartProp={this._visibleTimeStart}
                         visibleTimeEndProp={this._visibleTimeEnd}
-                    // onClickAnadirPreReserva={this.anadirPreReserva}
+                    
                         
                     />
 
