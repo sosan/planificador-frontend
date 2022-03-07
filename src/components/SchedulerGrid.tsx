@@ -82,6 +82,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             cantidadDias: 3,
             textoFechaDevolucionVisible: false,
             estado: ENUM_TIPOS_ESTADO.prereservado as string,
+            hasContract: false,
 
         },
         showLoading: true,
@@ -234,6 +235,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 "estado": ENUM_TIPOS_ESTADO.prereservado as string,
                 "isNewRegister": true,
                 "isPrereserva": true,
+                "hasContract": false,
 
             },
             "modalReservasVisible": false,
@@ -280,6 +282,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 "estado": ENUM_TIPOS_ESTADO.reservado as string,
                 "isNewRegister": true,
                 "isPrereserva": false,
+                "hasContract": false,
 
             },
             "modalReservasVisible": false,

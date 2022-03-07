@@ -1,0 +1,60 @@
+.modal
+{
+    
+}
+
+.top30
+{
+    margin-top: 30px;
+}
+
+.left10
+{
+    margin-left: 10px;
+}
+
+.grid-cabecera
+{
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: 1fr;
+    height: 100%;
+
+}
+
+.grid-lateral
+{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 50px 400px 50px 400px;
+    height: 100%;
+}
+
+.contenido
+{
+    background-color: brown;
+}
+
+.texto-negro
+{
+    color: black !important;
+}
+
+.borde-solido
+{
+    border: 1px solid gray;
+}
+
+.modal-wrapper.sc-ion-modal-md,
+.modal-shadow.sc-ion-modal-md
+{
+    width: 800px !important;
+}
+
+.boton-ultimo
+{
+    margin-left: auto;
+    background-color: #484848 !important;
+    color: white !important;
+    margin-right: 30px;
+}

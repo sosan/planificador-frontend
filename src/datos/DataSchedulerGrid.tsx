@@ -132,6 +132,7 @@ export class DataSchedulerGrid
                     estado: "reservado",
                     isPrereserva: false,
                     isNewRegister: false,
+                    hasContract: false,
     
                 },
     

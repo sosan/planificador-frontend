@@ -23,7 +23,6 @@ export class Database
         {
             name: "dietario.db",
             driverOrder: [CordovaSQLiteDriver._driver, Drivers.IndexedDB, Drivers.LocalStorage],
-            // location: 0,
             version: 2,
             storeName: "basedatos",
             dbKey: "keyyyyyyy",
@@ -38,17 +37,6 @@ export class Database
 
         await this.storage.create();
 
-    }
-
-    async LoadAllData()
-    {
-        try {
-        
-        } catch (err) {
-            console.log("Error loading table to in memory map.");
-            console.log(err);
-            return;
-        }
     }
 
     async setData(key: string, value: string)

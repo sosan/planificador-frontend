@@ -1,9 +1,8 @@
 import { IonContent, IonCard, IonImg, IonCardHeader, IonCardTitle, IonCardContent, IonButton } from "@ionic/react";
 import { Component } from "react";
 import * as categoriasManager from "../datos/listadoCategorias";
-import { IngresarContrato } from "../components/IngresarContratoContainer";
-import { ModificarContrato } from "../components/ModificarContratoContainer";
 import { ContainerState as IContainerIngresarContrato  } from "../components/IngresarContratoContainer";
+import { ModalDialog } from "../components/ModalContratos";
 
 interface ContainerProps {
     
@@ -13,6 +12,7 @@ interface ContainerProps {
 interface ContainerState {
     ingresarVisible: boolean;
     modificarVisible: boolean;
+    modalVisible: boolean;
 
 }
 
@@ -29,7 +29,11 @@ export class MenuContratos extends Component<ContainerProps, ContainerState>
 
     constructor(props: any) {
         super(props);
-        this.state = { "ingresarVisible": false, "modificarVisible": false };
+        this.state = { 
+            "modalVisible": false, 
+            "ingresarVisible": false, 
+            "modificarVisible": false 
+        };
         
 
         
@@ -51,12 +55,17 @@ export class MenuContratos extends Component<ContainerProps, ContainerState>
             break;
                     
             default:
-                this.setState({ "ingresarVisible": false, "modificarVisible": false });    
+                this.setState({ "ingresarVisible": false, "modificarVisible": false });
                 return;
                     
         }
         
-        this.setState({ "ingresarVisible": _ingresarVisible, "modificarVisible": _modificarVisible } );
+        this.setState(
+        {
+            "modalVisible": !this.state.modalVisible,
+            "ingresarVisible": _ingresarVisible,
+            "modificarVisible": _modificarVisible 
+        });
 
     }
             
@@ -97,25 +106,32 @@ export class MenuContratos extends Component<ContainerProps, ContainerState>
         
     }
 
+    onModalDidDismiss = () => {
+        this.setState({ 
+            "modalVisible": false,
+            "ingresarVisible": false,
+            "modificarVisible": false
+        });
+    }
+
     render()
     {
 
-        let elementoHtml = <></>;
-        if (this.state.ingresarVisible === true)
-        {
-            elementoHtml = <IngresarContrato onClickedGenerateContract={this.onClickedGenerateContract }/>
-        }
-
-        if (this.state.modificarVisible === true)
-        {
-            elementoHtml = <ModificarContrato />
-        }
 
         return (
             <>
+                <IonButton href='/page/Dashboard' className="boton-ultimo" fill='solid' color="#ffffff">Volver</IonButton>
                 <IonContent>
                     <div className='centrado'>{this.listadoCategoria}</div>
-                    {elementoHtml}
+                    <ModalDialog 
+                        onModalDidDismiss={this.onModalDidDismiss} 
+                        isVisible={this.state.modalVisible}
+                        ingresarVisible={this.state.ingresarVisible}
+                        modificarVisible={this.state.modificarVisible}
+                        onClickedGenerateContract={this.onClickedGenerateContract}
+                    />
+                    
+                    
                 </IonContent>
             </>
         );

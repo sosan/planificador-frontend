@@ -50,6 +50,7 @@ export interface IModalState
 
     isNewRegister: boolean;
     isFirstTime?: boolean;
+    hasContract: boolean;
     
 
 }
@@ -135,6 +136,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             "group": undefined,
             "isNewRegister": false,
             "isPrereserva": false,
+            "hasContract": false,
         },
         "errores": {
             "colaborador": false,
@@ -173,6 +175,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                 "group": this.defaultState.modalState.group,
                 "isPrereserva": this.defaultState.modalState.isPrereserva,
                 "isNewRegister": false,
+                "hasContract": this.defaultState.modalState.hasContract,
 
             },
             "errores":
