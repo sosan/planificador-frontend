@@ -342,8 +342,10 @@ class InterfaceStorage
     
         await ionicDb.setData(`length_${this.KEY_PREFIX_GROUPS_PRE_RESERVA }`, "0");
         await ionicDb.setData(`length_${this.KEY_PREFIX_GROUPS_RESERVA_EXTERIOR}`, "0");
+
         await ionicDb.setData(`length_${this.KEY_PREFIX_ITEMSPRERESERVAS}`, "0");
         await ionicDb.setData(`length_${this.KEY_PREFIX_ITEMS_RESERVA_EXTERIOR}`, "0");
+        await ionicDb.setData(`length_${this.KEY_PREFIX_ITEMS_RESERVA_VUELACAR}`, "0");
 
     }
 
@@ -535,6 +537,19 @@ class InterfaceStorage
         const key = `${this.KEY_PREFIX_GROUPS_PRE_RESERVA}${_id}`;
         await ionicDb.removeKey(key);
         
+
+    }
+
+    async removeAtGroupReservaExterior(_id: number) {
+        const lenTexto = await ionicDb.getKey(`length_${this.KEY_PREFIX_GROUPS_RESERVA_EXTERIOR}`);
+        let len = await this.convertNumber(lenTexto);
+        len -= 1;
+
+        await ionicDb.setData(`length_${this.KEY_PREFIX_GROUPS_RESERVA_EXTERIOR}`, len.toString());
+
+        const key = `${this.KEY_PREFIX_GROUPS_RESERVA_EXTERIOR}${_id}`;
+        await ionicDb.removeKey(key);
+
 
     }
 

@@ -10,6 +10,7 @@ export enum ENUM_LISTADO_COLABORADORES {
     "none" = "none",
     "gianni" = "gianni",
     "sven" = "sven",
+    "llull" = "llull",
     "llull1" = "llull1",
     "thomas" = "thomas",
     "belmi" = "belmi",
@@ -31,6 +32,11 @@ export let listadoColaboradores: IlistColaborators[] = [
         "id": "sven",
         "descripcion": "Sven",
         "color": "#38ff3f"
+    },
+    {
+        "id": "llull",
+        "descripcion": "Llull",
+        "color": "#abf739"
     },
     {
         "id": "llull1",
