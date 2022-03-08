@@ -39,7 +39,7 @@ export class DataSchedulerGrid
         this.setIsReady(false);
         
         const cantidadKeys = await repoStorage.getLengthGroupReservasVuelaCar();
-        console.log("cantidadKeys=" + cantidadKeys);
+        // console.log("cantidadKeys=" + cantidadKeys);
         if (cantidadKeys === 0)
         {
             await this.generateDB(dataCarsProps);
@@ -115,55 +115,53 @@ export class DataSchedulerGrid
     
         // },];
     
-        this.itemsReservasVuelaCar = [
-            {
-                id: 0,
-                group: 0,
-                title: 'item 1',
-                modalState: {
-                    fechaAlta: new Date().toISOString(),
-                    notareserva: "itemsdsdf",
-                    matricula: "",
-                    modeloVehiculo: "",
-                    claseVehiculo: "",
-                    cantidadDias: 3,
-                    colaborador: "",
-                    flota: "",
-                    estado: "reservado",
-                    isPrereserva: false,
-                    isNewRegister: false,
-                    hasContract: false,
+        // this.itemsReservasVuelaCar = [
+        //     {
+        //         "id": 0,
+        //         "group": 0,
+        //         "title": 'item 1',
+        //         "modalState": {
+        //             "fechaAlta": new Date().toISOString(),
+        //             "notareserva": "TEST",
+        //             "matricula": "TEST",
+        //             "modeloVehiculo": "TEST",
+        //             "claseVehiculo": "TEST",
+        //             "cantidadDias": 3,
+        //             "colaborador": "TEST",
+        //             "flota": "TEST",
+        //             "estado": "reservado",
+        //             "isPrereserva": false,
+        //             "isNewRegister": false,
+        //             "hasContract": false,
+        //             "reservaCompletada": false,
+        //         },
+        //         "start_time": new Date().getTime(),
+        //         "end_time": new Date().getTime(),
+        //         "canMove": false,
+        //         "canResize": false,
+        //         "canChangeGroup": false,
+        //         "itemProps": {
+        //             'data-custom-attribute': 'Random content',
+        //             'aria-hidden': true,
+        //             "onDoubleClick": () => { console.log('You clicked double!');  },
+        //             "className": 'altura-items',
+        //             "style": {
+        //                 background: 'fuchsia',
+        //             }
+        //         }
     
-                },
+        //     },
     
-                start_time: new Date().getTime(),
-                end_time: new Date().getTime(),
-                canMove: false,
-                canResize: false,
-                canChangeGroup: false,
+        // ];
     
-                itemProps: {
-                    'data-custom-attribute': 'Random content',
-                    'aria-hidden': true,
-                    onDoubleClick: () => { console.log('You clicked double!');  },
-                    className: 'altura-items',
-                    style: {
-                        background: 'fuchsia',
-                    }
-                }
-    
-            },
-    
-        ];
-    
-        const startTime = new Date(this.itemsReservasVuelaCar[0].start_time).setHours(0, 0, 0);
-        const endTime = new Date(this.itemsReservasVuelaCar[0].end_time).setHours(23, 59, 59);
+        // const startTime = new Date(this.itemsReservasVuelaCar[0].start_time).setHours(0, 0, 0);
+        // const endTime = new Date(this.itemsReservasVuelaCar[0].end_time).setHours(23, 59, 59);
 
-        this.itemsReservasVuelaCar[0].start_time = new Date(startTime).getTime();
-        this.itemsReservasVuelaCar[0].end_time = new Date(endTime).getTime();
+        // this.itemsReservasVuelaCar[0].start_time = new Date(startTime).getTime();
+        // this.itemsReservasVuelaCar[0].end_time = new Date(endTime).getTime();
         
         await repoStorage.initGroupsItems();
-        await repoStorage.insertItemsReservaVuelaCar(this.itemsReservasVuelaCar);
+        // await repoStorage.insertItemsReservaVuelaCar(this.itemsReservasVuelaCar);
         
         // this.itemsReservasExterior.push(this.itemsReservasVuelaCar[0]);
         // await repoStorage.insertGroupsPreReserva(this.groupsPreReserva);
@@ -219,7 +217,7 @@ export class DataSchedulerGrid
         }
 
 
-        groupCreated = this.orderGroupCars(groupCreated, ORDEN_LISTADO_MODELO_VEHICULOS);
+        groupCreated = await this.orderGroupCars(groupCreated, ORDEN_LISTADO_MODELO_VEHICULOS);
         
         const arrayListadoClasesVehiculos = Array.from(listadoClasesVehiculos);
         const arrayListadoModelosVehiculos = Array.from(listadoModelosVehiculos);
@@ -234,7 +232,7 @@ export class DataSchedulerGrid
     }
     
 
-    orderGroupCars(cars: typeGroup[], ordenListadoCoches: string[]) {
+    async orderGroupCars(cars: typeGroup[], ordenListadoCoches: string[]) {
         let groupOrdered: typeGroup[] = [];
         for (let i = 0; i < ordenListadoCoches.length; i++) {
 
@@ -252,31 +250,31 @@ export class DataSchedulerGrid
     }
 
     
-    getLengthItemsReservasVuelaCar() {
+    async getLengthItemsReservasVuelaCar() {
         return this.itemsReservasVuelaCar.length;
     }
 
-    getLengthItemsReservasExterior() {
+    async getLengthItemsReservasExterior() {
         return this.itemsReservasExterior.length;
     }
 
-    getLengthItemsPreReservas() {
+    async getLengthItemsPreReservas() {
         return this.itemsPreReservas.length;
     }
 
-    getLengthGroupsReservaVuelaCar() {
+    async getLengthGroupsReservaVuelaCar() {
         return this.groupsReservaVuelaCar.length;
     }
 
-    getLengthGroupsReservaExterior() {
+    async getLengthGroupsReservaExterior() {
         return this.groupsReservaExterior.length;
     }
 
-    getLengthGroupsPreReserva() {
+    async getLengthGroupsPreReserva() {
         return this.groupsPreReserva.length;
     }
 
-    fillGroupReservaVuelaCar(matricula: string, modelo: any, claseVehiculo: string, flota: string, position: number) {
+    async fillGroupReservaVuelaCar(matricula: string, modelo: any, claseVehiculo: string, flota: string, position: number) {
 
         this.groupsReservaVuelaCar[position].matricula = matricula;
         this.groupsReservaVuelaCar[position].modelo = modelo;
@@ -285,20 +283,20 @@ export class DataSchedulerGrid
 
     }
 
-    fillItemsReservasVuelaCar(elementoReserva: IListadoPrereserva, position: number) {
+    async fillItemsReservasVuelaCar(elementoReserva: IListadoPrereserva, position: number) {
         
         this.itemsReservasVuelaCar[position] = elementoReserva;
 
     }
 
 
-    fillItemsReservasExterior(elementoReserva: IListadoPrereserva, position: number) {
+    async fillItemsReservasExterior(elementoReserva: IListadoPrereserva, position: number) {
 
         this.itemsReservasExterior[position] = elementoReserva;
     }
 
 
-    fillGroupReservaExterior(matricula: string, modelo: string, claseVehiculo: string, flota: string, position: number) {
+    async fillGroupReservaExterior(matricula: string, modelo: string, claseVehiculo: string, flota: string, position: number) {
         this.groupsReservaExterior[position].matricula = matricula;
         this.groupsReservaExterior[position].modelo = modelo;
         this.groupsReservaExterior[position].clasevehiculo = claseVehiculo;
@@ -356,75 +354,83 @@ export class DataSchedulerGrid
 
     }
 
-    insertNewElementGrupoReserva(nuevoGrupoReserva: typeGroup) {
+    async insertNewElementGrupoReserva(nuevoGrupoReserva: typeGroup) {
         this.groupsReservaVuelaCar.push(nuevoGrupoReserva);
     }
 
 
-    insertNewElementReservasVuelaCar(elementoReserva: IListadoPrereserva) {
+    async insertNewElementReservasVuelaCar(elementoReserva: IListadoPrereserva) {
         this.itemsReservasVuelaCar.push(elementoReserva);
     }
 
-    insertNewElementReservasExterior(elementoReserva: IListadoPrereserva) {
+    async insertNewElementReservasExterior(elementoReserva: IListadoPrereserva) {
         this.itemsReservasExterior.push(elementoReserva);
     }
-    insertNewElementGrupoExterior(nuevoGrupoReserva: typeGroup) {
+    async insertNewElementGrupoExterior(nuevoGrupoReserva: typeGroup) {
         this.groupsReservaExterior.push(nuevoGrupoReserva);
     }
 
-    updateReservaExterior(elementoReserva: IListadoPrereserva, position: number) {
+    async updateReservaExterior(elementoReserva: IListadoPrereserva, position: number) {
         this.itemsReservasExterior[position as number] = elementoReserva;
     }
-    updateGroupReservaExterior(state: ContainerState, position: number) {
+    async updateGroupReservaExterior(state: ContainerState, position: number) {
         this.groupsReservaExterior[position as number].matricula = state.modalState.matricula as string;
         this.groupsReservaExterior[position as number].modelo = state.modalState.modeloVehiculo as string;
         this.groupsReservaExterior[position as number].clasevehiculo = state.modalState.claseVehiculo as string;
         this.groupsReservaExterior[position as number].flota = state.modalState.flota as string;
     }
-    updateReservaVuelaCar(positionListado: number, elementoReserva: IListadoPrereserva) {
+    async updateReservaVuelaCar(positionListado: number, elementoReserva: IListadoPrereserva) {
         this.itemsReservasVuelaCar[positionListado as number] = elementoReserva;
     }
 
-    updateGroupReservaVuelaCar(state: ContainerState, position: number) {
+    async updateGroupReservaVuelaCar(state: ContainerState, position: number) {
         this.groupsReservaVuelaCar[position as number].matricula = state.modalState.matricula as string;
         this.groupsReservaVuelaCar[position as number].modelo = state.modalState.modeloVehiculo as string;
         this.groupsReservaVuelaCar[position as number].clasevehiculo = state.modalState.claseVehiculo as string;
         this.groupsReservaVuelaCar[position as number].flota = state.modalState.flota as string;
     }
     
-    reemplacePrereservas(listadoE: IListadoPrereserva[]) {
+    async reemplacePrereservas(listadoE: IListadoPrereserva[]) {
         this.itemsPreReservas = [...listadoE];
     }
 
-    reemaplceReservasExterior(listadoE: IListadoPrereserva[]) {
+    async reemaplceReservasExterior(listadoE: IListadoPrereserva[]) {
         this.itemsReservasExterior = [...listadoE];
     }
-    reemplaceGroupReservaExterior(grupoE: typeGroup[]) {
+    async reemplaceGroupReservaExterior(grupoE: typeGroup[]) {
         this.groupsReservaExterior = [...grupoE];
     }
-    reemplaceReservasVuelaCar(listadoV: IListadoPrereserva[]) {
+    async reemplaceReservasVuelaCar(listadoV: IListadoPrereserva[]) {
         this.itemsReservasVuelaCar = [...listadoV];
     }
-    reemplaceAllGroupReservaVuelaCar(grupoV: typeGroup[]) {
+    async reemplaceAllGroupReservaVuelaCar(grupoV: typeGroup[]) {
         this.groupsReservaVuelaCar = [...grupoV];
     }
 
 
-    updateGroupPrereserva(state: ContainerState, position: number) {
+    async updateGroupPrereserva(state: ContainerState, position: number) {
         this.groupsPreReserva[position].matricula = state.modalState.matricula as string;
         this.groupsPreReserva[position].modelo = state.modalState.modeloVehiculo as string;
         this.groupsPreReserva[position].clasevehiculo = state.modalState.claseVehiculo as string;
         this.groupsPreReserva[position].flota = state.modalState.flota as string;
     }
-    removeAtItemsPrereserva(position: number) {
+    async removeAtItemsPrereserva(position: number) {
         this.itemsPreReservas.splice(position as number, 1);
     }
-    removeAtGroupsPrereserva(position: number) {
+    async removeAtGroupsPrereserva(position: number) {
         this.groupsPreReserva.splice(position, 1);
     }
 
+    async removeAtItemsReservaExterior(position: number) {
+        this.itemsReservasExterior.splice(position as number, 1);
+    }
 
-    insertNewElementGrupoPreReserva(state: ContainerState): typeGroup {
+    async removeAtGroupReservaExterior(position: number)
+    {
+        this.groupsReservaExterior.splice(position as number, 1);
+    }
+
+    async insertNewElementGrupoPreReserva(state: ContainerState) {
         const grupo: typeGroup = {
             "id": state.modalState.group as number,
             "title": "title",
@@ -443,7 +449,7 @@ export class DataSchedulerGrid
         return grupo;
     }
 
-    searchGroupByMatricula(grupo: typeGroup[], matricula: string): [boolean, number] {
+    async searchGroupByMatricula(grupo: typeGroup[], matricula: string) {
         let exist = false;
         let grupoId = -1;
 
@@ -463,7 +469,7 @@ export class DataSchedulerGrid
 
 
 
-    searchExistGroupById(grupo: typeGroup[], _id: number): [boolean, number] {
+    async searchExistGroupById(grupo: typeGroup[], _id: number) {
         let exist = false;
         let position = -1;
 
@@ -482,7 +488,7 @@ export class DataSchedulerGrid
     }
 
 
-    searchDuplicatedGroupMatricula(grupo: typeGroup[], matricula: string): [boolean, number] {
+    async searchDuplicatedGroupMatricula(grupo: typeGroup[], matricula: string) {
         let position = -1;
         for (let i = 0; i < grupo.length; i++) {
             if (grupo[i].matricula.toLowerCase() === matricula.toLowerCase()) {
@@ -494,7 +500,7 @@ export class DataSchedulerGrid
     }
 
 
-    deletePrereservadoById(_id: number)
+    async deletePrereservadoById(_id: number)
     {
 
         let grupo: number = -1;
@@ -528,7 +534,7 @@ export class DataSchedulerGrid
 
     }
 
-    deleteGroupPrereservaById(grupo: number)
+    async deleteGroupPrereservaById(grupo: number)
     {
         for (let i = 0; i < this.groupsPreReserva.length; i++)
         {
@@ -540,7 +546,7 @@ export class DataSchedulerGrid
 
     }
 
-    deleteReservadoVuelacarById(_id: number) {
+    async deleteReservadoVuelacarById(_id: number) {
 
         for (let i = 0; i < this.itemsReservasVuelaCar.length; i++) {
             if (this.itemsReservasVuelaCar[i].id === _id) {
@@ -553,7 +559,7 @@ export class DataSchedulerGrid
 
     }
 
-    deleteReservadoExteriorById(_id: number) {
+    async deleteReservadoExteriorById(_id: number) {
 
         for (let i = 0; i < this.itemsReservasExterior.length; i++) {
             if (this.itemsReservasExterior[i].id === _id) {
@@ -566,7 +572,7 @@ export class DataSchedulerGrid
 
     }
 
-    getNewIdFromLastIDGroupPreReserva()
+    async getNewIdFromLastIDGroupPreReserva()
     {
         let ultimaPosicion = this.groupsPreReserva.length - 1;
         if (ultimaPosicion < 0)
@@ -579,7 +585,7 @@ export class DataSchedulerGrid
 
     }
 
-    getNewIdFromLastIDPreReserva()
+    async getNewIdFromLastIDPreReserva()
     {
         let ultimaPosicion = this.itemsPreReservas.length - 1;
         if (ultimaPosicion < 0) {
@@ -592,7 +598,7 @@ export class DataSchedulerGrid
     }
 
 
-    getNewIdFromLastIDReservaVuelaCar()
+    async getNewIdFromLastIDReservaVuelaCar()
     {
 
         let ultimaPosicion = this.itemsReservasVuelaCar.length - 1;
@@ -605,7 +611,7 @@ export class DataSchedulerGrid
 
     }
 
-    getNewIdFromLastIDReservaExterior() {
+    async getNewIdFromLastIDReservaExterior() {
 
         let ultimaPosicion = this.itemsReservasExterior.length - 1;
         if (ultimaPosicion < 0) {
@@ -617,7 +623,7 @@ export class DataSchedulerGrid
 
     }
 
-    getNewIdFromLastIDGroupReservaVuelaCar()
+    async getNewIdFromLastIDGroupReservaVuelaCar()
     {
         let ultimaPosicion = this.groupsReservaVuelaCar.length - 1;
         if (ultimaPosicion < 0) {
@@ -629,7 +635,7 @@ export class DataSchedulerGrid
 
     }
 
-    getNewIdFromLastIDGroupReservaExterior() {
+    async getNewIdFromLastIDGroupReservaExterior() {
         let ultimaPosicion = this.groupsReservaExterior.length - 1;
         if (ultimaPosicion < 0) {
             return 0;
