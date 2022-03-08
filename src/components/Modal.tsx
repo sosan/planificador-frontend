@@ -574,10 +574,44 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                         
                         </IonRow>
                         <IonRow className="centradovertical">
-                            <IonCol size="3" className='centrado-horizontal'>
+                            <div className='centrado-horizontal'>
                                 <IonButton onClick={() => { this.props.onCloseModal(); }}>Volver</IonButton>
-                            </IonCol>
+                            </div>
                             {
+                                (this.state.modalState.reservaCompletada === false) ? null : 
+                                <div className='centrado-horizontal'>
+                                    <IonButton onClick={ () => {  this.activarModificar();  } }>Modificar</IonButton>
+                                </div>
+                            }
+                            {
+                                (this.state.modalState.estado === ENUM_TIPOS_ESTADO.reservado && 
+                                    (this.state.clickedModificar === false || this.state.clickedModificar === undefined)) ? <></>
+                                : 
+                                <div className='centrado-horizontal'>
+                                    <IonButton  onClick={
+                                        () => {
+                                            
+                                            this.saveProps(this.state,
+                                                this.props.modalState.id as number,
+                                                this.props.modalState.group as number,
+                                                itemsGenerados.fechaAlta as string
+                                            ); 
+                                        }
+                                    }>Guardar Datos</IonButton>
+                                </div>
+                            }
+                            <div className='centrado-horizontal boton-eliminar'>
+                                {
+                                    (this.props.isDoubleclickItem === false) ? null
+                                        :
+                                        <IonButton onClick={() => { this.props.onDelete(itemsGenerados.estado, itemsGenerados.flota, itemsGenerados.id); }}>Eliminar</IonButton>
+                                }
+                            </div>
+
+                            {/* <IonCol size="3" className='centrado-horizontal'>
+                                <IonButton onClick={() => { this.props.onCloseModal(); }}>Volver</IonButton>
+                            </IonCol> */}
+                            {/* {
                                 (this.state.modalState.estado === ENUM_TIPOS_ESTADO.reservado && 
                                     (this.state.clickedModificar === false || this.state.clickedModificar === undefined)) ? <></>
                                 : 
@@ -593,24 +627,20 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                         }
                                     }>Guardar Datos</IonButton>
                                 </IonCol>
-                            }
-                            {
+                            } */}
+                            {/* {
                                 (this.state.modalState.reservaCompletada === false) ? null : 
                                 <IonCol size="4" className='centrado-horizontal'>
-                                    <IonButton onClick={
-                                        () => {
-                                            this.activarModificar();
-                                        }
-                                    }>Modificar</IonButton>
+                                    <IonButton onClick={ () => {  this.activarModificar();  } }>Modificar</IonButton>
                                 </IonCol>
-                            }
-                            <IonCol size="2" className='centrado-horizontal'>
+                            } */}
+                            {/* <IonCol size="2" className='centrado-horizontal'>
                             {
                                 (this.props.isDoubleclickItem === false) ? null
                                 :
                                 <IonButton  onClick={() => { this.props.onDelete(itemsGenerados.estado, itemsGenerados.flota, itemsGenerados.id ); }}>Eliminar</IonButton>
                             }
-                            </IonCol>
+                            </IonCol> */}
                         </IonRow>
 
                     </IonGrid>
