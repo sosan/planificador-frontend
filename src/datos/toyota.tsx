@@ -48,7 +48,7 @@ export const toyota: IDataVehiculos[] = [
         "_id": "606651cbf5mae674f6c4727d3",
         "vehiculo": "toyotaAygoOpen",
         "descripcion": "Toyota Aygo Open",
-        "clasevehiculo": "v",
+        "clasevehiculo": "b",
         "modelo": "Toyota Aygo Open",
         "pax": 4,
         "puertas": 4,

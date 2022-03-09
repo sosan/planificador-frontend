@@ -17,7 +17,6 @@ import CompletarReservaContainer from "../components/Completar_reservaContainer"
 
 // import DashboardContainer from "../pages/DashboardContainer";
 import SubalquileresContainer from "../components/SubalquileresContainer";
-import FlotaContainer from "../components/FlotaContainer";
 import MotosContainer from "../components/MotosContainer";
 
 import PrereservarContainer from "../components/PrereservarContainer";
@@ -27,6 +26,8 @@ import { IngresarContrato } from '../components/IngresarContratoContainer';
 import { ModificarContrato } from '../components/ModificarContratoContainer';
 
 import { SchedulerContainer } from '../components/SchedulerGrid';
+import { FlotaManager } from '../pages/ManagerFlota';
+
 
 // 1.Planinging
 //  Preservas
@@ -85,7 +86,7 @@ export const categoriasDashboard: IItemCategoria[] = [
         cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
         url: '/page/contratos',
         containerId: "contratos",
-        container: <></>, //<PrereservarContainer />,
+        container: <></>,
         iosIcon: mailOutline,
         mdIcon: mailSharp
     },
@@ -111,7 +112,7 @@ export const categoriasDashboard: IItemCategoria[] = [
         cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
         url: '/page/multas',
         containerId: "Multas",
-        container: <></>, //<PrereservarContainer />,
+        container: <></>,
         iosIcon: mailOutline,
         mdIcon: mailSharp
     },
@@ -124,7 +125,7 @@ export const categoriasDashboard: IItemCategoria[] = [
         cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
         url: '/page/informes',
         containerId: "Informes",
-        container: <></>, //<PrereservarContainer />,
+        container: <></>, 
         iosIcon: mailOutline,
         mdIcon: mailSharp
     },
@@ -137,7 +138,21 @@ export const categoriasDashboard: IItemCategoria[] = [
         cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
         url: '/page/devolucion',
         containerId: "Devolucion",
-        container: <></>, // <PrereservarContainer />,
+        container: <></>, 
+        iosIcon: mailOutline,
+        mdIcon: mailSharp
+    },
+    {
+        title: 'Menu Flota',
+        image: "https://via.placeholder.com/180x80",
+        visibleInMenu: false,
+        colorBoton: "colorBotonCategorias",
+        colorBackground: "colorBackgroundCategorias",
+        cardTitle: "Menu Flota",
+        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+        url: '/page/flota-manager',
+        containerId: "flota-manager",
+        container: <FlotaManager />,
         iosIcon: mailOutline,
         mdIcon: mailSharp
     },
@@ -269,238 +284,47 @@ export const categoriasContratos: IItemCategoria[] = [
 ];
 
 
-
-export const categoriasFacturacion: IItemCategoria[] = [
+// --------------
+export const categoriasFlotaManager: IItemCategoria[] = [
 
     {
-        title: 'Pre-Reservar',
+        title: 'Menu Flota',
         image: "https://via.placeholder.com/180x80",
-
+        visibleInMenu: false,
         colorBoton: "colorBotonCategorias",
         colorBackground: "colorBackgroundCategorias",
-        cardTitle: "Titulo",
+        cardTitle: "Menu Flota",
         cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
-        url: '/page/prereservar',
-        containerId: "Prereservar",
-        container: <PrereservarContainer />,
+        url: '/page/flota-manager',
+        containerId: "flota-manager",
+        container: <FlotaManager />,
         iosIcon: mailOutline,
         mdIcon: mailSharp
     },
-    {
-        title: 'Completar Reserva',
-        image: "https://via.placeholder.com/180x80",
 
-        colorBoton: "colorBotonCategorias",
-        colorBackground: "colorBackgroundCategorias",
-        cardTitle: "Titulo",
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
-        url: '/page/completar_reserva',
-        containerId: "Completar_reserva",
-        container: <CompletarReservaContainer />,
-        iosIcon: paperPlaneOutline,
-        mdIcon: paperPlaneSharp
-    },
-    {
-        title: 'Flota',
-        url: '/page/flota',
-        image: "https://via.placeholder.com/180x80",
+];
+// --------
 
-        colorBoton: "colorBotonCategorias",
-        colorBackground: "colorBackgroundCategorias",
-        cardTitle: "Titulo",
-        containerId: "Flota",
-        container: <FlotaContainer />,
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
-        iosIcon: heartOutline,
-        mdIcon: heartSharp
-    },
-    {
-        title: 'Motos',
-        image: "https://via.placeholder.com/180x80",
+export const categoriasFacturacion: IItemCategoria[] = [
 
-        colorBoton: "colorBotonCategorias",
-        colorBackground: "colorBackgroundCategorias",
-        cardTitle: "Titulo",
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
-        url: '/page/motos',
-        containerId: "Motos",
-        container: <MotosContainer />,
-        iosIcon: archiveOutline,
-        mdIcon: archiveSharp
-    },
-    {
-        title: 'SubAlquileres',
-        image: "https://via.placeholder.com/180x80",
-
-        cardTitle: "Titulo",
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
-        colorBoton: "colorBotonCategorias",
-        colorBackground: "colorBackgroundCategorias",
-        url: '/page/subalquileres',
-        containerId: "Subalquileres",
-        container: <SubalquileresContainer />,
-        iosIcon: trashOutline,
-        mdIcon: trashSharp
-    }
-
+   
 
 ];
 
 export const categoriasMultas: IItemCategoria[] = [
 
-    {
-        title: 'Pre-Reservar',
-        image: "https://via.placeholder.com/180x80",
-
-        colorBoton: "colorBotonCategorias",
-        colorBackground: "colorBackgroundCategorias",
-        cardTitle: "Titulo",
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
-        url: '/page/prereservar',
-        containerId: "Prereservar",
-        container: <PrereservarContainer />,
-        iosIcon: mailOutline,
-        mdIcon: mailSharp
-    },
-    {
-        title: 'Completar Reserva',
-        image: "https://via.placeholder.com/180x80",
-
-        colorBoton: "colorBotonCategorias",
-        colorBackground: "colorBackgroundCategorias",
-        cardTitle: "Titulo",
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
-        url: '/page/completar_reserva',
-        containerId: "Completar_reserva",
-        container: <CompletarReservaContainer />,
-        iosIcon: paperPlaneOutline,
-        mdIcon: paperPlaneSharp
-    },
-    {
-        title: 'Flota',
-        url: '/page/flota',
-        image: "https://via.placeholder.com/180x80",
-
-        colorBoton: "colorBotonCategorias",
-        colorBackground: "colorBackgroundCategorias",
-        cardTitle: "Titulo",
-        containerId: "Flota",
-        container: <FlotaContainer />,
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
-        iosIcon: heartOutline,
-        mdIcon: heartSharp
-    },
-    {
-        title: 'Motos',
-        image: "https://via.placeholder.com/180x80",
-
-        colorBoton: "colorBotonCategorias",
-        colorBackground: "colorBackgroundCategorias",
-        cardTitle: "Titulo",
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
-        url: '/page/motos',
-        containerId: "Motos",
-        container: <MotosContainer />,
-        iosIcon: archiveOutline,
-        mdIcon: archiveSharp
-    },
-    {
-        title: 'SubAlquileres',
-        image: "https://via.placeholder.com/180x80",
-
-        cardTitle: "Titulo",
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
-        colorBoton: "colorBotonCategorias",
-        colorBackground: "colorBackgroundCategorias",
-        url: '/page/subalquileres',
-        containerId: "Subalquileres",
-        container: <SubalquileresContainer />,
-        iosIcon: trashOutline,
-        mdIcon: trashSharp
-    }
-
+    
 
 
 ];
 
 
 export const categoriasInformes: IItemCategoria[] = [
-    {
-        title: 'Pre-Reservar',
-        image: "https://via.placeholder.com/180x80",
-
-        colorBoton: "colorBotonCategorias",
-        colorBackground: "colorBackgroundCategorias",
-        cardTitle: "Titulo",
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
-        url: '/page/prereservar',
-        containerId: "Prereservar",
-        container: <PrereservarContainer />,
-        iosIcon: mailOutline,
-        mdIcon: mailSharp
-    },
-    {
-        title: 'Completar Reserva',
-        image: "https://via.placeholder.com/180x80",
-
-        colorBoton: "colorBotonCategorias",
-        colorBackground: "colorBackgroundCategorias",
-        cardTitle: "Titulo",
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
-        url: '/page/completar_reserva',
-        containerId: "Completar_reserva",
-        container: <CompletarReservaContainer />,
-        iosIcon: paperPlaneOutline,
-        mdIcon: paperPlaneSharp
-    },
-    {
-        title: 'Flota',
-        url: '/page/flota',
-        image: "https://via.placeholder.com/180x80",
-
-        colorBoton: "colorBotonCategorias",
-        colorBackground: "colorBackgroundCategorias",
-        cardTitle: "Titulo",
-        containerId: "Flota",
-        container: <FlotaContainer />,
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
-        iosIcon: heartOutline,
-        mdIcon: heartSharp
-    },
-    {
-        title: 'Motos',
-        image: "https://via.placeholder.com/180x80",
-
-        colorBoton: "colorBotonCategorias",
-        colorBackground: "colorBackgroundCategorias",
-        cardTitle: "Titulo",
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
-        url: '/page/motos',
-        containerId: "Motos",
-        container: <MotosContainer />,
-        iosIcon: archiveOutline,
-        mdIcon: archiveSharp
-    },
-    {
-        title: 'SubAlquileres',
-        image: "https://via.placeholder.com/180x80",
-
-        cardTitle: "Titulo",
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
-        colorBoton: "colorBotonCategorias",
-        colorBackground: "colorBackgroundCategorias",
-        url: '/page/subalquileres',
-        containerId: "Subalquileres",
-        container: <SubalquileresContainer />,
-        iosIcon: trashOutline,
-        mdIcon: trashSharp
-    }
-
-
-
+   
+   
 
 ];
 
 export let titulosCategorias: Record<string, string | any> = {
-    "Dashboard": "Dashboard"
+    "Dashboard": "Menu principal"
 };

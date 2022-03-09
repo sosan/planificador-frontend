@@ -37,13 +37,15 @@ export const FillAllRoutes = () =>
     const categoriasFacturacion = FillSelectedCategory(listadoCategorias.categoriasFacturacion);
     const categoriasInformes = FillSelectedCategory(listadoCategorias.categoriasInformes);
     const categoriasMultas = FillSelectedCategory(listadoCategorias.categoriasMultas);
-    
+    const categoriasFlotaManager = FillSelectedCategory(listadoCategorias.categoriasFlotaManager);
+
     let routesContainer: Record<string, ReactElement> = {
         ...categoriasPlaning,
         ...categoriasContratos,
         ...categoriasFacturacion,
         ...categoriasInformes,
         ...categoriasMultas,
+        ...categoriasFlotaManager
         
     };
     

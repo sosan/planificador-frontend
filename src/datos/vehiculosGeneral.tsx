@@ -27,23 +27,23 @@ export interface IListadoPrereserva {
 };
 
 export const ORDEN_LISTADO_MODELO_VEHICULOS = [
-    "Citroen C1",
-    "Peugeot 107",
-    "Peugeot 108",
-    "Toyota Aygo",
-    "Citroen C1 Automatic",
-    "Citroen C1 Open",
-    "Toyota Aygo Open",
-    "Citroen C3",
-    "Peugeout 208",
-    "Peugeout 807",
-    "Piaggio Liberty",
-    "Piaggio Medley",
-    "Suzuky Burgman",
-    "Yamaha Majesty",
-    "Yamaha Tricity"
+    { "descripcion": "Citroen C1", "vehiculo": "citroenC1" },
+    { "descripcion": "Peugeot 108", "vehiculo": "peugeot108"},
+    { "descripcion": "Toyota Aygo", "vehiculo": "toyotaAygo"},
+    { "descripcion": "Citroen C1 Auto.", "vehiculo": "citroenC1Automatic"},
+    { "descripcion": "Citroen C1 Open", "vehiculo": "citroenC1open"},
+    { "descripcion": "Toyota Aygo Open", "vehiculo": "toyotaAygoOpen"},
+    { "descripcion": "Citroen C3", "vehiculo": "citroenC3"},
+    { "descripcion": "Peugeout 208", "vehiculo": "peugeout208"},
+    { "descripcion": "Peugeout 807","vehiculo": "peugeout807"},
+    { "descripcion": "Piaggio Liberty", "vehiculo": "piaggioLiberty125"},
+    { "descripcion": "Piaggio Medley", "vehiculo": "piaggiomedley"},
+    { "descripcion": "Suzuky Burgman", "vehiculo": "suzukyBurgman125"},
+    { "descripcion": "Yamaha Majesty", "vehiculo": "yamahamajesty"},
+    { "descripcion": "Yamaha Tricity","vehiculo":  "yamahatricity}"}
 
 ];
+
 
 
 export interface IDataVehiculos {

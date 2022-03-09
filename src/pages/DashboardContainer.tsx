@@ -44,13 +44,33 @@ export default class DashboardContainer extends Component<ContainerProps, Contai
                             {elemento.cardContent}
                             <IonButton className={`${elemento.colorBoton}`}>Siguiente &gt;</IonButton>
                         </IonCardContent>
-    
                     </IonCard>
     
                 </div>
             );
     
         }
+
+        // listadoCategorias.push(
+        //     <div id="row" key="flota-manager" style={{ width: "200px" }}>
+        //         <IonCard href="/flota-manager" className="" type="button" >
+        //             <IonImg src="" />
+        //             <IonCardHeader>
+        //                 <IonCardTitle className="tituloCard">FLOTA MANAGER</IonCardTitle>
+        //             </IonCardHeader>
+        //             <IonCardContent className="tituloCard">
+        //                 Dar de Alta y Baja los vehiculos
+        //                 <IonButton className="">Siguiente &gt;</IonButton>
+        //             </IonCardContent>
+
+        //         </IonCard>
+
+        //     </div>
+
+        // );
+
+
+
     
         return listadoCategorias;
     };
@@ -62,7 +82,7 @@ export default class DashboardContainer extends Component<ContainerProps, Contai
             <>
                 <IonContent>
                     <div className='centrado'>
-                            {this.listadoDashboard}
+                        {this.listadoDashboard}
                     </div>
                 </IonContent>
             </>    

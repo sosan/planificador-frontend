@@ -133,7 +133,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         console.log("esta ready " + dataSchedulerGrid.getIsReady());
         this._dataSchedulerGrid = dataSchedulerGrid;
     }
-    
+
 
     onCloseModal = () => {
         this.setState({ "modalReservasVisible": false, });
@@ -849,11 +849,11 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         
         let posicion = -1;
         let found = false;
-        const matriculaTrimmed: string = this.trimMatricula(matricula);
+        const matriculaTrimmed: string = this.generateTrimmedMatricula(matricula);
         for (let i = 0; i < listado.length; i++)
         {
 
-            const matriculaModalStateTrimmed: string = this.trimMatricula(listado[i].modalState.matricula as string);
+            const matriculaModalStateTrimmed: string = this.generateTrimmedMatricula(listado[i].modalState.matricula as string);
 
             if (
                 (matriculaModalStateTrimmed === matriculaTrimmed) &&
@@ -870,15 +870,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     }
 
-    trimMatricula(matricula: string)
-    {
-        let matriculaTrimmed = "";
-
-        matriculaTrimmed = matricula?.trim().toLowerCase().split(" ").join();
-
-        return matriculaTrimmed;
-    }
-
+  
 
     generateNewElementReservas(currentState: IModalState, idGrupo: number, idReserva: number) {
 
@@ -952,11 +944,11 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         let exist = false;
         let position = -1;
 
-        const matriculaTrimmed: string = this.trimMatricula(matricula);
+        const matriculaTrimmed: string = this.generateTrimmedMatricula(matricula);
         for (let i = 0; i < grupo.length; i++)
         {
 
-            const matriculaModalStateTrimmed = this.trimMatricula(grupo[i].matricula as string);
+            const matriculaModalStateTrimmed = this.generateTrimmedMatricula(grupo[i].matricula as string);
 
             if (matriculaModalStateTrimmed === matriculaTrimmed) {
                 exist = true;
@@ -1007,11 +999,11 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
         let posicion = -1;
         let found = false;
-        const matriculaTrimmed: string = this.trimMatricula(matricula);
+        const matriculaTrimmed: string = this.generateTrimmedMatricula(matricula);
         for (let i = 0; i < listado.length; i++) 
         {
 
-            const matriculaModalStateTrimmed: string = this.trimMatricula(listado[i].modalState.matricula as string);
+            const matriculaModalStateTrimmed: string = this.generateTrimmedMatricula(listado[i].modalState.matricula as string);
 
             if (matriculaModalStateTrimmed === matriculaTrimmed) {
                 posicion = i;
@@ -1024,9 +1016,9 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     searchDuplicatedGroupMatricula(grupo: typeGroup[], matricula: string): [boolean, number] {
         let position = -1;
-        const matriculaTrimmed: string = this.trimMatricula(matricula);
+        const matriculaTrimmed: string = this.generateTrimmedMatricula(matricula);
         for (let i = 0; i < grupo.length; i++) {
-            const matriculaModalStateTrimmed: string = this.trimMatricula(grupo[i].matricula as string);
+            const matriculaModalStateTrimmed: string = this.generateTrimmedMatricula(grupo[i].matricula as string);
             if (matriculaModalStateTrimmed === matriculaTrimmed) {
                 position = i;
                 return [true, position];
@@ -1038,9 +1030,9 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     searchDuplicatedListadoMatricula(listado: IListadoPrereserva[], matricula: string): [boolean, number] {
         let position = -1;
-        const matriculaTrimmed: string = this.trimMatricula(matricula);
+        const matriculaTrimmed: string = this.generateTrimmedMatricula(matricula);
         for (let i = 0; i < listado.length; i++) {
-            const matriculaModalStateTrimmed: string = this.trimMatricula(listado[i].modalState.matricula as string);
+            const matriculaModalStateTrimmed: string = this.generateTrimmedMatricula(listado[i].modalState.matricula as string);
             if (matriculaModalStateTrimmed === matriculaTrimmed) {
                 position = i;
                 return [true, position];
@@ -1053,12 +1045,12 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
 
 
-    onSearchMatriculaAnotherTimeline(
+    onSearchMatriculaAnotherTimeline = (
         state: ContainerState,
         itemsReservasVuelaCar: IListadoPrereserva[],
         itemsReservasExternal: IListadoPrereserva[],
         externalPropsItemsPrereservas: IListadoPrereserva[]
-    ) 
+    ) =>
     {
 
         // if (state.modalState?.isNewRegister === true) {
@@ -1084,10 +1076,10 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             const startTime = new Date(state.modalState?.fechaRecogida as number);
             const endTime = new Date(state.modalState?.fechaDevolucion as number);
             
-            const matriculaTrimmed: string = this.trimMatricula(state.modalState?.matricula as string);
+            const matriculaTrimmed: string = this.generateTrimmedMatricula(state.modalState?.matricula as string);
 
             for (let i = 0; i < listado.length; i++) {
-                const matriculaModalStateTrimmed: string = this.trimMatricula(listado[i].modalState.matricula as string);
+                const matriculaModalStateTrimmed: string = this.generateTrimmedMatricula(listado[i].modalState.matricula as string);
                 if (matriculaModalStateTrimmed === matriculaTrimmed) {
 
                     const fechaRecogida = new Date(listado[i].modalState?.fechaRecogida as number);
@@ -1121,12 +1113,12 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             }
 
             // let matricula = state.modalState?.matricula as string;
-            const matriculaTrimmed: string = this.trimMatricula(state.modalState?.matricula as string);
+            const matriculaTrimmed: string = this.generateTrimmedMatricula(state.modalState?.matricula as string);
             let startTime = new Date(state.modalState?.fechaRecogida as number);
             let endTime = new Date(state.modalState?.fechaDevolucion as number);
 
             for (let i = 0; i < listado.length; i++) {
-                const matriculaModalStateTrimmed: string = this.trimMatricula(listado[i].modalState.matricula as string);
+                const matriculaModalStateTrimmed: string = this.generateTrimmedMatricula(listado[i].modalState.matricula as string);
                 if (matriculaModalStateTrimmed === matriculaTrimmed) {
 
                     const fechaRecogida = new Date(listado[i].modalState?.fechaRecogida as number);
@@ -1158,10 +1150,10 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
     searchMatriculaInTime(listado: IListadoPrereserva[], matricula: string, startTime: Date, endTime: Date) {
 
         let foundMatricula = false;
-        const matriculaTrimmed: string = this.trimMatricula(matricula as string);
+        const matriculaTrimmed: string = this.generateTrimmedMatricula(matricula as string);
         for (let i = 0; i < listado.length; i++) 
         {
-            const matriculaModalStateTrimmed: string = this.trimMatricula(listado[i].modalState.matricula as string);
+            const matriculaModalStateTrimmed: string = this.generateTrimmedMatricula(listado[i].modalState.matricula as string);
             if (matriculaModalStateTrimmed === matriculaTrimmed) {
 
                 const fechaRecogida = new Date(listado[i].modalState?.fechaRecogida as number);
@@ -1176,6 +1168,14 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
         return foundMatricula;
 
+    }
+
+    generateTrimmedMatricula(matricula: string) {
+        let matriculaTrimmed = "";
+
+        matriculaTrimmed = matricula?.trim().toLowerCase().split(" ").join();
+
+        return matriculaTrimmed;
     }
 
     render() {

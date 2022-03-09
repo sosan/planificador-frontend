@@ -232,18 +232,24 @@ export class DataSchedulerGrid
     }
     
 
-    async orderGroupCars(cars: typeGroup[], ordenListadoCoches: string[]) {
+    async orderGroupCars(cars: typeGroup[], ordenListadoCoches: any[]) {
         let groupOrdered: typeGroup[] = [];
-        for (let i = 0; i < ordenListadoCoches.length; i++) {
 
+        for (let i = 0; i < ordenListadoCoches.length; i++)
+        {
+            
+            const vehiculo = ordenListadoCoches[i]["vehiculo"];
+            
             for (let j = 0; j < cars.length; j++) {
-
-                if (cars[j].modelo === ordenListadoCoches[i]) {
+    
+                if (cars[j].vehiculo.toLowerCase() === vehiculo.toLowerCase())
+                {
                     groupOrdered.push(cars[j]);
-
+    
                 }
-
+    
             }
+            
         }
 
         return groupOrdered;
