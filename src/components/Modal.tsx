@@ -693,8 +693,21 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         let precioExternoItem = null;
         let extrasItem = null;
         let estadoItem = null;
-        let botonGuardarItem = null;
-        // state.modalState.isPrereserva
+        let botonGuardarItem = 
+            <div className='centrado-horizontal'>
+                <IonButton onClick={
+                    () => {
+
+                        this.saveProps(state,
+                            props.modalState.id as number,
+                            props.modalState.group as number,
+                            fechaAlta as string
+                        );
+                    }
+                }>Guardar Datos</IonButton>
+            </div>
+            ;
+        
 
         const isDisabled = this.checkInputsWillBeDisabled(state);
                 
@@ -704,9 +717,9 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         {
             modeloVehiculoItem = new Set();
             let modelosUnicos = new Set();
-            for (let i = 0; i < this.props.dataCars.length; i++)
+            for (let i = 0; i < props.dataCars.length; i++)
             {
-                const elemento = this.props.dataCars[i];
+                const elemento = props.dataCars[i];
                 if (elemento.clasevehiculo.toLowerCase() === claseVehiculo.toLowerCase() && modelosUnicos.has(elemento.modelo) === false)
                 {
                     modelosUnicos.add(elemento.modelo);
@@ -751,7 +764,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                             :
                             <IonSelect disabled={isDisabled} value={matricula} onIonChange={(evento) => { this.onChangeInputs(this.state, "matricula", evento.detail.value); }} key="matricula" id="matricula" name='matricula' className="matricula_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                                 {
-                                    this.props.dataCars.map((elemento: IDataVehiculos) => {
+                                    props.dataCars.map((elemento: IDataVehiculos) => {
                                         if (elemento.clasevehiculo.toLowerCase() === claseVehiculo.toLowerCase() as string &&
                                             elemento.modelo.toLowerCase() === modeloVehiculo.toLowerCase() as string
                                         ) {
@@ -778,7 +791,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                     }
                     <IonSelect disabled={isDisabled} value={flota} onIonChange={(evento) => { this.onChangeInputs(this.state, "flota", evento.detail.value as string); }} id="flotas" name='flotas' className="flotas_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                         {
-                            this.props.listFlotas.map((elemento: IlistFlotas) => {
+                            props.listFlotas.map((elemento: IlistFlotas) => {
                                 return <IonSelectOption key={elemento.id} value={elemento.id}>{elemento.descripcion}</IonSelectOption>;
                             })
                         }
@@ -837,39 +850,15 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                     </IonSelect>
                 </IonItem>
             ;
-
-
-
-            botonGuardarItem =
-                <div className='centrado-horizontal'>
-                    <IonButton onClick={
-                        () => {
-
-                            this.saveProps(state,
-                                this.props.modalState.id as number,
-                                this.props.modalState.group as number,
-                                fechaAlta as string
-                            );
-                        }
-                    }>Guardar Datos</IonButton>
-                </div>
-            ;
             
-            if (this.props.isDoubleclickItem === true && (state.clickedModificar === false || state.clickedModificar === undefined))
+            if (state.modalState.estado === ENUM_TIPOS_ESTADO.reservado && props.isDoubleclickItem === true && (state.clickedModificar === false || state.clickedModificar === undefined))
             {
-                botonGuardarItem = null;
+                botonGuardarItem = <></>;
             }
-            // if ()
-            //     {
-            //                     (this.state.modalState.estado === ENUM_TIPOS_ESTADO.reservado &&
-            //         (this.state.clickedModificar === false || this.state.clickedModificar === undefined)) ?
-            //         <></>
-            //         :
-            //     }
-            
-            // ;
 
         }
+
+        
 
         if (estado === ENUM_TIPOS_ESTADO.reservado && (state.clickedModificar === false || state.clickedModificar === undefined))
         {
