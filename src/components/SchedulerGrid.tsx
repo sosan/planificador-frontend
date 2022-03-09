@@ -182,7 +182,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
         if (time + DRAG_SNAP < new Date().getTime()) return;
 
-        const _state = this.getNewElementPrereserva();
+        const _state = await this.getNewElementPrereserva();
         this.anadirPreReserva(_state);
     }
 
@@ -194,7 +194,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
         if (time + DRAG_SNAP < new Date().getTime()) return;
 
-        const _state = this.getNewElementReservaVuelacar();
+        const _state = await this.getNewElementReservaVuelacar();
         this.anadirPreReserva(_state);
 
     }
@@ -203,7 +203,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
     }
 
 
-    getNewElementPrereserva() {
+
+    async getNewElementPrereserva() {
 
         const _startTime = new Date();
         const tempStarTime = new Date(_startTime);
@@ -212,8 +213,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         const startTime = new Date(_startTime.setHours(0, 0, 0)).getTime();
         const endTime = new Date(_endTime.setHours(23, 59, 59)).getTime();
 
-        const idReserva = this._dataSchedulerGrid.getNewIdFromLastIDPreReserva();
-        const idGroup = this._dataSchedulerGrid.getNewIdFromLastIDGroupPreReserva();
+        const idReserva = await this._dataSchedulerGrid.getNewIdFromLastIDPreReserva();
+        const idGroup = await this._dataSchedulerGrid.getNewIdFromLastIDGroupPreReserva();
 
         let newState: ContainerState = {
             "modalState": {
@@ -251,7 +252,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     }
 
-    getNewElementReservaVuelacar() {
+    async getNewElementReservaVuelacar() {
 
         const _startTime = new Date();
         const tempStarTime = new Date(_startTime);
@@ -260,8 +261,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         const startTime = new Date(_startTime.setHours(0, 0, 0)).getTime();
         const endTime = new Date(_endTime.setHours(23, 59, 59)).getTime();
 
-        const idReserva = this._dataSchedulerGrid.getNewIdFromLastIDReservaVuelaCar();
-        const idGroup = this._dataSchedulerGrid.getNewIdFromLastIDGroupReservaVuelaCar();
+        const idReserva = await this._dataSchedulerGrid.getNewIdFromLastIDReservaVuelaCar();
+        const idGroup = await this._dataSchedulerGrid.getNewIdFromLastIDGroupReservaVuelaCar();
 
         let newState: ContainerState = {
             "modalState": {
@@ -1214,13 +1215,13 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                     duration={5000}
                 />
                 <div className="fila_botones_scheduler boton-primero">
-                    <IonButton onClick={() => {
-                        const _state = this.getNewElementPrereserva();
+                    <IonButton onClick={ async () => {
+                        const _state = await this.getNewElementPrereserva();
                         this.anadirPreReserva(_state);
                     }
                     } className='boton_prereserva' fill='solid' color="#ffffff">Prereserva</IonButton>
-                    <IonButton onClick={() => {
-                        const _state = this.getNewElementReservaVuelacar();
+                    <IonButton onClick={ async () => {
+                        const _state = await this.getNewElementReservaVuelacar();
                         this.anadirPreReserva(_state);
                     }
                     } className="boton_reserva_vuelacar" fill='solid' color="#ffffff">Reserva Vuelacar</IonButton>
