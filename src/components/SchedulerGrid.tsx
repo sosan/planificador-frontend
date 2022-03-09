@@ -849,9 +849,14 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         
         let posicion = -1;
         let found = false;
-        for (let i = 0; i < listado.length; i++) {
+        const matriculaTrimmed: string = this.trimMatricula(matricula);
+        for (let i = 0; i < listado.length; i++)
+        {
+
+            const matriculaModalStateTrimmed: string = this.trimMatricula(listado[i].modalState.matricula as string);
+
             if (
-                (listado[i].modalState.matricula?.trim().toLowerCase() === matricula.trim().toLowerCase()) &&
+                (matriculaModalStateTrimmed === matriculaTrimmed) &&
                 (listado[i].modalState.group === grupo)
             )
             {
@@ -863,6 +868,15 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         return [found, posicion];
 
 
+    }
+
+    trimMatricula(matricula: string)
+    {
+        let matriculaTrimmed = "";
+
+        matriculaTrimmed = matricula?.trim().toLowerCase().split(" ").join();
+
+        return matriculaTrimmed;
     }
 
 
@@ -938,10 +952,13 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         let exist = false;
         let position = -1;
 
+        const matriculaTrimmed: string = this.trimMatricula(matricula);
         for (let i = 0; i < grupo.length; i++)
         {
 
-            if (grupo[i].matricula.trim().toLowerCase() === matricula.trim().toLowerCase()) {
+            const matriculaModalStateTrimmed = this.trimMatricula(grupo[i].matricula as string);
+
+            if (matriculaModalStateTrimmed === matriculaTrimmed) {
                 exist = true;
                 position = i;
 
@@ -990,8 +1007,13 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
         let posicion = -1;
         let found = false;
-        for (let i = 0; i < listado.length; i++) {
-            if (listado[i].modalState.matricula?.trim().toLowerCase() === matricula.trim().toLowerCase()) {
+        const matriculaTrimmed: string = this.trimMatricula(matricula);
+        for (let i = 0; i < listado.length; i++) 
+        {
+
+            const matriculaModalStateTrimmed: string = this.trimMatricula(listado[i].modalState.matricula as string);
+
+            if (matriculaModalStateTrimmed === matriculaTrimmed) {
                 posicion = i;
                 found = true;
                 return [found, posicion];
@@ -1002,8 +1024,10 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     searchDuplicatedGroupMatricula(grupo: typeGroup[], matricula: string): [boolean, number] {
         let position = -1;
+        const matriculaTrimmed: string = this.trimMatricula(matricula);
         for (let i = 0; i < grupo.length; i++) {
-            if (grupo[i].matricula.trim().toLowerCase() === matricula.trim().toLowerCase()) {
+            const matriculaModalStateTrimmed: string = this.trimMatricula(grupo[i].matricula as string);
+            if (matriculaModalStateTrimmed === matriculaTrimmed) {
                 position = i;
                 return [true, position];
             }
@@ -1014,8 +1038,10 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     searchDuplicatedListadoMatricula(listado: IListadoPrereserva[], matricula: string): [boolean, number] {
         let position = -1;
+        const matriculaTrimmed: string = this.trimMatricula(matricula);
         for (let i = 0; i < listado.length; i++) {
-            if (listado[i].modalState.matricula?.trim().toLowerCase() === matricula.trim().toLowerCase()) {
+            const matriculaModalStateTrimmed: string = this.trimMatricula(listado[i].modalState.matricula as string);
+            if (matriculaModalStateTrimmed === matriculaTrimmed) {
                 position = i;
                 return [true, position];
             }
@@ -1054,12 +1080,15 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 listado = itemsReservasExternal;
             }
 
-            const matricula = state.modalState?.matricula as string;
+            // const matricula = state.modalState?.matricula as string;
             const startTime = new Date(state.modalState?.fechaRecogida as number);
             const endTime = new Date(state.modalState?.fechaDevolucion as number);
+            
+            const matriculaTrimmed: string = this.trimMatricula(state.modalState?.matricula as string);
 
             for (let i = 0; i < listado.length; i++) {
-                if (listado[i].modalState.matricula?.trim().toLowerCase() === matricula.trim().toLowerCase()) {
+                const matriculaModalStateTrimmed: string = this.trimMatricula(listado[i].modalState.matricula as string);
+                if (matriculaModalStateTrimmed === matriculaTrimmed) {
 
                     const fechaRecogida = new Date(listado[i].modalState?.fechaRecogida as number);
                     const fechaDevolucion = new Date(listado[i].modalState?.fechaDevolucion as number);
@@ -1091,12 +1120,14 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 listado = itemsReservasExternal;
             }
 
-            let matricula = state.modalState?.matricula as string;
+            // let matricula = state.modalState?.matricula as string;
+            const matriculaTrimmed: string = this.trimMatricula(state.modalState?.matricula as string);
             let startTime = new Date(state.modalState?.fechaRecogida as number);
             let endTime = new Date(state.modalState?.fechaDevolucion as number);
 
             for (let i = 0; i < listado.length; i++) {
-                if (listado[i].modalState.matricula?.trim().toLowerCase() === matricula.trim().toLowerCase()) {
+                const matriculaModalStateTrimmed: string = this.trimMatricula(listado[i].modalState.matricula as string);
+                if (matriculaModalStateTrimmed === matriculaTrimmed) {
 
                     const fechaRecogida = new Date(listado[i].modalState?.fechaRecogida as number);
                     const fechaDevolucion = new Date(listado[i].modalState?.fechaDevolucion as number);
@@ -1127,8 +1158,11 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
     searchMatriculaInTime(listado: IListadoPrereserva[], matricula: string, startTime: Date, endTime: Date) {
 
         let foundMatricula = false;
-        for (let i = 0; i < listado.length; i++) {
-            if (listado[i].modalState.matricula?.trim().toLowerCase() === matricula.trim().toLowerCase()) {
+        const matriculaTrimmed: string = this.trimMatricula(matricula as string);
+        for (let i = 0; i < listado.length; i++) 
+        {
+            const matriculaModalStateTrimmed: string = this.trimMatricula(listado[i].modalState.matricula as string);
+            if (matriculaModalStateTrimmed === matriculaTrimmed) {
 
                 const fechaRecogida = new Date(listado[i].modalState?.fechaRecogida as number);
                 const fechaDevolucion = new Date(listado[i].modalState?.fechaDevolucion as number);

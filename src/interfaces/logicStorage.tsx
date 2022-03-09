@@ -614,7 +614,24 @@ class InterfaceStorage
 
     }
 
+    async getReservaExterior(_id: number)
+    {
 
+        const key = `${this.KEY_PREFIX_ITEMS_RESERVA_EXTERIOR}${_id}`;
+        const dataRaw = await ionicDb.getKey(key);
+        const dataParsed = await this.deserialize(dataRaw);
+        return dataParsed;
+
+    }
+
+    async getReservaVuelaCar(_id: number) {
+
+        const key = `${this.KEY_PREFIX_ITEMS_RESERVA_VUELACAR}${_id}`;
+        const dataRaw = await ionicDb.getKey(key);
+        const dataParsed = await this.deserialize(dataRaw);
+        return dataParsed;
+
+    }
 
 
 }

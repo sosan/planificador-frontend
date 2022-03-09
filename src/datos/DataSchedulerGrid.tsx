@@ -657,8 +657,7 @@ export class DataSchedulerGrid
 
 }
 
-
-// export let dataSchedulerGrid = new DataSchedulerGrid();
+export let dataSchedulerGrid = new DataSchedulerGrid();
 
 // dataSchedulerGrid.setupDb(dataCars);
 // console.log("asignado")

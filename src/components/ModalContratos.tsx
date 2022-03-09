@@ -1,13 +1,14 @@
 
-import { IonModal, IonGrid, IonItem, IonLabel, IonButton } from "@ionic/react";
+import { IonModal, IonButton } from "@ionic/react";
 import { Component, } from "react";
 import { IngresarContrato } from "./IngresarContratoContainer";
 import { ModificarContrato } from "../components/ModificarContratoContainer";
 import { ContainerState as IContainerIngresarContrato } from "../components/IngresarContratoContainer";
-import "../css/ModalContratos.css";
 import { repoStorage } from "../interfaces/logicStorage";
 import { IListadoPrereserva } from "../datos/vehiculosGeneral";
+import { ContenidoModalDerecha } from "../components/ContenidoDerecha";
 
+import "../css/ModalContratos.css";
 interface ContainerProps
 {
     onModalDidDismiss: any;
@@ -21,8 +22,14 @@ interface ContainerProps
 interface ContainerState
 {
     dummy: boolean;
+    contenidoDerecha: any;
 }
 
+enum TIPO_RESERVA
+{
+    "vuelacar" = "vuelacar",
+    "exterior" = "exterior",
+}
 
 
 export class ModalDialog extends Component<ContainerProps, ContainerState>
@@ -30,6 +37,8 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
     reservasVuelaCarFiltrado: any | null = null;
     reservasExteriorFiltrado: any | null = null;
+    contenidoDerecha: any | null = null;
+    
 
     constructor(props: any)
     {
@@ -37,11 +46,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         this.setState({ "dummy": false });
     }
 
-    // onClickedGenerateContract(state: IContainerIngresarContrato) {
-    //     console.log("adsfasdf");
-
-    // }
-
+    
     async componentDidMount() {
         console.log("schedulergrid montado");
         await this.init();
@@ -53,14 +58,36 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         const itemsReservasVuelaCar = await repoStorage.getItemsReservasVuelaCar();
         const itemsReservasExterior = await repoStorage.getItemsReservasExterior();
 
-        this.reservasVuelaCarFiltrado = await this.filtrarItemsPorTieneContrato(itemsReservasVuelaCar, "secondary");
-        this.reservasExteriorFiltrado = await this.filtrarItemsPorTieneContrato(itemsReservasExterior, "warning");
+        this.reservasVuelaCarFiltrado = await this.filtrarItemsPorTieneContrato(itemsReservasVuelaCar, "secondary", TIPO_RESERVA.vuelacar);
+        this.reservasExteriorFiltrado = await this.filtrarItemsPorTieneContrato(itemsReservasExterior, "warning", TIPO_RESERVA.exterior);
 
         this.setState({"dummy": false });
     }
 
+    async clickedBoton(_id: number, tipoReserva: string)
+    {
 
-    async filtrarItemsPorTieneContrato(reservas: IListadoPrereserva[], colorTexto:string )
+        let reservaRaw: any;
+        if (tipoReserva === TIPO_RESERVA.vuelacar)
+        {
+            reservaRaw = await repoStorage.getReservaVuelaCar(_id);
+
+        }
+
+        if (tipoReserva === TIPO_RESERVA.exterior)
+        {
+            reservaRaw = await repoStorage.getReservaExterior(_id);
+
+        }
+        
+        this.contenidoDerecha = <>
+            <ContenidoModalDerecha dataReserva={reservaRaw} />
+        </>;
+        this.setState({ "dummy": true });
+
+    }
+
+    async filtrarItemsPorTieneContrato(reservas: IListadoPrereserva[], colorTexto:string, tipoReserva: string )
     {
 
         let reservasVuelaCarFiltrado: any = [];
@@ -72,10 +99,9 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                 const fechaDevolucion = new Date(reservas[i].end_time as number);
 
                 reservasVuelaCarFiltrado.push(
-                  
                     
                     <div key={i}>
-                        <IonButton className="boton-vuelacarFiltrado" color={colorTexto}>
+                        <IonButton expand="block" type="button" onClick={() => { this.clickedBoton(reservas[i].modalState.id as number, tipoReserva); }} className="boton-vuelacarFiltrado" color={colorTexto}>
                             <span className="texto-boton-centrado">
                                 <h2 className="texto-negro fuente-boton-modal-contratos">MATRICULA: {reservas[i].modalState.matricula}</h2>
                                 <h3 className="texto-negro fuente-boton-modal-contratos">FECHA RECOGIDA: {fechaRecogida.getDate()}-{fechaRecogida.getMonth() + 1}-{fechaRecogida.getFullYear()}</h3>
@@ -108,6 +134,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                     onClickedGenerateContract={this.props.onClickedGenerateContract }
                     dataReservasVuelaCar={this.reservasVuelaCarFiltrado}
                     dataReservasExterior={this.reservasExteriorFiltrado}
+                    contenidoReserva={this.contenidoDerecha}
                 />
             </>
         }

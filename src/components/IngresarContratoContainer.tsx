@@ -7,6 +7,7 @@ interface ContainerProps {
     onClickedGenerateContract: any;
     dataReservasVuelaCar: any;
     dataReservasExterior: any;
+    contenidoReserva: any;
     
 }
 export interface ContainerState {
@@ -72,13 +73,9 @@ export class IngresarContrato extends Component<ContainerProps, ContainerState>
                             </IonInfiniteScroll> */}
 
                     </div>
-
-
-
-
                 </div>
                 <div className="contenido">
-                    CABECERA
+                    {this.props.contenidoReserva}
                 </div>
             
 
