@@ -363,6 +363,10 @@ export class DataSchedulerGrid
         this.itemsReservasVuelaCar.push(elementoReserva);
     }
 
+    async insertNewElementPreReserva(elementoReserva: IListadoPrereserva) {
+        this.itemsPreReservas.push(elementoReserva);
+    }
+
     async insertNewElementReservasExterior(elementoReserva: IListadoPrereserva) {
         this.itemsReservasExterior.push(elementoReserva);
     }
@@ -381,6 +385,10 @@ export class DataSchedulerGrid
     }
     async updateReservaVuelaCar(positionListado: number, elementoReserva: IListadoPrereserva) {
         this.itemsReservasVuelaCar[positionListado as number] = elementoReserva;
+    }
+
+    async updatePreReserva(positionListado: number, elementoReserva: IListadoPrereserva) {
+        this.itemsPreReservas[positionListado as number] = elementoReserva;
     }
 
     async updateGroupReservaVuelaCar(state: ContainerState, position: number) {
@@ -585,7 +593,7 @@ export class DataSchedulerGrid
 
     }
 
-    async getNewIdFromLastIDPreReserva()
+    getNewIdFromLastIDPreReserva()
     {
         let ultimaPosicion = this.itemsPreReservas.length - 1;
         if (ultimaPosicion < 0) {
@@ -598,7 +606,7 @@ export class DataSchedulerGrid
     }
 
 
-    async getNewIdFromLastIDReservaVuelaCar()
+    getNewIdFromLastIDReservaVuelaCar()
     {
 
         let ultimaPosicion = this.itemsReservasVuelaCar.length - 1;
@@ -611,7 +619,7 @@ export class DataSchedulerGrid
 
     }
 
-    async getNewIdFromLastIDReservaExterior() {
+    getNewIdFromLastIDReservaExterior() {
 
         let ultimaPosicion = this.itemsReservasExterior.length - 1;
         if (ultimaPosicion < 0) {
@@ -623,7 +631,7 @@ export class DataSchedulerGrid
 
     }
 
-    async getNewIdFromLastIDGroupReservaVuelaCar()
+    getNewIdFromLastIDGroupReservaVuelaCar()
     {
         let ultimaPosicion = this.groupsReservaVuelaCar.length - 1;
         if (ultimaPosicion < 0) {
@@ -635,7 +643,7 @@ export class DataSchedulerGrid
 
     }
 
-    async getNewIdFromLastIDGroupReservaExterior() {
+    getNewIdFromLastIDGroupReservaExterior() {
         let ultimaPosicion = this.groupsReservaExterior.length - 1;
         if (ultimaPosicion < 0) {
             return 0;
