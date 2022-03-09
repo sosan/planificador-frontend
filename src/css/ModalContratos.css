@@ -40,6 +40,13 @@
     color: black !important;
 }
 
+.fuente-boton-modal-contratos
+{
+    font-size: 16px;
+    margin: 0px;
+    font-weight: bolder;
+}
+
 .borde-solido
 {
     border: 1px solid gray;
@@ -57,4 +64,22 @@
     background-color: #484848 !important;
     color: white !important;
     margin-right: 30px;
+}
+
+
+.boton-vuelacarFiltrado
+{
+    height: 80px;
+    width: 97%;
+   
+}
+
+.texto-boton-centrado
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    gap: 3px;
 }

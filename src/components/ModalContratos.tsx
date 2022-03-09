@@ -53,14 +53,14 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         const itemsReservasVuelaCar = await repoStorage.getItemsReservasVuelaCar();
         const itemsReservasExterior = await repoStorage.getItemsReservasExterior();
 
-        this.reservasVuelaCarFiltrado = await this.filtrarItemsPorTieneContrato(itemsReservasVuelaCar);
-        this.reservasExteriorFiltrado = await this.filtrarItemsPorTieneContrato(itemsReservasExterior);
+        this.reservasVuelaCarFiltrado = await this.filtrarItemsPorTieneContrato(itemsReservasVuelaCar, "secondary");
+        this.reservasExteriorFiltrado = await this.filtrarItemsPorTieneContrato(itemsReservasExterior, "warning");
 
         this.setState({"dummy": false });
     }
 
 
-    async filtrarItemsPorTieneContrato(reservas: IListadoPrereserva[] )
+    async filtrarItemsPorTieneContrato(reservas: IListadoPrereserva[], colorTexto:string )
     {
 
         let reservasVuelaCarFiltrado: any = [];
@@ -72,15 +72,19 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                 const fechaDevolucion = new Date(reservas[i].end_time as number);
 
                 reservasVuelaCarFiltrado.push(
-                    <IonButton>
-                        <IonItem key={i}>
-                            <IonLabel>
-                                <h2 className="texto-negro">{reservas[i].modalState.matricula}</h2>
-                                <h3 className="texto-negro">{fechaRecogida.getDate()}-{fechaRecogida.getMonth() + 1}-{fechaRecogida.getFullYear()}</h3>
-                                <h3 className="texto-negro">{fechaDevolucion.getDate()}-{fechaDevolucion.getMonth() + 1}-{fechaDevolucion.getFullYear()}</h3>
-                            </IonLabel>
-                        </IonItem>
-                    </IonButton>
+                  
+                    
+                    <div key={i}>
+                        <IonButton className="boton-vuelacarFiltrado" color={colorTexto}>
+                            <span className="texto-boton-centrado">
+                                <h2 className="texto-negro fuente-boton-modal-contratos">MATRICULA: {reservas[i].modalState.matricula}</h2>
+                                <h3 className="texto-negro fuente-boton-modal-contratos">FECHA RECOGIDA: {fechaRecogida.getDate()}-{fechaRecogida.getMonth() + 1}-{fechaRecogida.getFullYear()}</h3>
+                                <h3 className="texto-negro fuente-boton-modal-contratos">FECHA DEVOLUCION: {fechaDevolucion.getDate()}-{fechaDevolucion.getMonth() + 1}-{fechaDevolucion.getFullYear()}</h3>
+
+                            </span>
+                        </IonButton>
+                    </div>
+                
                 );
 
             }

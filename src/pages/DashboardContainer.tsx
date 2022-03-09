@@ -6,27 +6,33 @@ import {
     IonContent,
     IonButton,
     IonImg,
+    IonRoute
 
 
 } from '@ionic/react';
+import { Component,  } from 'react';
+import { ContainerState } from '../components/Modal';
 import * as categoriasManager from "../datos/listadoCategorias";
 
+interface ContainerProps
+{
 
-const DashboardContainer: any = () => {
+}
 
-    // const clicked = async () => {
-    //     console.log("clicked")
+export default class DashboardContainer extends Component<ContainerProps, ContainerState>
+{
 
-    // };
+    listadoDashboard = this.GetListCategories(categoriasManager.categoriasDashboard);
 
-    const GetListCategories = (categorias: categoriasManager.IItemCategoria[]) => {
-
+    GetListCategories (categorias: categoriasManager.IItemCategoria[])
+    {
+    
         const listadoCategorias = [];
         for (const index in categorias) 
         {
             const elemento = categorias[index];
             // console.log("index=" + index + "listado=" + elemento);
-
+    
             listadoCategorias.push(
                 <div id="row" key={index} style={{ width: "200px" }}>
                     <IonCard href={elemento.url} className={`cursorclick noselect ${elemento.colorBackground}`} type={"button"} >
@@ -38,30 +44,32 @@ const DashboardContainer: any = () => {
                             {elemento.cardContent}
                             <IonButton className={`${elemento.colorBoton}`}>Siguiente &gt;</IonButton>
                         </IonCardContent>
-
+    
                     </IonCard>
-
+    
                 </div>
             );
-
+    
         }
-
+    
         return listadoCategorias;
     };
-
-    const listadoDashboard = GetListCategories(categoriasManager.categoriasDashboard);
-
-    return (
-        <>
-            <IonContent>
-                <div className='centrado'>{listadoDashboard}</div>
-            </IonContent>
-        </>    
+    
+    
+    
+    render() {
+        return (
+            <>
+                <IonContent>
+                    <div className='centrado'>
+                            {this.listadoDashboard}
+                    </div>
+                </IonContent>
+            </>    
+            
+        );
         
-    );
+    }
 
 
-};
-
-
-export default DashboardContainer;
+}

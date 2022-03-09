@@ -583,23 +583,9 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                     <IonButton onClick={ () => {  this.activarModificar();  } }>Modificar</IonButton>
                                 </div>
                             }
-                            {
-                                (this.state.modalState.estado === ENUM_TIPOS_ESTADO.reservado && 
-                                    (this.state.clickedModificar === false || this.state.clickedModificar === undefined)) ? <></>
-                                : 
-                                <div className='centrado-horizontal'>
-                                    <IonButton  onClick={
-                                        () => {
-                                            
-                                            this.saveProps(this.state,
-                                                this.props.modalState.id as number,
-                                                this.props.modalState.group as number,
-                                                itemsGenerados.fechaAlta as string
-                                            ); 
-                                        }
-                                    }>Guardar Datos</IonButton>
-                                </div>
-                            }
+                            
+                            {itemsGenerados.botonGuardarItem}
+                            
                             <div className='centrado-horizontal boton-eliminar'>
                                 {
                                     (this.props.isDoubleclickItem === false) ? null
@@ -607,40 +593,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                                         <IonButton onClick={() => { this.props.onDelete(itemsGenerados.estado, itemsGenerados.flota, itemsGenerados.id); }}>Eliminar</IonButton>
                                 }
                             </div>
-
-                            {/* <IonCol size="3" className='centrado-horizontal'>
-                                <IonButton onClick={() => { this.props.onCloseModal(); }}>Volver</IonButton>
-                            </IonCol> */}
-                            {/* {
-                                (this.state.modalState.estado === ENUM_TIPOS_ESTADO.reservado && 
-                                    (this.state.clickedModificar === false || this.state.clickedModificar === undefined)) ? <></>
-                                : 
-                                <IonCol size="3" className='centrado-horizontal'>
-                                    <IonButton  onClick={
-                                        () => {
-                                            
-                                            this.saveProps(this.state,
-                                                this.props.modalState.id as number,
-                                                this.props.modalState.group as number,
-                                                itemsGenerados.fechaAlta as string
-                                            ); 
-                                        }
-                                    }>Guardar Datos</IonButton>
-                                </IonCol>
-                            } */}
-                            {/* {
-                                (this.state.modalState.reservaCompletada === false) ? null : 
-                                <IonCol size="4" className='centrado-horizontal'>
-                                    <IonButton onClick={ () => {  this.activarModificar();  } }>Modificar</IonButton>
-                                </IonCol>
-                            } */}
-                            {/* <IonCol size="2" className='centrado-horizontal'>
-                            {
-                                (this.props.isDoubleclickItem === false) ? null
-                                :
-                                <IonButton  onClick={() => { this.props.onDelete(itemsGenerados.estado, itemsGenerados.flota, itemsGenerados.id ); }}>Eliminar</IonButton>
-                            }
-                            </IonCol> */}
+                            
                         </IonRow>
 
                     </IonGrid>
@@ -740,6 +693,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         let precioExternoItem = null;
         let extrasItem = null;
         let estadoItem = null;
+        let botonGuardarItem = null;
         // state.modalState.isPrereserva
 
         const isDisabled = this.checkInputsWillBeDisabled(state);
@@ -884,6 +838,37 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                 </IonItem>
             ;
 
+
+
+            botonGuardarItem =
+                <div className='centrado-horizontal'>
+                    <IonButton onClick={
+                        () => {
+
+                            this.saveProps(state,
+                                this.props.modalState.id as number,
+                                this.props.modalState.group as number,
+                                fechaAlta as string
+                            );
+                        }
+                    }>Guardar Datos</IonButton>
+                </div>
+            ;
+            
+            if (this.props.isDoubleclickItem === true && (state.clickedModificar === false || state.clickedModificar === undefined))
+            {
+                botonGuardarItem = null;
+            }
+            // if ()
+            //     {
+            //                     (this.state.modalState.estado === ENUM_TIPOS_ESTADO.reservado &&
+            //         (this.state.clickedModificar === false || this.state.clickedModificar === undefined)) ?
+            //         <></>
+            //         :
+            //     }
+            
+            // ;
+
         }
 
         if (estado === ENUM_TIPOS_ESTADO.reservado && (state.clickedModificar === false || state.clickedModificar === undefined))
@@ -932,7 +917,8 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             precioExternoItem,
             extrasItem,
             estadoItem,
-            modeloVehiculoItem
+            modeloVehiculoItem,
+            botonGuardarItem
 
         }
 
