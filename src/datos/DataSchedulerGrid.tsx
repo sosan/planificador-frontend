@@ -1,6 +1,6 @@
 import { ContainerState, IModalErrores } from "../components/Modal";
 import { typeGroup } from "../components/SchedulerGrid";
-import { IListadoPrereserva, IDataVehiculos, ORDEN_LISTADO_MODELO_VEHICULOS, setOrdenListadoModeloVehiculos } from "./vehiculosGeneral";
+import { IListadoPrereserva, IDataVehiculos, ORDEN_LISTADO_MODELO_VEHICULOS, setOrdenListadoModeloVehiculos, setDataCars } from "./vehiculosGeneral";
 import { repoStorage } from "../interfaces/logicStorage";
 import { listadoColaboradores, setColaboradores } from "./listadoColaboradores";
 import { listFlotas, setListadoFlotas } from "../datos/listadoFlotas";
@@ -57,8 +57,6 @@ export class DataSchedulerGrid
     async generateDB(dataCarsProps: any)
     {
 
-
-
         let groupsData = await this.createGroupForCars(dataCarsProps);
         this.groupsReservaVuelaCar = groupsData.groupCreated;
         this.listadoClaseVehiculos = groupsData.arrayListadoClasesVehiculos;
@@ -67,7 +65,7 @@ export class DataSchedulerGrid
         await repoStorage.initGroupsItems();
         await repoStorage.initListados(
             listadoColaboradores,
-            listFlotas
+            listFlotas,
         );
 
     }
@@ -77,6 +75,9 @@ export class DataSchedulerGrid
 
         const ordenListadoCoches = await repoStorage.getOrdenListadoModeloVehiculos();
         await setOrdenListadoModeloVehiculos(ordenListadoCoches);
+
+        const dataCarsTemp = await repoStorage.getDataCars();
+        await setDataCars(dataCarsTemp);
 
         this.groupsReservaVuelaCar = await repoStorage.getGroupsReservaVuelaCar();
         this.groupsReservaExterior = await repoStorage.getGroupsReservaExterior();
@@ -94,6 +95,7 @@ export class DataSchedulerGrid
         this.itemsPreReservas = await repoStorage.getItemsPreReservas();
         this.itemsReservasVuelaCar = await repoStorage.getItemsReservasVuelaCar();
         this.itemsReservasExterior = await repoStorage.getItemsReservasExterior();
+
 
         console.log("conversion")
 
@@ -136,6 +138,8 @@ export class DataSchedulerGrid
         await repoStorage.insertlistadoClasesVehiculos(arrayListadoClasesVehiculos);
         await repoStorage.insertlistadoModelosVehiculos(arrayListadoModelosVehiculos);
         await repoStorage.insertOrdenListadoModeloVehiculos(ORDEN_LISTADO_MODELO_VEHICULOS);
+
+        await repoStorage.insertDataCars(cars);
 
         // console.log("Modelos vehiculos" + JSON.stringify(arrayListadoModelosVehiculos));
         // console.log("Clases vehiculos" + JSON.stringify(arrayListadoClasesVehiculos));

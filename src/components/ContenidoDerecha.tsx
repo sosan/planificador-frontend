@@ -91,7 +91,7 @@ export class ContenidoModalDerecha extends Component<ContainerProps, ContainerSt
             precioexterno,
             extras
 
-        } = state.dataReserva?.modalState as IModalState;
+        } = props.dataReserva?.modalState as IModalState;
 
         let textoFechaRecogida = "";
         let fechaAltaDate = new Date();
@@ -179,41 +179,15 @@ export class ContenidoModalDerecha extends Component<ContainerProps, ContainerSt
 
             matriculaItem =
                 <IonItem>
-                    {
-                        (this.state.errores?.matricula === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Matricula</IonLabel></>
-                            :
-                            <IonLabel className="">Matricula</IonLabel>
-                    }
-                    {
-                        (this.state.dataReserva?.modalState.isPrereserva === true) ? <IonInput  value={matricula} onIonChange={(evento) => { this.onChangeInputs(this.state, "matricula", evento.detail.value as string); }} key="matricula" id="matricula" name='matricula' placeholder='Matricula' className="matricula_select texto-alineado-derecha" ></IonInput>
-                            :
-                            <IonSelect  value={matricula} onIonChange={(evento) => { this.onChangeInputs(this.state, "matricula", evento.detail.value); }} key="matricula" id="matricula" name='matricula' className="matricula_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
-                                {
-                                    props.dataCars.map((elemento: IDataVehiculos) => {
-                                        if (elemento.clasevehiculo.toLowerCase() === claseVehiculo.toLowerCase() as string &&
-                                            elemento.modelo.toLowerCase() === modeloVehiculo.toLowerCase() as string
-                                        ) {
-                                            return <IonSelectOption key={elemento.matricula} value={elemento.matricula}>{elemento.matricula}</IonSelectOption>;
-
-                                        }
-                                        return null;
-                                    })
-                                }
-                            </IonSelect>
-                    }
-
+                    <IonLabel className="">Matricula</IonLabel>
+                    <IonInput className="texto-alineado-derecha" name='matricula' value={matricula} onIonChange={(evento) => { this.onChangeInputs(props, "matricula", evento.detail.value as string); }} placeholder="Matricula"></IonInput>
                 </IonItem>
                 ;
 
 
             flotaItem =
                 <IonItem>
-                    {
-                        (this.state.errores?.flota === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Flotas externas</IonLabel></>
-                            :
-                            <IonLabel className="">Flotas externas</IonLabel>
-
-                    }
+                    <IonLabel className="">Flotas externas</IonLabel>
                     <IonSelect  value={flota} onIonChange={(evento) => { this.onChangeInputs(this.state, "flota", evento.detail.value as string); }} id="flotas" name='flotas' className="flotas_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                         {
                             props.listFlotas?.map((elemento: IlistFlotas) => {
@@ -247,12 +221,7 @@ export class ContenidoModalDerecha extends Component<ContainerProps, ContainerSt
 
             precioExternoItem =
                 <IonItem>
-                    {
-                        (this.state.errores?.precioExterno === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textoFallo">Precio externo</IonLabel></>
-                            :
-                            <IonLabel className="">Precio externo</IonLabel>
-
-                    }
+                    <IonLabel className="">Precio externo</IonLabel>
                     <IonInput  className="texto-alineado-derecha" name='precioexterno' value={precioexterno} onIonChange={(evento) => { this.onChangeInputs(this.state, "precioexterno", evento.detail.value as string); }} type='number' min='1' max='100000000' autocomplete="off" inputmode="numeric" placeholder='Precio externo'></IonInput>
                 </IonItem>
                 ;
@@ -320,103 +289,58 @@ export class ContenidoModalDerecha extends Component<ContainerProps, ContainerSt
 
     render()
     {
-        // const { dataReserva } = this.props;
         const itemsGenerados = this.generarItemsRender(this.state, this.props);
         
         return(
             <div>
                 <IonContent>
-                    <IonGrid className={itemsGenerados.colorCabecera}>
-                        <IonRow className=" altura_15 cabecera-arriba">
+                    <div>
+                        <div className=" altura_15 cabecera-arriba">
                             <h2 className='margen-cabecera-arriba'>{itemsGenerados.tituloReserva}</h2>
                             <span>Fecha alta: {itemsGenerados.fechaAltaTexto}</span>
-                            <IonInput name='fechaalta' value={itemsGenerados.fechaAlta} hidden={true} ></IonInput>
-                            <IonLabel className="textoFallo">{this.state.errores?.textoErrores}</IonLabel>
-                        </IonRow>
-                        <IonRow>
-                            <IonCol size='12'>
-                            </IonCol>
-                        </IonRow>
-
-                        <IonRow>
-                            <IonList className="ancho_100">
-                                <IonItem>
-                                    <IonLabel className="">Fecha Entrega</IonLabel>
-                                    <IonLabel className="">
-                                        <IonDatetime  value={itemsGenerados.textoFechaRecogida} displayFormat='DD-MM-YYYY' hour-cycle="h23" first-day-of-week={1} yearValues="2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034" cancelText="Cancelar" doneText="Confirmar" />
-                                    </IonLabel>
-                                </IonItem>
-                                <IonItem>
-                                    <IonLabel className="">Cantidad de dias</IonLabel>
-                                    <IonSelect  value={itemsGenerados.cantidadDias} key="cantidaddias" id="cantidaddias" name='cantidaddias' className="cantidaddias_select" okText="Confirmado" cancelText="Cancelar"  >
-                                        {
-                                            listadoDias.map((elemento: number) => {
-                                                return <IonSelectOption key={elemento} value={elemento}>{elemento}</IonSelectOption>;
-                                            })
-                                        }
-                                    </IonSelect>
-                                </IonItem>
-                                <IonItem>
-                                    <IonLabel className="">Fecha Devolucion</IonLabel>
-                                    <IonInput  className="texto-alineado-derecha" name='fechaDevolucion' readonly={true} value={itemsGenerados.textoFechaDevolucion} autocomplete="off" inputmode="text" placeholder='Fecha Devolucion' />
-                                </IonItem>
-                                {itemsGenerados.horaEntregaItem}
-                                {itemsGenerados.lugarEntregaItem}
-                                <IonItem>
-                                    {
-                                        (this.state.errores?.colaborador === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Colaborador</IonLabel></>
-                                            :
-                                            <IonLabel className="">Colaborador</IonLabel>
-
-                                    }
-                                    <IonSelect  value={itemsGenerados.colaborador} onIonChange={(evento) => { this.onChangeInputs(this.state, "colaborador", evento.detail.value as string); }} key="colaboradores" id="colaboradores" name='colaboradores' className="colaboradores_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
-                                    {
-                                        this.props.listColaborators?.map((elemento: IlistColaborators) => {
-                                            return <IonSelectOption key={elemento.id} value={elemento.id}>{elemento.descripcion}</IonSelectOption>;
-                                        })
-                                    }
-                                    </IonSelect>
-                                </IonItem>
-                                <IonItem>
-                                    {
-                                        (this.state.errores?.claseVehiculo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Clase</IonLabel></>
-                                            :
-                                            <IonLabel className="">Clase</IonLabel>
-                                    }
-                                    <IonSelect  value={itemsGenerados.claseVehiculo} onIonChange={(evento) => { this.onChangeInputs(this.state, "claseVehiculo", evento.detail.value as string); }} key="clase" id="clase" name='clase' className="clase_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
-                                        {
-                                            this.props.listadoClaseVehiculos?.map((elemento: string) => {
-                                                return <IonSelectOption key={elemento.toLowerCase()} value={elemento.toLowerCase()}>{elemento.toUpperCase()}</IonSelectOption>;
-                                            })
-                                        }
-                                    </IonSelect>
-                                </IonItem>
-
-
-
-                                <IonItem>
-                                    {
-                                        (this.state.errores?.modeloVehiculo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Modelo Vehiculo</IonLabel></>
-                                            :
-                                            <IonLabel className="">Modelo Vehiculo</IonLabel>
-                                    }
-                                    <IonSelect  value={itemsGenerados.modeloVehiculo} onIonChange={(evento) => { this.onChangeInputs(this.state, "modeloVehiculo", evento.detail.value); }} key="vehiculos" id="vehiculos" name='vehiculos' className="vehiculos_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
-                                        {itemsGenerados.modeloVehiculoItem}
-                                    </IonSelect>
-                                </IonItem>
-                                {itemsGenerados.matriculaItem}
-                                {itemsGenerados.flotaItem}
-                                {itemsGenerados.numeroReservaItem}
-                                {itemsGenerados.precioVuelacarItem}
-                                {itemsGenerados.notaReservaItem}
-                                {itemsGenerados.precioExternoItem}
-                                {itemsGenerados.extrasItem}
-                                {itemsGenerados.estadoItem}
-                            </IonList>
-
-                        </IonRow>
-                        
-                    </IonGrid>
+                            <IonInput name='fechaalta' value={this.props.dataReserva?.modalState.fechaAlta} hidden={true} ></IonInput>
+                        </div>
+                        <div>
+                            <IonLabel className="">Fecha Entrega</IonLabel>
+                            <IonLabel className="">
+                                <IonDatetime  value={itemsGenerados.textoFechaRecogida} displayFormat='DD-MM-YYYY' hour-cycle="h23" first-day-of-week={1} yearValues="2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034" cancelText="Cancelar" doneText="Confirmar" />
+                            </IonLabel>
+                        </div>
+                        <div>
+                            <IonLabel className="">Cantidad de dias</IonLabel>
+                            <IonLabel className="">{itemsGenerados.cantidadDias}</IonLabel>
+                        </div>
+                        <IonItem>
+                            <IonLabel className="">Fecha Devolucion</IonLabel>
+                            <IonInput  className="texto-alineado-derecha" name='fechaDevolucion' readonly={true} value={itemsGenerados.textoFechaDevolucion} autocomplete="off" inputmode="text" placeholder='Fecha Devolucion' />
+                        </IonItem>
+                        <IonItem>
+                            
+                            <IonLabel className="">Colaborador</IonLabel>
+                            <IonLabel className="">{itemsGenerados.colaborador}</IonLabel>
+                            
+                        </IonItem>
+                        {itemsGenerados.horaEntregaItem}
+                        {itemsGenerados.lugarEntregaItem}
+                        <IonItem>
+                            <IonLabel className="">Clase</IonLabel>
+                            <IonLabel className="">{itemsGenerados.claseVehiculo}</IonLabel>
+                        </IonItem>
+                        <IonItem>
+                            
+                            <IonLabel className="">Modelo Vehiculo</IonLabel>
+                            <IonLabel className="">{itemsGenerados.modeloVehiculo}</IonLabel>
+                            
+                        </IonItem>
+                        {itemsGenerados.matriculaItem}
+                        {itemsGenerados.flotaItem}
+                        {itemsGenerados.numeroReservaItem}
+                        {itemsGenerados.precioVuelacarItem}
+                        {itemsGenerados.notaReservaItem}
+                        {itemsGenerados.precioExternoItem}
+                        {itemsGenerados.extrasItem}
+                        {itemsGenerados.estadoItem}
+                    </div>
                 </IonContent>
             </div>
         );

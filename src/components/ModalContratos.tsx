@@ -4,7 +4,7 @@ import { Component, } from "react";
 import { IngresarContrato } from "./IngresarContratoContainer";
 import { ModificarContrato } from "../components/ModificarContratoContainer";
 import { repoStorage } from "../interfaces/logicStorage";
-import { IListadoPrereserva } from "../datos/vehiculosGeneral";
+import { IDataVehiculos, IListadoPrereserva, dataCars } from "../datos/vehiculosGeneral";
 import { ContenidoModalDerecha } from "../components/ContenidoDerecha";
 
 
@@ -47,7 +47,6 @@ export class ModalDialogContratos extends Component<ContainerProps, ContainerSta
     listadoModelosVehiculos: string[] | null = null;
     listadoColaboradores: IlistColaborators[] | null = null;
     listadoFlotas: IlistFlotas[] | null = null;
-    dataCars: any;
 
     constructor(props: any)
     {
@@ -94,14 +93,13 @@ export class ModalDialogContratos extends Component<ContainerProps, ContainerSta
 
         }
         
-       
 
         this.contenidoDerecha = <>
             <ContenidoModalDerecha 
                 dataReserva={reservaRaw} 
                 listadoClaseVehiculos={this.listadoClaseVehiculos}
                 listadoModelosVehiculos={this.listadoModelosVehiculos}
-                dataCars={this.dataCars}
+                dataCars={dataCars}
                 listColaborators={this.listadoColaboradores}
                 listFlotas={this.listadoFlotas}
                 errores={this.state.errores}
@@ -123,6 +121,7 @@ export class ModalDialogContratos extends Component<ContainerProps, ContainerSta
                 const fechaRecogida = new Date(reservas[i].start_time as number);
                 const fechaDevolucion = new Date(reservas[i].end_time as number);
 
+                
                 reservasVuelaCarFiltrado.push(
                     
                     <div key={i}>

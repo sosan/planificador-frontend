@@ -1,6 +1,6 @@
 import { typeGroup } from "../components/SchedulerGrid";
 import { ionicDb } from "../database/IonicStorage";
-import { IListadoPrereserva, } from "../datos/vehiculosGeneral";
+import { IDataVehiculos, IListadoPrereserva, } from "../datos/vehiculosGeneral";
 import { ContainerState as IContainerModalState } from "../components/Modal";
 import {  IlistColaborators } from "../datos/listadoColaboradores";
 import { IlistFlotas } from "../datos/listadoFlotas";
@@ -25,6 +25,8 @@ class InterfaceStorage
     KEY_PREFIX_LISTADO_COLABORADORES = "listadoColaboradores";
     KEY_PREFIX_LISTADO_FLOTAS = "listadoFlotas";
     KEY_ORDEN_LISTADO_MODELOS_VEHICULOS = "ordenListadoModelosVehiculos";
+
+    KEY_PREFIX_DATA_CARS = "data_cars"
 
 
     async getItemsReservasExterior() {
@@ -389,7 +391,7 @@ class InterfaceStorage
 
 
 
-    
+
     async setListadoGenerico(listado: any[], key: string)
     {
         const value = serialize(listado);
@@ -703,6 +705,27 @@ class InterfaceStorage
 
     }
 
+
+    async insertDataCars(cars: IDataVehiculos[])
+    {
+        
+        const key = `${this.KEY_PREFIX_DATA_CARS}`;
+        const value = serialize(cars);
+        await ionicDb.setData(key, value);
+        
+
+    }
+
+    async getDataCars()
+    {
+        const key = `${this.KEY_PREFIX_DATA_CARS}`;
+        const dataRaw = await ionicDb.getKey(key);
+        const dataParsed = await this.deserialize(dataRaw);
+        const dataJSON = JSON.parse(dataParsed);
+        
+        return dataJSON;
+
+    }
 
 }
 

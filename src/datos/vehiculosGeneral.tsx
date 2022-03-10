@@ -76,7 +76,7 @@ export interface IDataVehiculos {
 };
 
 
-export const dataCars: IDataVehiculos[] = [
+export let dataCars: IDataVehiculos[] = [
     ...citroen,
     ...peugeot,
     ...toyota,
@@ -85,3 +85,10 @@ export const dataCars: IDataVehiculos[] = [
     ...yamaha,
 
 ];
+
+export const setDataCars = async (_cars: IDataVehiculos[]) =>
+{
+
+    dataCars = _cars;
+
+};
