@@ -145,23 +145,6 @@ export class ContenidoModalDerecha extends Component<ContainerProps, ContainerSt
 
         let modeloVehiculoItem = null;
 
-        if (claseVehiculo !== "") 
-        {
-            modeloVehiculoItem = new Set();
-            let modelosUnicos = new Set();
-            for (let i = 0; i < props.dataCars.length; i++) {
-                const elemento = props.dataCars[i];
-                if (elemento.clasevehiculo.toLowerCase() === claseVehiculo.toLowerCase() && modelosUnicos.has(elemento.modelo) === false) {
-                    modelosUnicos.add(elemento.modelo);
-                    modeloVehiculoItem.add(<IonSelectOption key={elemento.modelo.toLowerCase()} value={elemento.modelo}>{elemento.modelo.toUpperCase()}</IonSelectOption>);
-
-                }
-            }
-
-        }
-
-        
-
             horaEntregaItem =
                 <IonItem>
                     <IonLabel className="">Hora de entrega</IonLabel>
@@ -292,8 +275,6 @@ export class ContenidoModalDerecha extends Component<ContainerProps, ContainerSt
         const itemsGenerados = this.generarItemsRender(this.state, this.props);
         
         return(
-            <div>
-                <IonContent>
                     <div>
                         <div className=" altura_15 cabecera-arriba">
                             <h2 className='margen-cabecera-arriba'>{itemsGenerados.tituloReserva}</h2>
@@ -341,8 +322,7 @@ export class ContenidoModalDerecha extends Component<ContainerProps, ContainerSt
                         {itemsGenerados.extrasItem}
                         {itemsGenerados.estadoItem}
                     </div>
-                </IonContent>
-            </div>
+
         );
     }
 
