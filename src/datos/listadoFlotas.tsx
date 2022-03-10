@@ -24,3 +24,10 @@ export let listFlotas: IlistFlotas[] = [
     },
     
 ];
+
+
+export const setListadoFlotas = async (_flotas: any) =>
+{
+    listFlotas = _flotas;
+
+}

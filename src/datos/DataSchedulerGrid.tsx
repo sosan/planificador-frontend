@@ -2,8 +2,8 @@ import { ContainerState, IModalErrores } from "../components/Modal";
 import { typeGroup } from "../components/SchedulerGrid";
 import { IListadoPrereserva, IDataVehiculos, ORDEN_LISTADO_MODELO_VEHICULOS } from "./vehiculosGeneral";
 import { repoStorage } from "../interfaces/logicStorage";
-import { listadoColaboradores } from "./listadoColaboradores";
-import { listFlotas } from "../datos/listadoFlotas";
+import { listadoColaboradores, setColaboradores } from "./listadoColaboradores";
+import { listFlotas, setListadoFlotas } from "../datos/listadoFlotas";
 export class DataSchedulerGrid
 {
 
@@ -78,6 +78,12 @@ export class DataSchedulerGrid
 
         this.listadoClaseVehiculos = await repoStorage.getlistadoClasesVehiculos();
         this.listadoModelosVehiculos = await repoStorage.getlistadoModelosVehiculos();
+
+        const listadoColaboradores = await repoStorage.getListadoColaboradores();
+        await setColaboradores(listadoColaboradores);
+
+        const listadoFlotas = await repoStorage.getListadoFlotas();
+        await setListadoFlotas(listadoFlotas);
 
         this.itemsPreReservas = await repoStorage.getItemsPreReservas();
         this.itemsReservasVuelaCar = await repoStorage.getItemsReservasVuelaCar();

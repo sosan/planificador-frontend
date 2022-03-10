@@ -79,3 +79,9 @@ export let listadoColaboradores: IlistColaborators[] = [
         "color": "#efccf8"
     },
 ];
+
+
+export const setColaboradores = async (_colaboradores: any[]) => 
+{
+    listadoColaboradores = _colaboradores;
+}
