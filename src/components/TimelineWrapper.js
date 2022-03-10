@@ -198,7 +198,7 @@ export default class TimelineWrapper extends Component {
                     fullUpdate
 
                     dragSnap={DRAG_SNAP}
-                    itemTouchSendsClick={false}
+                    itemTouchSendsClick={true}
                     groupRenderer={this.groupRenderer}
                     
                     stackItems={true}
@@ -207,6 +207,8 @@ export default class TimelineWrapper extends Component {
                     itemHeightRatio={1}
                     canMove={false}
                     canResize={false}
+
+                    
                     
                     onTimeChange={this.handleTimeChange}
                     onCanvasDoubleClick={(groupId, time, evento) => { this.props.onDoubleClicked(groupId, time, evento); } }
@@ -269,7 +271,7 @@ export default class TimelineWrapper extends Component {
                                 },
                             }}
                         unit="month" />
-                        <DateHeader unit="day" style={{ height: 50, width: 36 }}
+                        <DateHeader unit="day" style={{ height: "50px" }}
                             {...{
                                 intervalRenderer: ({ getIntervalProps, intervalContext }) => {
                                     const { style, onClick, key } = getIntervalProps();
