@@ -7,6 +7,7 @@ import { IModalState } from "./Modal";
 import imagenFallo from "../images/error_checkbox.svg";
 import { InputChangeEventDetail } from '@ionic/core';
 import { listadoDias} from "../components/Modal";
+import "../css/Modal.css";
 
 interface ContainerState
 {
@@ -275,38 +276,50 @@ export class ContenidoModalDerecha extends Component<ContainerProps, ContainerSt
         const itemsGenerados = this.generarItemsRender(this.state, this.props);
         
         return(
-                    <div>
-                        <div className=" altura_15 cabecera-arriba">
-                            <h2 className='margen-cabecera-arriba'>{itemsGenerados.tituloReserva}</h2>
-                            <span>Fecha alta: {itemsGenerados.fechaAltaTexto}</span>
-                            <IonInput name='fechaalta' value={this.props.dataReserva?.modalState.fechaAlta} hidden={true} ></IonInput>
-                        </div>
-                        <div>
-                            <IonLabel className="">Fecha Entrega</IonLabel>
-                            <IonLabel className="">
-                                <IonDatetime  value={itemsGenerados.textoFechaRecogida} displayFormat='DD-MM-YYYY' hour-cycle="h23" first-day-of-week={1} yearValues="2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034" cancelText="Cancelar" doneText="Confirmar" />
-                            </IonLabel>
-                        </div>
-                        <div>
-                            <IonLabel className="">Cantidad de dias</IonLabel>
-                            <IonLabel className="">{itemsGenerados.cantidadDias}</IonLabel>
-                        </div>
-                        <IonItem>
-                            <IonLabel className="">Fecha Devolucion</IonLabel>
-                            <IonInput  className="texto-alineado-derecha" name='fechaDevolucion' readonly={true} value={itemsGenerados.textoFechaDevolucion} autocomplete="off" inputmode="text" placeholder='Fecha Devolucion' />
-                        </IonItem>
-                        <IonItem>
-                            
-                            <IonLabel className="">Colaborador</IonLabel>
-                            <IonLabel className="">{itemsGenerados.colaborador}</IonLabel>
-                            
-                        </IonItem>
-                        {itemsGenerados.horaEntregaItem}
-                        {itemsGenerados.lugarEntregaItem}
-                        <IonItem>
-                            <IonLabel className="">Clase</IonLabel>
-                            <IonLabel className="">{itemsGenerados.claseVehiculo}</IonLabel>
-                        </IonItem>
+            <div className="grid-contenido-derecha-modal">
+                <IonItem className=" altura100 cabecera-arriba">
+                    <h2 className='margen-cabecera-arriba'>{itemsGenerados.tituloReserva}</h2>
+                    <span>Fecha reserva: {itemsGenerados.fechaAltaTexto}</span>
+                    <IonInput name='fechaalta' value={this.props.dataReserva?.modalState.fechaAlta} hidden={true} ></IonInput>
+                </IonItem>
+                <div>
+                    <IonLabel className="">Nº Contrato</IonLabel>
+                </div>
+                <div className="">
+                    <IonItem>
+                        <IonLabel className="">Fecha Entrega</IonLabel>
+                        <IonLabel className="">
+                            <IonDatetime  value={itemsGenerados.textoFechaRecogida} displayFormat='DD-MM-YYYY' hour-cycle="h23" first-day-of-week={1} yearValues="2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033, 2034" cancelText="Cancelar" doneText="Confirmar" />
+                        </IonLabel>
+                    </IonItem>
+                    {itemsGenerados.horaEntregaItem}
+                    {itemsGenerados.lugarEntregaItem}
+                </div>
+                <div>
+                    <IonItem>
+                        <IonLabel className="">Fecha Devolucion</IonLabel>
+                        <IonInput  className="texto-alineado-derecha" name='fechaDevolucion' readonly={true} value={itemsGenerados.textoFechaDevolucion} autocomplete="off" inputmode="text" placeholder='Fecha Devolucion' />
+                    </IonItem>
+                    {itemsGenerados.lugarEntregaItem}
+                    {itemsGenerados.horaEntregaItem}
+                </div>
+                <div>
+                    <IonItem>
+                        <IonLabel className="">Colaborador</IonLabel>
+                        <IonLabel className="">{itemsGenerados.colaborador}</IonLabel>
+                    </IonItem>
+                    {itemsGenerados.numeroReservaItem}
+                    <IonItem>
+                        <IonLabel className="">Cantidad de dias</IonLabel>
+                        <IonLabel className="">{itemsGenerados.cantidadDias}</IonLabel>
+                    </IonItem>
+                    <IonItem>
+                        <IonLabel className="">Clase</IonLabel>
+                        <IonLabel className="">{itemsGenerados.claseVehiculo}</IonLabel>
+                    </IonItem>
+                    
+
+                </div>
                         <IonItem>
                             
                             <IonLabel className="">Modelo Vehiculo</IonLabel>
@@ -315,7 +328,6 @@ export class ContenidoModalDerecha extends Component<ContainerProps, ContainerSt
                         </IonItem>
                         {itemsGenerados.matriculaItem}
                         {itemsGenerados.flotaItem}
-                        {itemsGenerados.numeroReservaItem}
                         {itemsGenerados.precioVuelacarItem}
                         {itemsGenerados.notaReservaItem}
                         {itemsGenerados.precioExternoItem}

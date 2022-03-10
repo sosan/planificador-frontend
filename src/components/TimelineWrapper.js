@@ -188,6 +188,7 @@ export default class TimelineWrapper extends Component {
                     items={items}
                     resizeDetector={containerResizeDetector}
                     
+                    
                     defaultTimeStart={this.state.defaultTimeStart}
                     defaultTimeEnd={this.state.defaultTimeEnd}
                     visibleTimeStart={this.state.visibleTimeStart}
@@ -201,7 +202,7 @@ export default class TimelineWrapper extends Component {
                     groupRenderer={this.groupRenderer}
                     
                     stackItems={true}
-                    sidebarWidth={270}
+                    sidebarWidth={145}
                     
                     itemHeightRatio={1}
                     canMove={false}
@@ -210,8 +211,8 @@ export default class TimelineWrapper extends Component {
                     onTimeChange={this.handleTimeChange}
                     onCanvasDoubleClick={(groupId, time, evento) => { this.props.onDoubleClicked(groupId, time, evento); } }
                     onItemDoubleClick={(itemId, e, time) => { this.props.onItemDoubleClick(itemId, e, time ); }  }
-                    minZoom={60 * 60 * 1000 * 24 * 20}
-                    maxZoom={60 * 60 * 1000 * 24 * 20}
+                    minZoom={60 * 60 * 1000 * 24 * 16}
+                    maxZoom={60 * 60 * 1000 * 24 * 16}
                     onZoom={this.onZoom}
 
                 >
@@ -268,7 +269,7 @@ export default class TimelineWrapper extends Component {
                                 },
                             }}
                         unit="month" />
-                        <DateHeader unit="day" style={{ height: 50 }}
+                        <DateHeader unit="day" style={{ height: 50, width: 36 }}
                             {...{
                                 intervalRenderer: ({ getIntervalProps, intervalContext }) => {
                                     const { style, onClick, key } = getIntervalProps();
@@ -284,11 +285,6 @@ export default class TimelineWrapper extends Component {
                                     return itemHeader;
                                 },
                             }}
-                        
-                        
-                        
-                        
-                        
                         />
                     </TimelineHeaders>
 

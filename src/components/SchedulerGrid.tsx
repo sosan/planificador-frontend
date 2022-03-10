@@ -105,8 +105,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
     setDefaultDate()
     {
         const today = new Date();
-        const fivedaysago = new Date(new Date().setDate( today.getDate() - 5));
-        const quincedias = new Date(new Date().setDate( today.getDate() + 15 ));
+        const fivedaysago = new Date(new Date().setDate( today.getDate() - 1));
+        const quincedias = new Date(new Date().setDate( today.getDate() + 16 ));
     
         this._visibleTimeStart = fivedaysago.getTime();
         this._visibleTimeEnd = quincedias.getTime();
@@ -453,7 +453,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             "clasevehiculo": state.modalState.claseVehiculo as string,
             "modelo": state.modalState.modeloVehiculo as string,
             "flota": state.modalState.flota as string,
-            "height": 50,
+            "height": 15,
             "srcImage": "",
             "rightTitle": "",
             "stackItems": true,
@@ -474,7 +474,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 "clasevehiculo": state.modalState.claseVehiculo as string,
                 "modelo": state.modalState.modeloVehiculo as string,
                 "flota": state.modalState.flota as string,
-                "height": 50,
+                "height": 15,
                 "srcImage": "",
                 "rightTitle": "",
                 "stackItems": true,

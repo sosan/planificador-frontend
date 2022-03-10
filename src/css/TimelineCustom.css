@@ -14,7 +14,7 @@
 {
     border-style: none;
     background-color: transparent;
-    height: 50px;
+    /* height: 50px; */
 }
 
 .altura-items
@@ -23,7 +23,7 @@
     justify-content: center;
     align-items: center;
 
-    height: 50px !important;
+    /* height: 50px !important; */
     font-size: 20px !important;;
     color: white !important;;
     text-transform: uppercase;
@@ -79,7 +79,7 @@
 .anchura_vehiculo
 {
     width: 50px;
-    height: 50px;
+    /* height: 50px; */
 }
 
 .item-label
@@ -191,6 +191,20 @@
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
+
+.rct-hl-even,
+.rct-hl-odd,
+.rct-sidebar-row.rct-sidebar-row-odd,
+.rct-sidebar-row.rct-sidebar-row-even
+{
+    height: 32px !important;
+}
+
+.rct-dateHeader
+{
+    width: 36px !important;
+}
+
 /* .rct-calendar-header
 {
     position: fixed;
