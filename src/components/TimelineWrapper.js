@@ -202,7 +202,7 @@ export default class TimelineWrapper extends Component {
                     groupRenderer={this.groupRenderer}
                     
                     stackItems={true}
-                    sidebarWidth={145}
+                    sidebarWidth={300}
                     
                     itemHeightRatio={1}
                     canMove={false}
@@ -256,9 +256,9 @@ export default class TimelineWrapper extends Component {
                                         <div key={key} style={style} className="rct-dateHeader" onClick={() => null } >
                                             <span className='espaciado-header'>
                                                 <b className='margen-izquierda-timeline-header texto-primer-header-timeline'>{intervalContext.intervalText}</b>
+                                                {/* <b className='texto-primer-header-timeline'>{intervalContext.intervalText}</b>
                                                 <b className='texto-primer-header-timeline'>{intervalContext.intervalText}</b>
-                                                <b className='texto-primer-header-timeline'>{intervalContext.intervalText}</b>
-                                                <b className='texto-primer-header-timeline'>{intervalContext.intervalText}</b>
+                                                <b className='texto-primer-header-timeline'>{intervalContext.intervalText}</b> */}
                                                 <b className='texto-primer-header-timeline'>{intervalContext.intervalText}</b>
                                                 <b className='texto-primer-header-timeline'>{intervalContext.intervalText}</b>
                                                 <b className='margen-derecha-timeline-header texto-primer-header-timeline'>{intervalContext.intervalText}</b>
@@ -275,11 +275,11 @@ export default class TimelineWrapper extends Component {
                             {...{
                                 intervalRenderer: ({ getIntervalProps, intervalContext }) => {
                                     const { style, onClick, key } = getIntervalProps();
-
+                                    const dia = intervalContext.intervalText.toString().split(" ")[1];
                                     const itemHeader = <>
                                         <div key={key} style={style} className="rct-dateHeader" onClick={() => null} >
                                             <span className='sub-header'>
-                                                <b className='noselect'>{intervalContext.intervalText}</b>
+                                                <b className='noselect'>{dia}</b>
                                             </span>
 
                                         </div>

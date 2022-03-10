@@ -49,9 +49,9 @@
 
 .custom-group
 {
-    display: flex !important;
-    flex-direction: row;
-    justify-content: flex-start;
+    display: grid !important;
+    grid-template-columns: 87px 35px 1fr;
+    place-content: flex-start;
 
 }
 
@@ -104,6 +104,7 @@
 .alineacion-modelo
 {
     text-align: right;
+    width: 100%;
 }
 
 .poscion-fija-anadir-reserva
