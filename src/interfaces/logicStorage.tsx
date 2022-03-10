@@ -24,6 +24,8 @@ class InterfaceStorage
 
     KEY_PREFIX_LISTADO_COLABORADORES = "listadoColaboradores";
     KEY_PREFIX_LISTADO_FLOTAS = "listadoFlotas";
+    KEY_ORDEN_LISTADO_MODELOS_VEHICULOS = "ordenListadoModelosVehiculos";
+
 
     async getItemsReservasExterior() {
         const listado = await this.generalGetItemsGroups(this.KEY_PREFIX_ITEMS_RESERVA_EXTERIOR);
@@ -184,6 +186,27 @@ class InterfaceStorage
     async insertlistadoModelosVehiculos(arrayListadoModelosVehiculos: string[])
     {
         await ionicDb.setData(this.KEY_LISTADO_MODELOS_VEHICULOS, arrayListadoModelosVehiculos.toString());
+    }
+
+    async insertOrdenListadoModeloVehiculos(ordenListadoModelosVehiculos: any[])
+    {
+        const key = this.KEY_ORDEN_LISTADO_MODELOS_VEHICULOS;
+        const datosSerializados = await serialize(ordenListadoModelosVehiculos);
+
+        await ionicDb.setData(key, datosSerializados);
+
+    }
+
+    async getOrdenListadoModeloVehiculos()
+    {
+
+        const key = this.KEY_ORDEN_LISTADO_MODELOS_VEHICULOS;
+        const datos = await ionicDb.getKey(key);
+
+        const datosDeserializados = await this.deserialize(datos);
+        const datosJSON = JSON.parse(datosDeserializados);
+        return datosJSON;
+
     }
 
     async getlistadoModelosVehiculos() {
@@ -353,9 +376,6 @@ class InterfaceStorage
         await ionicDb.setData(`length_${this.KEY_PREFIX_ITEMSPRERESERVAS}`, "0");
         await ionicDb.setData(`length_${this.KEY_PREFIX_ITEMS_RESERVA_EXTERIOR}`, "0");
         await ionicDb.setData(`length_${this.KEY_PREFIX_ITEMS_RESERVA_VUELACAR}`, "0");
-
-        
-        
         
     }
     
@@ -366,6 +386,10 @@ class InterfaceStorage
         
     }
 
+
+
+
+    
     async setListadoGenerico(listado: any[], key: string)
     {
         const value = serialize(listado);
@@ -374,20 +398,21 @@ class InterfaceStorage
     }
 
 
+
     async getListadoColaboradores()
     {
         const datosRaw = await ionicDb.getKey(this.KEY_PREFIX_LISTADO_COLABORADORES);
         const datos = this.deserialize(datosRaw);
-
-        return datos;
+        const datosJSON = JSON.parse(datos);
+        return datosJSON;
     }
 
     async getListadoFlotas()
     {
         const datosRaw = await ionicDb.getKey(this.KEY_PREFIX_LISTADO_FLOTAS);
         const datos = this.deserialize(datosRaw);
-
-        return datos;
+        const datosJSON = JSON.parse(datos);
+        return datosJSON;
 
     }
 

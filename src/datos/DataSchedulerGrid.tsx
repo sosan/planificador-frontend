@@ -1,6 +1,6 @@
 import { ContainerState, IModalErrores } from "../components/Modal";
 import { typeGroup } from "../components/SchedulerGrid";
-import { IListadoPrereserva, IDataVehiculos, ORDEN_LISTADO_MODELO_VEHICULOS } from "./vehiculosGeneral";
+import { IListadoPrereserva, IDataVehiculos, ORDEN_LISTADO_MODELO_VEHICULOS, setOrdenListadoModeloVehiculos } from "./vehiculosGeneral";
 import { repoStorage } from "../interfaces/logicStorage";
 import { listadoColaboradores, setColaboradores } from "./listadoColaboradores";
 import { listFlotas, setListadoFlotas } from "../datos/listadoFlotas";
@@ -56,6 +56,9 @@ export class DataSchedulerGrid
     
     async generateDB(dataCarsProps: any)
     {
+
+
+
         let groupsData = await this.createGroupForCars(dataCarsProps);
         this.groupsReservaVuelaCar = groupsData.groupCreated;
         this.listadoClaseVehiculos = groupsData.arrayListadoClasesVehiculos;
@@ -71,6 +74,9 @@ export class DataSchedulerGrid
 
     async readFromDB()
     {
+
+        const ordenListadoCoches = await repoStorage.getOrdenListadoModeloVehiculos();
+        await setOrdenListadoModeloVehiculos(ordenListadoCoches);
 
         this.groupsReservaVuelaCar = await repoStorage.getGroupsReservaVuelaCar();
         this.groupsReservaExterior = await repoStorage.getGroupsReservaExterior();
@@ -120,7 +126,7 @@ export class DataSchedulerGrid
 
         }
 
-
+        
         groupCreated = await this.orderGroupCars(groupCreated, ORDEN_LISTADO_MODELO_VEHICULOS);
         
         const arrayListadoClasesVehiculos = Array.from(listadoClasesVehiculos);
@@ -129,6 +135,7 @@ export class DataSchedulerGrid
         await repoStorage.insertGroupsReservaVuelaCar(groupCreated);
         await repoStorage.insertlistadoClasesVehiculos(arrayListadoClasesVehiculos);
         await repoStorage.insertlistadoModelosVehiculos(arrayListadoModelosVehiculos);
+        await repoStorage.insertOrdenListadoModeloVehiculos(ORDEN_LISTADO_MODELO_VEHICULOS);
 
         // console.log("Modelos vehiculos" + JSON.stringify(arrayListadoModelosVehiculos));
         // console.log("Clases vehiculos" + JSON.stringify(arrayListadoClasesVehiculos));

@@ -26,7 +26,7 @@ export interface IListadoPrereserva {
 
 };
 
-export const ORDEN_LISTADO_MODELO_VEHICULOS = [
+export let ORDEN_LISTADO_MODELO_VEHICULOS = [
     { "descripcion": "Citroen C1", "vehiculo": "citroenC1" },
     { "descripcion": "Peugeot 108", "vehiculo": "peugeot108"},
     { "descripcion": "Toyota Aygo", "vehiculo": "toyotaAygo"},
@@ -43,6 +43,13 @@ export const ORDEN_LISTADO_MODELO_VEHICULOS = [
     { "descripcion": "Yamaha Tricity","vehiculo":  "yamahatricity}"}
 
 ];
+
+
+export const setOrdenListadoModeloVehiculos = async (_orden:any) =>
+{
+    ORDEN_LISTADO_MODELO_VEHICULOS = _orden;
+
+}
 
 
 
