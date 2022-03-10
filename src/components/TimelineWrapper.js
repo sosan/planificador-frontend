@@ -271,7 +271,7 @@ export default class TimelineWrapper extends Component {
                                 },
                             }}
                         unit="month" />
-                        <DateHeader unit="day" style={{ height: "50px" }}
+                        <DateHeader unit="day" 
                             {...{
                                 intervalRenderer: ({ getIntervalProps, intervalContext }) => {
                                     const { style, onClick, key } = getIntervalProps();
