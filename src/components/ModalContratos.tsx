@@ -3,12 +3,15 @@ import { IonModal, IonButton } from "@ionic/react";
 import { Component, } from "react";
 import { IngresarContrato } from "./IngresarContratoContainer";
 import { ModificarContrato } from "../components/ModificarContratoContainer";
-import { ContainerState as IContainerIngresarContrato } from "../components/IngresarContratoContainer";
 import { repoStorage } from "../interfaces/logicStorage";
 import { IListadoPrereserva } from "../datos/vehiculosGeneral";
 import { ContenidoModalDerecha } from "../components/ContenidoDerecha";
 
+
 import "../css/ModalContratos.css";
+import { IlistColaborators } from "../datos/listadoColaboradores";
+import { IlistFlotas } from "../datos/listadoFlotas";
+import { IModalErrores } from "./Modal";
 interface ContainerProps
 {
     onModalDidDismiss: any;
@@ -23,6 +26,7 @@ interface ContainerState
 {
     dummy: boolean;
     contenidoDerecha: any;
+    errores: IModalErrores;
 }
 
 enum TIPO_RESERVA
@@ -32,13 +36,18 @@ enum TIPO_RESERVA
 }
 
 
-export class ModalDialog extends Component<ContainerProps, ContainerState>
+export class ModalDialogContratos extends Component<ContainerProps, ContainerState>
 {
-
+    
     reservasVuelaCarFiltrado: any | null = null;
     reservasExteriorFiltrado: any | null = null;
     contenidoDerecha: any | null = null;
     
+    listadoClaseVehiculos: string[] | null = null;
+    listadoModelosVehiculos: string[] | null = null;
+    listadoColaboradores: IlistColaborators[] | null = null;
+    listadoFlotas: IlistFlotas[] | null = null;
+    dataCars: any;
 
     constructor(props: any)
     {
@@ -61,13 +70,18 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         this.reservasVuelaCarFiltrado = await this.filtrarItemsPorTieneContrato(itemsReservasVuelaCar, "secondary", TIPO_RESERVA.vuelacar);
         this.reservasExteriorFiltrado = await this.filtrarItemsPorTieneContrato(itemsReservasExterior, "warning", TIPO_RESERVA.exterior);
 
+        this.listadoClaseVehiculos = await repoStorage.getlistadoClasesVehiculos();
+        this.listadoModelosVehiculos = await repoStorage.getlistadoModelosVehiculos();
+        this.listadoColaboradores = await repoStorage.getListadoColaboradores();
+        this.listadoFlotas = await repoStorage.getListadoFlotas();
+
         this.setState({"dummy": false });
     }
 
     async clickedBoton(_id: number, tipoReserva: string)
     {
 
-        let reservaRaw: any;
+        let reservaRaw: IListadoPrereserva | null = null;
         if (tipoReserva === TIPO_RESERVA.vuelacar)
         {
             reservaRaw = await repoStorage.getReservaVuelaCar(_id);
@@ -80,8 +94,19 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
         }
         
+       
+
         this.contenidoDerecha = <>
-            <ContenidoModalDerecha dataReserva={reservaRaw} />
+            <ContenidoModalDerecha 
+                dataReserva={reservaRaw} 
+                listadoClaseVehiculos={this.listadoClaseVehiculos}
+                listadoModelosVehiculos={this.listadoModelosVehiculos}
+                dataCars={this.dataCars}
+                listColaborators={this.listadoColaboradores}
+                listFlotas={this.listadoFlotas}
+                errores={this.state.errores}
+            
+            />
         </>;
         this.setState({ "dummy": true });
 

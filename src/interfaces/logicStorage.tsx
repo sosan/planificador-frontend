@@ -2,6 +2,9 @@ import { typeGroup } from "../components/SchedulerGrid";
 import { ionicDb } from "../database/IonicStorage";
 import { IListadoPrereserva, } from "../datos/vehiculosGeneral";
 import { ContainerState as IContainerModalState } from "../components/Modal";
+import {  IlistColaborators } from "../datos/listadoColaboradores";
+import { IlistFlotas } from "../datos/listadoFlotas";
+
 
 const serialize = require('serialize-javascript');
 
@@ -18,6 +21,9 @@ class InterfaceStorage
     KEY_PREFIX_ITEMSPRERESERVAS = "itemsPreReservas";
     KEY_PREFIX_ITEMS_RESERVA_VUELACAR = "itemsReservaVuelaCar";
     KEY_PREFIX_ITEMS_RESERVA_EXTERIOR = "itemsReservasExterior";
+
+    KEY_PREFIX_LISTADO_COLABORADORES = "listadoColaboradores";
+    KEY_PREFIX_LISTADO_FLOTAS = "listadoFlotas";
 
     async getItemsReservasExterior() {
         const listado = await this.generalGetItemsGroups(this.KEY_PREFIX_ITEMS_RESERVA_EXTERIOR);
@@ -198,6 +204,7 @@ class InterfaceStorage
 
     }
 
+  
 
     async insertGroupsPreReserva(grupo: typeGroup[]) {
         console.log("sdfkjsdf")
@@ -347,8 +354,42 @@ class InterfaceStorage
         await ionicDb.setData(`length_${this.KEY_PREFIX_ITEMS_RESERVA_EXTERIOR}`, "0");
         await ionicDb.setData(`length_${this.KEY_PREFIX_ITEMS_RESERVA_VUELACAR}`, "0");
 
+        
+        
+        
+    }
+    
+    async initListados(listadoColaboradores: IlistColaborators[], listadoFlotas: IlistFlotas[])
+    {
+        await this.setListadoGenerico(listadoColaboradores, this.KEY_PREFIX_LISTADO_COLABORADORES);
+        await this.setListadoGenerico(listadoFlotas, this.KEY_PREFIX_LISTADO_FLOTAS);
+        
     }
 
+    async setListadoGenerico(listado: any[], key: string)
+    {
+        const value = serialize(listado);
+        await ionicDb.setData(key, value);
+
+    }
+
+
+    async getListadoColaboradores()
+    {
+        const datosRaw = await ionicDb.getKey(this.KEY_PREFIX_LISTADO_COLABORADORES);
+        const datos = this.deserialize(datosRaw);
+
+        return datos;
+    }
+
+    async getListadoFlotas()
+    {
+        const datosRaw = await ionicDb.getKey(this.KEY_PREFIX_LISTADO_FLOTAS);
+        const datos = this.deserialize(datosRaw);
+
+        return datos;
+
+    }
 
     async insertItemsReservaVuelaCar(listado: IListadoPrereserva[]) {
 
@@ -620,7 +661,9 @@ class InterfaceStorage
         const key = `${this.KEY_PREFIX_ITEMS_RESERVA_EXTERIOR}${_id}`;
         const dataRaw = await ionicDb.getKey(key);
         const dataParsed = await this.deserialize(dataRaw);
-        return dataParsed;
+        const dataJSON = JSON.parse(dataParsed);
+        const reserva: IListadoPrereserva = { ...dataJSON };
+        return reserva;
 
     }
 
@@ -629,7 +672,9 @@ class InterfaceStorage
         const key = `${this.KEY_PREFIX_ITEMS_RESERVA_VUELACAR}${_id}`;
         const dataRaw = await ionicDb.getKey(key);
         const dataParsed = await this.deserialize(dataRaw);
-        return dataParsed;
+        const dataJSON = JSON.parse(dataParsed);
+        const reserva: IListadoPrereserva = { ...dataJSON };
+        return reserva;
 
     }
 

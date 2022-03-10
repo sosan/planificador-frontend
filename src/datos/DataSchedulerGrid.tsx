@@ -2,6 +2,8 @@ import { ContainerState, IModalErrores } from "../components/Modal";
 import { typeGroup } from "../components/SchedulerGrid";
 import { IListadoPrereserva, IDataVehiculos, ORDEN_LISTADO_MODELO_VEHICULOS } from "./vehiculosGeneral";
 import { repoStorage } from "../interfaces/logicStorage";
+import { listadoColaboradores } from "./listadoColaboradores";
+import { listFlotas } from "../datos/listadoFlotas";
 export class DataSchedulerGrid
 {
 
@@ -59,115 +61,11 @@ export class DataSchedulerGrid
         this.listadoClaseVehiculos = groupsData.arrayListadoClasesVehiculos;
         this.listadoModelosVehiculos = groupsData.arrayListadoModelosVehiculos;
 
-        // this.groupsPreReserva = [
-        //     {
-        //         "id": 0,
-        //         "matricula": " ",
-        //         "title": " ",
-        //         "vehiculo": " ",
-        //         "clasevehiculo": " ",
-        //         "modelo": " ",
-        //         "bgColor": "#3796f3",
-        //         "height": 2,
-        //     },
-    
-        // ];
-    
-        // this.groupsReservaExterior = [
-        //     {
-        //         "id": 0,
-        //         "matricula": " ",
-        //         "title": " ",
-        //         "vehiculo": " ",
-        //         "clasevehiculo": " ",
-        //         "modelo": " ",
-        //         "bgColor": "#3796f3",
-        //         "height": 2,
-        //     },
-    
-        // ];
-    
-        // this.itemsPreReservas = [{
-        //     id: 0,
-        //     group: 0,
-        //     title: ' ',
-        //     start_time: new Date(new Date().setHours(0, 0, 0)).getTime(),
-        //     end_time: new Date(new Date().setHours(23, 59, 59)).getTime(),
-        //     canMove: false,
-        //     canResize: false,
-        //     canChangeGroup: false,
-        //     modalState: {
-        //         fechaAlta: "asdasd",
-        //         notareserva: "asdasd",
-        //         matricula: "asdasd",
-        //         modeloVehiculo: "asdasd",
-        //         claseVehiculo: "asdasd",
-        //         cantidadDias: 0,
-        //         colaborador: "asdasd",
-        //         flota: "asda",
-        //         isPrereserva: false,
-        //         estado: "asd",
-        //         isNewRegister: false,
-        //     },
-        //     itemProps: {
-        //         className: 'altura-items-inicio',
-        //     }
-    
-        // },];
-    
-        // this.itemsReservasVuelaCar = [
-        //     {
-        //         "id": 0,
-        //         "group": 0,
-        //         "title": 'item 1',
-        //         "modalState": {
-        //             "fechaAlta": new Date().toISOString(),
-        //             "notareserva": "TEST",
-        //             "matricula": "TEST",
-        //             "modeloVehiculo": "TEST",
-        //             "claseVehiculo": "TEST",
-        //             "cantidadDias": 3,
-        //             "colaborador": "TEST",
-        //             "flota": "TEST",
-        //             "estado": "reservado",
-        //             "isPrereserva": false,
-        //             "isNewRegister": false,
-        //             "hasContract": false,
-        //             "reservaCompletada": false,
-        //         },
-        //         "start_time": new Date().getTime(),
-        //         "end_time": new Date().getTime(),
-        //         "canMove": false,
-        //         "canResize": false,
-        //         "canChangeGroup": false,
-        //         "itemProps": {
-        //             'data-custom-attribute': 'Random content',
-        //             'aria-hidden': true,
-        //             "onDoubleClick": () => { console.log('You clicked double!');  },
-        //             "className": 'altura-items',
-        //             "style": {
-        //                 background: 'fuchsia',
-        //             }
-        //         }
-    
-        //     },
-    
-        // ];
-    
-        // const startTime = new Date(this.itemsReservasVuelaCar[0].start_time).setHours(0, 0, 0);
-        // const endTime = new Date(this.itemsReservasVuelaCar[0].end_time).setHours(23, 59, 59);
-
-        // this.itemsReservasVuelaCar[0].start_time = new Date(startTime).getTime();
-        // this.itemsReservasVuelaCar[0].end_time = new Date(endTime).getTime();
-        
         await repoStorage.initGroupsItems();
-        // await repoStorage.insertItemsReservaVuelaCar(this.itemsReservasVuelaCar);
-        
-        // this.itemsReservasExterior.push(this.itemsReservasVuelaCar[0]);
-        // await repoStorage.insertGroupsPreReserva(this.groupsPreReserva);
-        // await repoStorage.insertGroupsReservaExterior(this.groupsReservaExterior);
-        // await repoStorage.insertItemsPreReservas(this.itemsPreReservas);
-        // await repoStorage.insertItemsReservasExterior(this.itemsReservasExterior);
+        await repoStorage.initListados(
+            listadoColaboradores,
+            listFlotas
+        );
 
     }
 

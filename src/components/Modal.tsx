@@ -75,10 +75,10 @@ interface ContainerProps {
     onSaveData: any;
     onSearchMatriculaAnotherTimeline: any;
     isVisible: boolean;
+    tiempoClick: any;
     dataCars: IDataVehiculos[];
     listColaborators: IlistColaborators[];
     listFlotas: IlistFlotas[];
-    tiempoClick: any;
     
     listadoClaseVehiculos: string[];
     listadoModelosVehiculos: string[];
@@ -111,7 +111,7 @@ export enum ENUM_TIPOS_ESTADO {
     "length" = 4,
 }
 
-let listadoDias: number[] = [];
+export let listadoDias: number[] = [];
 for (let i = 1; i < 366; i++)
 {
     listadoDias.push(i);

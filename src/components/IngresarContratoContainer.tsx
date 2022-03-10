@@ -36,7 +36,8 @@ export class IngresarContrato extends Component<ContainerProps, ContainerState>
         let textoFechaRecogida = fechaRecogida.toISOString();
         
         // <IonListHeader> SUBALQUILERES </IonListHeader>
-        const { dataReservasVuelaCar, dataReservasExterior } = this.props;
+        const { dataReservasVuelaCar, dataReservasExterior, contenidoReserva } = this.props;
+
 
         return (
 
@@ -67,15 +68,10 @@ export class IngresarContrato extends Component<ContainerProps, ContainerState>
                                 }
                             </IonList>
                             </IonContent>
-                            {/* <IonInfiniteScroll threshold="200px" disabled={false} onIonInfinite={this.loadData}>
-                                <IonInfiniteScrollContent loadingSpinner="bubbles" loadingText="Loading more data..." >
-                                </IonInfiniteScrollContent>
-                            </IonInfiniteScroll> */}
-
                     </div>
                 </div>
                 <div className="contenido">
-                    {this.props.contenidoReserva}
+                    {contenidoReserva}
                 </div>
             
 

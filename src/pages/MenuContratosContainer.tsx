@@ -2,7 +2,7 @@ import { IonContent, IonCard, IonImg, IonCardHeader, IonCardTitle, IonCardConten
 import { Component } from "react";
 import * as categoriasManager from "../datos/listadoCategorias";
 import { ContainerState as IContainerIngresarContrato  } from "../components/IngresarContratoContainer";
-import { ModalDialog } from "../components/ModalContratos";
+import { ModalDialogContratos } from "../components/ModalContratos";
 
 interface ContainerProps {
     
@@ -123,7 +123,7 @@ export class MenuContratos extends Component<ContainerProps, ContainerState>
                 <IonButton href='/page/Dashboard' className="boton-ultimo" fill='solid' color="#ffffff">Volver</IonButton>
                 <IonContent>
                     <div className='centrado'>{this.listadoCategoria}</div>
-                    <ModalDialog 
+                    <ModalDialogContratos 
                         onModalDidDismiss={this.onModalDidDismiss} 
                         isVisible={this.state.modalVisible}
                         ingresarVisible={this.state.ingresarVisible}
