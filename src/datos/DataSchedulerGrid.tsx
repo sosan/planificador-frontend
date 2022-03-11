@@ -253,6 +253,17 @@ export class DataSchedulerGrid
 
     }
 
+    notAsyncSearchReservaVuelaCarByID(_id: number)
+    {
+        for (let i = 0; i < this.itemsReservasVuelaCar.length; i++) {
+            if (this.itemsReservasVuelaCar[i].id === _id) {
+                return this.itemsReservasVuelaCar[i];
+            }
+
+        }
+
+    }
+
     async searchPreReservaByID(_id: number) {
         for (let i = 0; i < this.itemsPreReservas.length; i++) {
             if (this.itemsPreReservas[i].id === _id) {

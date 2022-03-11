@@ -173,7 +173,7 @@ export class ModalDialogContratos extends Component<ContainerProps, ContainerSta
 
         return(
             <>
-                <IonModal cssClass={"modal-contratos"} isOpen={this.props.isVisible} animated={true} onWillDismiss={async () => { this.props.onModalDidDismiss(); }}  >
+                <IonModal cssClass="modal-contratos" isOpen={this.props.isVisible} animated={true} onWillDismiss={async () => { this.props.onModalDidDismiss(); }}  >
                     {elementoHtml}
                 </IonModal>
             </>

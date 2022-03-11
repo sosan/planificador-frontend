@@ -171,7 +171,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     }
 
-    onModalDidDismiss = async () => {
+    onModalDidDismiss = () => {
 
         this.setState({ "modalReservasVisible": false, });
 
@@ -314,10 +314,11 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
     };
 
 
-    onItemDoubleClickReservas = async (itemId: any, e: any, time: any)=>{
+    onItemDoubleClickReservas = (itemId: any, e: any, time: any)=>{
         console.log("dobleclick");
+        e.stopPropagation();
 
-        const elemento: IListadoPrereserva = await this._dataSchedulerGrid.searchReservaVuelaCarByID(itemId);
+        const elemento: IListadoPrereserva = this._dataSchedulerGrid.notAsyncSearchReservaVuelaCarByID(itemId);
 
         let stateToSend: ContainerState = {
             "isDoubleclickItem": true,
@@ -333,7 +334,6 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         stateToSend.modalState.textoFechaDevolucionVisible = true;
         this.setState(stateToSend, () => {
             this.setState({ "modalReservasVisible": true, "isFirstTime": false });
-            // console.log(this.state);
         });
 
 
@@ -634,6 +634,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
 
         }
+
 
 
         // llevarnoslo al class
@@ -1244,7 +1245,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                         items={itemsReservasVuelaCar}
                         subalquileres={false}
                         onDoubleClicked={this.onDoubleClickedTimelineReservas}
-                        onItemDoubleClick={this.onItemDoubleClickReservas}
+                        onItemDoubleClick={ this.onItemDoubleClickReservas }
                         stickyHeader={true}
                         visibleTimeStartProp={this._visibleTimeStart}
                         visibleTimeEndProp={this._visibleTimeEnd}

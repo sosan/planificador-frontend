@@ -218,7 +218,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
     
 
-    elegirFechaRecogida(evento: CustomEvent<InputChangeEventDetail>)
+    elegirFechaRecogida(evento: CustomEvent)
     {
         const fechaRecogida = new Date(evento.detail.value as string);
         const fechaRecogidaTemp = new Date(fechaRecogida);
@@ -234,7 +234,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
     }
 
-    elegirHoraRecogida(evento: CustomEvent<InputChangeEventDetail>)
+    elegirHoraRecogida(evento: CustomEvent)
     {
 
         let estadoActual: IModalState = this.state.modalState;
@@ -477,7 +477,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
         return(
         <>
-                <IonModal cssClass={"modal-timeline"} onWillDismiss={ () => { this.onModalDidDismiss(); }} isOpen={this.props.isVisible} animated={true}>
+                <IonModal cssClass="modal-timeline" onWillDismiss={ () => { this.onModalDidDismiss(); }} isOpen={this.props.isVisible} animated={true}>
                 <IonContent>
                     <IonGrid className={itemsGenerados.colorCabecera}>
                         <IonRow className=" altura_15 cabecera-arriba">

@@ -8,8 +8,6 @@ import {
 
 } from '@ionic/react';
 
-import Sticky from 'react-stickynode';
-
 import { LISTADO_IMAGENES_COCHES } from "../datos/imagenescoches";
 
 // import { IDataEventos } from "./SchedulerGrid";

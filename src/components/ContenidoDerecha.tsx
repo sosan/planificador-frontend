@@ -62,7 +62,7 @@ export class ContenidoModalDerecha extends Component<ContainerProps, ContainerSt
 
     }
 
-    elegirHoraRecogida(evento: CustomEvent<InputChangeEventDetail>) {
+    elegirHoraRecogida(evento: CustomEvent) {
 
         let estadoActual: IModalState = this.state.dataReserva?.modalState as IModalState;
         estadoActual["horaentrega"] = evento.detail.value as string;
