@@ -18,9 +18,9 @@ import { IonButton,
 import { IlistColaborators }  from "../datos/listadoColaboradores";
 import { IDataVehiculos, DEFAULT_TEXT_MATRICULA, IListadoPrereserva } from "../datos/vehiculosGeneral";
 import { IlistFlotas } from "../datos/listadoFlotas";
-import "../css/Modal.css";
 import { InputChangeEventDetail } from '@ionic/core';
 import imagenFallo from "../images/error_checkbox.svg";
+import "../css/Modal.css";
 
 export interface IModalState
 {
@@ -477,7 +477,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
         return(
         <>
-            <IonModal onWillDismiss={ () => { this.onModalDidDismiss(); }} isOpen={this.props.isVisible} animated={true}>
+                <IonModal cssClass={"modal-timeline"} onWillDismiss={ () => { this.onModalDidDismiss(); }} isOpen={this.props.isVisible} animated={true}>
                 <IonContent>
                     <IonGrid className={itemsGenerados.colorCabecera}>
                         <IonRow className=" altura_15 cabecera-arriba">

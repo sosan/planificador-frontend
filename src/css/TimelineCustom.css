@@ -54,7 +54,13 @@
     display: grid !important;
     grid-template-columns: 87px 35px 1fr;
     place-content: flex-start;
+    
 
+}
+
+.margen-group
+{
+    padding: 10px;
 }
 
 

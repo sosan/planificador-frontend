@@ -162,3 +162,7 @@ input[type=number] {
     height: 100px;
 }
 
+.modal-timeline > div.modal-wrapper.ion-overlay-wrapper.sc-ion-modal-md
+{
+    width: 600px !important;
+}

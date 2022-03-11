@@ -198,7 +198,7 @@ export default class TimelineWrapper extends Component {
                     fullUpdate
 
                     dragSnap={DRAG_SNAP}
-                    itemTouchSendsClick={true}
+                    itemTouchSendsClick={false}
                     groupRenderer={this.groupRenderer}
                     
                     stackItems={true}
@@ -232,7 +232,7 @@ export default class TimelineWrapper extends Component {
                                 
                                 return <div {...getRootProps()}>
                                     <IonItem key="matriculas" className="flex-izquierda">
-                                        <IonLabel className="custom-group">
+                                        <IonLabel className="custom-group margen-group">
                                             <span className="title anchura_minimo alineacion-matricula">MATRICULA</span>
                                             <span className="title anchura_minimo alineacion-clasevehiculo">CLASE</span>
                                             <span className="title anchura_minimo anchura_minimo_modelo alineacion-modelo">MODELO</span>
@@ -256,9 +256,6 @@ export default class TimelineWrapper extends Component {
                                         <div key={key} style={style} className="rct-dateHeader" onClick={() => null } >
                                             <span className='espaciado-header'>
                                                 <b className='margen-izquierda-timeline-header texto-primer-header-timeline'>{intervalContext.intervalText}</b>
-                                                {/* <b className='texto-primer-header-timeline'>{intervalContext.intervalText}</b>
-                                                <b className='texto-primer-header-timeline'>{intervalContext.intervalText}</b>
-                                                <b className='texto-primer-header-timeline'>{intervalContext.intervalText}</b> */}
                                                 <b className='texto-primer-header-timeline'>{intervalContext.intervalText}</b>
                                                 <b className='texto-primer-header-timeline'>{intervalContext.intervalText}</b>
                                                 <b className='margen-derecha-timeline-header texto-primer-header-timeline'>{intervalContext.intervalText}</b>

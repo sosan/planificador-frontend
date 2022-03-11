@@ -1,8 +1,3 @@
-.modal
-{
-    
-}
-
 .top30
 {
     margin-top: 30px;
@@ -52,11 +47,12 @@
     border: 1px solid gray;
 }
 
-.modal-wrapper.sc-ion-modal-md,
-.modal-shadow.sc-ion-modal-md
+
+.modal-contratos > div.modal-wrapper.ion-overlay-wrapper.sc-ion-modal-md
 {
     width: 800px !important;
 }
+
 
 .boton-ultimo
 {

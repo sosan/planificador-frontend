@@ -6,12 +6,11 @@ import { ModificarContrato } from "../components/ModificarContratoContainer";
 import { repoStorage } from "../interfaces/logicStorage";
 import { IDataVehiculos, IListadoPrereserva, dataCars } from "../datos/vehiculosGeneral";
 import { ContenidoModalDerecha } from "../components/ContenidoDerecha";
-
-
-import "../css/ModalContratos.css";
 import { IlistColaborators } from "../datos/listadoColaboradores";
 import { IlistFlotas } from "../datos/listadoFlotas";
 import { IModalErrores } from "./Modal";
+import "../css/ModalContratos.css";
+
 interface ContainerProps
 {
     onModalDidDismiss: any;
@@ -174,9 +173,7 @@ export class ModalDialogContratos extends Component<ContainerProps, ContainerSta
 
         return(
             <>
-                <IonModal isOpen={this.props.isVisible} animated={true}
-                    onWillDismiss={async () => { this.props.onModalDidDismiss(); }} 
-                >
+                <IonModal cssClass={"modal-contratos"} isOpen={this.props.isVisible} animated={true} onWillDismiss={async () => { this.props.onModalDidDismiss(); }}  >
                     {elementoHtml}
                 </IonModal>
             </>
