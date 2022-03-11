@@ -22,6 +22,7 @@ import { repoStorage } from '../interfaces/logicStorage';
 
 
 const DRAG_SNAP = 60 * 60 * 24 * 1000;
+export const HEIGHT_ITEM_RESERVA_AND_GROUP = 36;
 
 interface ContainerProps {
     name: string;
@@ -105,11 +106,11 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
     setDefaultDate()
     {
         const today = new Date();
-        const fivedaysago = new Date(new Date().setDate( today.getDate() - 1));
-        const quincedias = new Date(new Date().setDate( today.getDate() + 16 ));
+        const timeStart = new Date(new Date().setDate( today.getDate() - 1));
+        const timeEnd = new Date(new Date().setDate( today.getDate() + 16 ));
     
-        this._visibleTimeStart = fivedaysago.getTime();
-        this._visibleTimeEnd = quincedias.getTime();
+        this._visibleTimeStart = timeStart.getTime();
+        this._visibleTimeEnd = timeEnd.getTime();
 
         this.setState({ "dummy": false });
     }
@@ -130,7 +131,6 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         
         const dataSchedulerGrid = new DataSchedulerGrid();
         await dataSchedulerGrid.setupDb(dataCars);
-        console.log("esta ready " + dataSchedulerGrid.getIsReady());
         this._dataSchedulerGrid = dataSchedulerGrid;
     }
 
@@ -453,7 +453,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             "clasevehiculo": state.modalState.claseVehiculo as string,
             "modelo": state.modalState.modeloVehiculo as string,
             "flota": state.modalState.flota as string,
-            "height": 15,
+            "height": HEIGHT_ITEM_RESERVA_AND_GROUP,
             "srcImage": "",
             "rightTitle": "",
             "stackItems": true,
@@ -474,7 +474,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 "clasevehiculo": state.modalState.claseVehiculo as string,
                 "modelo": state.modalState.modeloVehiculo as string,
                 "flota": state.modalState.flota as string,
-                "height": 15,
+                "height": HEIGHT_ITEM_RESERVA_AND_GROUP,
                 "srcImage": "",
                 "rightTitle": "",
                 "stackItems": true,

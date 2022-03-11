@@ -1,5 +1,5 @@
 import { ContainerState, IModalErrores } from "../components/Modal";
-import { typeGroup } from "../components/SchedulerGrid";
+import { HEIGHT_ITEM_RESERVA_AND_GROUP, typeGroup } from "../components/SchedulerGrid";
 import { IListadoPrereserva, IDataVehiculos, ORDEN_LISTADO_MODELO_VEHICULOS, setOrdenListadoModeloVehiculos, setDataCars } from "./vehiculosGeneral";
 import { repoStorage } from "../interfaces/logicStorage";
 import { listadoColaboradores, setColaboradores } from "./listadoColaboradores";
@@ -119,7 +119,7 @@ export class DataSchedulerGrid
                 "modelo": `${cars[i].modelo}`,
                 "srcImage": "",
                 "rightTitle": "",
-                "height": 50,
+                "height": HEIGHT_ITEM_RESERVA_AND_GROUP,
                 "stackItems": true,
                 "flota": "v",
                 "matricula": `${cars[i].matricula}`
@@ -368,7 +368,7 @@ export class DataSchedulerGrid
             "clasevehiculo": state.modalState.claseVehiculo as string,
             "modelo": state.modalState.modeloVehiculo as string,
             "flota": state.modalState.flota as string,
-            "height": 50,
+            "height": HEIGHT_ITEM_RESERVA_AND_GROUP,
             "srcImage": "",
             "rightTitle": "",
             "stackItems": true,

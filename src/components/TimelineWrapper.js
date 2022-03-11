@@ -275,7 +275,11 @@ export default class TimelineWrapper extends Component {
                             {...{
                                 intervalRenderer: ({ getIntervalProps, intervalContext }) => {
                                     const { style, onClick, key } = getIntervalProps();
-                                    const dia = intervalContext.intervalText.toString().split(" ")[1];
+                                    let dia = intervalContext.intervalText.toString().split(" ")[1];
+                                    if (dia === undefined)
+                                    {
+                                        dia = intervalContext.intervalText;
+                                    }
                                     const itemHeader = <>
                                         <div key={key} style={style} className="rct-dateHeader" onClick={() => null} >
                                             <span className='sub-header'>

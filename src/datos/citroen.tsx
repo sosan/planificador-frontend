@@ -105,9 +105,9 @@ export const citroen: IDataVehiculos[] = [
     {
         "_id": "606651cbf59ae674f6c472826",
         "vehiculo": "citroenC1Automatic",
-        "descripcion": "Citroen C1 Auto-",
+        "descripcion": "Citroen C1 Automatic",
         "clasevehiculo": "b",
-        "modelo": "Citroen C1 Auto.",
+        "modelo": "Citroen C1 Automatic",
         "pax": 4,
         "puertas": 4,
         "conbustible": "95 oct",

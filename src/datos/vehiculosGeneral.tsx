@@ -30,7 +30,7 @@ export let ORDEN_LISTADO_MODELO_VEHICULOS = [
     { "descripcion": "Citroen C1", "vehiculo": "citroenC1" },
     { "descripcion": "Peugeot 108", "vehiculo": "peugeot108"},
     { "descripcion": "Toyota Aygo", "vehiculo": "toyotaAygo"},
-    { "descripcion": "Citroen C1 Auto.", "vehiculo": "citroenC1Automatic"},
+    { "descripcion": "Citroen C1 Automatic", "vehiculo": "citroenC1Automatic"},
     { "descripcion": "Citroen C1 Open", "vehiculo": "citroenC1open"},
     { "descripcion": "Toyota Aygo Open", "vehiculo": "toyotaAygoOpen"},
     { "descripcion": "Citroen C3", "vehiculo": "citroenC3"},
