@@ -313,10 +313,9 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     };
 
-
     onItemDoubleClickReservas = (itemId: any, e: any, time: any)=>{
         console.log("dobleclick");
-        e.stopPropagation();
+        // e.stopPropagation();
 
         const elemento: IListadoPrereserva = this._dataSchedulerGrid.notAsyncSearchReservaVuelaCarByID(itemId);
 
@@ -812,7 +811,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             "canMove": false,
             "canResize": false,
             "canChangeGroup": false,
-            "title": `${state.modalState.colaborador as string} id=${state.modalState.id} group=${state.modalState.group}`,
+            "title": `${state.modalState.colaborador as string}`,
             "itemProps": {
                 "className": 'altura-items color-prereserva ',
             },

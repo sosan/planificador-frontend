@@ -3,7 +3,8 @@ import {
     IonItem,
     IonFab,
     IonFabButton,
-    IonLabel
+    IonLabel,
+    IonButton
 
 
 } from '@ionic/react';
@@ -36,16 +37,18 @@ const DRAG_SNAP = 60 * 60 * 24 * 1000;
 
 export default class TimelineWrapper extends Component {
     
-    // _visibleTimeStart = 0;
-    // _visibleTimeEnd = 0;
+
+    lastTouchTime = 0;
+    DOUBLE_CLICK_THRESHOLD = 700;
 
     constructor(props) {
         super(props);
         
         const _defaultTimeStart = moment().add(-2, 'day');
         const _defaultTimeEnd = moment().add(2, 'day');
-        // this._visibleTimeStart = moment().add(-5, 'day').valueOf();
-        // this._visibleTimeEnd = moment().add(15, 'day').valueOf();
+        // https://github.com/facebook/react/issues/6436
+        this.testing = this.testing.bind(this);
+        this.testing.options = { passive: false };
 
         this.state = { 
             groups: this.props.groups,
@@ -62,8 +65,38 @@ export default class TimelineWrapper extends Component {
 
     }
 
+    itemRenderer = ({ item, itemContext, getItemProps, getResizeProps }) => {
+        const { left: leftResizeProps, right: rightResizeProps } = getResizeProps();
+        const obj = getItemProps();
+        // 
+        return (
+            <div {...getItemProps(item.itemProps)} onTouchStart={(evento) => this.onItemDoubleClick(evento, item)} >
+                <div className="rct-item-content" style={{ maxHeight: `${itemContext.dimensions.height}` }}>
+                    {itemContext.title}
+                </div>
+            </div>
+        )
+    };
+
+    onItemDoubleClick = (evento, item) =>
+    {
+
+        const now = Date.now();
+
+        if (Math.abs(now - this.lastTouchTime) <= this.DOUBLE_CLICK_THRESHOLD)
+        {
+            this.lastTouchTime = 0;
+            console.log("doble click");
+            this.props.onItemDoubleClick(item.id, evento, evento.timeStamp); 
+
+        } else {
+            this.lastTouchTime = now;
+        }
+        
+    }
     
-    // itemRenderer = ({ item, timelineContext, itemContext, getItemProps, getResizeProps }) => {
+
+    // itemRenderer2 = ({ item, timelineContext, itemContext, getItemProps, getResizeProps }) => {
     //     // const { left: leftResizeProps, right: rightResizeProps } = getResizeProps();
     //     // const backgroundColor = itemContext.selected ? (itemContext.dragging ? "red" : item.selectedBgColor) : item.bgColor;
     //     // const borderColor = itemContext.resizing ? "red" : item.color;
@@ -77,14 +110,15 @@ export default class TimelineWrapper extends Component {
     //         </>
     //     );
 
-
-
     // };
 
-    groupRenderer = ( {group: elementGroup} ) => {
+    onZoom = (timelineContext, unit) => {
 
-        // const key = elementGroup.vehiculo;
-        // elementGroup["srcImage"] = LISTADO_IMAGENES_COCHES[key];
+
+    };
+
+
+    groupRenderer = ( {group: elementGroup} ) => {
 
         return (
             <>
@@ -100,61 +134,7 @@ export default class TimelineWrapper extends Component {
     }
 
 
-    handleItemMove = (itemId, dragTime, newGroupOrder) => {
-        
-        if (dragTime + DRAG_SNAP < new Date().getTime()) return;
-        
-        const { items, groups } = this.state;
-
-        const group = groups[newGroupOrder];
-
-        if (group === undefined || group.id === undefined) return;
-
-        let devItems = [];
-        for (let i = 0; i < items.length; i++) 
-        {
-            if (items[i].id === itemId) 
-            {
-                const fechaDestino = new Date(dragTime);
-                const fechaDestinoStart = fechaDestino.setHours(0, 0, 0, 0);
-                const fechaDestinoEnd = fechaDestino.setHours(23, 59, 59, 0);
-                
-                items[i].start_time = moment(fechaDestinoStart);
-                items[i].end_time = moment(fechaDestinoEnd);
-                items[i].group = group.id;
-                
-            }
-            devItems.push(items[i]);
-            
-        }
-        
-        this.setState({ "items": devItems});
-        
-    };
-
-    handleItemResize = (itemId, time, edge) => {
-        const { items } = this.state;
-        console.log('handleItemResize', edge)
-
-        this.setState({
-            items: items.map(item =>
-                item.id === itemId
-                    ? Object.assign({}, item, {
-                        start: edge === "left" ? time : item.start_time,
-                        end: edge === "rigt" ? time : item.end_time,
-                    })
-                    : item
-            )
-        });
-
-        console.log("Resized", itemId, time, edge);
-    };
-
     handleTimeChange = (visibleTimeStart, visibleTimeEnd) => {
-
-        // this._visibleTimeStart = visibleTimeStart;
-        // this._visibleTimeEnd = visibleTimeEnd;
-        // this.forceUpdate();
 
         this.setState({
             visibleTimeStart,
@@ -163,14 +143,16 @@ export default class TimelineWrapper extends Component {
         });
     };
 
-    onZoom = (timelineContext, unit) =>
-    {
-
-
-    };
+   
 
     componentDidMount() {
 
+    }
+
+    testing(itemId, e, time)
+    {
+        console.log("2clicked item")
+        // e.stopPropagation();
     }
     
     render() {
@@ -206,15 +188,20 @@ export default class TimelineWrapper extends Component {
                     canMove={false}
                     canResize={false}
 
-                    
-                    
+                    itemRenderer={this.itemRenderer}
+
                     onTimeChange={this.handleTimeChange}
-                    onCanvasDoubleClick={(groupId, time, evento) => { this.props.onDoubleClicked(groupId, time, evento); } }
-                    onItemDoubleClick={(itemId, e, time) => { this.props.onItemDoubleClick(itemId, e, time ); }  }
+                    onCanvasClick={ () => { console.log("canvas click")} }
+                    // onItemDoubleClick={this.testing}
+                    // onItemClick={() => { console.log("clicked item") } }
+                    // onItemDoubleClick={ () => { console.log("sdkfjksldf")} } 
+
+                    // https://github.com/facebook/react/issues/6436
+                    // onCanvasDoubleClick={(groupId, time, evento) => { this.props.onDoubleClicked(groupId, time, evento); } }
+                    // onItemDoubleClick={(itemId, e, time) => { this.props.onItemDoubleClick(itemId, e, time); }  }
                     minZoom={60 * 60 * 1000 * 24 * 16}
                     maxZoom={60 * 60 * 1000 * 24 * 16}
                     onZoom={this.onZoom}
-
                 >
                     <TimelineMarkers>
                         <TodayMarker>
