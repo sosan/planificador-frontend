@@ -125,7 +125,7 @@ export default class TimelineWrapper extends Component {
                 <IonItem key={elementGroup.matricula} className="flex-izquierda">
                     <IonLabel className="custom-group">
                         <span className="title anchura_minimo alineacion-matricula">{elementGroup.matricula}</span>
-                        <span className="title anchura_minimo alineacion-clasevehiculo">{elementGroup.clasevehiculo.toUpperCase()}</span>
+                        <span className="title anchura_minimo alineacion-clasevehiculo">{elementGroup.clasevehiculo}</span>
                         <span className="title anchura_minimo anchura_minimo_modelo alineacion-modelo">{elementGroup.modelo}</span>
                     </IonLabel>
                 </IonItem>
@@ -182,7 +182,7 @@ export default class TimelineWrapper extends Component {
                     groupRenderer={this.groupRenderer}
                     
                     stackItems={true}
-                    sidebarWidth={270}
+                    sidebarWidth={240}
                     
                     itemHeightRatio={1}
                     canMove={false}
@@ -218,9 +218,9 @@ export default class TimelineWrapper extends Component {
                                 return <div {...getRootProps()}>
                                     <IonItem key="matriculas" className="flex-izquierda">
                                         <IonLabel className="custom-group margen-group">
-                                            <span className="title anchura_minimo alineacion-matricula">MATRICULA</span>
-                                            <span className="title anchura_minimo alineacion-clasevehiculo">CLASE</span>
-                                            <span className="title anchura_minimo anchura_minimo_modelo alineacion-modelo">MODELO</span>
+                                            <span className="title anchura_minimo alineacion-matricula">Matricula</span>
+                                            <span className="title anchura_minimo alineacion-clasevehiculo">Clase</span>
+                                            <span className="title anchura_minimo anchura_minimo_modelo alineacion-modelo">Modelo</span>
                                         </IonLabel>
                                     </IonItem>
                                     {

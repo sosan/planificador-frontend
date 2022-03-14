@@ -52,7 +52,7 @@
 .custom-group
 {
     display: grid !important;
-    grid-template-columns: 66px 58px 129px;
+    grid-template-columns: 56px 58px 129px;
     place-content: flex-start;
     
 
@@ -104,14 +104,16 @@
 .alineacion-matricula
 {
     text-align: left;
+    
 }
 .alineacion-clasevehiculo
 {
     text-align: center;
+    text-transform: capitalize;
 }
 .alineacion-modelo
 {
-    text-align: right;
+    text-align: left;
     width: 100%;
 }
 

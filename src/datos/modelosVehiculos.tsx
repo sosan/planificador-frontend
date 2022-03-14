@@ -31,7 +31,7 @@ export let modelosVehiculos: IModelosVehiculos[] = [
     },
     {
         "id": "citroenc1automatic",
-        "descripcion": "Citroen C1 Automatic",
+        "descripcion": "Citroen C1 Auto",
 
     },
     {
