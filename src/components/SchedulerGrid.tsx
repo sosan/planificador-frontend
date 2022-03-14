@@ -1125,20 +1125,28 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
                     const fechaRecogida = new Date(listado[i].modalState?.fechaRecogida as number);
                     const fechaDevolucion = new Date(listado[i].modalState?.fechaDevolucion as number);
-                    if ((
+                    let doubleCheck = false;
+                    if (
                         fechaRecogida.getDate() >= startTime.getDate() &&
-                        fechaRecogida.getMonth() >= startTime.getMonth() &&
-                        fechaRecogida.getFullYear() >= startTime.getFullYear()
-                    ) ||
+                        fechaRecogida.getMonth() === startTime.getMonth() &&
+                        fechaRecogida.getFullYear() === startTime.getFullYear()
+                    )
+                    {
+                        foundMatricula = true;
+                        // break;
+                    }
+                    
+                    if 
                         (
                             fechaDevolucion.getDate() <= endTime.getDate() &&
-                            fechaDevolucion.getMonth() <= endTime.getMonth() &&
-                            fechaDevolucion.getFullYear() <= endTime.getFullYear()
+                            fechaDevolucion.getMonth() === endTime.getMonth() &&
+                            fechaDevolucion.getFullYear() === endTime.getFullYear()
                         )
-                    ) {
+                    {
                         foundMatricula = true;
-                        break;
                     }
+                    
+                    
 
                 }
             }

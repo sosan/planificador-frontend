@@ -23,6 +23,7 @@ export enum ENUM_LISTADO_COLABORADORES {
 }
 
 export let listadoColaboradores: IlistColaborators[] = [
+    
     {
         "id": "gianni",
         "descripcion": "Gianni",
@@ -62,6 +63,11 @@ export let listadoColaboradores: IlistColaborators[] = [
         "id": "dido",
         "descripcion": "Dido",
         "color": "#c8c8c8"
+    },
+    {
+        "id": "RentCarmallorca.es",
+        "descripcion": "RentCarMallorca.es",
+        "color": "#c9dcff"
     },
     {
         "id": "campa",
