@@ -56,17 +56,23 @@ input[type=number] {
 
 .boton_prereserva
 {
-    background-color: #484848 !important;
-    color: white !important;
+    background-color: #9fa9ff !important;
+    color: black !important;
     
 }
 
 .boton_reserva_vuelacar
 {
-    background-color: #484848 !important;
-    color: white !important;
+    background-color: #fcfb8e !important;
+    color: black !important;
     
 
+}
+
+.boton-hoy
+{
+    background-color: #434343 !important;
+    color: white !important;
 }
 
 .fila_botones_scheduler

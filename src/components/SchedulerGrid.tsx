@@ -953,7 +953,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
             if (matriculaModalStateTrimmed === matriculaTrimmed) {
                 exist = true;
-                position = i;
+                
+                position = grupo[i].id;
 
                 return [exist, position];
             }
@@ -1229,7 +1230,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                     <IonButton onClick={() => {
                         this.setDefaultDate();
                     }
-                    } className="boton_reserva_vuelacar" fill='solid' color="#ffffff">HOY</IonButton>
+                    } className="boton-hoy" fill='solid' color="#ffffff">HOY</IonButton>
 
                     <IonButton href='/page/Dashboard' className="boton-ultimo" fill='solid' color="#ffffff">Volver</IonButton>
                 </div>
