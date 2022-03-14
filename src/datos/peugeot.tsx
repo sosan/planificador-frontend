@@ -24,7 +24,7 @@ export const peugeot: IDataVehiculos[] = [
     },
     {
         "_id": "60da00ceaa9590bf3e75279422",
-        "vehiculo": "peugeot208",
+        "vehiculo": "peugeout208",
         "descripcion": "Peugeot 208",
         "clasevehiculo": "c",
         "modelo": "Peugeot 208",
@@ -44,7 +44,7 @@ export const peugeot: IDataVehiculos[] = [
     },
     {
         "_id": "60da00ceaa9590bf3e75279423",
-        "vehiculo": "peugeot208",
+        "vehiculo": "peugeout208",
         "descripcion": "Peugeot 208",
         "clasevehiculo": "c",
         "modelo": "Peugeot 208",
@@ -64,7 +64,7 @@ export const peugeot: IDataVehiculos[] = [
     },
     {
         "_id": "60da00ceaa9590bf3e75279424",
-        "vehiculo": "peugeot208",
+        "vehiculo": "peugeout208",
         "descripcion": "Peugeot 208",
         "clasevehiculo": "c",
         "modelo": "Peugeot 208",
@@ -84,7 +84,7 @@ export const peugeot: IDataVehiculos[] = [
     },
     {
         "_id": "60da00ceaa9590bf3e75279425",
-        "vehiculo": "peugeot208",
+        "vehiculo": "peugeout208",
         "descripcion": "Peugeot 208",
         "clasevehiculo": "c",
         "modelo": "Peugeot 208",
@@ -104,7 +104,7 @@ export const peugeot: IDataVehiculos[] = [
     },
     {
         "_id": "60da00ceaa9590bf3e75279426",
-        "vehiculo": "peugeot208",
+        "vehiculo": "peugeout208",
         "descripcion": "Peugeot 208",
         "clasevehiculo": "c",
         "modelo": "Peugeot 208",
@@ -124,7 +124,7 @@ export const peugeot: IDataVehiculos[] = [
     },
     {
         "_id": "60da00ceaa9590bf3e75279427",
-        "vehiculo": "peugeot208",
+        "vehiculo": "peugeout208",
         "descripcion": "Peugeot 208",
         "clasevehiculo": "c",
         "modelo": "Peugeot 208",
@@ -140,6 +140,26 @@ export const peugeot: IDataVehiculos[] = [
         "matricula": "9809JBK",
         "precio": 100,
         "srcImage": LISTADO_IMAGENES_COCHES.peugeot208,
+        "altImage": ""
+    },
+    {
+        "_id": "60da001eaA9590bf3e75279426",
+        "vehiculo": "peugeout807",
+        "descripcion": "Peugeot 807",
+        "clasevehiculo": "d",
+        "modelo": "Peugeot 807",
+        "pax": 7,
+        "puertas": 4,
+        "conbustible": "95 oct",
+        "transmision": "M",
+        "topCase": 0,
+        "aireacondicionado": true,
+        "franquicia": 0,
+        "entregado": false,
+        "devuelto": false,
+        "matricula": "0536HVR",
+        "precio": 100,
+        "srcImage": LISTADO_IMAGENES_COCHES.peugeot807,
         "altImage": ""
     },
 ];

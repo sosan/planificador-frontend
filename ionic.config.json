@@ -1,5 +1,5 @@
 {
-  "name": "planificador_frontend",
+  "name": "gestor de alquiler",
   "integrations": {
     "capacitor": {}
   },

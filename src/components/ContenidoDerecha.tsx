@@ -354,6 +354,12 @@ export class ContenidoModalDerecha extends Component<ContainerProps, ContainerSt
             const y = await FilePath.resolveNativePath(t?.uri as string);
             console.log("Y=" + y);
 
+            //  file:///storage/emulated/0/Download/2064537.jpeg
+            const directory = y.split("/")
+            // const m = await File.getFile(y);
+
+
+
             // let uri = await File.resolveLocalFilesystemUrl(t?.uri as string);
             
             // console.log("uri URL=" + JSON.stringify(uri));
