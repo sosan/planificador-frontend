@@ -9,8 +9,23 @@ export let claseVehiculos: IClaseVehiculos[] = [
 
 
     {
-        "id": "m",
-        "descripcion": "M",
+        "id": "motosA",
+        "descripcion": "Motos A",
+
+    },
+    {
+        "id": "motosB",
+        "descripcion": "Motos B",
+
+    },
+    {
+        "id": "motosC",
+        "descripcion": "Motos C",
+
+    },
+    {
+        "id": "motosD",
+        "descripcion": "MotosD",
 
     },
     {

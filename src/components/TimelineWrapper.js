@@ -182,7 +182,7 @@ export default class TimelineWrapper extends Component {
                     groupRenderer={this.groupRenderer}
                     
                     stackItems={true}
-                    sidebarWidth={300}
+                    sidebarWidth={270}
                     
                     itemHeightRatio={1}
                     canMove={false}
