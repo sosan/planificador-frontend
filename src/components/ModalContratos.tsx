@@ -40,7 +40,14 @@ export class ModalDialogContratos extends Component<ContainerProps, ContainerSta
     
     reservasVuelaCarFiltrado: any | null = null;
     reservasExteriorFiltrado: any | null = null;
-    contenidoDerecha: any | null = null;
+    contenidoDerecha: any  = <>
+        <div className="contenido-vacio">
+            <h1>
+                Selecciona reserva
+
+            </h1>
+        </div>
+    </>;
     
     listadoClaseVehiculos: string[] | null = null;
     listadoModelosVehiculos: string[] | null = null;

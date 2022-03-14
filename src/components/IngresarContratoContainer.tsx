@@ -70,7 +70,7 @@ export class IngresarContrato extends Component<ContainerProps, ContainerState>
                             </IonContent>
                     </div>
                 </div>
-                <div className="contenido">
+                <div className="contenido color-contenido">
                     {contenidoReserva}
                 </div>
             

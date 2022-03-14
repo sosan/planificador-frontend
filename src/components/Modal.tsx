@@ -47,6 +47,7 @@ export interface IModalState
     preciovuelacar?: number;
     precioexterno?: number;
     extras?: string;
+    uriNotaExterior?: string
 
     isNewRegister: boolean;
     isFirstTime?: boolean;
