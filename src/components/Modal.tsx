@@ -861,7 +861,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
         
 
-        if (estado === ENUM_TIPOS_ESTADO.reservado && (state.clickedModificar === false || state.clickedModificar === undefined))
+        if (estado === ENUM_TIPOS_ESTADO.reservado && (flota === "v") && (state.clickedModificar === false || state.clickedModificar === undefined))
         {
 
             flotaItem = null;
