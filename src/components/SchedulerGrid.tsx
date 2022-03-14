@@ -1121,32 +1121,28 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
             for (let i = 0; i < listado.length; i++) {
                 const matriculaModalStateTrimmed: string = this.generateTrimmedMatricula(listado[i].modalState.matricula as string);
-                if (matriculaModalStateTrimmed === matriculaTrimmed) {
+                if (matriculaModalStateTrimmed === matriculaTrimmed) 
+                {
 
-                    const fechaRecogida = new Date(listado[i].modalState?.fechaRecogida as number);
-                    const fechaDevolucion = new Date(listado[i].modalState?.fechaDevolucion as number);
-                    let doubleCheck = false;
+                    const fechaRecogidaItemListado = new Date(listado[i].modalState?.fechaRecogida as number);
+                    const fechaDevolucionItemListado = new Date(listado[i].modalState?.fechaDevolucion as number);
                     if (
-                        fechaRecogida.getDate() >= startTime.getDate() &&
-                        fechaRecogida.getMonth() === startTime.getMonth() &&
-                        fechaRecogida.getFullYear() === startTime.getFullYear()
+                    (
+                        fechaRecogidaItemListado.getDate() >= startTime.getDate() &&
+                        fechaRecogidaItemListado.getMonth() === startTime.getMonth() &&
+                        fechaRecogidaItemListado.getFullYear() === startTime.getFullYear()
                     )
+                    ||
+                    (
+                        fechaDevolucionItemListado.getDate() <= endTime.getDate() &&
+                        fechaDevolucionItemListado.getMonth() === endTime.getMonth() &&
+                        fechaDevolucionItemListado.getFullYear() === endTime.getFullYear()
+                    )
+                    ) 
                     {
                         foundMatricula = true;
-                        // break;
+                        
                     }
-                    
-                    if 
-                        (
-                            fechaDevolucion.getDate() <= endTime.getDate() &&
-                            fechaDevolucion.getMonth() === endTime.getMonth() &&
-                            fechaDevolucion.getFullYear() === endTime.getFullYear()
-                        )
-                    {
-                        foundMatricula = true;
-                    }
-                    
-                    
 
                 }
             }
