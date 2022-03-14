@@ -1098,7 +1098,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                         )
                     ) {
                         foundMatricula = true;
-                        break;
+                        // break;
                     }
 
                 }
