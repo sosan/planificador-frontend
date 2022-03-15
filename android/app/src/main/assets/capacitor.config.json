@@ -1,6 +1,6 @@
 {
 	"appId": "planificador.frontend.com",
-	"appName": "planificador_frontend",
+	"appName": "gestor de alquiler",
 	"webDir": "build",
 	"bundledWebRuntime": false
 }
