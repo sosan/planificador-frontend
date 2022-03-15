@@ -38,8 +38,8 @@ export let ORDEN_LISTADO_MODELO_VEHICULOS = [
     { "descripcion": "Peugeout 807","vehiculo": "peugeout807"},
     { "descripcion": "Piaggio Liberty", "vehiculo": "piaggioLiberty125"},
     { "descripcion": "Piaggio Medley", "vehiculo": "piaggiomedley"},
-    { "descripcion": "Suzuky Burgman", "vehiculo": "suzukyBurgman125"},
     { "descripcion": "Yamaha Majesty", "vehiculo": "yamahamajesty"},
+    { "descripcion": "Suzuky Burgman", "vehiculo": "suzukyBurgman125"},
     { "descripcion": "Yamaha Tricity","vehiculo":  "yamahatricity}"}
 
 ];

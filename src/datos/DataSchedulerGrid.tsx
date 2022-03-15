@@ -160,7 +160,8 @@ export class DataSchedulerGrid
                 if (cars[j].vehiculo.toLowerCase() === vehiculo.toLowerCase())
                 {
                     groupOrdered.push(cars[j]);
-    
+                    const ultimaPos = groupOrdered.length - 1;
+                    groupOrdered[ultimaPos].id = ultimaPos;
                 }
     
             }
