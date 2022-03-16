@@ -122,6 +122,49 @@ export const peugeot: IDataVehiculos[] = [
         "srcImage": LISTADO_IMAGENES_COCHES.peugeot208,
         "altImage": ""
     },
+
+    {
+        "_id": "60da00ceaa95Ax90bf3e75279426",
+        "vehiculo": "peugeout208",
+        "descripcion": "Peugeot 208",
+        "clasevehiculo": "c",
+        "modelo": "Peugeot 208",
+        "pax": 5,
+        "puertas": 4,
+        "conbustible": "95 oct",
+        "transmision": "M",
+        "topCase": 0,
+        "aireacondicionado": true,
+        "franquicia": 0,
+        "entregado": false,
+        "devuelto": false,
+        "matricula": "2312JDJ",
+        "precio": 100,
+        "srcImage": LISTADO_IMAGENES_COCHES.peugeot208,
+        "altImage": ""
+    },
+
+    {
+        "_id": "60da00ceaa95Amax90bf3e75279426",
+        "vehiculo": "peugeout208",
+        "descripcion": "Peugeot 208",
+        "clasevehiculo": "c",
+        "modelo": "Peugeot 208",
+        "pax": 5,
+        "puertas": 4,
+        "conbustible": "95 oct",
+        "transmision": "M",
+        "topCase": 0,
+        "aireacondicionado": true,
+        "franquicia": 0,
+        "entregado": false,
+        "devuelto": false,
+        "matricula": "9513JBK",
+        "precio": 100,
+        "srcImage": LISTADO_IMAGENES_COCHES.peugeot208,
+        "altImage": ""
+    },
+
     {
         "_id": "60da00ceaa9590bf3e75279427",
         "vehiculo": "peugeout208",
