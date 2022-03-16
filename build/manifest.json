@@ -1,6 +1,6 @@
 {
-  "short_name": "Planificador",
-  "name": "Planificador RentCarMallorca",
+  "short_name": "Gestor alquileres",
+  "name": "Gestor de alquileres",
   "icons": [
     {
       "src": "assets/icon/favicon.png",

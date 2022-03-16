@@ -1126,25 +1126,30 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
                     const fechaRecogidaItemListado = new Date(listado[i].modalState?.fechaRecogida as number);
                     const fechaDevolucionItemListado = new Date(listado[i].modalState?.fechaDevolucion as number);
-                    if 
-                    (
-                        fechaRecogidaItemListado.getDate() >= startTime.getDate() &&
-                        fechaRecogidaItemListado.getMonth() === startTime.getMonth() &&
-                        fechaRecogidaItemListado.getFullYear() === startTime.getFullYear()
-                    )
+
+                    if (((fechaRecogidaItemListado <= endTime) && (fechaDevolucionItemListado >= startTime)) === false)
                     {
                         foundMatricula = true;
                     }
-                    if 
-                    (
-                        fechaDevolucionItemListado.getDate() <= endTime.getDate() &&
-                        fechaDevolucionItemListado.getMonth() === endTime.getMonth() &&
-                        fechaDevolucionItemListado.getFullYear() === endTime.getFullYear()
-                    )
-                    {
-                        foundMatricula = true;
+                                        // if 
+                    // (
+                    //     fechaRecogidaItemListado.getDate() >= startTime.getDate() &&
+                    //     fechaRecogidaItemListado.getMonth() === startTime.getMonth() &&
+                    //     fechaRecogidaItemListado.getFullYear() === startTime.getFullYear()
+                    // )
+                    // {
+                    //     foundMatricula = true;
+                    // }
+                    // if 
+                    // (
+                    //     fechaDevolucionItemListado.getDate() <= endTime.getDate() &&
+                    //     fechaDevolucionItemListado.getMonth() === endTime.getMonth() &&
+                    //     fechaDevolucionItemListado.getFullYear() === endTime.getFullYear()
+                    // )
+                    // {
+                    //     foundMatricula = true;
                         
-                    }
+                    // }
 
                 }
             }

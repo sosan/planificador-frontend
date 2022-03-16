@@ -753,6 +753,27 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                 </IonItem>
             ;
             
+            let inputItem = null;
+            
+            if (this.state.clickedModificar === true)
+            {
+                if (this.state.modalState.isPrereserva === true)
+                {
+                }
+
+                if (state.modalState.flota !== "v")
+                {
+                    matricula = "";
+
+                    flota = "";
+
+                    inputItem = <IonInput disabled={isDisabled} value={matricula} onIonChange={(evento) => { this.onChangeInputs(this.state, "matricula", evento.detail.value as string); }} key="matricula" id="matricula" name='matricula' placeholder='Matricula' className="matricula_select texto-alineado-derecha" ></IonInput>
+
+                }
+            }
+            else
+            {
+            }
 
             matriculaItem = 
                 <IonItem>
@@ -786,9 +807,9 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             flotaItem = 
                 <IonItem>
                     {
-                        (this.state.errores.flota === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Flotas externas</IonLabel></>
+                        (this.state.errores.flota === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Flotas</IonLabel></>
                             :
-                            <IonLabel className="">Flotas externas</IonLabel>
+                            <IonLabel className="">Flotas</IonLabel>
 
                     }
                     <IonSelect disabled={isDisabled} value={flota} onIonChange={(evento) => { this.onChangeInputs(this.state, "flota", evento.detail.value as string); }} id="flotas" name='flotas' className="flotas_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >

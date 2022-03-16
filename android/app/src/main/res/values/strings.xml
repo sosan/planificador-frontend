@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">planificador_frontend</string>
-    <string name="title_activity_main">planificador_frontend</string>
+    <string name="app_name">Gestor de alquileres</string>
+    <string name="title_activity_main">Gestor de alquileres</string>
     <string name="package_name">planificador.frontend.com</string>
     <string name="custom_url_scheme">planificador.frontend.com</string>
 </resources>

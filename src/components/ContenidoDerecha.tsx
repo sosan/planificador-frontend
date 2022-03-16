@@ -195,7 +195,7 @@ export class ContenidoModalDerecha extends Component<ContainerProps, ContainerSt
 
             flotaItem =
                 <div>
-                    <IonLabel className="">Flotas externas</IonLabel>
+                    <IonLabel className="">Flotas</IonLabel>
                     <IonSelect  value={flota} onIonChange={(evento) => { this.onChangeInputs(this.state, "flota", evento.detail.value as string); }} id="flotas" name='flotas' className="flotas_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
                         {
                             props.listFlotas?.map((elemento: IlistFlotas) => {

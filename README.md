@@ -1,1 +1,1 @@
-Planificador/dietario para rent a car
+Gestor de alquileres para rent a car

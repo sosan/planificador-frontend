@@ -8,13 +8,13 @@ export interface IlistFlotas {
 
 export let listFlotas: IlistFlotas[] = [
     {
-        "id": "belming",
-        "descripcion": "Belming",
+        "id": "belmi",
+        "descripcion": "Belmi",
         "color": "#c9dcff"
     },
     {
-        "id": "st",
-        "descripcion": "ST",
+        "id": "sc",
+        "descripcion": "Star Car",
         "color": "#38ff3f"
     },
     {
@@ -22,6 +22,12 @@ export let listFlotas: IlistFlotas[] = [
         "descripcion": "Vuelacar",
         "color": "#ffc738"
     },
+    {
+        "id": "rr",
+        "descripcion": "Royal Rent",
+        "color": "#ffc7a8"
+    }
+
     
 ];
 

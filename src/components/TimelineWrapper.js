@@ -70,7 +70,7 @@ export default class TimelineWrapper extends Component {
         const obj = getItemProps();
         // 
         return (
-            <div {...getItemProps(item.itemProps)} onTouchStart={(evento) => this.onItemDoubleClick(evento, item)} >
+            <div {...getItemProps(item.itemProps)} onTouchStart={(evento) => this.onItemDoubleTouch(evento, item)} onDoubleClick={ (evento) => { this.onItemDoubleClick(evento, item); } } >
                 <div className="rct-item-content" style={{ maxHeight: `${itemContext.dimensions.height}` }}>
                     {itemContext.title}
                 </div>
@@ -78,7 +78,13 @@ export default class TimelineWrapper extends Component {
         )
     };
 
-    onItemDoubleClick = (evento, item) =>
+    onItemDoubleClick = (evento, item) => {
+
+        this.props.onItemDoubleClick(item.id, evento, evento.timeStamp); 
+
+    }
+
+    onItemDoubleTouch = (evento, item) =>
     {
 
         const now = Date.now();
@@ -94,23 +100,6 @@ export default class TimelineWrapper extends Component {
         }
         
     }
-    
-
-    // itemRenderer2 = ({ item, timelineContext, itemContext, getItemProps, getResizeProps }) => {
-    //     // const { left: leftResizeProps, right: rightResizeProps } = getResizeProps();
-    //     // const backgroundColor = itemContext.selected ? (itemContext.dragging ? "red" : item.selectedBgColor) : item.bgColor;
-    //     // const borderColor = itemContext.resizing ? "red" : item.color;
-    //     const titulo = `${itemContext.title} ID: ${ item.id } GROUP: ${item.group}`;
-    
-    //     return (
-    //         <>
-    //             {itemContext.title}
-    //             {/* <div>{titulo}</div> */}
-                
-    //         </>
-    //     );
-
-    // };
 
     onZoom = (timelineContext, unit) => {
 
