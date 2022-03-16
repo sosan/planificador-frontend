@@ -1075,8 +1075,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             }
 
             // const matricula = state.modalState?.matricula as string;
-            const startTime = new Date(state.modalState?.fechaRecogida as number);
-            const endTime = new Date(state.modalState?.fechaDevolucion as number);
+            const startTimeUsuario = new Date(state.modalState?.fechaRecogida as number);
+            const endTimeUsuario = new Date(state.modalState?.fechaDevolucion as number);
             
             const matriculaTrimmed: string = this.generateTrimmedMatricula(state.modalState?.matricula as string);
 
@@ -1084,21 +1084,16 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                 const matriculaModalStateTrimmed: string = this.generateTrimmedMatricula(listado[i].modalState.matricula as string);
                 if (matriculaModalStateTrimmed === matriculaTrimmed) {
 
-                    const fechaRecogida = new Date(listado[i].modalState?.fechaRecogida as number);
-                    const fechaDevolucion = new Date(listado[i].modalState?.fechaDevolucion as number);
-                    if ((
-                        fechaRecogida.getDate() >= startTime.getDate() &&
-                        fechaRecogida.getMonth() >= startTime.getMonth() &&
-                        fechaRecogida.getFullYear() >= startTime.getFullYear()
-                    ) &&
-                        (
-                            fechaDevolucion.getDate() <= endTime.getDate() &&
-                            fechaDevolucion.getMonth() <= endTime.getMonth() &&
-                            fechaDevolucion.getFullYear() <= endTime.getFullYear()
-                        )
-                    ) {
+                    const fechaRecogidaItemListado = new Date(listado[i].modalState?.fechaRecogida as number);
+                    const fechaDevolucionItemListado = new Date(listado[i].modalState?.fechaDevolucion as number);
+                    if (startTimeUsuario < fechaRecogidaItemListado && fechaRecogidaItemListado < endTimeUsuario) {
                         foundMatricula = true;
-                        // break;
+                    }
+                    if (startTimeUsuario < fechaDevolucionItemListado && fechaDevolucionItemListado < endTimeUsuario) {
+                        foundMatricula = true;
+                    }
+                    if (fechaRecogidaItemListado < startTimeUsuario && endTimeUsuario < fechaDevolucionItemListado) {
+                        foundMatricula = true;
                     }
 
                 }
@@ -1116,8 +1111,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
             // let matricula = state.modalState?.matricula as string;
             const matriculaTrimmed: string = this.generateTrimmedMatricula(state.modalState?.matricula as string);
-            let startTime = new Date(state.modalState?.fechaRecogida as number);
-            let endTime = new Date(state.modalState?.fechaDevolucion as number);
+            let startTimeUsuario = new Date(state.modalState?.fechaRecogida as number);
+            let endTimeUsuario = new Date(state.modalState?.fechaDevolucion as number);
 
             for (let i = 0; i < listado.length; i++) {
                 const matriculaModalStateTrimmed: string = this.generateTrimmedMatricula(listado[i].modalState.matricula as string);
@@ -1127,30 +1122,19 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                     const fechaRecogidaItemListado = new Date(listado[i].modalState?.fechaRecogida as number);
                     const fechaDevolucionItemListado = new Date(listado[i].modalState?.fechaDevolucion as number);
 
-                    if (((fechaRecogidaItemListado <= endTime) && (fechaDevolucionItemListado >= startTime)) === false)
+                    if (startTimeUsuario < fechaRecogidaItemListado && fechaRecogidaItemListado < endTimeUsuario)
+                    {
+                        foundMatricula = true;
+                    } 
+                    if (startTimeUsuario < fechaDevolucionItemListado && fechaDevolucionItemListado < endTimeUsuario)
                     {
                         foundMatricula = true;
                     }
-                                        // if 
-                    // (
-                    //     fechaRecogidaItemListado.getDate() >= startTime.getDate() &&
-                    //     fechaRecogidaItemListado.getMonth() === startTime.getMonth() &&
-                    //     fechaRecogidaItemListado.getFullYear() === startTime.getFullYear()
-                    // )
-                    // {
-                    //     foundMatricula = true;
-                    // }
-                    // if 
-                    // (
-                    //     fechaDevolucionItemListado.getDate() <= endTime.getDate() &&
-                    //     fechaDevolucionItemListado.getMonth() === endTime.getMonth() &&
-                    //     fechaDevolucionItemListado.getFullYear() === endTime.getFullYear()
-                    // )
-                    // {
-                    //     foundMatricula = true;
-                        
-                    // }
-
+                    if (fechaRecogidaItemListado < startTimeUsuario && endTimeUsuario < fechaDevolucionItemListado)
+                    {
+                        foundMatricula = true;
+                    }
+                    
                 }
             }
 
