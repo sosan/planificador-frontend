@@ -23,7 +23,7 @@ export enum ENUM_LISTADO_COLABORADORES {
 }
 
 export let listadoColaboradores: IlistColaborators[] = [
-    
+    // Gianni, Sven, Llul1, Thomas, Belmi, Lupe, Dido, Fuera Servicio, RentCarMallorca
     {
         "id": "gianni",
         "descripcion": "Gianni",
@@ -34,14 +34,14 @@ export let listadoColaboradores: IlistColaborators[] = [
         "descripcion": "Sven",
         "color": "#38ff3f"
     },
-    {
-        "id": "llull",
-        "descripcion": "Llull",
-        "color": "#abf739"
-    },
+    // {
+    //     "id": "llull",
+    //     "descripcion": "Llull",
+    //     "color": "#abf739"
+    // },
     {
         "id": "llull1",
-        "descripcion": "Llull1",
+        "descripcion": "Llul1",
         "color": "#ffc738"
     },
     {
@@ -65,25 +65,25 @@ export let listadoColaboradores: IlistColaborators[] = [
         "color": "#c8c8c8"
     },
     {
-        "id": "RentCarmallorca.es",
-        "descripcion": "RentCarMallorca.es",
+        "id": "RentCarmallorca",
+        "descripcion": "RentCarMallorca",
         "color": "#c9dcff"
     },
-    {
-        "id": "campa",
-        "descripcion": "Campa",
-        "color": "#B0ED66"
-    },
+    // {
+    //     "id": "campa",
+    //     "descripcion": "Campa",
+    //     "color": "#B0ED66"
+    // },
     {
         "id": "fs",
-        "descripcion": "Fuera de servicio",
+        "descripcion": "Fuera Servicio",
         "color": "#effcf8"
     },
-    {
-        "id": "v",
-        "descripcion": "VuelaCar",
-        "color": "#efccf8"
-    },
+    // {
+    //     "id": "v",
+    //     "descripcion": "VuelaCar",
+    //     "color": "#efccf8"
+    // },
 ];
 
 

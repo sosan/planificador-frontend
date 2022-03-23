@@ -13,6 +13,15 @@ import {
 
 } from 'ionicons/icons';
 
+import imagenPlanning from "../images/PlanningIMG.png";
+import imagenContrato from "../images/1_contrato_IMG.png";
+import imagenDevolucion from "../images/devolucion_IMG.png";
+import imagenDevoluciones from "../images/Devoluciones_IMG.png";
+import imagenFacturas from "../images/Facturas_IMG.png";
+import imagenInformes from "../images/informes_IMG.png";
+import imagenMultas from "../images/Multas_IMG.png";
+
+
 import CompletarReservaContainer from "../components/Completar_reservaContainer";
 
 // import DashboardContainer from "../pages/DashboardContainer";
@@ -49,7 +58,7 @@ export interface IItemCategoria {
     image?: string;
     cardSubtitle?: string;
     cardTitle?: string;
-    cardContent?: string;
+    cardContent: string[];
     colorBoton?: string;
     colorBackground?: string;
     url?: string;
@@ -60,16 +69,25 @@ export interface IItemCategoria {
     visibleInMenu?: boolean;
 }
 
+
+
+// imagenDevolucion
+// 
+// 
+// 
+// 
+
+
 export const categoriasDashboard: IItemCategoria[] = [
 
     {
         title: 'Planning',
-        image: "https://via.placeholder.com/180x80",
+        image: imagenPlanning,
 
         colorBoton: "colorBotonCategorias",
         colorBackground: "colorBackgroundCategorias",
         cardTitle: "Planning",
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+        cardContent: ["Pre Reserva", "Reserva VuelaCar", "Completar Pre reserva", "Consulta - Modifica - Elimina" ],
         url: '/page/planning',
         containerId: "planning",
         container: <></>,
@@ -77,13 +95,40 @@ export const categoriasDashboard: IItemCategoria[] = [
         mdIcon: mailSharp
     },
     {
+        title: 'Devoluciones',
+        image: imagenDevolucion,
+        colorBoton: "colorBotonCategorias",
+        colorBackground: "colorBackgroundCategorias",
+        cardTitle: "Devoluciones",
+        cardContent: ["Devoluciones de HOY"],
+        url: '/page/devolucion',
+        containerId: "Devolucion",
+        container: <></>,
+        iosIcon: mailOutline,
+        mdIcon: mailSharp
+    },
+    {
+        title: 'Menu Flota Planning',
+        image: imagenDevoluciones,
+        visibleInMenu: false,
+        colorBoton: "colorBotonCategorias",
+        colorBackground: "colorBackgroundCategorias",
+        cardTitle: "Menu Flota Planning",
+        cardContent: ["Alta de Matrículas", "Baja de Matrículas"],
+        url: '/page/flota-manager',
+        containerId: "flota-manager",
+        container: <FlotaManager />,
+        iosIcon: mailOutline,
+        mdIcon: mailSharp
+    },
+    {
         title: 'Contratos',
-        image: "https://via.placeholder.com/180x80",
+        image: imagenContrato,
 
         colorBoton: "colorBotonCategorias",
         colorBackground: "colorBackgroundCategorias",
         cardTitle: "Contratos",
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+        cardContent: ["Ingresar Contratos", "Modificar Contratos"],
         url: '/page/contratos',
         containerId: "contratos",
         container: <></>,
@@ -91,25 +136,12 @@ export const categoriasDashboard: IItemCategoria[] = [
         mdIcon: mailSharp
     },
     {
-        title: 'Facturas',
-        image: "https://via.placeholder.com/180x80",
-        colorBoton: "colorBotonCategorias",
-        colorBackground: "colorBackgroundCategorias",
-        cardTitle: "Facturas",
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
-        url: '/page/facturas',
-        containerId: "Facturas",
-        container: <></>, //<PrereservarContainer />,
-        iosIcon: mailOutline,
-        mdIcon: mailSharp
-    },
-    {
         title: 'Multas',
-        image: "https://via.placeholder.com/180x80",
+        image: imagenMultas,
         colorBoton: "colorBotonCategorias",
         colorBackground: "colorBackgroundCategorias",
         cardTitle: "Multas",
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+        cardContent: ["Localizar multas",],
         url: '/page/multas',
         containerId: "Multas",
         container: <></>,
@@ -117,45 +149,34 @@ export const categoriasDashboard: IItemCategoria[] = [
         mdIcon: mailSharp
     },
     {
+        title: 'Facturas',
+        image: imagenFacturas,
+        colorBoton: "colorBotonCategorias",
+        colorBackground: "colorBackgroundCategorias",
+        cardTitle: "Facturas",
+        cardContent: ["Facturas", ],
+        url: '/page/facturas',
+        containerId: "Facturas",
+        container: <></>, //<PrereservarContainer />,
+        iosIcon: mailOutline,
+        mdIcon: mailSharp
+    },
+   
+    {
         title: 'Informes',
-        image: "https://via.placeholder.com/180x80",
+        image: imagenInformes,
         colorBoton: "colorBotonCategorias",
         colorBackground: "colorBackgroundCategorias",
         cardTitle: "Informes",
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+        cardContent: ["Informes", ],
         url: '/page/informes',
         containerId: "Informes",
         container: <></>, 
         iosIcon: mailOutline,
         mdIcon: mailSharp
     },
-    {
-        title: 'Devolucion',
-        image: "https://via.placeholder.com/180x80",
-        colorBoton: "colorBotonCategorias",
-        colorBackground: "colorBackgroundCategorias",
-        cardTitle: "Devolucion",
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
-        url: '/page/devolucion',
-        containerId: "Devolucion",
-        container: <></>, 
-        iosIcon: mailOutline,
-        mdIcon: mailSharp
-    },
-    {
-        title: 'Menu Flota',
-        image: "https://via.placeholder.com/180x80",
-        visibleInMenu: false,
-        colorBoton: "colorBotonCategorias",
-        colorBackground: "colorBackgroundCategorias",
-        cardTitle: "Menu Flota",
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
-        url: '/page/flota-manager',
-        containerId: "flota-manager",
-        container: <FlotaManager />,
-        iosIcon: mailOutline,
-        mdIcon: mailSharp
-    },
+  
+   
 
 ];
 
@@ -167,7 +188,7 @@ export const categoriasPlaning: IItemCategoria[] = [
         colorBoton: "colorBotonCategorias",
         colorBackground: "colorBackgroundCategorias",
         cardTitle: "Planning",
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+        cardContent: ["Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum", ],
         url: '/page/planning',
         containerId: "planning",
         container: <SchedulerContainer name="schedulercontainer" />,
@@ -181,7 +202,7 @@ export const categoriasPlaning: IItemCategoria[] = [
         colorBoton: "colorBotonCategorias",
         colorBackground: "colorBackgroundCategorias",
         cardTitle: "Completar Reserva",
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+        cardContent: ["Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum", ],
         url: '/page/completar_reserva',
         containerId: "Completar_reserva",
         container: <></>, //<CompletarReservaContainer />,
@@ -198,7 +219,7 @@ export const categoriasPlaning: IItemCategoria[] = [
         cardTitle: "Flota",
         containerId: "Flota",
         container: <></>, //<FlotaContainer />,
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+        cardContent: ["Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum", ],
         iosIcon: heartOutline,
         mdIcon: heartSharp
     },
@@ -209,7 +230,7 @@ export const categoriasPlaning: IItemCategoria[] = [
         colorBoton: "colorBotonCategorias",
         colorBackground: "colorBackgroundCategorias",
         cardTitle: "Motos",
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+        cardContent: ["Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum", ],
         url: '/page/motos',
         containerId: "Motos",
         container: <></>, //<MotosContainer />,
@@ -221,7 +242,7 @@ export const categoriasPlaning: IItemCategoria[] = [
         image: "https://via.placeholder.com/180x80",
 
         cardTitle: "SubAlquileres",
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+        cardContent: ["Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum", ],
         colorBoton: "colorBotonCategorias",
         colorBackground: "colorBackgroundCategorias",
         url: '/page/subalquileres',
@@ -244,7 +265,7 @@ export const categoriasContratos: IItemCategoria[] = [
         colorBoton: "colorBotonCategorias",
         colorBackground: "colorBackgroundCategorias",
         cardTitle: "Menu Contratos",
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+        cardContent: ["Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum", ],
         url: '/page/contratos',
         containerId: "contratos",
         container: <MenuContratos />,
@@ -259,7 +280,7 @@ export const categoriasContratos: IItemCategoria[] = [
         colorBoton: "colorBotonCategorias",
         colorBackground: "colorBackgroundCategorias",
         cardTitle: "Ingresar Contrato",
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+        cardContent: ["Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum", ],
         url: '/page/ingresarcontrato',
         containerId: "IngresarContrato",
         container: <MenuContratos />,
@@ -273,7 +294,7 @@ export const categoriasContratos: IItemCategoria[] = [
         colorBoton: "colorBotonCategorias",
         colorBackground: "colorBackgroundCategorias",
         cardTitle: "Modificar Contrato",
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+        cardContent: ["Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum", ],
         url: '/page/modificarcontrato',
         containerId: "ModificarContrato",
         container: <MenuContratos />,
@@ -294,7 +315,7 @@ export const categoriasFlotaManager: IItemCategoria[] = [
         colorBoton: "colorBotonCategorias",
         colorBackground: "colorBackgroundCategorias",
         cardTitle: "Menu Flota",
-        cardContent: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
+        cardContent: ["Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum", ],
         url: '/page/flota-manager',
         containerId: "flota-manager",
         container: <FlotaManager />,
@@ -326,5 +347,5 @@ export const categoriasInformes: IItemCategoria[] = [
 ];
 
 export let titulosCategorias: Record<string, string | any> = {
-    "Dashboard": "Menu principal"
+    "Dashboard": "Sistema Gestión de Alquileres"
 };

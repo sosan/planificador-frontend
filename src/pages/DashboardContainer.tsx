@@ -32,16 +32,32 @@ export default class DashboardContainer extends Component<ContainerProps, Contai
         {
             const elemento = categorias[index];
             // console.log("index=" + index + "listado=" + elemento);
+
+            let contenidoCard = []
+            const lenghtContenido = elemento.cardContent?.length as number;
+            for (let m = 0; m < lenghtContenido ; m++)
+            {
+                contenidoCard.push(
+                <>
+                    <span>{elemento.cardContent[m].toString()}</span>
+                </>
+                );
+            }
     
+
+
+
             listadoCategorias.push(
                 <div id="row" key={index} style={{ width: "200px" }}>
-                    <IonCard href={elemento.url} className={`cursorclick noselect ${elemento.colorBackground}`} type={"button"} >
+                    <IonCard href={elemento.url} className={`cursorclick noselect altura-card ${elemento.colorBackground}`} type={"button"} >
                         <IonImg src={elemento.image} />
                         <IonCardHeader>
                             <IonCardTitle className="tituloCard">{elemento.cardTitle}</IonCardTitle>
                         </IonCardHeader>
-                        <IonCardContent className="tituloCard">
-                            {elemento.cardContent}
+                        <IonCardContent className="contenidoCard">
+                            <div className='textoContenido'>
+                                {contenidoCard}
+                            </div>
                             <IonButton className={`${elemento.colorBoton}`}>Siguiente &gt;</IonButton>
                         </IonCardContent>
                     </IonCard>

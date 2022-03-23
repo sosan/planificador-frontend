@@ -12,7 +12,7 @@
     display: grid;
     grid-template-columns: 1fr 200px;
     grid-template-rows: 120px 1fr;
-    height: min-content;
+    height: 100%;
 
 }
 
