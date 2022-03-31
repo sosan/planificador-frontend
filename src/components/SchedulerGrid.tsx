@@ -517,37 +517,47 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
             else
             {
 
-                const lastIdGroup: number = grupoSeleccionado[positiongroups].id;
-                const lastIdModalReserva: number = state.modalState.id as number;
-
                 await this._dataSchedulerGrid.insertNewElementGrupoExterior(nuevoGrupoReserva);
-                
-                
-                const elementoReserva = this.generateNewElementReservas(
+                const elementoReserva = this.generateNewElementReservasExterior(
                     state.modalState,
-                    state.modalState.group as number, 
-                    state.modalState.id as number
+                    nuevoGrupoReserva.id as number,
+                    await this._dataSchedulerGrid.getLengthItemsReservasExterior() + 1
                 );
                 await this._dataSchedulerGrid.insertNewElementReservasExterior(elementoReserva);
                 await repoStorage.insertReservaExterior(elementoReserva);
+                await repoStorage.insertGroupExterior(nuevoGrupoReserva);
 
-                //borrar el anterior grupo y elemento
-                
-                await this._dataSchedulerGrid.removeAtItemsReservaExterior(positionListado as number);
-                
-                await repoStorage.removeItemReservaExterior(lastIdModalReserva as number);
-                // busqueda en los groups por si queda algun elemento en el grupo
-                // en el caso de que no haya ningun elemento borramos el grupo
-                let [existe, position] = this.searchExistListByMatriculaAndGroup(
-                    this._dataSchedulerGrid.itemsReservasExterior,
-                    state.modalState.matricula as string,
-                    state.modalState.group as number
-                );
-                if (existe === false) {
-                    await this._dataSchedulerGrid.removeAtGroupReservaExterior(positiongroups as number);
-                    await repoStorage.removeAtGroupReservaExterior(lastIdGroup);
+                if (positiongroups !== -1)
+                {
+                    let lastIdGroup: number = 0;
+                    let lastIdModalReserva: number = 0;
+
+                    lastIdGroup = grupoSeleccionado[positiongroups].id;
+                    lastIdModalReserva = state.modalState.id as number;
+                    //borrar el anterior grupo y elemento
+                    await this._dataSchedulerGrid.removeAtItemsReservaExterior(positionListado as number);
+                    await repoStorage.removeItemReservaExterior(lastIdModalReserva as number);
+                    // busqueda en los groups por si queda algun elemento en el grupo
+                    // en el caso de que no haya ningun elemento borramos el grupo
+                    let [existe, position] = this.searchExistListByMatriculaAndGroup(
+                        this._dataSchedulerGrid.itemsReservasExterior,
+                        state.modalState.matricula as string,
+                        state.modalState.group as number
+                    );
+                    if (existe === false) {
+                        await this._dataSchedulerGrid.removeAtGroupReservaExterior(positiongroups as number);
+                        await repoStorage.removeAtGroupReservaExterior(lastIdGroup);
+                    }
+
                 }
+                else
+                {
 
+                    await this._dataSchedulerGrid.deleteReservadoVuelacarById(state.modalState.id);
+                    await repoStorage.removeItemReservaVuelaCar(state.modalState.id as number);
+
+                }
+                
 
             }
 
@@ -871,7 +881,38 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     }
 
-  
+    generateNewElementReservasExterior(currentState: IModalState, idGrupo: number, idReserva: number)
+    {
+        const startTime = new Date(currentState.fechaRecogida as number);
+        const endTime = new Date(currentState.fechaDevolucion as number);
+
+        startTime.setHours(0, 0, 0);
+        endTime.setHours(23, 59, 59);
+
+        const colaboradorDescripcion = this.getDescripcionListadoColaboradores(currentState.colaborador as string);
+
+        currentState.group = idGrupo;
+        currentState.id = idReserva;
+
+        let elementoReservas: IListadoPrereserva = {
+            canMove: false,
+            canResize: false,
+            canChangeGroup: false,
+            start_time: startTime.getTime(),
+            end_time: endTime.getTime(),
+            group: idGrupo as number,
+            id: idReserva as number,
+            title: colaboradorDescripcion,
+            modalState: currentState,
+        };
+
+        elementoReservas["itemProps"] = {
+            className: 'altura-items color-reserva color-black',
+        }
+
+        return elementoReservas;
+
+    }
 
     generateNewElementReservas(currentState: IModalState, idGrupo: number, idReserva: number) {
 

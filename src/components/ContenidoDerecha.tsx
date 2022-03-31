@@ -192,6 +192,12 @@ export class ContenidoModalDerecha extends Component<ContainerProps, ContainerSt
                 </div>
                 ;
 
+        modeloVehiculoItem =
+            <div>
+                <IonLabel className="">Matricula</IonLabel>
+                <IonInput className="texto-alineado-derecha" name='matricula' value={matricula} onIonChange={(evento) => { this.onChangeInputs(props, "matricula", evento.detail.value as string); }} placeholder="Matricula"></IonInput>
+            </div>
+            ;
 
             flotaItem =
                 <div>

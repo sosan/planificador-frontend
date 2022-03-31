@@ -51,7 +51,7 @@
 
 .centrado-flex
 {
-  height: 120px;
+  /* height: 120px; */
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -64,7 +64,7 @@
 {
   font-size: 30px;
   font-weight: bold;
-  padding: 20px;
+  /* padding: 20px; */
   
 }
 
@@ -149,7 +149,7 @@
 .ion-inherit-color
 {
   padding: 0 !important;
-    padding-left: 9px !important;
-    padding-top: 5px !important;
-    font-variant: petite-caps;
+  padding-left: 9px !important;
+  padding-top: 5px !important;
+  font-variant: petite-caps;
 }

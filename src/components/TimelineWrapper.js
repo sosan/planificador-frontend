@@ -47,8 +47,8 @@ export default class TimelineWrapper extends Component {
         const _defaultTimeStart = moment().add(-2, 'day');
         const _defaultTimeEnd = moment().add(2, 'day');
         // https://github.com/facebook/react/issues/6436
-        this.testing = this.testing.bind(this);
-        this.testing.options = { passive: false };
+        // this.testing = this.testing.bind(this);
+        // this.testing.options = { passive: false };
 
         this.state = { 
             groups: this.props.groups,
@@ -132,17 +132,17 @@ export default class TimelineWrapper extends Component {
         });
     };
 
-   
+
 
     componentDidMount() {
 
     }
 
-    testing(itemId, e, time)
-    {
-        console.log("2clicked item")
-        // e.stopPropagation();
-    }
+    // testing(itemId, e, time)
+    // {
+    //     console.log("2clicked item")
+    //     // e.stopPropagation();
+    // }
     
     render() {
 
