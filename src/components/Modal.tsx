@@ -577,9 +577,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                         
                         </IonRow>
                         <IonRow className="centradobotones">
-                            <div className='centrado-horizontal'>
-                                <IonButton onClick={ () => {  this.activarModificar();  } } disabled={this.state.clickedModificar}>Modificar</IonButton>
-                            </div>
+                            {itemsGenerados.botonModificarItem}
                             {itemsGenerados.botonGuardarItem}
                             
                             <div className='centrado-horizontal boton-eliminar'>
@@ -705,6 +703,8 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                 }>Guardar Datos</IonButton>
             </div>
             ;
+
+        let botonModificarItem = <></>;
         
 
         const isDisabled = this.checkInputsWillBeDisabled(state);
@@ -905,6 +905,15 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                     </IonSelect>
                 </IonItem>
             ;
+
+            if (props.isDoubleclickItem === true)
+            {
+                botonModificarItem = <div className='centrado-horizontal'>
+                    <IonButton onClick={() => { this.activarModificar(); }} disabled={this.state.clickedModificar}>Modificar</IonButton>
+                </div>
+                ;
+
+            }
             
             if (state.modalState.estado === ENUM_TIPOS_ESTADO.reservado && props.isDoubleclickItem === true && (state.clickedModificar === false || state.clickedModificar === undefined))
             {
@@ -963,7 +972,8 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
             estadoItem,
             modeloVehiculoItem,
             claseVehiculoItem,
-            botonGuardarItem
+            botonGuardarItem,
+            botonModificarItem
 
         }
 
