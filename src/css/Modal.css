@@ -156,6 +156,35 @@ input[type=number] {
     
 }
 
+.item-interactive-disabled:not(.item-multiple-inputs) .sc-ion-label-md-h
+{
+    opacity: 1 !important;
+    --placeholder-opacity: 0.6 !important;
+}
+
+.select-disabled
+{
+    opacity: 0.6 !important;
+    --placeholder-opacity: 0.6 !important;
+}
+
+.datetime-disabled
+{
+    opacity: 0.6 !important;
+    --placeholder-opacity: 0.6 !important;
+}
+
+.native-input[disabled].sc-ion-input-md
+{
+    opacity: 0.6 !important;
+    --placeholder-opacity: 0.6 !important;
+}
+
+.sc-ion-input-md-h
+{
+    --placeholder-opacity: 0.6 !important;
+}
+
 .altura100
 {
     height: 100px;
@@ -165,3 +194,5 @@ input[type=number] {
 {
     width: 600px !important;
 }
+
+

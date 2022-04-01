@@ -579,8 +579,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                     {
                         elementoReserva.modalState.reservaCompletada = true;
                     }
-                    await this._dataSchedulerGrid.updateReservaVuelaCar(positionListado as number, elementoReserva);
-                    await repoStorage.updateReservaVuelaCar(positionListado as number, elementoReserva);
+                    const pos = await this._dataSchedulerGrid.updateReservaVuelaCar(positionListado as number, elementoReserva);
+                    await repoStorage.updateReservaVuelaCar(pos, elementoReserva);
     
                 }
                 else
@@ -881,8 +881,11 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     }
 
-    generateNewElementReservasExterior(currentState: IModalState, idGrupo: number, idReserva: number)
+    generateNewElementReservasExterior(staticState: IModalState, idGrupo: number, idReserva: number)
     {
+
+        let currentState = {...staticState};
+
         const startTime = new Date(currentState.fechaRecogida as number);
         const endTime = new Date(currentState.fechaDevolucion as number);
 
@@ -914,7 +917,9 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
     }
 
-    generateNewElementReservas(currentState: IModalState, idGrupo: number, idReserva: number) {
+    generateNewElementReservas(staticState: IModalState, idGrupo: number, idReserva: number) {
+
+        let currentState = {...staticState};
 
         const startTime = new Date(currentState.fechaRecogida as number);
         const endTime = new Date(currentState.fechaDevolucion as number);

@@ -317,11 +317,33 @@ export class DataSchedulerGrid
         this.groupsReservaExterior[position as number].flota = state.modalState.flota as string;
     }
     async updateReservaVuelaCar(positionListado: number, elementoReserva: IListadoPrereserva) {
-        this.itemsReservasVuelaCar[positionListado as number] = elementoReserva;
+
+        for (let i = 0; i < this.itemsReservasVuelaCar.length; i++)
+        {
+            if (this.itemsReservasVuelaCar[i].id === elementoReserva.id)
+            {
+                this.itemsReservasVuelaCar[i] = elementoReserva;
+                return i;
+
+            }
+        }
+
+        return -1;
+
     }
 
     async updatePreReserva(positionListado: number, elementoReserva: IListadoPrereserva) {
-        this.itemsPreReservas[positionListado as number] = elementoReserva;
+
+        for (let i = 0; i < this.itemsPreReservas.length; i++) {
+            if (this.itemsPreReservas[i].id === elementoReserva.id) {
+                this.itemsPreReservas[i] = elementoReserva;
+                return i;
+
+            }
+        }
+
+        return -1;
+
     }
 
     async updateGroupReservaVuelaCar(state: ContainerState, position: number) {

@@ -209,14 +209,14 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
     componentDidMount()
     {
-
+        
         console.log("modal montado=");
     }
 
     componentDidUpdate()
     {
         console.log("modal updated" );
-        
+     
     }
 
 
@@ -435,6 +435,10 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
             state.modalState.fechaAlta = fechaAlta;
         }
+
+        this.matriculaValue = "";
+        this.modeloVehiculoValue = "";
+        this.claseVehiculoValue = "";
 
         this.props.onSaveData(state, _idModal, groupId, this.props.isDoubleclickItem);
         
