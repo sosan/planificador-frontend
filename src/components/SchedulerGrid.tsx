@@ -442,7 +442,6 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         let listadoSeleccionado: IListadoPrereserva[] = [...this._dataSchedulerGrid.itemsReservasVuelaCar];
 
         const cantidadGruposReservasVuelaCar = this._dataSchedulerGrid.getNewIdFromLastIDGroupReservaVuelaCar();
-        
 
         let nuevoGrupoReserva: typeGroup = {
             "id": cantidadGruposReservasVuelaCar,
@@ -459,7 +458,8 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
         };
 
-        if (state.modalState.flota !== "v") {
+        if (state.modalState.flota !== "v") 
+        {
             grupoSeleccionado = [...this._dataSchedulerGrid.groupsReservaExterior];
             listadoSeleccionado = [...this._dataSchedulerGrid.itemsReservasExterior];
 
@@ -487,11 +487,11 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
     {
 
         const { grupoSeleccionado, listadoSeleccionado, nuevoGrupoReserva } = this.getSelectedGroup(state);
-        let [existGroup, positiongroups] = this.searchExistGroupByMatricula(grupoSeleccionado, state.modalState.matricula as string);
-        let [existListado, positionListado] = this.searchExistListByMatricula(listadoSeleccionado, state.modalState.matricula as string);
+        // let [existGroup, positiongroups] = this.searchExistGroupByMatricula(grupoSeleccionado, state.modalState.matricula as string);
+        // let [existListado, positionListado] = this.searchExistListByMatricula(listadoSeleccionado, state.modalState.matricula as string);
 
-        // let [existGroup, positiongroups] = this.searchExistGroupById(grupoSeleccionado, state.modalState.group as number);
-        // let [existListado, positionListado] = this.searchExistListById(listadoSeleccionado, state.modalState.id as number);
+        let [existGroup, positiongroups] = this.searchExistGroupById(grupoSeleccionado, state.modalState.group as number);
+        let [existListado, positionListado] = this.searchExistListById(listadoSeleccionado, state.modalState.id as number);
 
         if (existGroup === false)
         {

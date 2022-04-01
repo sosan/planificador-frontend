@@ -650,8 +650,25 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
         //
         const fechaAltaTexto = `${fechaAltaDate.getDate().toString().padStart(2, "00")}-${(fechaAltaDate.getMonth() + 1).toString().padStart(2, "00")}-${fechaAltaDate.getFullYear()} ${fechaAltaDate.getHours().toString().padStart(2, "00")}:${fechaAltaDate.getMinutes().toString().padStart(2, "00")}`;
-        let tituloReserva = "Planning - Reserva";
+
+
+        let tituloReserva = "Planning - ";
         let colorCabecera = "grid_cabecera grid_cabecera_reserva";
+
+        if (estado === ENUM_TIPOS_ESTADO.reservado)
+        {
+            tituloReserva += "Reserva";
+        }
+        else if (estado === ENUM_TIPOS_ESTADO.prereservado)
+        {
+            tituloReserva += "PreReserva";
+            colorCabecera = "grid_cabecera grid_cabecera_prereserva";
+        }
+        else if (estado === ENUM_TIPOS_ESTADO.alquilado)
+        {
+            tituloReserva += "Consulta";
+            colorCabecera = "grid_cabecera grid_cabecera_alquilado";
+        }
 
         if (flota === "v")
         {
@@ -661,25 +678,6 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         {
             tituloReserva += " Externa";
         }
-
-        switch (estado) {
-            case ENUM_TIPOS_ESTADO.prereservado:
-                tituloReserva = "Planning - PreReserva";
-                colorCabecera = "grid_cabecera grid_cabecera_prereserva";
-                break;
-
-            case ENUM_TIPOS_ESTADO.reservado:
-                break;
-
-            case ENUM_TIPOS_ESTADO.prepagado:
-                break;
-
-            case ENUM_TIPOS_ESTADO.alquilado:
-                tituloReserva = "Consulta";
-                colorCabecera = "grid_cabecera grid_cabecera_alquilado";
-                break;
-        }
-
 
         let horaEntregaItem = null;
         let lugarEntregaItem = null;
@@ -751,34 +749,48 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                     </IonSelect>
             ;
 
-            
+            let seleccionModeloVehiculo = null;
+            let listadoClaseVehiculo = null;
 
-            if (claseVehiculo !== "") {
-                listadoModelosVehiculos = new Set();
-                let modelosUnicos = new Set();
-                for (let i = 0; i < props.dataCars.length; i++) {
-                    const elemento = props.dataCars[i];
-                    if (elemento.clasevehiculo.toLowerCase() === claseVehiculo.toLowerCase() && modelosUnicos.has(elemento.modelo) === false) {
-                        modelosUnicos.add(elemento.modelo);
-                        listadoModelosVehiculos.add(<IonSelectOption key={elemento.modelo.toLowerCase()} value={elemento.modelo}>{elemento.modelo.toUpperCase()}</IonSelectOption>);
+            if (flota === "v")
+            {
+                if (claseVehiculo !== "") {
+                    listadoModelosVehiculos = new Set();
+                    let modelosUnicos = new Set();
+                    for (let i = 0; i < props.dataCars.length; i++) {
+                        const elemento = props.dataCars[i];
+                        if (elemento.clasevehiculo.toLowerCase() === claseVehiculo.toLowerCase() && modelosUnicos.has(elemento.modelo) === false) {
+                            modelosUnicos.add(elemento.modelo);
+                            listadoModelosVehiculos.add(<IonSelectOption key={elemento.modelo.toLowerCase()} value={elemento.modelo}>{elemento.modelo.toUpperCase()}</IonSelectOption>);
 
+                        }
                     }
+
                 }
+
+                seleccionModeloVehiculo = 
+                    <IonSelect disabled={isDisabled} value={modeloVehiculo} onIonChange={(evento) => { this.onChangeInputs(this.state, "modeloVehiculo", evento.detail.value); }} key="vehiculos" id="modeloVehiculo" name='vehiculos' className="vehiculos_select texto-alineado-derecha" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                        {listadoModelosVehiculos}
+                    </IonSelect>
+
+                listadoClaseVehiculo = <IonSelect disabled={isDisabled} value={claseVehiculo} onIonChange={(evento) => { this.onChangeInputs(this.state, "claseVehiculo", evento.detail.value as string); }} key="claseVehiculo" id="claseVehiculo" name='claseVehiculo' className="clase_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                    {
+                        this.props.listadoClaseVehiculos.map((elemento: string) => {
+                            return <IonSelectOption key={elemento.toLowerCase()} value={elemento.toLowerCase()}>{elemento.toUpperCase()}</IonSelectOption>;
+                        })
+                    }
+                </IonSelect>
+
+
+            }
+            else
+            {
+                inputSelectionMatricula = <IonInput disabled={isDisabled} value={matricula} onIonChange={(evento) => { this.onChangeInputs(this.state, "matricula", evento.detail.value as string); }} key="matricula" id="matricula" name="matricula" placeholder="Matricula" className="matricula_select texto-alineado-derecha" ></IonInput>
+                seleccionModeloVehiculo = <IonInput disabled={isDisabled} value={modeloVehiculo} onIonChange={(evento) => { this.onChangeInputs(this.state, "modeloVehiculo", evento.detail.value as string); }} key="vehiculos" id="modeloVehiculo" name='vehiculos' className="vehiculos_select texto-alineado-derecha" placeholder="Modelo Vehiculo" ></IonInput>
+                listadoClaseVehiculo = <IonInput disabled={isDisabled} value={claseVehiculo} onIonChange={(evento) => { this.onChangeInputs(this.state, "claseVehiculo", evento.detail.value as string); }} key="claseVehiculo" id="claseVehiculo" name='clasevehiculo' className="vehiculos_select texto-alineado-derecha" placeholder="Clase Vehiculo" ></IonInput>
 
             }
 
-            let seleccionModeloVehiculo = 
-                <IonSelect disabled={isDisabled} value={modeloVehiculo} onIonChange={(evento) => { this.onChangeInputs(this.state, "modeloVehiculo", evento.detail.value); }} key="vehiculos" id="modeloVehiculo" name='vehiculos' className="vehiculos_select texto-alineado-derecha" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
-                    {listadoModelosVehiculos}
-                </IonSelect>
-
-            let listadoClaseVehiculo = <IonSelect disabled={isDisabled} value={claseVehiculo} onIonChange={(evento) => { this.onChangeInputs(this.state, "claseVehiculo", evento.detail.value as string); }} key="claseVehiculo" id="claseVehiculo" name='claseVehiculo' className="clase_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
-                {
-                    this.props.listadoClaseVehiculos.map((elemento: string) => {
-                        return <IonSelectOption key={elemento.toLowerCase()} value={elemento.toLowerCase()}>{elemento.toUpperCase()}</IonSelectOption>;
-                    })
-                }
-            </IonSelect>
 
             if (this.state.clickedModificar === true)
             {
