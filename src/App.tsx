@@ -51,20 +51,8 @@ export class App extends Component<ContainerProps, ContainerState> {
 
   render()
   {
-    
-    // let intervalo = setInterval( () => {
-  
-    //     if (DataSchedulerGrid.getIsReady() === true)
-    //     {
-    //       this.setState({ setShowLoading: false });
-    //       clearInterval(intervalo);
-    //     }
-  
-    // }, 1000);
-
     const { showLoading } = this.state;
-    
-    
+
     return (
       <IonApp>
         <IonLoading
@@ -72,7 +60,7 @@ export class App extends Component<ContainerProps, ContainerState> {
           isOpen={showLoading}
           onDidDismiss={ () => {this.setState({ setShowLoading: false}); } }
           message={'Cargando...'}
-          duration={1000}
+          duration={1500}
         />
         <IonReactRouter>
           <IonSplitPane contentId="main" disabled={true}>

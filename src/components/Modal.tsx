@@ -373,25 +373,23 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                 break;
 
             case ENUM_TIPOS_ESTADO.reservado:
-                if (state.modalState.colaborador === "")
+                if (state.modalState.colaborador === "" )
                 {
                     colaboradorFallo = true;
                     conFallos = true;
                 }
                 
-                if (state.modalState.claseVehiculo === "") {
+                if (state.modalState.claseVehiculo === "" ) {
                     claseVehiculoFallo = true;
                     conFallos = true;
                 }
                 
-                if (state.modalState.modeloVehiculo === "") {
+                if (state.modalState.modeloVehiculo === "" ) {
                     modeloVehiculoFallo = true;
                     conFallos = true;
                 }
 
-                if (
-                    state.modalState.matricula === ""
-                ) {
+                if ( state.modalState.matricula === "" ) {
                     matriculoFallo = true;
                     conFallos = true;
                 }
@@ -399,6 +397,29 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                 if (state.modalState.flota === "" ) {
                     flotaFallo = true;
                     conFallos = true;
+                }
+
+                if (state.modalState.flota !== "v")
+                {
+                    if (this.claseVehiculoValue === "")
+                    {
+                        claseVehiculoFallo = true;
+                        conFallos = true;
+                    }
+    
+                    if (this.modeloVehiculoValue === "")
+                    {
+                        modeloVehiculoFallo = true;
+                        conFallos = true;
+                    }
+                    
+                    if (this.matriculaValue === "")
+                    {
+                        matriculoFallo = true;
+                        conFallos = true;
+    
+                    }
+
                 }
 
                 break;

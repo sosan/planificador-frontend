@@ -347,6 +347,8 @@ export class DataSchedulerGrid
     }
 
     async updateGroupReservaVuelaCar(state: ContainerState, position: number) {
+
+        this.groupsReservaVuelaCar[position as number].title = state.modalState.colaborador as string;
         this.groupsReservaVuelaCar[position as number].matricula = state.modalState.matricula as string;
         this.groupsReservaVuelaCar[position as number].modelo = state.modalState.modeloVehiculo as string;
         this.groupsReservaVuelaCar[position as number].clasevehiculo = state.modalState.claseVehiculo as string;

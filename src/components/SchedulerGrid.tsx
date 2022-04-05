@@ -121,10 +121,9 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         console.log("schedulergrid montado");
         await this.init();
 
-        this.setState({ setShowLoading: false });
-
+        
     }
-
+    
     
     async init()
     {
@@ -132,6 +131,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
         const dataSchedulerGrid = new DataSchedulerGrid();
         await dataSchedulerGrid.setupDb(dataCars);
         this._dataSchedulerGrid = dataSchedulerGrid;
+        this.setState({ setShowLoading: false });
     }
 
 

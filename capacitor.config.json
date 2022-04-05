@@ -1,6 +1,6 @@
 {
 	"appId": "planificador.frontend.com",
-	"appName": "gestor de alquiler",
+	"appName": "SGA",
 	"webDir": "build",
 	"bundledWebRuntime": false
 }
