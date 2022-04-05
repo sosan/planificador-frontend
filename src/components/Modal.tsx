@@ -389,9 +389,13 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                     conFallos = true;
                 }
 
-                if ( state.modalState.matricula === "" ) {
-                    matriculoFallo = true;
-                    conFallos = true;
+
+                if (state.modalState.flota === "v") {
+                    if ( state.modalState.matricula === "" ) {
+                        matriculoFallo = true;
+                        conFallos = true;
+                    }
+
                 }
 
                 if (state.modalState.flota === "" ) {
@@ -673,20 +677,29 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         let tituloReserva = "Planning - ";
         let colorCabecera = "grid_cabecera grid_cabecera_reserva";
 
-        if (estado === ENUM_TIPOS_ESTADO.reservado)
+        if (props.isDoubleclickItem === true)
         {
-            tituloReserva += "Reserva";
+            tituloReserva += "Consulta Reserva";
         }
-        else if (estado === ENUM_TIPOS_ESTADO.prereservado)
+        else
         {
-            tituloReserva += "PreReserva";
-            colorCabecera = "grid_cabecera grid_cabecera_prereserva";
+            if (estado === ENUM_TIPOS_ESTADO.reservado)
+            {
+                tituloReserva += "Reserva";
+            }
+            else if (estado === ENUM_TIPOS_ESTADO.prereservado)
+            {
+                tituloReserva += "Pre-Reserva";
+                colorCabecera = "grid_cabecera grid_cabecera_prereserva";
+            }
+            else if (estado === ENUM_TIPOS_ESTADO.alquilado)
+            {
+                tituloReserva += "Consulta";
+                colorCabecera = "grid_cabecera grid_cabecera_alquilado";
+            }
+
         }
-        else if (estado === ENUM_TIPOS_ESTADO.alquilado)
-        {
-            tituloReserva += "Consulta";
-            colorCabecera = "grid_cabecera grid_cabecera_alquilado";
-        }
+
 
         if (flota === "v")
         {
@@ -694,7 +707,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         }
         else
         {
-            tituloReserva += " Externa";
+            tituloReserva += " Subalquileres";
         }
 
         let horaEntregaItem = null;
@@ -749,22 +762,23 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
             }
 
-        seleccionModeloVehiculo =
-            <IonSelect disabled={isDisabled} value={modeloVehiculo} onIonChange={(evento) => { this.onChangeInputs(this.state, "modeloVehiculo", evento.detail.value); }} key="vehiculos" id="modeloVehiculo" name='vehiculos' className="vehiculos_select texto-alineado-derecha" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
-                {listadoModelosVehiculos}
-            </IonSelect>
-
-        listadoClaseVehiculo = <IonSelect disabled={isDisabled} value={claseVehiculo} onIonChange={(evento) => { this.onChangeInputs(this.state, "claseVehiculo", evento.detail.value as string); }} key="claseVehiculo" id="claseVehiculo" name='claseVehiculo' className="clase_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
-            {
-                this.props.listadoClaseVehiculos.map((elemento: string) => {
-                    return <IonSelectOption key={elemento.toLowerCase()} value={elemento.toLowerCase()}>{elemento.toUpperCase()}</IonSelectOption>;
-                })
-            }
-        </IonSelect>
         
         
         if (estado === ENUM_TIPOS_ESTADO.prereservado)
         {
+            seleccionModeloVehiculo =
+                <IonSelect disabled={isDisabled} value={modeloVehiculo} onIonChange={(evento) => { this.onChangeInputs(this.state, "modeloVehiculo", evento.detail.value); }} key="vehiculos" id="modeloVehiculo" name='vehiculos' className="vehiculos_select texto-alineado-derecha" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                    {listadoModelosVehiculos}
+                </IonSelect>
+
+            listadoClaseVehiculo = <IonSelect disabled={isDisabled} value={claseVehiculo} onIonChange={(evento) => { this.onChangeInputs(this.state, "claseVehiculo", evento.detail.value as string); }} key="claseVehiculo" id="claseVehiculo" name='claseVehiculo' className="clase_select" okText="Confirmado" cancelText="Cancelar" placeholder="Seleccionar Uno" >
+                {
+                    this.props.listadoClaseVehiculos.map((elemento: string) => {
+                        return <IonSelectOption key={elemento.toLowerCase()} value={elemento.toLowerCase()}>{elemento.toUpperCase()}</IonSelectOption>;
+                    })
+                }
+            </IonSelect>
+
             claseVehiculoItem = <IonItem>
                 {
                     (this.state.errores.claseVehiculo === true) ? <><IonImg src={imagenFallo}></IonImg><IonLabel className="textofallo">Clase</IonLabel></>
@@ -788,7 +802,6 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
         if (
             (props.isDoubleclickItem === true && estado === ENUM_TIPOS_ESTADO.prereservado) ||
             (estado !== ENUM_TIPOS_ESTADO.prereservado)
-
         )
         {
 
