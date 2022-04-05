@@ -711,33 +711,53 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
 
                         if (state.modalState.flota === "v")
                         {
-                            const cantidadGruposReservasVuelaCar = await this._dataSchedulerGrid.getNewIdFromLastIDGroupReservaVuelaCar(); //.groupsReservaVuelaCar.length;
-                            elementoGrupo["id"] = cantidadGruposReservasVuelaCar;
-                            elementoGrupo["matricula"] = state.modalState.matricula as string;
 
-                            await this._dataSchedulerGrid.insertNewElementGrupoReserva(elementoGrupo);
+                            // let elementoReserva = this.generateNewElementReservas(
+                            //     state.modalState,
+                            //     positiongroups,
+                            //     state.modalState.id as number
+                            // );
+                           
+                           
+                            // await this._dataSchedulerGrid.updateGroupReservaVuelaCar(state, positiongroupsPreReserva);
+                            // let elementoReserva = this.generateNewElementReservas(
+                            //     state.modalState,
+                            //     positiongroupsPreReserva,
+                            //     state.modalState.id as number
+                            // );
+                            // // if (elementoReserva.modalState.reservaCompletada === false)
+                            // // {
+                            // // }
+                            // elementoReserva.modalState.reservaCompletada = true;
+                            // const pos = await this._dataSchedulerGrid.updateReservaVuelaCar(positionListadoPreReserva as number, elementoReserva);
+                            // await repoStorage.updateReservaVuelaCar(pos, elementoReserva);
+
                             
+                            
+                            // const cantidadGruposReservasVuelaCar = await this._dataSchedulerGrid.getNewIdFromLastIDGroupReservaVuelaCar(); //.groupsReservaVuelaCar.length;
+                            // elementoGrupo["id"] = cantidadGruposReservasVuelaCar;
+                            // elementoGrupo["matricula"] = state.modalState.matricula as string;
+                            // await this._dataSchedulerGrid.insertNewElementGrupoReserva(elementoGrupo);
+                            
+                            //buscar el grupo por matricula
+                            const [exist, grupoId] = await this._dataSchedulerGrid.searchGroupByMatriculaReservaVuelaCar(state.modalState.matricula);
+                            if (exist === false) return;
+
                             const cantidadReservasVuelaCar: number = await this._dataSchedulerGrid.getNewIdFromLastIDReservaVuelaCar();
-
-
                             const elementoReserva = this.generateNewElementReservas(
                                 state.modalState, 
-                                cantidadGruposReservasVuelaCar, 
+                                grupoId, 
                                 cantidadReservasVuelaCar
                             );
-                            // if (elementoReserva.modalState.reservaCompletada === false) {
-                            // }
                             elementoReserva.modalState.reservaCompletada = true;
                             await this._dataSchedulerGrid.insertNewElementReservasVuelaCar(elementoReserva);
-
-                            await repoStorage.insertGroupReservaVuelaCar(elementoGrupo);
                             await repoStorage.insertReservaVuelaCar(elementoReserva);
 
                         }
                         else
                         {
                             //modificamos el gurpo
-                            const cantidadGruposReservasExterior = await this._dataSchedulerGrid.getNewIdFromLastIDGroupReservaExterior(); //.groupsReservaVuelaCar.length;
+                            const cantidadGruposReservasExterior = await this._dataSchedulerGrid.getNewIdFromLastIDGroupReservaExterior();
                             elementoGrupo["id"] = cantidadGruposReservasExterior;
                             elementoGrupo["matricula"] = state.modalState.matricula as string;
                             // insertamos el nuevo grupo
@@ -753,9 +773,7 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                                 cantidadReservasExterior
                             );
 
-                            // if(elementoReserva.modalState.reservaCompletada === false)
-                            // {
-                            // }
+                            
                             elementoReserva.modalState.reservaCompletada = true;
                             // insertamos la nueva reserva en exterior
                             await this._dataSchedulerGrid.insertNewElementReservasExterior(elementoReserva);

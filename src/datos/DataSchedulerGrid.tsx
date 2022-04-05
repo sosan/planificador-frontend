@@ -432,6 +432,26 @@ export class DataSchedulerGrid
 
     }
 
+    async searchGroupByMatriculaReservaVuelaCar(matricula: string)
+    {
+        let exist = false;
+        let grupoId = -1;
+
+        for (let i = 0; i < this.groupsReservaVuelaCar.length; i++) {
+            if (this.groupsReservaVuelaCar[i].matricula.toLowerCase() === matricula.toLowerCase()) {
+
+                exist = true;
+                grupoId = this.groupsReservaVuelaCar[i].id;
+                break;
+
+            }
+        }
+
+        return [exist, grupoId];
+
+
+    }
+
 
 
     async searchExistGroupById(grupo: typeGroup[], _id: number) {
