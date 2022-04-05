@@ -575,10 +575,10 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                         positiongroups,
                         state.modalState.id as number
                     );
-                    if (elementoReserva.modalState.reservaCompletada === false)
-                    {
-                        elementoReserva.modalState.reservaCompletada = true;
-                    }
+                    // if (elementoReserva.modalState.reservaCompletada === false)
+                    // {
+                    // }
+                    elementoReserva.modalState.reservaCompletada = true;
                     const pos = await this._dataSchedulerGrid.updateReservaVuelaCar(positionListado as number, elementoReserva);
                     await repoStorage.updateReservaVuelaCar(pos, elementoReserva);
     
@@ -595,10 +595,10 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                         state.modalState.group as number,
                         state.modalState.id as number
                     );
-                    if (elementoReserva.modalState.reservaCompletada === false) {
-                        elementoReserva.modalState.reservaCompletada = true;
-                    }
+                    // if (elementoReserva.modalState.reservaCompletada === false) {
+                    // }
                     
+                    elementoReserva.modalState.reservaCompletada = true;
                     await this._dataSchedulerGrid.updateReservaExterior(elementoReserva, positionListado as number);
                     await repoStorage.updateReservaExterior(positionListado as number, elementoReserva);
     
@@ -615,10 +615,10 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                         positiongroups,
                         state.modalState.id as number
                     );
-                    if (elementoReserva.modalState.reservaCompletada === false) {
-                        elementoReserva.modalState.reservaCompletada = true;
-                    }
-
+                    // if (elementoReserva.modalState.reservaCompletada === false) {
+                    // }
+                    
+                    elementoReserva.modalState.reservaCompletada = true;
                     await this._dataSchedulerGrid.insertNewElementReservasVuelaCar(elementoReserva);
                     await repoStorage.insertReservaVuelaCar(elementoReserva);
 
@@ -630,10 +630,10 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                         positiongroups,
                         state.modalState.id as number
                     );
-                    if (elementoReserva.modalState.reservaCompletada === false) {
-                        elementoReserva.modalState.reservaCompletada = true;
-                    }
-
+                    // if (elementoReserva.modalState.reservaCompletada === false) {
+                    // }
+                    
+                    elementoReserva.modalState.reservaCompletada = true;
                     await this._dataSchedulerGrid.insertNewElementReservasExterior(elementoReserva);
                     await repoStorage.insertReservaExterior(elementoReserva);
 
@@ -725,9 +725,9 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                                 cantidadGruposReservasVuelaCar, 
                                 cantidadReservasVuelaCar
                             );
-                            if (elementoReserva.modalState.reservaCompletada === false) {
-                                elementoReserva.modalState.reservaCompletada = true;
-                            }
+                            // if (elementoReserva.modalState.reservaCompletada === false) {
+                            // }
+                            elementoReserva.modalState.reservaCompletada = true;
                             await this._dataSchedulerGrid.insertNewElementReservasVuelaCar(elementoReserva);
 
                             await repoStorage.insertGroupReservaVuelaCar(elementoGrupo);
@@ -753,10 +753,10 @@ export class SchedulerContainer extends Component<ContainerProps, ContainerState
                                 cantidadReservasExterior
                             );
 
-                            if(elementoReserva.modalState.reservaCompletada === false)
-                            {
-                                elementoReserva.modalState.reservaCompletada = true;
-                            }
+                            // if(elementoReserva.modalState.reservaCompletada === false)
+                            // {
+                            // }
+                            elementoReserva.modalState.reservaCompletada = true;
                             // insertamos la nueva reserva en exterior
                             await this._dataSchedulerGrid.insertNewElementReservasExterior(elementoReserva);
 
