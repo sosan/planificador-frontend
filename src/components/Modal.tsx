@@ -353,10 +353,10 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                 else
                 {
 
-                    if (state.modalState.matricula === "" ) {
-                        matriculoFallo = true;
-                        conFallos = true;
-                    }
+                    // if (state.modalState.matricula === "" ) {
+                    //     matriculoFallo = true;
+                    //     conFallos = true;
+                    // }
     
                     if (state.modalState.flota === "") {
                         flotaFallo = true;
@@ -417,7 +417,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                         conFallos = true;
                     }
                     
-                    if (this.matriculaValue === "")
+                    if (this.matriculaValue === "") /// nose si es obligarotio en un reserva subalquiler
                     {
                         matriculoFallo = true;
                         conFallos = true;
@@ -532,7 +532,7 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
                 <IonContent>
                     <IonGrid className={itemsGenerados.colorCabecera}>
                         <IonRow className=" altura_15 cabecera-arriba">
-                            <h2 className='margen-cabecera-arriba'>{itemsGenerados.tituloReserva}</h2>
+                            <h2 className='margen-cabecera-arriba-planning'>{itemsGenerados.tituloReserva}</h2>
                             <span>Fecha alta: {itemsGenerados.fechaAltaTexto}</span>
                             <IonInput name='fechaalta' value={itemsGenerados.fechaAlta} hidden={true} ></IonInput>
                             <IonLabel className="textoFallo">{this.state.errores.textoErrores}</IonLabel>
@@ -679,25 +679,22 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
         if (props.isDoubleclickItem === true)
         {
-            tituloReserva += "Consulta Reserva";
+            tituloReserva += "Consulta ";
         }
-        else
+        
+        if (estado === ENUM_TIPOS_ESTADO.reservado)
         {
-            if (estado === ENUM_TIPOS_ESTADO.reservado)
-            {
-                tituloReserva += "Reserva";
-            }
-            else if (estado === ENUM_TIPOS_ESTADO.prereservado)
-            {
-                tituloReserva += "Pre-Reserva";
-                colorCabecera = "grid_cabecera grid_cabecera_prereserva";
-            }
-            else if (estado === ENUM_TIPOS_ESTADO.alquilado)
-            {
-                tituloReserva += "Consulta";
-                colorCabecera = "grid_cabecera grid_cabecera_alquilado";
-            }
-
+            tituloReserva += "Reserva";
+        }
+        else if (estado === ENUM_TIPOS_ESTADO.prereservado)
+        {
+            tituloReserva += "Pre-Reserva";
+            colorCabecera = "grid_cabecera grid_cabecera_prereserva";
+        }
+        else if (estado === ENUM_TIPOS_ESTADO.alquilado)
+        {
+            tituloReserva += "Consulta";
+            colorCabecera = "grid_cabecera grid_cabecera_alquilado";
         }
 
 
@@ -1010,10 +1007,19 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
 
             if (props.isDoubleclickItem === true)
             {
-                botonModificarItem = <div className='centrado-horizontal'>
-                    <IonButton onClick={() => { this.activarModificar(); }} disabled={this.state.clickedModificar}>Modificar</IonButton>
-                </div>
-                ;
+
+                if (estado === ENUM_TIPOS_ESTADO.prereservado)
+                {
+
+                }
+                else
+                {
+                    botonModificarItem = <div className='centrado-horizontal'>
+                        <IonButton onClick={() => { this.activarModificar(); }} disabled={this.state.clickedModificar}>Modificar</IonButton>
+                    </div>
+                    ;
+
+                }
 
             }
             
