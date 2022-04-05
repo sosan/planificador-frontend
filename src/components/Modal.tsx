@@ -1092,6 +1092,11 @@ export class ModalDialog extends Component<ContainerProps, ContainerState>
     {
 
         let isDisabled = false;
+        // if (this.props.isDoubleclickItem === true )
+        // {
+        //     isDisabled = true;
+        // }
+
         if (state.modalState.reservaCompletada === true) {
             isDisabled = true;
         }
