@@ -78,7 +78,7 @@
   },
   "description": "An Ionic project",
   "devDependencies": {
-    "@capacitor/cli": "3.4.3",
+    "@capacitor/cli": "5.7.0",
     "@ionic/cli": "6.19.0",
     "@types/jest": "^26.0.20",
     "@types/node": "^12.19.15",
