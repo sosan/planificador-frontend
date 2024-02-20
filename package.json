@@ -5,7 +5,7 @@
   "dependencies": {
     "@awesome-cordova-plugins/android-permissions": "^5.40.0",
     "@awesome-cordova-plugins/camera": "^5.40.0",
-    "@awesome-cordova-plugins/chooser": "^5.40.0",
+    "@awesome-cordova-plugins/chooser": "^6.0.0",
     "@awesome-cordova-plugins/file": "^5.40.0",
     "@awesome-cordova-plugins/file-path": "^5.40.0",
     "@awesome-cordova-plugins/image-picker": "^5.40.0",
