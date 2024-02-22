@@ -6,7 +6,7 @@
     "@awesome-cordova-plugins/android-permissions": "^6.0.0",
     "@awesome-cordova-plugins/camera": "^6.0.0",
     "@awesome-cordova-plugins/chooser": "^6.0.0",
-    "@awesome-cordova-plugins/file": "^5.40.0",
+    "@awesome-cordova-plugins/file": "^6.0.0",
     "@awesome-cordova-plugins/file-path": "^6.0.0",
     "@awesome-cordova-plugins/image-picker": "^6.0.0",
     "@capacitor/android": "5.7.0",
